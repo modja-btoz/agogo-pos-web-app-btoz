@@ -13,7 +13,11 @@ const FooterNavLeft = (props) => {
 
       <Nav className="ml-auto" navbar>
         <NavItem>
+<<<<<<< HEAD
+          <NavLink active={props.cartStore.state.isOpenTransactionShow} onClick={() => props.cartStore.openTransaction()}><i className="fas fa-folder-open"></i><br />Buka Trx</NavLink>
+=======
           <NavLink href="#"><i className="fas fa-folder-open"></i><br />Buka Trx</NavLink>
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
         </NavItem>
         <NavItem>
           <NavLink href="#"><i className="fas fa-save"></i><br />Simpan</NavLink>

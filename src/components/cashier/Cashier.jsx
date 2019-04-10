@@ -11,6 +11,12 @@ import PaymentCheckout from '../payments/PaymentCheckout'
 
 import './Cashier.scss';
 import './SidebarComponentsWrapper.scss';
+<<<<<<< HEAD
+import TransactionList from '../transaction/TransactionList';
+import ReservationList from '../reservation/ReservationList';
+import Refund from '../payments/Refund';
+=======
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
 
 class Kasir extends Component {
 
@@ -30,7 +36,11 @@ class Kasir extends Component {
                   <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Hapsa</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
+<<<<<<< HEAD
+                      <NavLink href="/pemesanan">Order #TK-1800000015</NavLink>
+=======
                       <NavLink href="/pemesanan">Order #TK-1800000014</NavLink>
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
                     </NavItem>
                     <NavItem>
                       <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>
@@ -68,11 +78,39 @@ class Kasir extends Component {
             
             {this.props.cartStore.state.isPaymentCheckoutShow &&
               <aside className="SidebarComponentsWrapper">
+<<<<<<< HEAD
+                {/* PAYMENT COMPONENTS */}
+=======
                 {/* PAYEMNT COMPONENTS */}
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
                 <PaymentCheckout cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 
+<<<<<<< HEAD
+            {this.props.cartStore.state.isTransactionListShow &&
+              <aside className="SidebarComponentsWrapper">
+                {/* TRANSACTION COMPONENTS */}
+                <TransactionList cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+              </aside>
+            }
+
+            {this.props.cartStore.state.isReservationListShow &&
+              <aside className="SidebarComponentsWrapper">
+                {/* RESERVATION COMPONENTS */}
+                <ReservationList cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+              </aside>
+            }
+
+            {this.props.cartStore.state.isRefundShow &&
+              <aside className="SidebarComponentsWrapper">
+                {/* REFUND COMPONENTS */}
+                <Refund cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+              </aside>
+            }
+
+=======
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
           </Col>
 
           <Col xs="6" className="kasir-product">
