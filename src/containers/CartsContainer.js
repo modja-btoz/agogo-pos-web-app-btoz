@@ -13,6 +13,7 @@ const initialState = {
   totalAmount: 0,
   discountAmount: 0,
   discountPercentage: 0,
+  additionalCost: 0,
   expenseAmount: 0,
   grandTotalAmount: 0,
   grandTotalAmountDiscount: 0,
@@ -249,6 +250,14 @@ class CartsContainer extends Container {
     return discount
   }
 
+  additionalCost() {
+    let cost = this.state.valueInputBooking
+    if (cost === cost) {
+      cost = cost;
+    }
+    return cost
+  }
+
   sumChangePayment() {
     let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"] )
     console.log("sumChangePayment", totalPayment)
@@ -371,10 +380,21 @@ class CartsContainer extends Container {
     console.log("Input changed", valueInputPayment);
   };
 
+  onChangeBooking = valueInputBooking => {
+    this.setState({
+      valueInputBooking: valueInputBooking
+    },
+      () => {
+        this.additionalCost()
+      }
+    )
+    console.log("Input change", valueInputBooking)
+  }
+
   setActiveInputBooking = (event) => {
     document.getElementById(event.target.id).focus();
     this.setState({
-      activeInputBooking: event.target.id
+      activeInputBooking: event.target.value
     },
       () => {
         console.log("setActiveInput", this.state.activeInputBooking)
@@ -382,15 +402,15 @@ class CartsContainer extends Container {
     )
   }
 
-  onChangeBooking = valueInputbooking => {
+  setInputBooking = (event) => {
+    document.getElementById(event.target.id).focus();
     this.setState({
-      valueInputBooking: valueInputbooking
+      valueInputBooking: event.target.value
     },
       () => {
-        this.sumGrandTotalAmount()
+        console.log("valueInputBooking", this.state.valueInputBooking)
       }
     )
-    console.log("Input changed", valueInputbooking)
   }
 
   onKeyPressPayment = (button) => {

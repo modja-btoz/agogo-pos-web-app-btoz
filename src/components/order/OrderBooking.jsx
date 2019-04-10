@@ -52,11 +52,11 @@ const OrderBooking = (props) => {
                                     <Label sm={2} className="control-label">BIAYA TAMBAHAN</Label>
                                     <Col sm={10}>
                                         <Input className="input-lg size-input" placeholder="Rp0" 
-                                                value={props.cartStore.state.valueInputBooking || ""}
+                                                value={props.cartStore.setActiveInputBooking}
+                                                onChange={props.cartStore.setActiveInputBooking}
                                                 name="input" id="input"
-                                                onFocus={props.cartStore.setActiveInputBooking}
-                                                autoFocus />
-                                           
+                                                autoFocus 
+                                            /> 
                                     </Col>
                                 </FormGroup>
 
