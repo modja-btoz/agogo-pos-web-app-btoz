@@ -9,11 +9,7 @@ class RootContainer extends Container {
 
   activePath = (activePath) => {
     console.log("=== ACTIVE PATH ===")
-<<<<<<< HEAD
-     //console.log(props.match.path)
-=======
     // console.log(props.match.path)
->>>>>>> dev
     if(activePath !== this.state.activePath){
       this.setState({
         activePath: activePath

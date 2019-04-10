@@ -7,13 +7,9 @@ import decode from 'jwt-decode';
 import UsersContainer from './containers/UsersContainer';
 import Login from './components/logins/Login';
 import InitialBalance from './components/balances/InitialBalance';
-<<<<<<< HEAD
 import Selection from './components/selection/Selection'
 import Cashier from './components/cashier/Cashier';
 import Booking from './components/booking/Booking'
-=======
-import Cashier from './components/cashier/Cashier';
->>>>>>> dev
 
 import Fullscreen from "react-full-screen";
 
@@ -108,11 +104,7 @@ class App extends Component {
 
           {this.state.activePath === '/initial-balance' &&
           <a href="#" className="btn-logout" onClick={() => this.props.modalStore.toggleModal('saldo', '')} >
-<<<<<<< HEAD
             <i className="fas fa-power-off"></i>
-=======
-            <i class="fas fa-power-off"></i>
->>>>>>> dev
           </a>
           }
         </footer>
@@ -167,7 +159,6 @@ class App extends Component {
                 }}
               />
 
-<<<<<<< HEAD
               <Route path='/selection'
                 render={(props) => {
                   this.activePath(props);
@@ -182,8 +173,6 @@ class App extends Component {
                 }}
               />
 
-=======
->>>>>>> dev
               <Route path='/cashier'
                 render={(props) => {
                   this.activePath(props);
@@ -200,7 +189,6 @@ class App extends Component {
                 }}
               />
 
-<<<<<<< HEAD
               <Route path='/booking'
                 render={(props) => {
                   this.activePath(props);
@@ -217,8 +205,6 @@ class App extends Component {
                 }}
               />
 
-=======
->>>>>>> dev
               <Route path="/logout" 
                 render={() => {
                   this.logout();

@@ -11,12 +11,9 @@ import PaymentCheckout from '../payments/PaymentCheckout'
 
 import './Cashier.scss';
 import './SidebarComponentsWrapper.scss';
-<<<<<<< HEAD
-=======
 import TransactionList from '../transaction/TransactionList';
 import ReservationList from '../reservation/ReservationList';
 import Refund from '../payments/Refund';
->>>>>>> dev
 
 class Kasir extends Component {
 
@@ -36,11 +33,7 @@ class Kasir extends Component {
                   <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Hapsa</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
-<<<<<<< HEAD
-                      <NavLink href="/pemesanan">Order #TK-1800000014</NavLink>
-=======
                       <NavLink href="/pemesanan">Order #TK-1800000015</NavLink>
->>>>>>> dev
                     </NavItem>
                     <NavItem>
                       <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>
@@ -78,17 +71,11 @@ class Kasir extends Component {
             
             {this.props.cartStore.state.isPaymentCheckoutShow &&
               <aside className="SidebarComponentsWrapper">
-<<<<<<< HEAD
-                {/* PAYEMNT COMPONENTS */}
-=======
                 {/* PAYMENT COMPONENTS */}
->>>>>>> dev
                 <PaymentCheckout cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 
-<<<<<<< HEAD
-=======
             {this.props.cartStore.state.isTransactionListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* TRANSACTION COMPONENTS */}
@@ -110,7 +97,6 @@ class Kasir extends Component {
               </aside>
             }
 
->>>>>>> dev
           </Col>
 
           <Col xs="6" className="kasir-product">

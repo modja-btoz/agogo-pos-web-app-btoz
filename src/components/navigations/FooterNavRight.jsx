@@ -7,17 +7,10 @@ const FooterNavRight = (props) => {
     <Navbar expand="md">
       <Nav className="ml-auto" navbar>
         <NavItem>
-<<<<<<< HEAD
-          <NavLink href="/refund"><i className="fas fa-retweet"></i><br />Refund</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink onClick={() => props.cartStore.cashierOverlay()}><i className="fas fa-edit"></i> <br />Pemesanan</NavLink>
-=======
           <NavLink active={props.cartStore.state.isOpenRefundShow} onClick={() => props.cartStore.openRefund()}><i className="fas fa-retweet"></i><br />Refund</NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={props.cartStore.state.isOpenReservationShow} onClick={() => props.cartStore.openReservation()}><i className="fas fa-edit"></i> <br />Pemesanan</NavLink>
->>>>>>> dev
         </NavItem>
         <NavItem>
           <NavLink href="/logout"><i className="fas fa-sign-out-alt"></i> <br />Sign Out</NavLink>
