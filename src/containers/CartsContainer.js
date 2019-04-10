@@ -18,6 +18,13 @@ const initialState = {
   grandTotalAmountDiscount: 0,
   isCashierOverlayShow: false,
   isPaymentCheckoutShow: false,
+  isTransactionListShow: false,
+  isReservationListShow: false,
+  isRefundShow: false,
+  valueInputRefund: '',
+  activeInputRefund: '',
+  valueInputApproval: '',
+  activeInputApproval: '',
   valueInputPayment: '',
   activeInputPayment: '',
   discountType: 'Rp',
@@ -319,6 +326,9 @@ class CartsContainer extends Container {
 
   togglePaymentCheckoutShow = () => {
     this.setState({
+      isReservationListShow: false,
+      isTransactionListShow: false,
+      isRefundShow: false,
       isPaymentCheckoutShow: !this.state.isPaymentCheckoutShow
     })
   }
@@ -382,6 +392,90 @@ class CartsContainer extends Container {
     this.sumChangePayment()
   };
 
-}
+
+
+
+
+  // ===============
+  // SHOW TRX ACTIONS
+  // ===============
+  openTransaction = () => {
+    // console.log("OpenTransaction")
+    this.toggleOpenTransactionShow()
+  }
+
+  toggleOpenTransactionShow = () => {
+    this.setState({
+      isReservationListShow: false,
+      isRefundShow: false,
+      isPaymentCheckoutShow: false,
+      isTransactionListShow: !this.state.isTransactionListShow,
+    })
+  };
+
+  // ===============
+  // SHOW TRX ACTIONS
+  // ===============
+  openReservation = () => {
+    // console.log("OpenReservation")
+    this.toggleOpenReservationShow()
+  }
+
+  toggleOpenReservationShow = () => {
+    this.setState({
+      isTransactionListShow: false,
+      isRefundShow: false,
+      isPaymentCheckoutShow: false,
+      isReservationListShow: !this.state.isReservationListShow
+    })
+  };
+
+  // ===============
+  // SHOW TRX ACTIONS
+  // ===============
+  openRefund = () => {
+    // console.log("OpenReservation")
+    this.toggleOpenRefundShow()
+  }
+
+  toggleOpenRefundShow = () => {
+    this.setState({
+      isReservationListShow: false,
+      isTransactionListShow: false,
+      isPaymentCheckoutShow: false,
+      isRefundShow: !this.state.isRefundShow
+    })
+  }
+
+  setActiveInputRefund = (event) => {
+    // console.log('event', event.target.id)
+    document.getElementById(event.target.id).focus();
+    this.setState({
+      activeInputRefund: event.target.id
+    },
+      () => {
+        console.log("setActiveInput", this.state.activeInputRefund)
+      }
+    );
+  }
+  onChangeRefund = valueInputRefund => {
+    this.setState({
+      valueInputRefund: valueInputRefund
+    });
+    console.log("Input changed", valueInputRefund);
+  };
+
+  handleAddRow = () => {
+    this.setState((prevState, props) => {
+      const row = { content: "hello this is a new row!" };
+      return { rows: [...prevState.rows, row] };
+    });
+  };
+  
+  handleRemoveRow = () => {
+    this.setState((prevState, props) => {
+      return { rows: prevState.rows.slice(1) };
+    });
+  };}
 
 export default CartsContainer
