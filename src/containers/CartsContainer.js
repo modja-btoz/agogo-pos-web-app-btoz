@@ -18,6 +18,7 @@ const initialState = {
   grandTotalAmountDiscount: 0,
   isCashierOverlayShow: false,
   isPaymentCheckoutShow: false,
+<<<<<<< HEAD
   isTransactionListShow: false,
   isReservationListShow: false,
   isRefundShow: false,
@@ -25,6 +26,8 @@ const initialState = {
   activeInputRefund: '',
   valueInputApproval: '',
   activeInputApproval: '',
+=======
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
   valueInputPayment: '',
   activeInputPayment: '',
   discountType: 'Rp',
@@ -326,9 +329,12 @@ class CartsContainer extends Container {
 
   togglePaymentCheckoutShow = () => {
     this.setState({
+<<<<<<< HEAD
       isReservationListShow: false,
       isTransactionListShow: false,
       isRefundShow: false,
+=======
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
       isPaymentCheckoutShow: !this.state.isPaymentCheckoutShow
     })
   }
@@ -392,6 +398,7 @@ class CartsContainer extends Container {
     this.sumChangePayment()
   };
 
+<<<<<<< HEAD
 
 
 
@@ -477,5 +484,8 @@ class CartsContainer extends Container {
       return { rows: prevState.rows.slice(1) };
     });
   };}
+=======
+}
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
 
 export default CartsContainer
