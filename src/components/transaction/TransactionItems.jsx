@@ -2,17 +2,18 @@ import React from 'react'
 import TransactionItem from './TransactionItem';
 
 const TransactionItems = (props) => {
+  
   return (
     <tbody>
-      <li><a href="#" color="white">AAA</a></li>
-      {/* {props.transactionStore.state.list.map((transaction, i) => (
+      <li><a href="#">AAA</a></li>
+      {props.transactionStore.state.transaction.map((transaction, i) => (
         <TransactionItem
           idx={i}
           id={transaction.id}
-          date={transaction.date}
+          date={transaction.harga}
           transactionStore={props.transactionStore}  
         />
-      ))}  */}
+      ))} 
 
       {/* {props.transactionStore.props.transaction((transaction, i) =>  (
         <TransactionItem

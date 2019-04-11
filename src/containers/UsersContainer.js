@@ -3,11 +3,6 @@ import axios from 'axios'
 import UserList from '../components/users/UserList'
 import '../components/users/Users.scss';
 
-<<<<<<< HEAD
-=======
-// test PR
-
->>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
 class LoginSplashScreen extends Component {
 
   state = {

@@ -1,7 +1,8 @@
 import { Container } from 'unstated'
+import axios from 'axios'
 
 const initialState = {
-  list: [],
+  transaction: []
   // selectedProduct: {},
   // isAdded: false,
   // isCalcNumericCartOpen: false,
@@ -39,14 +40,23 @@ class TransactionContainer extends Container {
   }
 
   fetchTransaction() {
-    // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
-    axios.get(`http://dev.wakwaw.com/agogo/wp-json/wp/v2/produk?_embed`)
+    axios.get(`http://dev.wakwaw.com/agogo/wp-json/wp/v2/users`)
     .then(res => {
-      const transactions = res.data.data.children.map(obj => obj.data);
-      this.setState({transactions}
-      );
+      const transaction = res.data;
+      this.setState({transaction});
+      sessionStorage.setItem('products', JSON.stringify(transaction));
     })
   }
+  // checkTransaction(idx, id, date) {
+  //   this.setState(
+  //     {
+  //       transaction: {
+  //         idx: idx,
+  //         id: id,
+  //         date: date
+  //       }
+  //     });
+  // }
 
   // deleteSelectedTransaction= () => {
   //   console.log("CLEAR TRX")

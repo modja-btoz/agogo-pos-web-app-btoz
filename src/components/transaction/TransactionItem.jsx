@@ -8,19 +8,17 @@ class TransactionItem extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    this.props.transactionStore.fetchTransaction()
-  }
-
   render() {
     // console.log(this.state.products)
     // this.props.productStore.productsFiltered()
 
     return (
-      <Container className="products pt-4 pl-0">
+      <Container className="transaction pt-4 pl-0">
 
-          <TransactionItems transactionStore={this.props.transactionStore}/>
-
+          <TransactionItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
+          {/* id={"id"+this.props.id}
+          date={"id"+this.props.date}  */}
+          
       </Container>
     );
   }

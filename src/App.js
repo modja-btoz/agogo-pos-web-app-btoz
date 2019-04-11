@@ -8,6 +8,7 @@ import UsersContainer from './containers/UsersContainer';
 import Login from './components/logins/Login';
 import InitialBalance from './components/balances/InitialBalance';
 import Cashier from './components/cashier/Cashier';
+import TransactionList from './components/transaction/TransactionList';
 
 import Fullscreen from "react-full-screen";
 
@@ -167,6 +168,7 @@ class App extends Component {
                         modalStore={this.props.modalStore} 
                         cartStore={this.props.cartStore} 
                         productStore={this.props.productStore} 
+                        transactionStore={this.props.transactionStore}
                         activePath={props.match.path} />
                     : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
                   )
