@@ -7,7 +7,9 @@ import decode from 'jwt-decode';
 import UsersContainer from './containers/UsersContainer';
 import Login from './components/logins/Login';
 import InitialBalance from './components/balances/InitialBalance';
+import Selection from './components/selection/Selection'
 import Cashier from './components/cashier/Cashier';
+import Booking from './components/booking/Booking'
 
 import Fullscreen from "react-full-screen";
 
@@ -102,7 +104,7 @@ class App extends Component {
 
           {this.state.activePath === '/initial-balance' &&
           <a href="#" className="btn-logout" onClick={() => this.props.modalStore.toggleModal('saldo', '')} >
-            <i class="fas fa-power-off"></i>
+            <i className="fas fa-power-off"></i>
           </a>
           }
         </footer>
@@ -157,6 +159,20 @@ class App extends Component {
                 }}
               />
 
+              <Route path='/selection'
+                render={(props) => {
+                  this.activePath(props);
+                  return(
+                    isLoggedIn() === true 
+                    ? <Selection {...props}
+                      rootStore={this.props.rootStore}
+                      modalStore={this.props.modalStore}
+                      activePath={props.match.path} />
+                    : <Redirect to={{ pathname: '/', state: {from: props.location} }} />
+                  )
+                }}
+              />
+
               <Route path='/cashier'
                 render={(props) => {
                   this.activePath(props);
@@ -169,6 +185,22 @@ class App extends Component {
                         productStore={this.props.productStore} 
                         activePath={props.match.path} />
                     : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+                  )
+                }}
+              />
+
+              <Route path='/booking'
+                render={(props) => {
+                  this.activePath(props);
+                  return (
+                    isLoggedIn() === true
+                      ? <Booking {...props}
+                        rootStore={this.props.rootStore}
+                        modalStore={this.props.modalStore}
+                        cartStore={this.props.cartStore}
+                        productStore={this.props.productStore}
+                        activePath={props.match.path} />
+                      : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
                   )
                 }}
               />
