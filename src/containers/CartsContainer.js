@@ -13,11 +13,16 @@ const initialState = {
   totalAmount: 0,
   discountAmount: 0,
   discountPercentage: 0,
-  expenseAmount: 0,
+  expenseAmount: 5,
   grandTotalAmount: 0,
   grandTotalAmountDiscount: 0,
   isCashierOverlayShow: false,
   isPaymentCheckoutShow: false,
+  isOrderBookingShow: false,
+  valueInputPayment: '',
+  activeInputPayment: '',
+  activeInputBooking: '',
+  valueInputBooking: '',
   isTransactionListShow: false,
   isReservationListShow: false,
   isRefundShow: false,
@@ -268,6 +273,11 @@ class CartsContainer extends Container {
     })
   }
 
+  sumChangeAdditionalCost() {
+    let totalAdditional = parseInt(this.state.valueInputBooking["additionalCost"])
+    console.log("sumChangeAdditionalCost", totalAdditional)
+  }
+
 
   // ===============
   // KEYBOARD ACTION
@@ -307,7 +317,6 @@ class CartsContainer extends Container {
   
   // /END KEYBOARD ACTION
 
-
   toggleCashierOverlayShow = () => {
     this.setState({
       isCashierOverlayShow: !this.state.isCashierOverlayShow
@@ -330,6 +339,20 @@ class CartsContainer extends Container {
       isTransactionListShow: false,
       isRefundShow: false,
       isPaymentCheckoutShow: !this.state.isPaymentCheckoutShow
+    })
+  }
+
+  // =============
+  // ORDER ACTIONS
+  // =============
+  orderBooking = () => {
+    console.log("orderBooking")
+    this.toggleOrderBookingShow()
+  }
+
+  toggleOrderBookingShow = () => {
+    this.setState({
+      isOrderBookingShow: !this.state.isOrderBookingShow
     })
   }
 
@@ -361,6 +384,39 @@ class CartsContainer extends Container {
     );
     console.log("Input changed", valueInputPayment);
   };
+
+  onChangeBooking = valueInputBooking => {
+    this.setState({
+      valueInputBooking: valueInputBooking
+    },
+      () => {
+        this.sumGrandTotalAmount()
+      }
+    )
+    console.log("Input change", valueInputBooking)
+  }
+
+  setActiveInputBooking = (event) => {
+    document.getElementById(event.target.id).focus();
+    this.setState({
+      activeInputBooking: event.target.value
+    },
+      () => {
+        console.log("setActiveInput", this.state.activeInputBooking)
+      }
+    )
+  }
+
+  setInputBooking = (event) => {
+    document.getElementById(event.target.id).focus();
+    this.setState({
+      valueInputBooking: event.target.value
+    },
+      () => {
+        console.log("valueInputBooking", this.state.valueInputBooking)
+      }
+    )
+  }
 
   onKeyPressPayment = (button) => {
     console.log("Button pressed", button);

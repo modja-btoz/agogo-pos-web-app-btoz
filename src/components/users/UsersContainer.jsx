@@ -51,7 +51,19 @@ onChangeAll = (input) => {
         </div>
 
         <input id="input1" onFocus={this.setActiveInput} value={this.state.input['input1'] || ""}/>
+<<<<<<< HEAD
         <input id="input2" onFocus={this.setActiveInput} value={this.state.input['input2'] || ""}/>
+=======
+<<<<<<< HEAD
+      <input id="input2" onFocus={this.setActiveInput} value={this.state.input['input2'] || ""}/>
+=======
+<<<<<<< HEAD
+        <input id="input2" onFocus={this.setActiveInput} value={this.state.input['input2'] || ""}/>
+=======
+      <input id="input2" onFocus={this.setActiveInput} value={this.state.input['input2'] || ""}/>
+>>>>>>> 900f054379670bed1524833a7ac06c01b1e3dd3c
+>>>>>>> dev
+>>>>>>> ea71f29c5a72c855cc7eae9cc26407466cc9918e
 
       <Keyboard
         ref={r => this.keyboard = r}
