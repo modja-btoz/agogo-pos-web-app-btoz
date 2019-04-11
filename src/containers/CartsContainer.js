@@ -13,8 +13,7 @@ const initialState = {
   totalAmount: 0,
   discountAmount: 0,
   discountPercentage: 0,
-  additionalCost: 0,
-  expenseAmount: 0,
+  expenseAmount: 5,
   grandTotalAmount: 0,
   grandTotalAmountDiscount: 0,
   isCashierOverlayShow: false,
@@ -259,14 +258,6 @@ class CartsContainer extends Container {
     return discount
   }
 
-  additionalCost() {
-    let cost = this.state.valueInputBooking
-    if (cost === cost) {
-      cost = cost;
-    }
-    return cost
-  }
-
   sumChangePayment() {
     let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"] )
     console.log("sumChangePayment", totalPayment)
@@ -280,6 +271,11 @@ class CartsContainer extends Container {
     this.setState({
       changePayment: changePayment
     })
+  }
+
+  sumChangeAdditionalCost() {
+    let totalAdditional = parseInt(this.state.valueInputBooking["additionalCost"])
+    console.log("sumChangeAdditionalCost", totalAdditional)
   }
 
 
@@ -394,7 +390,7 @@ class CartsContainer extends Container {
       valueInputBooking: valueInputBooking
     },
       () => {
-        this.additionalCost()
+        this.sumGrandTotalAmount()
       }
     )
     console.log("Input change", valueInputBooking)
