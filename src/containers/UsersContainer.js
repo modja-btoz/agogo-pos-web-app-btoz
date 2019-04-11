@@ -8,7 +8,7 @@ class LoginSplashScreen extends Component {
   state = {
     users: []
   }
-
+  render = this.render.bind(this);
   componentDidMount() {
     axios.get(`http://dev.wakwaw.com/agogo/wp-json/wp/v2/users`)
     .then(res => {
@@ -17,8 +17,6 @@ class LoginSplashScreen extends Component {
       sessionStorage.setItem('users', JSON.stringify(users));
     })
   }
-
-  
 
   render() {
     // console.log(this.state.users)

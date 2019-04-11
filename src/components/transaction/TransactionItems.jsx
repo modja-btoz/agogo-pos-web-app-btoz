@@ -1,32 +1,27 @@
-import React from 'react'
+import React, { Component } from 'react'
 import TransactionItem from './TransactionItem';
 
-const TransactionItems = (props) => {
-  
-  return (
-    <tbody>
-      <li><a href="#">AAA</a></li>
-      {props.transactionStore.state.transaction.map((transaction, i) => (
-        <TransactionItem
-          idx={i}
-          id={transaction.id}
-          date={transaction.harga}
-          transactionStore={props.transactionStore}  
-        />
-      ))} 
+class TransactionItems extends Component {
 
-      {/* {props.transactionStore.props.transaction((transaction, i) =>  (
-        <TransactionItem
-          idx={i}
-          id={transaction.title}
-          date={transaction.date}
-          transactions={props.transactions}
-          transactionStore={props.transactionStore}  
-        />
-      ))}  */}
+  constructor(props){
+    super(props)
+  }
 
-    </tbody>
-  )
+  componentDidMount(){
+    console.log("ETSTTTTTT", this.props.transactionStore)
+  }
+
+  render(){
+
+    return (
+      <div>
+        <li><a href="#">AAA</a></li>
+        {this.props.transactionStore.state.transactionStore.map((transaction, i) => 
+          <li>{transaction.name}</li>
+        )}
+      </div>
+    )
+  }
 }
 
 export default TransactionItems

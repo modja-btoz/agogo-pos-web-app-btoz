@@ -20,6 +20,10 @@ class Kasir extends Component {
   constructor(props){
     super(props)
   }
+  componentDidMount(){
+    this.props.transactionStore.fetchTransaction()
+    console.log("CASHIER ~~~~~~~~~~~~~ ", this.props.transactionStore)
+  }
 
   render() {
     return (
