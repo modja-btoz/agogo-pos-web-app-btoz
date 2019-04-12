@@ -64,7 +64,12 @@ const isLoggedIn = () => {
 //   }} />
 // );
 
+
 class App extends Component {
+
+  // componentDidMount(){
+  //   console.log("TES ~~~~~~~~~~~~~ ", this.props.transactionStore)
+  // }
 
   state = {
     activePath: '/'
@@ -183,6 +188,7 @@ class App extends Component {
                         modalStore={this.props.modalStore} 
                         cartStore={this.props.cartStore} 
                         productStore={this.props.productStore} 
+                        transactionStore={this.props.transactionStore} 
                         activePath={props.match.path} />
                     : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
                   )

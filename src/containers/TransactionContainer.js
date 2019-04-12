@@ -14,9 +14,9 @@ class TransactionContainer extends Container {
 
 
   fetchTransaction() {
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:8000/api/users`)
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/users`)
     .then(res => {
-      const transaction = res.data[0];
+      const transaction = res.data;
       this.setState({ transactionStore: transaction });
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
     })
