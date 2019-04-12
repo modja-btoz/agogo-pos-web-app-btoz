@@ -12,6 +12,7 @@ import Cashier from './components/cashier/Cashier';
 import Booking from './components/booking/Booking'
 
 import Fullscreen from "react-full-screen";
+import Production from './components/production/Production';
 
 
 const isTokenExpired = (token) => {
@@ -201,6 +202,22 @@ class App extends Component {
                         productStore={this.props.productStore}
                         activePath={props.match.path} />
                       : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+                  )
+                }}
+              />
+
+              <Route path='/production'
+                render={(props) => {
+                  this.activePath(props);
+                  return (
+                    isLoggedIn() === true
+                      ? <Production {...props}
+                        rootStore={this.props.rootStore}
+                        modalStore={this.props.modalStore}
+                        cartStore={this.props.cartStore}
+                        productStore={this.props.productStore}
+                        activePath={this.props.activePath} />
+                      : <Redirect to={{pathname: '/', state: { from: props.location } }} />
                   )
                 }}
               />

@@ -1,0 +1,114 @@
+
+.body-left {
+    text-align: center;
+}
+
+.date {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.change-date {
+    margin-top: 5px;
+    background-color: orange;
+    border-radius: 20px;
+    width: 150px;
+    text-align: center;
+    margin-left: 60px; 
+}
+
+.view-img {
+    margin-top: 10px;
+    width: 250px;
+    height: 215px;
+    background-color: orange;
+    margin-left: 15px;
+}
+
+.select-view-product {
+    font-weight: bold;
+    font-style: italic;
+    margin: 10px;
+}
+
+.body-right {
+    // background-color: blueviolet;
+    padding-left: 35px;
+}
+
+.add-product {
+    color: brown;
+}
+
+.production {
+    padding-right: 100px;
+    text-align: left;
+    color: black;
+}
+
+.total-production {
+    padding-right: 100px;
+    text-align: left;
+    color: black;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.product-total {
+    text-align: right;
+    padding-left: 40px;
+}
+
+.calc-product-total {
+    text-align: right;
+    padding-left: 10px;
+}
+
+.edit {
+    border-radius: 1px;
+    color: gray;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+hr {
+    margin: 0px;
+    color: black;
+    width: 230px;
+}
+
+.production-store {
+    padding-right: 100px;
+    text-align: left;
+    color: black;
+}
+
+.product-total-store {
+    text-align: right;
+    padding-left: 85px;
+}
+
+.total-sales {
+    padding-right: 100px;
+    text-align: left;
+    color: black;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.broken-production {
+    padding-right: 100px;
+    text-align: left;
+    color: black;
+}
+
+.product-total-broken {
+    text-align: right;
+    padding-left: 77px;
+}
+
+.calc-product-others {
+    text-align: right;
+    padding-left: 10px;
+}
+
