@@ -12,10 +12,11 @@ class TransactionContainer extends Container {
     this.state = initialState;
   }
 
+
   fetchTransaction() {
-    axios.get(`http://dev.wakwaw.com/agogo/wp-json/wp/v2/users`)
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:8000/api/users`)
     .then(res => {
-      const transaction = res.data;
+      const transaction = res.data[0];
       this.setState({ transactionStore: transaction });
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
     })
