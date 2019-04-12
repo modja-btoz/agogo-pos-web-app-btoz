@@ -11,11 +11,30 @@ import PaymentCheckout from '../payments/PaymentCheckout'
 
 import './Cashier.scss';
 import './SidebarComponentsWrapper.scss';
+import TransactionList from '../transaction/TransactionList';
+import ReservationList from '../reservation/ReservationList';
+import Refund from '../payments/Refund';
 
 class Kasir extends Component {
 
   constructor(props){
     super(props)
+  }
+  state = {
+    userLoggedIn: []
+  }
+  
+  componentDidMount(){
+    this.props.transactionStore.fetchTransaction()
+    console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore)
+    console.log('Userrrrr', sessionStorage)
+    console.log('Userrrrr', this.state.userLoggedIn)
+
+    const user = JSON.stringify(sessionStorage.getItem('usernow'))
+    this.setState({userLoggedIn: user});
+
+    console.log('UserrrrrL', this.state.userLoggedIn)
+
   }
 
   render() {
@@ -27,10 +46,10 @@ class Kasir extends Component {
             <Row className="cart-header no-gutters">
               <Col xs="12">
                 <Navbar expand="md">
-                  <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Hapsa</NavbarBrand>
+                  <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Welcome {this.state.userLoggedIn}</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
-                      <NavLink href="/pemesanan">Order #TK-1800000014</NavLink>
+                      <NavLink href="/pemesanan">Order #TK-1800000015</NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>
@@ -42,7 +61,7 @@ class Kasir extends Component {
 
             <Row className="cart-list no-gutters">
               <Col xs="12">
-                <Cart cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <Cart cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore} />
 
                 {this.props.cartStore.state.isCalcNumericCartOpen && (
                 <div className="calc-container">
@@ -68,8 +87,29 @@ class Kasir extends Component {
             
             {this.props.cartStore.state.isPaymentCheckoutShow &&
               <aside className="SidebarComponentsWrapper">
-                {/* PAYEMNT COMPONENTS */}
+                {/* PAYMENT COMPONENTS */}
                 <PaymentCheckout cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+              </aside>
+            }
+
+            {this.props.cartStore.state.isTransactionListShow &&
+              <aside className="SidebarComponentsWrapper">
+                {/* TRANSACTION COMPONENTS */}
+                <TransactionList transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} />
+              </aside>
+            }
+
+            {this.props.cartStore.state.isReservationListShow &&
+              <aside className="SidebarComponentsWrapper">
+                {/* RESERVATION COMPONENTS */}
+                <ReservationList cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+              </aside>
+            }
+
+            {this.props.cartStore.state.isRefundShow &&
+              <aside className="SidebarComponentsWrapper">
+                {/* REFUND COMPONENTS */}
+                <Refund cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 

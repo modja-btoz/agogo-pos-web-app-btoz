@@ -10,6 +10,7 @@ import RootContainer from './containers/RootContainer'
 import ModalsContainer from './containers/ModalsContainer'
 import CartsContainer from './containers/CartsContainer'
 import ProductsContainer from './containers/ProductsContainer'
+import TransactionContainer from './containers/TransactionContainer'
 
 import Modals from './components/modals/Modals';
 import App from './App';
@@ -19,8 +20,8 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <Provider>
 
-    <Subscribe to={[RootContainer, ModalsContainer, CartsContainer, ProductsContainer]}>
-      {(rootStore, modalStore, cartStore, productStore) => (
+    <Subscribe to={[RootContainer, ModalsContainer, CartsContainer, ProductsContainer, TransactionContainer]}>
+      {(rootStore, modalStore, cartStore, productStore, transactionStore) => (
         <React.Fragment>
           
           <Modals 
@@ -41,6 +42,7 @@ ReactDOM.render(
             modalStore={modalStore} 
             cartStore={cartStore}
             productStore={productStore}
+            transactionStore={transactionStore}
           />
 
         </React.Fragment>
