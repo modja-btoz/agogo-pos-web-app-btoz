@@ -14,10 +14,13 @@ class Selection extends Component {
                 <Row>
                     <Col sm="12" md={{ size: 6, offset: 3}} className="container-selection">
                         <Link to={'/initial-balance'}>
-                            <button onClick={() => console.log("Button pressed")} className="btn btn-size">KASIR</button>
+                            <button className="btn btn-size">KASIR</button>
                         </Link>
                         <Link to={'/booking'}>
                             <button className="btn btn-size">PEMESANAN</button>
+                        </Link>
+                        <Link to={'/production'}>
+                            <button className="btn btn-size">PRODUKSI</button>
                         </Link>
                     </Col>
                 </Row>
