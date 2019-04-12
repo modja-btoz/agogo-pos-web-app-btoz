@@ -13,7 +13,7 @@ const initialState = {
   totalAmount: 0,
   discountAmount: 0,
   discountPercentage: 0,
-  expenseAmount: 5,
+  expenseAmount: 0,
   grandTotalAmount: 0,
   grandTotalAmountDiscount: 0,
   isCashierOverlayShow: false,

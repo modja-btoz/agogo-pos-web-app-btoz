@@ -20,6 +20,22 @@ class Kasir extends Component {
   constructor(props){
     super(props)
   }
+  state = {
+    userLoggedIn: []
+  }
+  
+  componentDidMount(){
+    this.props.transactionStore.fetchTransaction()
+    console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore)
+    console.log('Userrrrr', sessionStorage)
+    console.log('Userrrrr', this.state.userLoggedIn)
+
+    const user = JSON.stringify(sessionStorage.getItem('usernow'))
+    this.setState({userLoggedIn: user});
+
+    console.log('UserrrrrL', this.state.userLoggedIn)
+
+  }
 
   render() {
     return (
@@ -30,7 +46,7 @@ class Kasir extends Component {
             <Row className="cart-header no-gutters">
               <Col xs="12">
                 <Navbar expand="md">
-                  <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Hapsa</NavbarBrand>
+                  <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Welcome {this.state.userLoggedIn}</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
                       <NavLink href="/pemesanan">Order #TK-1800000015</NavLink>
@@ -45,7 +61,7 @@ class Kasir extends Component {
 
             <Row className="cart-list no-gutters">
               <Col xs="12">
-                <Cart cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <Cart cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore} />
 
                 {this.props.cartStore.state.isCalcNumericCartOpen && (
                 <div className="calc-container">
@@ -79,7 +95,7 @@ class Kasir extends Component {
             {this.props.cartStore.state.isTransactionListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* TRANSACTION COMPONENTS */}
-                <TransactionList cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <TransactionList transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} />
               </aside>
             }
 

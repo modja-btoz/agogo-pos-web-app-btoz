@@ -28,9 +28,8 @@ class Login extends Component {
   };
 
   componentDidMount(){
-
     if(sessionStorage.getItem('users')){
-      // console.log('User logged in')
+      console.log('User logged in', sessionStorage)
     }else{
       this.state({ redirect: true })
     }
@@ -44,10 +43,10 @@ class Login extends Component {
         user: this.state.users[user_index]
       },
       () => {
-        // console.log(this.state.user)
+        console.log(this.state.user)
         this.setState({
-          username: this.state.user.slug,
-          userAvatar: this.state.user.avatar_urls['96']
+          username: this.state.user.username,
+          // userAvatar: this.state.user.avatar_urls['96']
         },
         () => {
           // console.log("USERNAME")
@@ -80,11 +79,13 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    axios.post(`http://dev.wakwaw.com/agogo/wp-json/jwt-auth/v1/token`, userData )
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/auth/login`, userData )
       .then(res => {
-        // console.log(res);
-        // console.log(res.data);
+        console.log("UI ", res);
+        console.log("UO ", res.data);
+        console.log('Cek', sessionStorage)
         sessionStorage.setItem('token', res.data.token);
+        sessionStorage.setItem('usernow', res.data.username);
         this.setState({ redirect: true })
       })
   }
@@ -134,8 +135,8 @@ class Login extends Component {
                     <UserCard 
                       user={this.state.user} 
                       userID={this.state.user.id} 
-                      userName={this.state.user.name} 
-                      userAvatar={this.state.userAvatar} 
+                      userName={this.state.user.username} 
+                      // userAvatar={this.state.userAvatar} 
                       colorTitle="text-black" 
                       colorSubTitle="text-red" 
                     />

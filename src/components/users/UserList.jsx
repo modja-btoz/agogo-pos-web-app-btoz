@@ -1,6 +1,7 @@
 import React from 'react'
 import UserCard from './UserCard';
 
+
 const UserList = (props) => {
   return (
     <div className="UserList row justify-content-center">
@@ -12,8 +13,8 @@ const UserList = (props) => {
               userIndex = {index}
               user={user} 
               userID={user.id} 
-              userName={user.name} 
-              userAvatar={user.avatar_urls['96']} 
+              userName={user.username} 
+              // userAvatar={user.avatar_urls['96']} 
               colorTitle="text-white" colorSubTitle="text-orange" 
             />
           </div>
