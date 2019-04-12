@@ -50,8 +50,8 @@ onChangeAll = (input) => {
           < UserList users={this.state.users} />
         </div>
 
-      <input id="input1" onFocus={this.setActiveInput} value={this.state.input['input1'] || ""}/>
-      <input id="input2" onFocus={this.setActiveInput} value={this.state.input['input2'] || ""}/>
+        <input id="input1" onFocus={this.setActiveInput} value={this.state.input['input1'] || ""}/>
+        <input id="input2" onFocus={this.setActiveInput} value={this.state.input['input2'] || ""}/>
 
       <Keyboard
         ref={r => this.keyboard = r}

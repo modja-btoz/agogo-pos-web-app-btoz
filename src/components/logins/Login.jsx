@@ -100,7 +100,7 @@ class Login extends Component {
   render() {
 
     if(this.state.redirect || sessionStorage.getItem('token')){
-      return (<Redirect to={'/initial-balance'} />);
+      return (<Redirect to={'/selection'} />);
     }
 
     return (
