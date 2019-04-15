@@ -14,7 +14,7 @@ class TransactionItems extends Component {
   render(){
 
     return (
-      <div>
+      <div className="container-transaction">
         {this.props.transactionStore.state.transactionStore.map((transaction, i) => 
           <li>{transaction.username}</li>
         )}
