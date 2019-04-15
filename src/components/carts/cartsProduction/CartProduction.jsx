@@ -13,7 +13,7 @@ class CartProduct extends React.Component {
             <Container className="cart mt-4 pt-5 pr-0 pl-0">
                 <Row>
                     <Col xs="6" className="body-left">
-                        <div className="date">Posisi per <span>Sabtu, 27 Oct 2018</span></div>
+                        <div className="date">Posisi per <span className="date-update">Sabtu, 27 Oct 2018</span></div>
                         <div className="change-date"><strong>Ubah Tanggal</strong></div>
                         <div className="view-img">
                             <img></img>
@@ -50,6 +50,11 @@ class CartProduct extends React.Component {
 
                         <ProductionStore/>
                         <OthersProduction/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Input className="note-production" type="textarea" name="catatan" placeholder="CATATAN" rows="3"></Input>
                     </Col>
                 </Row>
 
