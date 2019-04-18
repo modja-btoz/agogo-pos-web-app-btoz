@@ -143,8 +143,24 @@
 .container-transaction {
   background-color: white;
   color: black;
-  border-radius: 5px;
+  border-radius: 8px;
   height: 300px;
   margin-top: 0px;
 }
+
+.list-item {
+  background-color: white;
+  height: 300px;
+  color: black;
+  border-radius: 8px;
+}
+
+.borderline {
+  font-weight: bold;
+  color: black;
+}
+// li {
+//   // color: green;
+//   // text-decoration-style: none !important;
+// }
 

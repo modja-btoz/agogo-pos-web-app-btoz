@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, NavLink, Button, Input, Table } from 'reactstrap';
+import FooterNavRight from '../navigations/FooterNavRight';
 
 const ReservationList = (props) => {
   
@@ -21,17 +22,26 @@ const ReservationList = (props) => {
             <h7 className="mb-0">Tanggal</h7>
           </Col>
         </Row>
-        <hr/>
 
-        <Row className="SidebarBody">
-        <Table>
+        <Row className="SidebarBody list-item">
+        <Col>
           <tr>
             <td scope="row" className="transaction-name">TR#000001</td>
+          </tr>
+        </Col>
+        <Col>
+          <tr>
             <td className="text-left transaction-date">Tanggal Hari Ini</td>
           </tr>
-        </Table>
+        </Col>
         </Row>
+        <hr/>
 
+      <Row className="product-nav no-gutters">
+        <Col xs="12">
+          <FooterNavRight cartStore={props.cartStore} />
+        </Col>
+      </Row>
       </Container>
     </Row>
 

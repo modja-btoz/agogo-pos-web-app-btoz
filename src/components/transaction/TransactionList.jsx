@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Table, NavLink, Container } from 'reactstrap';
+import { Table, NavLink, Container, Row, Col } from 'reactstrap';
 import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 
 import TransactionHeader from './TransactionHeader';
 import TransactionItems from './TransactionItems';
+import FooterNavRight from '../navigations/FooterNavRight';
 
 
 class TransactionList extends Component {
@@ -59,6 +60,12 @@ class TransactionList extends Component {
                 </Table>
               </div>
             </ShadowScrollbars>
+
+            <Row className="product-nav no-gutters">
+              <Col xs="12">
+                <FooterNavRight cartStore={this.props.cartStore}/>
+              </Col>
+            </Row>
         </Container>
       );
     }
