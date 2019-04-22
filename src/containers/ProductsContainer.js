@@ -16,7 +16,7 @@ class ProductsContainer extends Container {
 
   fetchProducts() {
     // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
-    axios.get(`http://dev.wakwaw.com/agogo/wp-json/wp/v2/produk?_embed`)
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
     .then(res => {
       const products = res.data;
       this.setState({ 
@@ -69,7 +69,7 @@ class ProductsContainer extends Container {
     let filterKeyword = this.state.filterKeyword
 
     let productsFiltered =  products.filter(function(product) {
-      return product.kategori[0] === filterKeyword;
+      return product.category_id[0] === filterKeyword;
     });
 
     if(filterKeyword === "Semua Item"){

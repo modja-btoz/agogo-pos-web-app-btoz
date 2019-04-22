@@ -55,7 +55,7 @@ class TransactionList extends Component {
             >
               <div className="scroll-wrapper">
                 <Table borderless striped className="mb-0">
-                  <TransactionItems transactionStore={this.props.transactionStore}/>
+                  <TransactionItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
                 </Table>
               </div>
             </ShadowScrollbars>

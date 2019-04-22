@@ -13,11 +13,11 @@ const ProductItems = (props) => {
         <ProductItem 
           productIndex = {index}
           productID={product.id} 
-          productName={product.title.rendered} 
+          productName={product.name} 
           productQty={1} 
-          productPrice={product.harga}
+          productPrice={product.price}
           // productImage={product._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url} 
-          productImage={product.gambar.guid} 
+          productImage="http://dev.wakwaw.com/agogo/wp-content/uploads/2018/11/donut.jpeg" 
           colorTitle="text-white"
           products={props.products}
           cartStore={props.cartStore} 

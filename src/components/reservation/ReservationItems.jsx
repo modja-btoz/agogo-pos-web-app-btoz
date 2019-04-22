@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
-import TransactionItem from './TransactionItem';
+import ReservationItem from './Reservationtem';
 
-class TransactionItems extends Component {
+class ReservationItems extends Component {
 
   constructor(props){
     super(props)
@@ -21,7 +21,7 @@ class TransactionItems extends Component {
 
       { this.props.transactionStore.state.transactionStore.map((transaction, i) => 
       <Col xs="7">
-        <TransactionItem 
+        <ReservationItem 
           trxIndex={i}
           trxID={transaction.id} 
           trxName={transaction.invoice}
@@ -46,4 +46,4 @@ class TransactionItems extends Component {
   }
 }
 
-export default TransactionItems
+export default ReservationItems

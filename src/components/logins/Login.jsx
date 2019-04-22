@@ -21,7 +21,7 @@ class Login extends Component {
   state = {
     users: [],
     user: [],
-    userAvatar: '',
+    userAvatar: 'https://cdn4.vectorstock.com/i/1000x1000/81/08/cook-chef-logo-or-label-restaurant-concept-vector-20578108.jpg',
     password: '',
     username: '',
     redirect: false
@@ -49,6 +49,7 @@ class Login extends Component {
           // userAvatar: this.state.user.avatar_urls['96']
         },
         () => {
+          sessionStorage.setItem('usernow', JSON.stringify(this.state.user));
           // console.log("USERNAME")
           // console.log(this.state.username)
           // console.log(this.state.userAvatar)
@@ -85,7 +86,6 @@ class Login extends Component {
         console.log("UO ", res.data);
         console.log('Cek', sessionStorage)
         sessionStorage.setItem('token', res.data.token);
-        sessionStorage.setItem('usernow', res.data.username);
         this.setState({ redirect: true })
       })
   }
@@ -136,7 +136,7 @@ class Login extends Component {
                       user={this.state.user} 
                       userID={this.state.user.id} 
                       userName={this.state.user.username} 
-                      // userAvatar={this.state.userAvatar} 
+                      userAvatar={this.state.userAvatar} 
                       colorTitle="text-black" 
                       colorSubTitle="text-red" 
                     />
