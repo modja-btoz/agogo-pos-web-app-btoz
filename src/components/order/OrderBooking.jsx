@@ -49,8 +49,8 @@ const OrderBooking = (props) => {
 
                             <Form>
                                 <FormGroup row>
-                                    <Label sm={2} className="control-label">BIAYA TAMBAHAN</Label>
-                                    <Col sm={10}>
+                                    <Label sm={3} className="control-label">BIAYA TAMBAHAN</Label>
+                                    <Col sm={9}>
                                         <Input className="input-lg size-input" placeholder="Rp0" 
                                                 
                                                 onChange={props.cartStore.setActiveInputBooking}
@@ -61,34 +61,34 @@ const OrderBooking = (props) => {
                                 </FormGroup>
 
                                 <FormGroup row>
-                                    <Label sm={2} className="control-label">DISKON</Label>
+                                    <Label sm={3} className="control-label">DISKON</Label>
                                     <Col sm={7}>
                                         <Input className="input-lg" placeholder="0%"></Input>
                                     </Col>
-                                    <Col sm={3}>
+                                    <Col sm={2}>
                                         <FormGroup check>
                                             <Label check>
                                                 <Input className="radio sm" size="sm" type="radio" name="radio1" /> {' '} %
-                                        </Label>
+                                            </Label>
                                         </FormGroup>
                                         <FormGroup check>
                                             <Label check>
                                                 <Input className="radio sm" size="sm" type="radio" name="radio1" /> {' '} Rp
-                                        </Label>
+                                            </Label>
                                         </FormGroup>
                                     </Col>
                                 </FormGroup>
 
                                 <FormGroup row>
-                                    <Label sm={2} className="control-label">UANG MUKA</Label>
-                                    <Col sm={10}>
+                                    <Label sm={3} className="control-label">UANG MUKA</Label>
+                                    <Col sm={9}>
                                         <Input className="input-lg" placeholder="Rp0"></Input>
                                     </Col>
                                 </FormGroup>
 
                                 <FormGroup row>
-                                    <Label sm={2} className="approval">APPROVAL</Label>
-                                    <Col sm={7}>
+                                    <Label sm={3} className="approval">APPROVAL</Label>
+                                    <Col sm={6}>
                                         <Input className="input-lg approval" ></Input>
                                     </Col>
                                     <Col sm={3}>
@@ -96,11 +96,8 @@ const OrderBooking = (props) => {
                                     </Col>
                                 </FormGroup>
                             </Form>
-
                         </Col>
-
                     </Row>
-
                 </Container>
             </Row>
 

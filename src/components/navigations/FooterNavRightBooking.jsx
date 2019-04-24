@@ -7,13 +7,13 @@ const FooterNavRightBooking = (props) => {
         <Navbar expand="md">
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                    <NavLink href="/Hapus"><i class="fas fa-trash-alt"></i><br />Hapus</NavLink>
+                    <NavLink active={props.cartStore.state.isDeleteBookingShow} onClick={() => props.cartStore.deleteBooking()}><i class="fas fa-trash-alt"></i><br />Hapus</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/Edit"><i class="fas fa-pen"></i><br />Edit</NavLink>
+                    <NavLink active={props.cartStore.state.isEditBookingShow} onClick={() => props.cartStore.editBooking()}><i class="fas fa-pen"></i><br />Edit</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/Ambil"><i class="fas fa-check"></i><br />Ambil</NavLink>
+                    <NavLink active={props.cartStore.state.isTakeBookingShow} onClick={() => props.cartStore.takeBooking()}><i class="fas fa-check"></i><br />Ambil</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink active={props.cartStore.state.isOrderBookingShow} onClick={() => props.cartStore.orderBooking()}><i class="fas fa-edit"></i><br />Order</NavLink>

@@ -19,6 +19,9 @@ const initialState = {
   isCashierOverlayShow: false,
   isPaymentCheckoutShow: false,
   isOrderBookingShow: false,
+  isDeleteBookingShow: false,
+  isEditBookingShow: false,
+  isTakeBookingShow: false,
   valueInputPayment: '',
   activeInputPayment: '',
   activeInputBooking: '',
@@ -352,7 +355,55 @@ class CartsContainer extends Container {
 
   toggleOrderBookingShow = () => {
     this.setState({
+      isDeleteBookingShow: false,
+      isEditBookingShow: false,
+      isTakeBookingShow: false,
       isOrderBookingShow: !this.state.isOrderBookingShow
+    })
+  }
+
+  // ===================
+  // SHOW DELETE ACTIONS
+  // ===================
+  deleteBooking = () => {
+    console.log("deleteBooking")
+    this.toggleDeleteBookingShow()
+  }
+
+  toggleDeleteBookingShow = () => {
+    this.setState({
+      isOrderBookingShow: false,
+      isDeleteBookingShow: false,
+      isTakeBookingShow: false,
+      isDeleteBookingShow: !this.state.isDeleteBookingShow
+    })
+  }
+
+  editBooking = () => {
+    console.log("editBooking");
+    this.toggleEditBookingShow()
+  }
+
+  toggleEditBookingShow = () => {
+    this.setState({
+      isOrderBookingShow: false,
+      isDeleteBookingShow: false,
+      isTakeBookingShow: false,
+      isEditBookingShow: !this.state.isEditBookingShow
+    })
+  }
+
+  takeBooking = () => {
+    console.log("takeBooking");
+    this.toggleTakeBookingShow()
+  }
+
+  toggleTakeBookingShow = () => {
+    this.setState({
+      isOrderBookingShow: false,
+      isDeleteBookingShow: false,
+      isEditBookingShow: false,
+      isTakeBookingShow: !this.state.isTakeBookingShow
     })
   }
 
