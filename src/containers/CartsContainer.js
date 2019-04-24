@@ -83,7 +83,7 @@ class CartsContainer extends Container {
     let index = this.state.items.findIndex( x => x.id === id);
 
     if (index === -1 || id === index){
-      // console.log("ADD NEW")
+      console.log("ADD NEW", index)
       this.setState({
         items: [...this.state.items, selectedProduct]
       },
@@ -139,29 +139,47 @@ class CartsContainer extends Container {
     );
   }
 
-  addSelectedTransaction(id, idx) {
+//   addSelectedTransaction(id, idx) {
+//   axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + id)
+//   .then(res => {
+//     const transaction = res.data;
+//     transaction.map((trx) =>
+//       this.setState (
+//         {
+//           selectedProduct: {
+//           idx: idx,
+//           id: trx.product_id,
+//           name: trx.product.name,
+//           qty: trx.qty,
+//           price: trx.price
+//         }
+//       },
+//       () => {
+//         this.onAddToCart(this.state.selectedProduct);
+//         console.log(this.state.selectedProduct)
+//         console.log(this.state.items)
+//       }
+//     )
+//   )
+//   })
+// }
+
+addSelectedTransaction(id, idx) {
+  this.setState({items: []})
   axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + id)
   .then(res => {
     const transaction = res.data;
-    transaction.map((trx) =>
-      this.setState (
-        {
-          selectedProduct: {
-          idx: idx,
-          id: trx.product_id,
-          name: trx.product.name,
-          qty: trx.qty,
-          price: trx.price
-        }
-      },
-      () => {
-        this.onAddToCart(this.state.selectedProduct);
-        console.log(this.state.selectedProduct)
-        console.log(this.state.items)
-      }
+    transaction.forEach((trx) =>
+      this.state.items.push({
+        idx: idx,
+        id: trx.product_id,
+        name: trx.product.name,
+        qty: trx.qty,
+        price: trx.price
+      })
     )
+  }
   )
-  })
 }
 
 //   addSelectedTransaction(id) {

@@ -35,6 +35,10 @@ class Kasir extends Component {
 
   }
 
+  // componentWillUpdate(){
+  //   console.log("update", this.props.transactionStore)
+  // }
+
   render() {
     return (
       <Container fluid="true" className="kasir container-fluid h-100">
