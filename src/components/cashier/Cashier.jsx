@@ -21,19 +21,17 @@ class Kasir extends Component {
     super(props)
   }
   state = {
-    userLoggedIn: []
+    userLoggedIn: [],
   }
   
   componentDidMount(){
     this.props.transactionStore.fetchTransaction()
-    console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore)
-    console.log('Userrrrr', sessionStorage)
-    console.log('Userrrrr', this.state.userLoggedIn)
+    console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore);
+    console.log("CART ~~~~~~~~~~~~~ ", this.props.cartStore);
+    console.log('A', sessionStorage);
 
-    const user = JSON.stringify(sessionStorage.getItem('usernow'))
+    const user = JSON.parse(sessionStorage.getItem('usernow'))
     this.setState({userLoggedIn: user});
-
-    console.log('UserrrrrL', this.state.userLoggedIn)
 
   }
 
@@ -46,7 +44,7 @@ class Kasir extends Component {
             <Row className="cart-header no-gutters">
               <Col xs="12">
                 <Navbar expand="md">
-                  <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Welcome {this.state.userLoggedIn}</NavbarBrand>
+                  <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Welcome {this.state.userLoggedIn.username}</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
                       <NavLink href="/pemesanan">Order #TK-1800000015</NavLink>
@@ -81,14 +79,14 @@ class Kasir extends Component {
 
             <Row className="cart-nav no-gutters">
               <Col xs="12">
-                <FooterNavLeft cartStore={this.props.cartStore} />
+                <FooterNavLeft transactionStore={this.props.transactionStore} userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} />
               </Col>
             </Row>
             
             {this.props.cartStore.state.isPaymentCheckoutShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* PAYMENT COMPONENTS */}
-                <PaymentCheckout cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <PaymentCheckout userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore}/>
               </aside>
             }
 
@@ -102,7 +100,7 @@ class Kasir extends Component {
             {this.props.cartStore.state.isReservationListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* RESERVATION COMPONENTS */}
-                <ReservationList cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <ReservationList transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 

@@ -5,13 +5,13 @@ class ModalsContainer extends Container {
   state = {
     modal: false,
     modalType: 'reguler',
-    modalSize: 'sm'
+    modalSize: 'sm',
   };
 
-  toggleModal = (type, size) => {
+  toggleModal = (type, size,) => {
     this.setState({
       modalType: type,
-      modalSize: size
+      modalSize: size,
     },
     () => {
       console.log("MODAL TYPE =>", this.state.modalType)

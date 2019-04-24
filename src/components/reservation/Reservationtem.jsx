@@ -1,8 +1,7 @@
 import React from 'react'
-import TransactionItems from './TransactionItems';
+import ReservationItems  from './ReservationItems';
 
-
-const TransactionItem = (props) => {
+const ReservationItem = (props) => {
   return (
     <div>
           <a href="#" style ={{color: "white"}}onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxIndex)}>
@@ -12,4 +11,4 @@ const TransactionItem = (props) => {
   )
 }
 
-export default TransactionItem
+export default ReservationItem

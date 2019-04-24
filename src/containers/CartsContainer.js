@@ -1,8 +1,11 @@
 import { Container } from 'unstated'
+import axios from 'axios'
 
 const initialState = {
   items: [],
+  selectedItems: [],
   selectedProduct: {},
+  selectedTransaction: {},
   isAdded: false,
   isCalcNumericCartOpen: false,
   inputQtyCartItem: '',
@@ -12,17 +15,23 @@ const initialState = {
   activeItem: -1,
   totalAmount: 0,
   discountAmount: 0,
-  discountPercentage: 0,
+  discountPercentage: 0, 
   expenseAmount: 0,
   grandTotalAmount: 0,
   grandTotalAmountDiscount: 0,
+  bookingAmount:0,
   isCashierOverlayShow: false,
   isPaymentCheckoutShow: false,
   isOrderBookingShow: false,
-  valueInputPayment: '',
+  isOrderBookingDeleteShow: false,
+  isOrderBookingEditShow: false,
+  isOrderBookingTakeShow: false,
   activeInputPayment: '',
+  valueInputPayment: '',
   activeInputBooking: '',
   valueInputBooking: '',
+  activeInputBookingPayment: '',
+  valueInputBookingPayment: '',
   isTransactionListShow: false,
   isReservationListShow: false,
   isRefundShow: false,
@@ -30,8 +39,6 @@ const initialState = {
   activeInputRefund: '',
   valueInputApproval: '',
   activeInputApproval: '',
-  valueInputPayment: '',
-  activeInputPayment: '',
   discountType: 'Rp',
   changePayment: 0
 };
@@ -71,6 +78,7 @@ class CartsContainer extends Container {
   onAddToCart(selectedProduct) {
 
     let id = selectedProduct.id
+    let user_id = selectedProduct.user_id
     let qty = selectedProduct.qty
     let index = this.state.items.findIndex( x => x.id === id);
 
@@ -111,6 +119,7 @@ class CartsContainer extends Container {
     
   }
 
+
   addSelectedProduct(idx, id, name, qty, price) {
     this.setState(
       {
@@ -124,10 +133,128 @@ class CartsContainer extends Container {
       },
       () => {
         this.onAddToCart(this.state.selectedProduct);
+        console.log(this.state.selectedProduct)
+        console.log(this.state.items)
       }
     );
   }
 
+  addSelectedTransaction(id, idx) {
+  axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + id)
+  .then(res => {
+    const transaction = res.data;
+    transaction.map((trx) =>
+      this.setState (
+        {
+          selectedProduct: {
+          idx: idx,
+          id: trx.product_id,
+          name: trx.product.name,
+          qty: trx.qty,
+          price: trx.price
+        }
+      },
+      () => {
+        this.onAddToCart(this.state.selectedProduct);
+        console.log(this.state.selectedProduct)
+        console.log(this.state.items)
+      }
+    )
+  )
+  })
+}
+
+//   addSelectedTransaction(id) {
+//     axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + id)
+//     .then (res => {
+//       const transaction = res.data;
+//       console.log("transaction", transaction);
+//       this.setState({selectedTransaction: []})
+//       console.log("transaction", this.selectedTransaction);
+//       // this.setState({items: [...this.state.items, this.transaction]})
+
+//   })
+// }
+
+// addSelectedTransaction(id) {
+//     axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + id)
+//     .then (res => {
+//       const transaction = res.data;
+//       console.log("Transaksi", transaction)
+//       transaction.map((trx, i) =>
+//       this.setState (
+//         {
+//           selectedTransaction: {
+//           idx: i,
+//           id: trx.product_id,
+//           name: trx.product.name,
+//           qty: trx.qty,
+//           price: trx.price
+//         }
+//       },
+//       () => {
+//         // this.onAddTrxToCart(this.state.selectedTransaction);
+//         console.log("Items",this.state.items)
+//         console.log("Selected",this.state.selectedTransaction)
+//         // console.log("PARSE",JSON.parse(transaction))
+//       }
+//     )
+//   )
+  
+//   })
+// }
+
+//   addSelectedTransaction(id) {
+//     axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + id)
+//     .then (res => {
+//       const transaction = res.data;
+//       transaction.map((trx, i) =>
+//       this.setState (
+//         {
+//           selectedTransaction : {
+//           idx: i,
+//           id: trx.product_id,
+//           name: trx.product.name,
+//           qty: trx.qty,
+//           price: trx.price
+//         }
+//       },
+//       () => {
+//         this.onAddTrxToCart(this.state.selectedTransaction);
+//         console.log("Items",this.state.items)
+//         console.log("Selected",this.state.selectedTransaction)
+//       }
+//     )
+//   )
+  
+//   })
+// }
+
+  // addSelectedTransaction(id) {
+  //   this.setState(
+  //     {
+  //       selectedTransaction: {
+  //         id: id,
+  //         name: ""
+  //       }
+  //     },
+  //     () => {
+  //       axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + id)
+  //       .then(res => {
+  //       const transaction = res.data;
+  //       this.setState({ items: transaction}, 
+  //         () => this.sumTotalAmount());})
+        
+        
+  //       // this.onAddToCart(this.state.selectedProduct);
+  //       console.log(this.state.selectedTransaction)
+  //       console.log(this.state.items)
+  //       // console.log(JSON.stringify(this.state.items))
+  //       // console.log(JSON.parse(this.state.items))
+  //     }
+  //   );
+  // }
+  
   setSelectedQtyID = (idx, id, currentQty) => {
     this.setState({
       selectedQtyID: id,
@@ -232,7 +359,7 @@ class CartsContainer extends Container {
   }
 
   discountPercentage(){
-    let discount = this.state.valueInputPayment["paymentDiscount"]
+    let discount = this.state.valueInputPayment["paymentDiscount"] || this.state.valueInputBooking["paymentDiscount"]
     if(discount === undefined || discount === ''){
       discount = 0;
     }
@@ -247,7 +374,7 @@ class CartsContainer extends Container {
   }
 
   discountPrice(){
-    let discount = this.state.valueInputPayment["paymentDiscount"]
+    let discount = this.state.valueInputPayment["paymentDiscount"] || this.state.valueInputBooking["paymentDiscount"]
     let sumTotalAmount = parseInt( this.state.totalAmount )
     if(discount === undefined || discount === ''){
       discount = 0;
@@ -259,7 +386,7 @@ class CartsContainer extends Container {
   }
 
   sumChangePayment() {
-    let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"] )
+    let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"] || this.state.valueInputBooking["bookingAddition"])
     console.log("sumChangePayment", totalPayment)
     if(isNaN(totalPayment)){
       totalPayment = 0
@@ -352,9 +479,54 @@ class CartsContainer extends Container {
 
   toggleOrderBookingShow = () => {
     this.setState({
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
       isOrderBookingShow: !this.state.isOrderBookingShow
     })
   }
+
+  orderBookingDelete = () => {
+    console.log("orderBookingDelete")
+    this.toggleOrderBookingDeleteShow()
+  }
+
+  toggleOrderBookingDeleteShow = () => {
+    this.setState({
+      isOrderBookingShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
+      isOrderBookingDeleteShow: !this.state.isOrderBookingDeleteShow
+    })
+  }
+
+  orderBookingEdit = () => {
+    console.log("orderBooking")
+    this.toggleOrderBookingEditShow()
+  }
+
+  toggleOrderBookingEditShow = () => {
+    this.setState({
+      isOrderBookingShow: false,
+      isOrderBookingDeleteShow: false,
+      isOrderBookingTakeShow: false,
+      isOrderBookingEditShow: !this.state.isOrderBookingEditShow
+    })
+  }
+  orderBookingTake = () => {
+    console.log("orderBooking")
+    this.toggleOrderBookingTakeShow()
+  }
+
+  toggleOrderBookingTakeShow = () => {
+    this.setState({
+      isOrderBookingShow: false,
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: !this.state.isOrderBookingTakeShow
+    })
+  }
+
 
   moveCaretAtEnd(e) {
     let temp_value = e.target.value
@@ -385,6 +557,18 @@ class CartsContainer extends Container {
     console.log("Input changed", valueInputPayment);
   };
 
+  setActiveInputBooking = (event) => {
+    document.getElementById(event.target.id).focus();
+    this.setState({
+      activeInputBooking: event.target.id,
+      // expenseAmount: event.target.value
+    },
+      () => {
+        console.log("setActiveInput", this.state.activeInputBooking)
+      }
+    )
+  }
+
   onChangeBooking = valueInputBooking => {
     this.setState({
       valueInputBooking: valueInputBooking
@@ -396,27 +580,27 @@ class CartsContainer extends Container {
     console.log("Input change", valueInputBooking)
   }
 
-  setActiveInputBooking = (event) => {
-    document.getElementById(event.target.id).focus();
-    this.setState({
-      activeInputBooking: event.target.value
-    },
-      () => {
-        console.log("setActiveInput", this.state.activeInputBooking)
-      }
-    )
-  }
+  // setActiveInputBookingPayment = (event) => {
+  //   document.getElementById(event.target.id).focus();
+  //   this.setState({
+  //     bookingAmount: event.target.value
+  //   },
+  //     () => {
+  //       console.log("valueInputBookingPayment", this.state.bookingAmount)
+  //     }
+  //   )
+  // }
 
-  setInputBooking = (event) => {
-    document.getElementById(event.target.id).focus();
-    this.setState({
-      valueInputBooking: event.target.value
-    },
-      () => {
-        console.log("valueInputBooking", this.state.valueInputBooking)
-      }
-    )
-  }
+  // onChangeBookingPayment = valueInputBookingPayment => {
+  //   this.setState({
+  //     valueInputBookingPayment: valueInputBookingPayment
+  //   },
+  //     () => {
+  //       this.sumGrandTotalAmount()
+  //     }
+  //   )
+  //   console.log("Input change", valueInputBookingPayment)
+  // }
 
   onKeyPressPayment = (button) => {
     console.log("Button pressed", button);
@@ -521,17 +705,45 @@ class CartsContainer extends Container {
     console.log("Input changed", valueInputRefund);
   };
 
-  handleAddRow = () => {
-    this.setState((prevState, props) => {
-      const row = { content: "hello this is a new row!" };
-      return { rows: [...prevState.rows, row] };
-    });
-  };
+  handleChange= (event) => {
+    if (this.state.activeInputBooking === 'bookingAddition'){
+      this.setState({expenseAmount: event.target.value})
+    } 
+    else if (this.state.activeInputBooking === 'paymentDiscount'){
+      this.setState({discountAmount: event.target.value})
+    }
+    else if (this.state.activeInputBooking === 'bookingPayment'){
+      this.setState({bookingAmount: event.target.value})
+    }
+  }
   
-  handleRemoveRow = () => {
-    this.setState((prevState, props) => {
-      return { rows: prevState.rows.slice(1) };
-    });
-  };}
+  deleteOrder = (id) => {
+    axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/' + id)
+    .then(res => {
+      const transaction = res.data;
+      console.log(transaction)
+    //   transaction.map((trx) =>
+    //     this.setState (
+    //       {
+    //         selectedProduct: {
+    //         idx: idx,
+    //         id: trx.product_id,
+    //         name: trx.product.name,
+    //         qty: trx.qty,
+    //         price: trx.price
+    //       }
+    //     },
+    //     () => {
+    //       this.onAddToCart(this.state.selectedProduct);
+    //       console.log(this.state.selectedProduct)
+    //       console.log(this.state.items)
+    //     }
+    //   )
+    // )
+    })
+  }
+
+
+}
 
 export default CartsContainer

@@ -12,11 +12,20 @@ import CartTotal from '../carts/CartTotal'
 import '../booking/Booking.scss'
 import '../cashier/SidebarComponentsWrapper.scss'
 import OrderBooking from '../order/OrderBooking'
+import OrderBookingDelete from '../order/OrderBookingDelete'
+import OrderBookingEdit from '../order/OrderBookingEdit'
+import OrderBookingTake from '../order/OrderBookingTake'
 
 class Booking extends Component {
     constructor(props) {
         super(props)
     }
+
+    componentDidMount(){
+        this.props.transactionStore.fetchReservation()
+        console.log("UWOWO ~~~~~~~~~~~~~ ", this.props.transactionStore);
+    
+      }
 
     render() {
         return (
@@ -81,6 +90,24 @@ class Booking extends Component {
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
                                 <OrderBooking cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                            </aside>
+                        }
+                        {this.props.cartStore.state.isOrderBookingDeleteShow &&
+                            <aside className="SidebarComponentsWrapper">
+                                {/* PAYEMNT COMPONENTS */}
+                                <OrderBookingDelete transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                            </aside>
+                        }
+                        {this.props.cartStore.state.isOrderBookingEditShow &&
+                            <aside className="SidebarComponentsWrapper">
+                                {/* PAYEMNT COMPONENTS */}
+                                <OrderBookingEdit transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                            </aside>
+                        }
+                        {this.props.cartStore.state.isOrderBookingTakeShow &&
+                            <aside className="SidebarComponentsWrapper">
+                                {/* PAYEMNT COMPONENTS */}
+                                <OrderBookingTake transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
 
