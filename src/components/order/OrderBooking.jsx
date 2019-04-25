@@ -47,12 +47,6 @@ const OrderBooking = (props) => {
 
                             <Form>
                                 <FormGroup row>
-<<<<<<< HEAD
-                                    <Label sm={3} className="control-label">BIAYA TAMBAHAN</Label>
-                                    <Col sm={9}>
-                                        <Input className="input-lg size-input" placeholder="Rp0" 
-                                                
-=======
                                     <Label sm={2} className="control-label">BIAYA TAMBAHAN</Label>
                                     <Col sm={10}>
 
@@ -69,7 +63,6 @@ const OrderBooking = (props) => {
                                     </div>
                                         
                                         {/* <Input className="input-lg size-input" placeholder="Rp0" 
->>>>>>> c35b374eb8da81d155b9afba4014f5a1956ef1e8
                                                 onChange={props.cartStore.setActiveInputBooking}
                                                 name="bookingAddition" id="bookingAddition"
                                             />  */}
@@ -125,11 +118,6 @@ const OrderBooking = (props) => {
                                 </FormGroup>
 
                                 <FormGroup row>
-<<<<<<< HEAD
-                                    <Label sm={3} className="control-label">UANG MUKA</Label>
-                                    <Col sm={9}>
-                                        <Input className="input-lg" placeholder="Rp0"></Input>
-=======
                                     <Label sm={2} className="control-label">UANG MUKA</Label>
                                     <Col sm={10}>
                                         <div className={props.cartStore.state.activeInputBooking === 'bookingPayment' ? 'input-data-wrapper active-input' : 'input-data-wrapper'}>
@@ -143,7 +131,6 @@ const OrderBooking = (props) => {
                                         onFocus={props.cartStore.setActiveInputBooking}
                                         />
                                         </div>
->>>>>>> c35b374eb8da81d155b9afba4014f5a1956ef1e8
                                     </Col>
                                 </FormGroup>
 

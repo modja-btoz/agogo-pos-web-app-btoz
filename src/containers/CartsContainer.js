@@ -23,16 +23,10 @@ const initialState = {
   isCashierOverlayShow: false,
   isPaymentCheckoutShow: false,
   isOrderBookingShow: false,
-<<<<<<< HEAD
   isDeleteBookingShow: false,
   isEditBookingShow: false,
   isTakeBookingShow: false,
   valueInputPayment: '',
-=======
-  isOrderBookingDeleteShow: false,
-  isOrderBookingEditShow: false,
-  isOrderBookingTakeShow: false,
->>>>>>> c35b374eb8da81d155b9afba4014f5a1956ef1e8
   activeInputPayment: '',
   valueInputPayment: '',
   activeInputBooking: '',
@@ -486,20 +480,13 @@ class CartsContainer extends Container {
 
   toggleOrderBookingShow = () => {
     this.setState({
-<<<<<<< HEAD
       isDeleteBookingShow: false,
       isEditBookingShow: false,
       isTakeBookingShow: false,
-=======
-      isOrderBookingDeleteShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: false,
->>>>>>> c35b374eb8da81d155b9afba4014f5a1956ef1e8
       isOrderBookingShow: !this.state.isOrderBookingShow
     })
   }
 
-<<<<<<< HEAD
   // ===================
   // SHOW DELETE ACTIONS
   // ===================
@@ -545,50 +532,6 @@ class CartsContainer extends Container {
     })
   }
 
-=======
-  orderBookingDelete = () => {
-    console.log("orderBookingDelete")
-    this.toggleOrderBookingDeleteShow()
-  }
-
-  toggleOrderBookingDeleteShow = () => {
-    this.setState({
-      isOrderBookingShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: false,
-      isOrderBookingDeleteShow: !this.state.isOrderBookingDeleteShow
-    })
-  }
-
-  orderBookingEdit = () => {
-    console.log("orderBooking")
-    this.toggleOrderBookingEditShow()
-  }
-
-  toggleOrderBookingEditShow = () => {
-    this.setState({
-      isOrderBookingShow: false,
-      isOrderBookingDeleteShow: false,
-      isOrderBookingTakeShow: false,
-      isOrderBookingEditShow: !this.state.isOrderBookingEditShow
-    })
-  }
-  orderBookingTake = () => {
-    console.log("orderBooking")
-    this.toggleOrderBookingTakeShow()
-  }
-
-  toggleOrderBookingTakeShow = () => {
-    this.setState({
-      isOrderBookingShow: false,
-      isOrderBookingDeleteShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: !this.state.isOrderBookingTakeShow
-    })
-  }
-
-
->>>>>>> c35b374eb8da81d155b9afba4014f5a1956ef1e8
   moveCaretAtEnd(e) {
     let temp_value = e.target.value
     e.target.value = ''

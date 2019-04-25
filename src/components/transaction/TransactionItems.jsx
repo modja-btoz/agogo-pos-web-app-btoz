@@ -16,13 +16,6 @@ class TransactionItems extends Component {
   render(){
 
     return (
-<<<<<<< HEAD
-      <div className="container-transaction">
-        {this.props.transactionStore.state.transactionStore.map((transaction, i) => 
-          <li>{transaction.username}</li>
-        )}
-      </div>
-=======
 
       <Row className="TransactionItems row m-0">
 
@@ -49,7 +42,6 @@ class TransactionItems extends Component {
       //     <li>{transaction.username}</li>
       //   )}
       // </div>
->>>>>>> c35b374eb8da81d155b9afba4014f5a1956ef1e8
     )
   }
 }
