@@ -2,6 +2,9 @@ import React from 'react'
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Input } from 'reactstrap';
 
 const FooterNavLeft = (props) => {
+  for(var i=0; i<props.cartStore.state.items; i++){
+    let index = i;
+  }
   return (
 
     <Navbar expand="md">
@@ -16,7 +19,7 @@ const FooterNavLeft = (props) => {
           <NavLink active={props.cartStore.state.isOpenTransactionShow} onClick={() => props.cartStore.openTransaction()}><i className="fas fa-folder-open"></i><br />Buka Trx</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#"><i className="fas fa-save"></i><br />Simpan</NavLink>
+          <NavLink onClick={() => props.transactionStore.addTransaction(props.userNow.id, props.cartStore.state.items, props.cartStore.state.totalAmount)}><i className="fas fa-save"></i><br />Simpan</NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={props.cartStore.state.isPaymentCheckoutShow} onClick={() => props.cartStore.paymentCheckout()}><i className="fas fa-coins"></i><br/>Bayar</NavLink>

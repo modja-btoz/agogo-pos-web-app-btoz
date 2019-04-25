@@ -1,11 +1,24 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { Container, Row, Col, NavLink, Button, Input } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import CalcNumericPayment from '../calcs/CalcNumericPayment'
 import './PaymentCheckout.scss';
 
-
 const PaymentCheckout = (props) => {
+
+  // ~ {
+  //   usernow: props.userNow.id,
+  //   qty: "",
+  //   product_id: "",
+  //   price: "",
+  //   subtotal: props.cartStore.state.totalAmount,
+  //   diskon: props.cartStore.state.grandTotalAmountDiscount,
+  //   total: props.cartStore.state.grandTotalAmount,
+  //   dibayar: props.cartStore.state.totalPayment,
+  //   kembali: props.cartStore.state.changePayment,
+  //   status: "",
+  // }
+
   return (
 
     <Row className="PaymentCheckout d-block">
@@ -33,7 +46,7 @@ const PaymentCheckout = (props) => {
             <div className={props.cartStore.state.activeInputPayment === 'paymentDiscount' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
                 value={props.cartStore.state.valueInputPayment["paymentDiscount"] || ""}
-                name="paymentDiscount" id="paymentDiscount"
+                name="paymentDiscount" id="paymentDiscount" 
                 onFocus={props.cartStore.moveCaretAtEnd}
                 prefix={'Rp '}
               />
@@ -105,7 +118,8 @@ const PaymentCheckout = (props) => {
 
         <Row className="SidebarFooter mt-4">
           <Col>
-            <Button onClick={() => props.modalStore.toggleModal('bayar', '')} color="danger" size="lg" className="py-3 px-5"><i className="fas fa-coins mr-2"></i> BAYAR</Button>
+            <Button onClick={() => props.modalStore.toggleModal('bayar', '')} 
+            color="danger" size="lg" className="py-3 px-5"><i className="fas fa-coins mr-2"></i> BAYAR</Button>
           </Col>
         </Row>
       </Container>
