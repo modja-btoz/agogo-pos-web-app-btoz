@@ -9,7 +9,7 @@ import ReservationItems from './ReservationItems';
 const ReservationList = (props) => {
   
   return (
-<Container className="reservation mt-4 pt-5 pr-0 pl-0">
+<Container className="reservation">
         <NavLink onClick={() => props.cartStore.toggleOpenReservationShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
             <Table borderless striped>
               <ReservationHeader transactionStore={props.transactionStore}/>

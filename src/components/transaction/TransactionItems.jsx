@@ -20,7 +20,7 @@ class TransactionItems extends Component {
       <Row className="TransactionItems row m-0">
 
       { this.props.transactionStore.state.transactionStore.map((transaction, i) => 
-      <Col xs="7">
+      <Col xs="12">
         <TransactionItem 
           trxIndex={i}
           trxID={transaction.id} 
