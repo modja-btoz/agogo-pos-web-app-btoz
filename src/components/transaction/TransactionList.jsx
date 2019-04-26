@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Table, NavLink, Container } from 'reactstrap';
+import { Table, NavLink, Container, Row, Col } from 'reactstrap';
 import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 
 import TransactionHeader from './TransactionHeader';
 import TransactionItems from './TransactionItems';
+import FooterNavRight from '../navigations/FooterNavRight';
 
 
 class TransactionList extends Component {
@@ -39,7 +40,7 @@ class TransactionList extends Component {
 
     render() {
       return (
-        <Container className="transaction mt-4 pt-5 pr-0 pl-0">
+        <Container className="transaction d-block">
         <NavLink onClick={() => this.props.cartStore.toggleOpenTransactionShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
             <Table borderless striped>
               <TransactionHeader transactionStore={this.props.transactionStore}/>
@@ -59,6 +60,12 @@ class TransactionList extends Component {
                 </Table>
               </div>
             </ShadowScrollbars>
+
+            <Row className="product-nav no-gutters">
+              <Col xs="12">
+                <FooterNavRight cartStore={this.props.cartStore}/>
+              </Col>
+            </Row>
         </Container>
       );
     }

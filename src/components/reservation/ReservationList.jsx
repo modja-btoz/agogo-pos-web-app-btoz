@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, NavLink, Button, Input, Table } from 'reactstrap';
+
 import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 
 import ReservationHeader from './ReservationHeader';

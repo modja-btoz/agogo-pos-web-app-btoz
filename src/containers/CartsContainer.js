@@ -23,9 +23,10 @@ const initialState = {
   isCashierOverlayShow: false,
   isPaymentCheckoutShow: false,
   isOrderBookingShow: false,
-  isOrderBookingDeleteShow: false,
-  isOrderBookingEditShow: false,
-  isOrderBookingTakeShow: false,
+  isDeleteBookingShow: false,
+  isEditBookingShow: false,
+  isTakeBookingShow: false,
+  valueInputPayment: '',
   activeInputPayment: '',
   valueInputPayment: '',
   activeInputBooking: '',
@@ -479,54 +480,57 @@ class CartsContainer extends Container {
 
   toggleOrderBookingShow = () => {
     this.setState({
-      isOrderBookingDeleteShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: false,
+      isDeleteBookingShow: false,
+      isEditBookingShow: false,
+      isTakeBookingShow: false,
       isOrderBookingShow: !this.state.isOrderBookingShow
     })
   }
 
-  orderBookingDelete = () => {
-    console.log("orderBookingDelete")
-    this.toggleOrderBookingDeleteShow()
+  // ===================
+  // SHOW DELETE ACTIONS
+  // ===================
+  deleteBooking = () => {
+    console.log("deleteBooking")
+    this.toggleDeleteBookingShow()
   }
 
-  toggleOrderBookingDeleteShow = () => {
+  toggleDeleteBookingShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: false,
-      isOrderBookingDeleteShow: !this.state.isOrderBookingDeleteShow
+      isDeleteBookingShow: false,
+      isTakeBookingShow: false,
+      isDeleteBookingShow: !this.state.isDeleteBookingShow
     })
   }
 
-  orderBookingEdit = () => {
-    console.log("orderBooking")
-    this.toggleOrderBookingEditShow()
+  editBooking = () => {
+    console.log("editBooking");
+    this.toggleEditBookingShow()
   }
 
-  toggleOrderBookingEditShow = () => {
+  toggleEditBookingShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isOrderBookingDeleteShow: false,
-      isOrderBookingTakeShow: false,
-      isOrderBookingEditShow: !this.state.isOrderBookingEditShow
-    })
-  }
-  orderBookingTake = () => {
-    console.log("orderBooking")
-    this.toggleOrderBookingTakeShow()
-  }
-
-  toggleOrderBookingTakeShow = () => {
-    this.setState({
-      isOrderBookingShow: false,
-      isOrderBookingDeleteShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: !this.state.isOrderBookingTakeShow
+      isDeleteBookingShow: false,
+      isTakeBookingShow: false,
+      isEditBookingShow: !this.state.isEditBookingShow
     })
   }
 
+  takeBooking = () => {
+    console.log("takeBooking");
+    this.toggleTakeBookingShow()
+  }
+
+  toggleTakeBookingShow = () => {
+    this.setState({
+      isOrderBookingShow: false,
+      isDeleteBookingShow: false,
+      isEditBookingShow: false,
+      isTakeBookingShow: !this.state.isTakeBookingShow
+    })
+  }
 
   moveCaretAtEnd(e) {
     let temp_value = e.target.value
