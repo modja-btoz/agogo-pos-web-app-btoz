@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, NavLink, Button, Input, Table } from 'reactstrap';
+
 import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 
 import ReservationHeader from './ReservationHeader';
@@ -8,7 +9,7 @@ import ReservationItems from './ReservationItems';
 const ReservationList = (props) => {
   
   return (
-<Container className="reservation mt-4 pt-5 pr-0 pl-0">
+<Container className="reservation">
         <NavLink onClick={() => props.cartStore.toggleOpenReservationShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
             <Table borderless striped>
               <ReservationHeader transactionStore={props.transactionStore}/>

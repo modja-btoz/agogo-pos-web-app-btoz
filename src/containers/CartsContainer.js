@@ -31,6 +31,10 @@ const initialState = {
   isOrderBookingEditShow: false,
   isOrderBookingTakeShow: false,
   isBookingDo: false,
+  isDeleteBookingShow: false,
+  isEditBookingShow: false,
+  isTakeBookingShow: false,
+  valueInputPayment: '',
   activeInputPayment: '',
   valueInputPayment: '',
   activeInputBooking: '',
@@ -532,9 +536,9 @@ addSelectedTransaction(id, idx) {
 
   toggleOrderBookingShow = () => {
     this.setState({
-      isOrderBookingDeleteShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: false,
+      isDeleteBookingShow: false,
+      isEditBookingShow: false,
+      isTakeBookingShow: false,
       isOrderBookingShow: !this.state.isOrderBookingShow
     })
   }
@@ -545,12 +549,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingDeleteShow()
   }
 
-  toggleOrderBookingDeleteShow = () => {
+  toggleDeleteBookingShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: false,
-      isOrderBookingDeleteShow: !this.state.isOrderBookingDeleteShow
+      isDeleteBookingShow: false,
+      isTakeBookingShow: false,
+      isDeleteBookingShow: !this.state.isDeleteBookingShow
     })
   }
 
@@ -560,12 +564,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingEditShow()
   }
 
-  toggleOrderBookingEditShow = () => {
+  toggleEditBookingShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isOrderBookingDeleteShow: false,
-      isOrderBookingTakeShow: false,
-      isOrderBookingEditShow: !this.state.isOrderBookingEditShow
+      isDeleteBookingShow: false,
+      isTakeBookingShow: false,
+      isEditBookingShow: !this.state.isEditBookingShow
     })
   }
   orderBookingTake = () => {
@@ -574,12 +578,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingTakeShow()
   }
 
-  toggleOrderBookingTakeShow = () => {
+  toggleTakeBookingShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isOrderBookingDeleteShow: false,
-      isOrderBookingEditShow: false,
-      isOrderBookingTakeShow: !this.state.isOrderBookingTakeShow
+      isDeleteBookingShow: false,
+      isEditBookingShow: false,
+      isTakeBookingShow: !this.state.isTakeBookingShow
     })
   }
 

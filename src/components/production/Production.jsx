@@ -9,6 +9,7 @@ import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
 import CartBooking from '../carts/cartsBooking/CartBooking'
 import CartBookingTotal from '../carts/CartBookingTotal'
 import CartTotal from '../carts/CartTotal'
+import FooterNavRightProduction from '../navigations/FooterNavRightProduction';
 
 class Production extends React.Component {
     render() {
@@ -66,7 +67,7 @@ class Production extends React.Component {
 
                         <Row className="product-nav no-gutters">
                             <Col xs="12">
-                                <FooterNavRightBooking cartStore={this.props.cartStore} />
+                                <FooterNavRightProduction/>
                             </Col>
                         </Row>
                     </Col>

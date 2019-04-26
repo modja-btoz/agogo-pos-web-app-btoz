@@ -4,15 +4,15 @@ const CartProductionTotal = () => {
     return (
         <tfoot className="tfoot-booking">
             <tr className="cart-total">
-                <th className="header grand-total-label">
-                    STOK AWAL
-                    <p></p>    
+                <th>
+                    STOK AWAL <br/>
+                    <span className="date">Jum'at, 26 Oct 2018</span>    
                 </th>
-                <th className="header grand-total-label">-</th>
-                <th className="header text-right grand-total">
-                    
+                <th>-</th>
+                <th>
+                    SISA STOK
                 </th>
-                <th className="header text-right grand-total">-</th>
+                <th>-</th>
             </tr>
         </tfoot>
     )
