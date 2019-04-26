@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const initialState = {
   transactionStore: [],
+  reservationStore: [],
   items: [],
   data: [],
   redirect: false,
@@ -33,7 +34,7 @@ class TransactionContainer extends Container {
     axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
     .then(res => {
       const transaction = res.data;
-      this.setState({ transactionStore: transaction });
+      this.setState({ reservationStore: transaction });
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
     })
   }

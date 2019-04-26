@@ -8,6 +8,7 @@ import CashierOverlay from './CashierOverlay'
 import FooterNavLeft from '../navigations/FooterNavLeft'
 import FooterNavRight from '../navigations/FooterNavRight'
 import PaymentCheckout from '../payments/PaymentCheckout'
+import ReservationCheckout from '../payments/ReservationCheckout'
 
 import './Cashier.scss';
 import './SidebarComponentsWrapper.scss';
@@ -26,6 +27,7 @@ class Kasir extends Component {
   
   componentDidMount(){
     this.props.transactionStore.fetchTransaction()
+    this.props.transactionStore.fetchReservation()
     console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore);
     console.log("CART ~~~~~~~~~~~~~ ", this.props.cartStore);
     console.log('A', sessionStorage);
@@ -36,7 +38,7 @@ class Kasir extends Component {
   }
 
   // componentWillUpdate(){
-  //   console.log("update", this.props.transactionStore)
+  //   console.log("update", this.props.cartStore.state.selectedItems)
   // }
 
   render() {
@@ -83,7 +85,7 @@ class Kasir extends Component {
 
             <Row className="cart-nav no-gutters">
               <Col xs="12">
-                <FooterNavLeft transactionStore={this.props.transactionStore} userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} />
+                <FooterNavLeft modalStore={this.props.modalStore} transactionStore={this.props.transactionStore} userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} />
               </Col>
             </Row>
             
@@ -91,6 +93,13 @@ class Kasir extends Component {
               <aside className="SidebarComponentsWrapper">
                 {/* PAYMENT COMPONENTS */}
                 <PaymentCheckout userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore}/>
+              </aside>
+            }
+
+            {this.props.cartStore.state.isReservationCheckoutShow &&
+              <aside className="SidebarComponentsWrapper">
+                {/* PAYMENT COMPONENTS */}
+                <ReservationCheckout userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore}/>
               </aside>
             }
 
@@ -111,7 +120,7 @@ class Kasir extends Component {
             {this.props.cartStore.state.isRefundShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* REFUND COMPONENTS */}
-                <Refund cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <Refund userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 

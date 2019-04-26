@@ -98,7 +98,7 @@ const OrderBooking = (props) => {
                                     <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
                                     value={props.cartStore.state.valueInputBooking["paymentDiscount"] || ""}
                                     name="paymentDiscount" id="paymentDiscount"
-                                    onFocus={props.cartStore.setActiveInputBooking}
+                                    onFocus={props.cartStore.setActiveInputBooking} 
                                     />
                                     </div>
                                     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Nav, NavItem, NavLink, Input } from 'reactstrap';
+import axios from 'axios'
 
 import './ProductCategories.scss';
 
@@ -12,38 +13,26 @@ class ProductCategories extends Component {
     searchInputText: '',
     categories: [
       {
-        "id": 0,
-        "title": "Semua Item",
-      },
-      {
-        "id": 1,
-        "title": "Roti"
-      },
-      {
-        "id": 2,
-        "title": "Cake"
-      },
-      {
-        "id": 3,
-        "title": "Kue Basah"
-      },
-      {
-        "id": 4,
-        "title": "Brownies"
-      },
-      {
-        "id": 5,
-        "title": "Cake Slices"
-      },
-      {
-        "id": 6,
-        "title": "Black Forrest"
-      },
-      {
-        "id": 7,
-        "title": "Sponge"
+        'id': 0,
+        'name' : 'Semua Item'
       }
     ]
+  }
+
+  componentDidMount(){
+    this.fetchCategories()
+  }
+
+  fetchCategories() {
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/categories`)
+    .then(res => {
+      const categories = res.data;
+      categories.map(x => 
+      this.setState({ categories: [...this.state.categories, x] })
+      )
+      // sessionStorage.setItem('transaction', JSON.stringify(transaction));
+      console.log("TIS", this.state.categories)
+    })
   }
 
   buttonSetFilteredKeyword(keyword, index){
@@ -88,12 +77,12 @@ class ProductCategories extends Component {
           />
         </NavItem>
         { this.state.categories.map((cat, index) => 
-          <NavItem key={cat.title}>
+          <NavItem key={cat.name}>
             <NavLink href="#" 
-              onClick={() => this.buttonSetFilteredKeyword(cat.title, index)}
+              onClick={() => this.buttonSetFilteredKeyword(cat.name, index)}
               className={classNames({'active': this.props.productStore.state.activeCatClass === ("cat-"+index)})}
             >
-              {cat.title}
+              {cat.name}
             </NavLink>
           </NavItem>
         )}

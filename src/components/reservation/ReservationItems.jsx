@@ -19,7 +19,7 @@ class ReservationItems extends Component {
 
       <Row className="TransactionItems row m-0">
 
-      { this.props.transactionStore.state.transactionStore.map((transaction, i) => 
+      { this.props.transactionStore.state.reservationStore.map((transaction, i) => 
       <Col xs="7">
         <ReservationItem 
           trxIndex={i}

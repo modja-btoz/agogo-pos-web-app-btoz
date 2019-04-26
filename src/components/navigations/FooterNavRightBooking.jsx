@@ -6,6 +6,9 @@ const FooterNavRightBooking = (props) => {
 
         <Navbar expand="md">
             <Nav className="ml-auto" navbar>
+                
+                <NavLink active={props.cartStore.state.isBookingDo} onClick={() => props.cartStore.bookingDo()}></NavLink>
+                
                 <NavItem>
                     <NavLink active={props.cartStore.state.isOrderBookingDeleteShow} onClick={() => props.cartStore.orderBookingDelete()}><i class="fas fa-trash-alt"></i><br />Hapus</NavLink>
                 </NavItem>

@@ -1,10 +1,9 @@
 import React from 'react'
-import ReservationItems  from './ReservationItems';
 
 const ReservationItem = (props) => {
   return (
     <div>
-          <a href="#" style ={{color: "white"}}onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxIndex)}>
+          <a href="#" style ={{color: "white"}}onClick={() => props.cartStore.addSelectedReservation(props.trxID, props.trxIndex, props.trxName) || props.cartStore.reservationCheckout()}>
           {props.trxIndex} {props.trxName} || {props.trxDate}</a>
           
     </div>

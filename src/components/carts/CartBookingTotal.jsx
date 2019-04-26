@@ -28,14 +28,14 @@ const CartBookingTotal = (props) => {
             <tr className="cart-subtotal">
                 <td scope="row">Uang Muka</td>
                 <td className="subtotal-price">
-                    <NumberFormat prefix={'Rp '} value={props.cartStore.state.bookingAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} />
+                    <NumberFormat prefix={'Rp '} value={props.cartStore.state.dpReservationAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} />
                 </td>
             </tr>
             <tr className="table-spacer"><td></td></tr>
             <tr className="cart-total">
                 <th className="header grand-total-label">Sisa Pembayaran</th>
                 <th className="header text-right grand-total">
-                    <NumberFormat value={props.cartStore.state.grandTotalAmountDiscount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
+                    <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
                 </th>
             </tr>
         </tfoot>
