@@ -1,11 +1,13 @@
 import React from 'react'
 import { Table, Container } from 'reactstrap'
 import CartHeader from '../CartHeader'
+
 import ShadowScrollbars from '../../scrollbars/ShadowScrollbars'
 import CartItems from '../CartItems'
 import CartBookingTotal from '../CartBookingTotal'
 
 import '../../booking/CartBooking.scss'
+
 
 class CartBooking extends React.Component {
     constructor(props) {

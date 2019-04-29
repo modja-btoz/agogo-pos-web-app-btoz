@@ -39,7 +39,7 @@ class ProductsContainer extends Container {
 
     let productsSearch =  products.filter(function(product) {
       // return product.title.rendered === searchKeyword;
-      return product.title.rendered.toString().toLowerCase().search(searchKeyword.toLowerCase()) !== -1;
+      return product.name.toString().toLowerCase().search(searchKeyword.toLowerCase()) !== -1;
     });
 
     this.setState({ 
@@ -69,7 +69,7 @@ class ProductsContainer extends Container {
     let filterKeyword = this.state.filterKeyword
 
     let productsFiltered =  products.filter(function(product) {
-      return product.category_id[0] === filterKeyword;
+      return product.category.name === filterKeyword;
     });
 
     if(filterKeyword === "Semua Item"){

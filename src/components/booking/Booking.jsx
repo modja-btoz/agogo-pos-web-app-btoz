@@ -12,9 +12,10 @@ import CartTotal from '../carts/CartTotal'
 import '../booking/Booking.scss'
 import '../cashier/SidebarComponentsWrapper.scss'
 import OrderBooking from '../order/OrderBooking'
+import OrderBookingDelete from '../order/OrderBookingDelete'
+import OrderBookingEdit from '../order/OrderBookingEdit'
+import OrderBookingTake from '../order/OrderBookingTake'
 import DeleteBooking from '../order/DeleteBooking'
-import EditBooking from '../order/EditBooking'
-import TakeBooking from '../order/TakeBooking';
 
 class Booking extends Component {
     constructor(props) {
@@ -89,21 +90,21 @@ class Booking extends Component {
                         {this.props.cartStore.state.isDeleteBookingShow &&
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
-                                <DeleteBooking cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                <OrderBookingDelete cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
 
                         {this.props.cartStore.state.isEditBookingShow &&
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
-                                <EditBooking cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                <OrderBookingEdit cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
 
                         {this.props.cartStore.state.isTakeBookingShow &&
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
-                                <TakeBooking cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                <OrderBookingTake cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
 
@@ -130,6 +131,12 @@ class Booking extends Component {
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
                                 {/* <OrderBookingTake transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} /> */}
+                            </aside>
+                        }
+                        {this.props.cartStore.state.isBookingDo &&
+                            <aside className="SidebarComponentsWrapper">
+                                {/* PAYEMNT COMPONENTS */}
+                                <DeleteBooking transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
 

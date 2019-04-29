@@ -1,9 +1,24 @@
 .deleteBooking {
     color: white;
+    
+    input{
+    margin-left: -1rem;
+    }
+
+    .input-keyboard-wrapper{
+    position: relative;
+    .input-masking{
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;;
+    }
+    }
 }
 
 .SidebarBodyBooking {
     margin-top: 5px;
+    color: white;
 }
 
 h7.mb-0 {

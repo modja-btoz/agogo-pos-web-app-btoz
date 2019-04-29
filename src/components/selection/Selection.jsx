@@ -9,9 +9,9 @@ class Selection extends Component {
     render() {
 
         return (
-
-            <Container>
-                <Row>
+    <section className="Selection centered">
+            <Container >
+                <Row >
                     <Col sm="12" md={{ size: 6, offset: 3}} className="container-selection">
                         <Link to={'/initial-balance'}>
                             <button className="btn btn-size">KASIR</button>
@@ -25,7 +25,7 @@ class Selection extends Component {
                     </Col>
                 </Row>
             </Container>
-
+        </section>
         )
     }
 }

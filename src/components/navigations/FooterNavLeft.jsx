@@ -19,7 +19,7 @@ const FooterNavLeft = (props) => {
           <NavLink active={props.cartStore.state.isOpenTransactionShow} onClick={() => props.cartStore.openTransaction()}><i className="fas fa-folder-open"></i><br />Buka Trx</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink onClick={() => props.transactionStore.addTransaction(props.userNow.id, props.cartStore.state.items, props.cartStore.state.totalAmount)}><i className="fas fa-save"></i><br />Simpan</NavLink>
+          <NavLink onClick={() => props.transactionStore.addTransaction(props.userNow.id, props.cartStore.state.items, props.cartStore.state.totalAmount) || props.modalStore.toggleModal('saveTransaction', '')}><i className="fas fa-save"></i><br />Simpan</NavLink>
         </NavItem>
         <NavItem>
           <NavLink active={props.cartStore.state.isPaymentCheckoutShow} onClick={() => props.cartStore.paymentCheckout()}><i className="fas fa-coins"></i><br/>Bayar</NavLink>
