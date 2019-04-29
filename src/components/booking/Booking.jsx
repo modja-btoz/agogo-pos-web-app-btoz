@@ -86,29 +86,7 @@ class Booking extends Component {
                                 <FooterNavRightBooking cartStore={this.props.cartStore} />
                             </Col>
                         </Row>
-                        
-                        {this.props.cartStore.state.isDeleteBookingShow &&
-                            <aside className="SidebarComponentsWrapper">
-                                {/* PAYEMNT COMPONENTS */}
-                                <OrderBookingDelete cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
-                            </aside>
-                        }
 
-                        {this.props.cartStore.state.isEditBookingShow &&
-                            <aside className="SidebarComponentsWrapper">
-                                {/* PAYEMNT COMPONENTS */}
-                                <OrderBookingEdit cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
-                            </aside>
-                        }
-
-                        {this.props.cartStore.state.isTakeBookingShow &&
-                            <aside className="SidebarComponentsWrapper">
-                                {/* PAYEMNT COMPONENTS */}
-                                <OrderBookingTake cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
-                            </aside>
-                        }
-
-                        
                         {this.props.cartStore.state.isOrderBookingShow &&
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
@@ -118,19 +96,19 @@ class Booking extends Component {
                         {this.props.cartStore.state.isOrderBookingDeleteShow &&
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
-                                {/* <OrderBookingDelete transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} /> */}
+                                <OrderBookingDelete transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
                         {this.props.cartStore.state.isOrderBookingEditShow &&
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
-                                {/* <OrderBookingEdit transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} /> */}
+                                <OrderBookingEdit transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
                         {this.props.cartStore.state.isOrderBookingTakeShow &&
                             <aside className="SidebarComponentsWrapper">
                                 {/* PAYEMNT COMPONENTS */}
-                                {/* <OrderBookingTake transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} /> */}
+                                <OrderBookingTake transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                             </aside>
                         }
                         {this.props.cartStore.state.isBookingDo &&

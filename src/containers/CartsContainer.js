@@ -536,9 +536,9 @@ addSelectedTransaction(id, idx) {
 
   toggleOrderBookingShow = () => {
     this.setState({
-      isDeleteBookingShow: false,
-      isEditBookingShow: false,
-      isTakeBookingShow: false,
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
       isOrderBookingShow: !this.state.isOrderBookingShow
     })
   }
@@ -549,12 +549,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingDeleteShow()
   }
 
-  toggleDeleteBookingShow = () => {
+  toggleOrderBookingDeleteShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isDeleteBookingShow: false,
-      isTakeBookingShow: false,
-      isDeleteBookingShow: !this.state.isDeleteBookingShow
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
+      isOrderBookingDeleteShow: !this.state.isOrderBookingDeleteShow,
     })
   }
 
@@ -564,12 +564,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingEditShow()
   }
 
-  toggleEditBookingShow = () => {
+  toggleOrderBookingEditShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isDeleteBookingShow: false,
-      isTakeBookingShow: false,
-      isEditBookingShow: !this.state.isEditBookingShow
+      isOrderBookingDeleteShow: false,
+      isOrderBookingTakeShow: false,
+      isOrderBookingEditShow: !this.state.isOrderBookingEditShow,
     })
   }
   orderBookingTake = () => {
@@ -578,12 +578,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingTakeShow()
   }
 
-  toggleTakeBookingShow = () => {
+  toggleOrderBookingTakeShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isDeleteBookingShow: false,
-      isEditBookingShow: false,
-      isTakeBookingShow: !this.state.isTakeBookingShow
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: !this.state.isOrderBookingTakeShow,
     })
   }
 

@@ -9,20 +9,22 @@
 }
 
 .change-date {
-    margin-top: 5px;
+    margin: 0px auto;
     background-color: orange;
     border-radius: 20px;
     width: 150px;
     text-align: center;
-    margin-left: 60px; 
+    // margin-left: 60px;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
 .view-img {
-    margin-top: 10px;
+    margin: 0px auto;
     width: 250px;
     height: 215px;
     background-color: orange;
-    margin-left: 15px;
+    // margin-left: 15px;
 }
 
 .select-view-product {

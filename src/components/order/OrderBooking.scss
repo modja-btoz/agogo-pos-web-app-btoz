@@ -35,6 +35,10 @@
     background-color: none;
 }
 
+textarea.input.alamat.form-control {
+    margin: 5px 0px 0px -16px;
+}
+
 textarea.input-note.form-control {
     margin-top: 20px;
     height: 100px;
@@ -52,8 +56,17 @@ textarea.input-note.form-control {
     border-radius: 1rem;
 }
 
+#bookingAddition, #paymentDiscount, #bookingPayment {
+    margin: 0px 0px 0px -16px !important;
+}
+
+.input-lg.approval-btn {
+    margin: 0px;
+}
+
 .input-lg.approval {
     background-color: gray;
+    margin: 0px;
 }
 
 input[type=radio] {
