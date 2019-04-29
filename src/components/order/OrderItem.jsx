@@ -5,7 +5,7 @@ import OrderItems from './OrderItems';
 const OrderItem = (props) => {
   return (
     <div>
-          <a href="#" style ={{color: "white"}}onClick={() => props.cartStore.deleteOrder(props.trxID)}>
+          <a href="#" style ={{color: "white"}} onClick={() => props.cartStore.doOrder(props.trxID)}>
           {props.trxIndex} {props.trxName} || {props.trxDate}</a>
           
     </div>

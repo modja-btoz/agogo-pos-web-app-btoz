@@ -8,7 +8,7 @@ const ReservationItem = (props) => {
         <Row>
           <Col sm="6" className="transaction-list">
             <a className="open-booking" href="#" onClick={() => props.cartStore.addSelectedReservation(props.trxID, props.trxIndex, props.trxName) || props.cartStore.reservationCheckout()}>
-              {props.trxIndex} {props.trxName}</a>
+              {props.trxName}</a>
           </Col>
           <Col sm="6" className="transaction-list">
             <a className="open-booking" href="#" onClick={() => props.cartStore.addSelectedReservation(props.trxID, props.trxIndex, props.trxName) || props.cartStore.reservationCheckout()}>

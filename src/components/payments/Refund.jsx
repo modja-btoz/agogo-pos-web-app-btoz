@@ -57,7 +57,7 @@ const Refund = (props) => {
           <Col className="px-0">
             <CalcNumericRefund
               cartStore={props.cartStore} 
-              onEnter={props.cartStore.onEnter} 
+              onEnterRefund={props.cartStore.onEnterRefund} 
               inputName={props.cartStore.state.inputName}
             />
             
@@ -65,11 +65,11 @@ const Refund = (props) => {
           
         </Row>
 
-        <Row className="SidebarFooter mt-4">
+        {/* <Row className="SidebarFooter mt-4">
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <Button onClick={() => props.cartStore.doRefund()} color="danger" size="lg" className="py-3 px-5"><i className="fas fa-retweet mr-2"></i> Search</Button>
           </Col>
-        </Row>
+        </Row> */}
         <Row className="SidebarFooter mt-4">
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             <Button onClick={() => props.modalStore.toggleModal('bayar', '') } color="danger" size="lg" className="py-3 px-5"><i className="fas fa-retweet mr-2"></i> REFUND</Button>

@@ -17,8 +17,14 @@ class CalcNumeric extends Component {
     // console.log("Button pressed", button);
 
     if ( button === "{enter}" ) {
-      this.onEnter(button);
+      this.onEnterRefund(button);
     }
+  };
+  onEnterRefund = (button) => {
+    console.log("Button ENTER pressed", button);
+
+    // JALANKAN FUNGSI DARI PARENT
+    this.props.onEnterRefund()
   };
 
   render() {

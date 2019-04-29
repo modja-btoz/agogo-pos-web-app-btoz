@@ -8,22 +8,22 @@ const TakeBooking = (props) => {
             <Container>
                 <Row className="SidebarHeader">
                     <Col>
-                        <NavLink onClick={() => props.cartStore.toggleTakeBookingShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
+                        <NavLink onClick={() => props.cartStore.toggleBookingTakeShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
                     </Col>
                 </Row>
 
                 <Row className="SidebarBodyBooking">
                     <Col sm={5}>
                         <h7 className="mb-0">PEMESAN</h7>
-                        <Input className="input pemesan" placeholder="NAMA"></Input>
+                        <Input value={props.cartStore.state.dataTrx.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input value={props.cartStore.state.dataTrx.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={3}>
                         <h7 className="mb-0">JAM SELESAI</h7>
-                        <Input className="input jam" placeholder="HH-MM"></Input>
+                        <Input value="JamSelesai" className="input jam" placeholder="HH-MM"></Input>
                     </Col>
                 </Row>
 
@@ -37,7 +37,7 @@ const TakeBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                    <Input bsSize="lg" type="textarea" name="note" rows="3" ></Input>
+                                    <Input value={props.cartStore.state.dataTrx.catatan} bsSize="lg" type="textarea" name="note" rows="3" ></Input>
                                 </Col>
                             </FormGroup>
                             {/* <FormGroup row>
