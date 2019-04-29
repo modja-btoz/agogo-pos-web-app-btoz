@@ -9,8 +9,6 @@ class LoginSplashScreen extends Component {
 
   state = {
     users: [],
-    input,
-    inputName
   }
 
   componentDidMount() {

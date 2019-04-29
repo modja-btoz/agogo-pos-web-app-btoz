@@ -22,7 +22,7 @@ const TransactionItem = (props) => {
       <Row>
         <Col sm="6" className="transaction-list">
           <a className="open-transaction" href="#" style={{ color: "black" }} onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxIndex)}>
-            {props.trxIndex} {props.trxName}</a>
+            {props.trxName}</a>
         </Col>
         <Col sm="6" className="transaction-list">
           <a className="open-transaction" href="#" style={{ color: "black" }} onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxIndex)}>

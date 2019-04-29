@@ -30,11 +30,12 @@ const initialState = {
   isOrderBookingDeleteShow: false,
   isOrderBookingEditShow: false,
   isOrderBookingTakeShow: false,
-  isBookingDo: false,
+  isBookingDelete: false,
+  isBookingEdit: false,
+  isBookingTake: false,
   isDeleteBookingShow: false,
   isEditBookingShow: false,
   isTakeBookingShow: false,
-  valueInputPayment: '',
   activeInputPayment: '',
   valueInputPayment: '',
   activeInputBooking: '',
@@ -55,7 +56,8 @@ const initialState = {
   whatRefund: 'PS',
   whatBooking: '',
   dpReservationAmount: 0,
-  leftToPay: 0
+  leftToPay: 0,
+  popStatus: false
 };
 
 class CartsContainer extends Container {
@@ -68,10 +70,6 @@ class CartsContainer extends Container {
   clearCart = () => {
     console.log("CLEAR CART", this.state.selectedItems)
     this.setState(initialState);
-  }
-
-  componentDidMount(){
-    this.sumGrandTotalAmount()
   }
 
   componentWillMount(){
@@ -201,8 +199,7 @@ addSelectedTransaction(id, idx) {
       if(reservationData.length === 0){
         console.log("GAGAL COY")
       } else {
-      this.setState({dpReservationAmount: reservationData[0].uang_muka, 
-                    leftToPay: reservationData[0].total - reservationData[0].uang_muka, 
+      this.setState({dpReservationAmount: reservationData[0].uang_muka,  
                     changePayment: reservationData[0].subtotal - reservationData[0].uang_muka,
                     expenseAmount: reservationData[0].add_fee,
                     discountAmount: reservationData[0].discount},
@@ -245,6 +242,7 @@ addSelectedTransaction(id, idx) {
 
   doRefund() {
     let refundCode = this.state.whatRefund + '-' + (this.state.valueInputRefund["refundCode"] || "")
+    if(this.state.whatRefund === 'PS'){
     axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
     .then(res => {
       const transaction = res.data;
@@ -254,48 +252,38 @@ addSelectedTransaction(id, idx) {
       if(refundData.length === 0){
         console.log("GAGAL COY")
       } else {
-      this.setState({dataRefund: refundData}, ()=> this.addSelectedRefund())
+      this.setState({dataRefund: refundData}, ()=> this.addSelectedRefundPS())
       console.log(refundData)
       }
     })
     console.log(refundCode)
+    }
+    if(this.state.whatRefund === 'TK'){
+      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`)
+      .then(res => {
+        const transaction = res.data;
+        let refundData = transaction.filter(function(data) {
+          return data.invoice === refundCode
+        });
+        if(refundData.length === 0){
+          console.log("GAGAL COY")
+        } else {
+        this.setState({dataRefund: refundData}, ()=> this.addSelectedRefundTK())
+        console.log(refundData)
+        }
+      })
+      console.log(refundCode)
+      }
   }
 
-  addSelectedRefund() {
+  addSelectedRefundTK() {
     let dataRefund = this.state.dataRefund[0]
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/` + dataRefund.id)
-    .then(res => {
-      const transaction = res.data;
-      transaction.forEach((trx, i) =>
-        this.state.selectedItems.push({
-          idx: i,
-          id: trx.product_id,
-          name: trx.product.name,
-          qty: trx.qty,
-          price: trx.product.price
-        })
-      )
-      console.log("INI ", this.state.selectedItems)
-      this.setState({items: this.state.selectedItems}, 
-        () => {this.sumTotalAmount() 
-              this.setState({
-                isAdded: true,
+    this.addSelectedTransaction(dataRefund.id)
+  }
 
-                selectedItems: []
-                  }, 
-                  () => {
-                    this.sumGrandTotalAmount()
-                    setTimeout(() => {
-                    this.setState({
-                      selectedItems: [],
-                      isAdded: false
-                  });
-                }, 3500);
-              }
-            )
-          }
-        )
-    })
+  addSelectedRefundPS() {
+    let dataRefund = this.state.dataRefund[0]
+    this.addSelectedReservation(dataRefund.id)
   }
 
 
@@ -392,7 +380,8 @@ addSelectedTransaction(id, idx) {
       () => {
         let grandTotalAmountDiscount = parseInt( sumTotalAmount - discountAmount + otherExpenses )
         this.setState({
-          grandTotalAmountDiscount: grandTotalAmountDiscount
+          grandTotalAmountDiscount: grandTotalAmountDiscount,
+          leftToPay: grandTotalAmountDiscount - this.state.dpReservationAmount
         },
           () => {
             this.sumChangePayment()
@@ -446,6 +435,12 @@ addSelectedTransaction(id, idx) {
     })
   }
 
+  onEnterRefund = () => {
+    // console.log("Button ENTER pressed");
+    this.doRefund()
+  };
+
+  
 
   // ===============
   // KEYBOARD ACTION
@@ -518,7 +513,7 @@ addSelectedTransaction(id, idx) {
 
   toggleReservationCheckoutShow = () => {
     this.setState({
-      isReservationListShow: false,
+      isReservationListShow: false, 
       isTransactionListShow: false,
       isRefundShow: false,
       isPaymentCheckoutShow: false,
@@ -536,9 +531,9 @@ addSelectedTransaction(id, idx) {
 
   toggleOrderBookingShow = () => {
     this.setState({
-      isDeleteBookingShow: false,
-      isEditBookingShow: false,
-      isTakeBookingShow: false,
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
       isOrderBookingShow: !this.state.isOrderBookingShow
     })
   }
@@ -549,12 +544,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingDeleteShow()
   }
 
-  toggleDeleteBookingShow = () => {
+  toggleOrderBookingDeleteShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isDeleteBookingShow: false,
-      isTakeBookingShow: false,
-      isDeleteBookingShow: !this.state.isDeleteBookingShow
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
+      isOrderBookingDeleteShow: !this.state.isOrderBookingDeleteShow,
     })
   }
 
@@ -564,12 +559,12 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingEditShow()
   }
 
-  toggleEditBookingShow = () => {
+  toggleOrderBookingEditShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isDeleteBookingShow: false,
-      isTakeBookingShow: false,
-      isEditBookingShow: !this.state.isEditBookingShow
+      isOrderBookingDeleteShow: false,
+      isOrderBookingTakeShow: false,
+      isOrderBookingEditShow: !this.state.isOrderBookingEditShow,
     })
   }
   orderBookingTake = () => {
@@ -578,28 +573,66 @@ addSelectedTransaction(id, idx) {
     this.toggleOrderBookingTakeShow()
   }
 
-  toggleTakeBookingShow = () => {
+  toggleOrderBookingTakeShow = () => {
     this.setState({
       isOrderBookingShow: false,
-      isDeleteBookingShow: false,
-      isEditBookingShow: false,
-      isTakeBookingShow: !this.state.isTakeBookingShow
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: !this.state.isOrderBookingTakeShow,
     })
   }
 
-  bookingDo = () => {
+  bookingDelete = () => {
     // console.log("orderBooking")
-    this.toggleBookingDoShow()
+    this.toggleBookingDeleteShow()
   }
 
-  toggleBookingDoShow = () => {
+  toggleBookingDeleteShow = () => {
     // console.log()
     this.setState({
       isOrderBookingShow: false,
       isOrderBookingDeleteShow: false,
       isOrderBookingEditShow: false,
       isOrderBookingTakeShow: false,
-      isBookingDo: !this.state.isBookingDo
+      isBookingEditShow: false,
+      isBookingTakeShow: false,
+      isBookingDeleteShow: !this.state.isBookingDeleteShow,
+    })
+  }
+
+  bookingEdit = () => {
+    // console.log("orderBooking")
+    this.toggleBookingEditShow()
+  }
+
+  toggleBookingEditShow = () => {
+    // console.log()
+    this.setState({
+      isOrderBookingShow: false,
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
+      isBookingDeleteShow: false,
+      isBookingTakeShow: false,
+      isBookingEditShow: !this.state.isBookingEditShow,
+    })
+  }
+
+  bookingTake = () => {
+    // console.log("orderBooking")
+    this.toggleBookingTakeShow()
+  }
+
+  toggleBookingTakeShow = () => {
+    // console.log()
+    this.setState({
+      isOrderBookingShow: false,
+      isOrderBookingDeleteShow: false,
+      isOrderBookingEditShow: false,
+      isOrderBookingTakeShow: false,
+      isBookingEditShow: false,
+      isBookingDeleteShow: false,
+      isBookingTakeShow: !this.state.isBookingTakeShow,
     })
   }
 
@@ -654,28 +687,6 @@ addSelectedTransaction(id, idx) {
     )
     console.log("Input change", valueInputBooking)
   }
-
-  // setActiveInputBookingPayment = (event) => {
-  //   document.getElementById(event.target.id).focus();
-  //   this.setState({
-  //     bookingAmount: event.target.value
-  //   },
-  //     () => {
-  //       console.log("valueInputBookingPayment", this.state.bookingAmount)
-  //     }
-  //   )
-  // }
-
-  // onChangeBookingPayment = valueInputBookingPayment => {
-  //   this.setState({
-  //     valueInputBookingPayment: valueInputBookingPayment
-  //   },
-  //     () => {
-  //       this.sumGrandTotalAmount()
-  //     }
-  //   )
-  //   console.log("Input change", valueInputBookingPayment)
-  // }
 
   onKeyPressPayment = (button) => {
     console.log("Button pressed", button);
@@ -824,7 +835,7 @@ addSelectedTransaction(id, idx) {
     this.setState({ redirect: true })
   }
   
-  deleteOrder = (id) => {
+  doOrder = (id) => {
     let orderCode = id
     axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -835,28 +846,61 @@ addSelectedTransaction(id, idx) {
       if(orderData.length === 0){
         console.log("GAGAL COY")
       } else {
-      this.setState({dataTrx: orderData[0]})
+      this.setState({dataTrx: orderData[0]}, 
+        () => {if(this.state.whatBooking === 'deleteBooking'){
+                this.deleteOrder(id)
+                console.log("delete booking")
+              }
+              if(this.state.whatBooking === 'editBooking') {
+                this.editOrder(id)
+                this.setState({popStatus: !this.state.popStatus})
+                console.log("edit booking")
+              }
+              if(this.state.whatBooking === 'takeBooking') {
+                this.takeOrder(id)
+                console.log("take boking")
+              }})
+
       console.log(orderData, id)
       }
     })
     // console.log(reservationCode)
-
-    axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/' + id)
-    .then(res => {
-      const transaction = res.data;
-      if(this.state.whatBooking === 'deleteBooking'){
-        this.bookingDo()
-        this.addSelectedReservation(id)
-        console.log("edit", transaction, this.state.dataTrx)
-      }
-      if(this.state.whatBooking === 'editBooking') {
-        console.log("edit", transaction)
-      }
-      if(this.state.whatBooking === 'takeBooking') {
-        console.log("take", transaction)
-      }
-    })
   }
+
+  deleteOrder = (id) => {
+    this.bookingDelete()
+    this.addSelectedReservation(id)
+    console.log("do delete booking") 
+  }
+
+  editOrder = (id) => {
+    this.bookingEdit()
+    this.addSelectedReservation(id)
+    console.log("do edit booking") 
+  }
+  takeOrder = (id) => {
+    this.bookingTake()
+    this.addSelectedReservation(id)
+    console.log("do edit booking") 
+  }
+
+  // deleteOrder = (id) => {
+  //   axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/' + id)
+  //   .then(res => {
+  //     const transaction = res.data;
+  //     if(this.state.whatBooking === 'deleteBooking'){
+  //       this.bookingDo()
+  //       this.addSelectedReservation(id)
+  //       console.log("edit", transaction, this.state.dataTrx)
+  //     }
+  //     if(this.state.whatBooking === 'editBooking') {
+  //       console.log("edit", transaction)
+  //     }
+  //     if(this.state.whatBooking === 'takeBooking') {
+  //       console.log("take", transaction)
+  //     }
+  //   })
+  // }
 
   deleteReservation(id) {
     axios.delete(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/` + id)
