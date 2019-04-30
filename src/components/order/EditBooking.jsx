@@ -17,22 +17,22 @@ const EditBooking = (props) => {
                 <Row className="SidebarBody">
                     <Col sm={5}>
                         <h7 className="mb-0">PEMESAN</h7>
-                        <Input value={props.cartStore.state.dataTrx.nama} className="input pemesan" placeholder="NAMA"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input value={props.cartStore.state.dataTrx.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={3}>
                         <h7 className="mb-0">JAM SELESAI</h7>
-                        <Input value="JamSelesai" className="input jam" placeholder="HH-MM"></Input>
+                        <Input style={{ color: "white" }} value="JamSelesai" className="input jam" placeholder="HH-MM"></Input>
                     </Col>
                 </Row>
 
                 <Row className="Sidebar">
                     <Col sm={5}>
-                        <Input value={props.cartStore.state.dataTrx.alamat} className="input alamat" type="textarea" placeholder="ALAMAT"></Input>
-                        <Input value={props.cartStore.state.dataTrx.telepon} className="input telepon" placeholder="TELEPON"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.alamat} className="input alamat" type="textarea" placeholder="ALAMAT"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.telepon} className="input telepon" placeholder="TELEPON"></Input>
                     </Col>
                     <Col sm={7}>
                         <Input value={props.cartStore.state.dataTrx.catatan} className="input-note" type="textarea" placeholder="CATATAN"></Input>
@@ -48,15 +48,17 @@ const EditBooking = (props) => {
                             <FormGroup row>
                                 <Label sm={3} className="control-label">BIAYA TAMBAHAN</Label>
                                 <Col sm={9}>
-                                <div className='input-keyboard-wrapper'>
+                                <div className={props.cartStore.state.activeInputEditBooking === 'biaya_tambahan' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                                 <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
-                                    value={props.cartStore.state.dataTrx.add_fee}
-                                    name="biaya_tambahan" id="biaya_tambahan"
-                                    prefix={'Rp '}
+                                    value={props.cartStore.state.valueInputEditBooking["biaya_tambahan"] || props.cartStore.state.dataTrx.add_fee || ""}
+                                    name="biaya_tambahan" id="biaya_tambahan" onChange={props.cartStore.onChangeEditBooking}
+                                    prefix={'Rp '} onFocus={props.cartStore.moveCaretAtEnd}
                                 />
                                 <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
-                                    value={props.cartStore.state.dataTrx.add_fee}
-                                    name="biaya_tambahan" id="biaya_tambahan"
+                                    value={props.cartStore.state.valueInputEditBooking["biaya_tambahan"] || props.cartStore.state.dataTrx.add_fee || ""}
+                                    name="biaya_tambahan" id="biaya_tambahan" onChange={props.cartStore.onChangeEditBooking}
+                                    onFocus={props.cartStore.setActiveInputEditBooking} 
+
                                 />
                                 </div>
                                 </Col>
@@ -65,15 +67,16 @@ const EditBooking = (props) => {
                             <FormGroup row>
                                 <Label sm={3} className="control-label">DISKON</Label>
                                 <Col sm={7}>
-                                    <div className='input-keyboard-wrapper'>
+                                    <div className={props.cartStore.state.activeInputEditBooking === 'discount' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                                     <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
-                                        value={props.cartStore.state.dataTrx.discount}
-                                        name="discount" id="discount"
-                                        prefix={'Rp '}
+                                        value={props.cartStore.state.valueInputEditBooking["discount"] || props.cartStore.state.dataTrx.discount}
+                                        name="discount" id="discount" onChangeAll={props.cartStore.onChangeEditBooking.bind(this)}
+                                        prefix={'Rp '} onFocus={props.cartStore.moveCaretAtEnd}
                                     />
                                     <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
-                                        value={props.cartStore.state.dataTrx.discount}
-                                        name="discount" id="discount"
+                                        value={props.cartStore.state.valueInputEditBooking["discount"] || props.cartStore.state.dataTrx.discount}
+                                        name="discount" id="discount" onChangeAll={props.cartStore.onChangeEditBooking.bind(this)}
+                                        onFocus={props.cartStore.setActiveInputEditBooking} 
                                     />
                                     </div>
                                 </Col>
@@ -94,15 +97,15 @@ const EditBooking = (props) => {
                             <FormGroup row>
                                 <Label sm={3} className="control-label">UANG MUKA<br/><i className="far fa-times-circle notif-close"></i><span className="notif"> Belum dibayar</span></Label>
                                 <Col sm={9}>
-                                <div className='input-keyboard-wrapper'>
+                                <div className={props.cartStore.state.activeInputEditBooking === 'uang_muka' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                                 <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
                                     value={props.cartStore.state.dataTrx.uang_muka}
                                     name="uang_muka" id="uang_muka"
-                                    prefix={'Rp '} 
+                                    prefix={'Rp '} onFocus={props.cartStore.moveCaretAtEnd}
                                 />
                                 <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
                                     value={props.cartStore.state.dataTrx.uang_muka}
-                                    name="uang_muka" id="uang_muka"
+                                    name="uang_muka" id="uang_muka" 
                                 />
                                 </div>
                                 </Col>
@@ -111,7 +114,7 @@ const EditBooking = (props) => {
                             <FormGroup row>
                                 <Label sm={3} className="approval">APPROVAL</Label>
                                 <Col sm={6}>
-                                    <Input className="input-lg approval" ></Input>
+                                    <Input type="password" className="input-lg approval" ></Input>
                                 </Col>
                                 <Col sm={3}>
                                     <Button onClick={() => props.modalStore.toggleModal('bayar', '')} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>

@@ -40,8 +40,8 @@ const initialState = {
   valueInputPayment: '',
   activeInputBooking: '',
   valueInputBooking: '',
-  activeInputBookingPayment: '',
-  valueInputBookingPayment: '',
+  activeInputEditBooking: '',
+  valueInputEditBooking: '',
   isTransactionListShow: false,
   isReservationListShow: false,
   isRefundShow: false,
@@ -90,7 +90,6 @@ class CartsContainer extends Container {
   // ===============
   onAddToCart = this.onAddToCart.bind(this);
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
-
   onAddToCart(selectedProduct) {
 
     let id = selectedProduct.id
@@ -407,7 +406,7 @@ addSelectedTransaction(id, idx) {
   }
 
   discountPrice(){
-    let discount = this.state.discountAmount || this.state.valueInputPayment["paymentDiscount"] || this.state.valueInputBooking["paymentDiscount"]
+    let discount = this.state.valueInputPayment["paymentDiscount"] || this.state.valueInputBooking["paymentDiscount"] || this.state.discountAmount
     let sumTotalAmount = parseInt( this.state.totalAmount )
     if(discount === undefined || discount === ''){
       discount = 0;
@@ -688,6 +687,24 @@ addSelectedTransaction(id, idx) {
     console.log("Input change", valueInputBooking)
   }
 
+  setActiveInputEditBooking = (event) => {
+    document.getElementById(event.target.id).focus();
+    this.setState({
+      activeInputEditBooking: event.target.id,
+    },
+      () => {
+        console.log("setActiveInput", this.state.activeInputEditBooking)
+      }
+    )
+  }
+
+  onChangeEditBooking = (valueInputEditBooking) => {
+    this.setState({
+      valueInputEditBooking: valueInputEditBooking.target.value
+    })
+    console.log("Input change", valueInputEditBooking.target.value)
+  }
+
   onKeyPressPayment = (button) => {
     console.log("Button pressed", button);
 
@@ -794,17 +811,17 @@ addSelectedTransaction(id, idx) {
     console.log("Input changed", valueInputRefund);
   };
 
-  handleChange= (event) => {
-    if (this.state.activeInputBooking === 'bookingAddition'){
-      this.setState({expenseAmount: event.target.value})
-    } 
-    else if (this.state.activeInputBooking === 'paymentDiscount'){
-      this.setState({discountAmount: event.target.value})
-    }
-    else if (this.state.activeInputBooking === 'bookingPayment'){
-      this.setState({bookingAmount: event.target.value})
-    }
-  }
+  // handleChange= (event) => {
+  //   if (this.state.activeInputBooking === 'bookingAddition'){
+  //     this.setState({expenseAmount: event.target.value})
+  //   } 
+  //   else if (this.state.activeInputBooking === 'paymentDiscount'){
+  //     this.setState({discountAmount: event.target.value})
+  //   }
+  //   else if (this.state.activeInputBooking === 'bookingPayment'){
+  //     this.setState({bookingAmount: event.target.value})
+  //   }
+  // }
 
   handleRefundChange= (event) => {
     console.log("PENCET", this.state.selectedRefund, this.state.valueInputRefund)
@@ -815,6 +832,14 @@ addSelectedTransaction(id, idx) {
       this.setState({selectedRefund: event.target.value, whatRefund: event.target.value})
     }
   }
+
+  // handleBookingChange= (event) => {
+  //   if (this.state.activeInputEditBooking === 'biaya_tambahan'){
+  //     this.setState({add_fee: event.target.value})
+  //   }else{
+  //     console.log('wew')
+  //   }
+  // }
 
   doTransaction(user_id, items) {
     items.forEach((x) => 

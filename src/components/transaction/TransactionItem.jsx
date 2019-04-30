@@ -7,18 +7,6 @@ import './TransactionItem.scss'
 const TransactionItem = (props) => {
   return (
     <div>
-        {/* <tbody> */}
-          {/* <tr> */}
-            {/* <a href="#" style={{ color: "black" }} onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxIndex)}>
-            <td className="table-transaction"> {props.trxIndex} {props.trxName}</td>
-            <td>{props.trxDate}</td> 
-            </a>
-            
-
-            <hr className="garis-pembatas"/> */}
-          {/* </tr> */}
-        {/* </tbody>      */}
-
       <Row>
         <Col sm="6" className="transaction-list">
           <a className="open-transaction" href="#" style={{ color: "black" }} onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxIndex)}>

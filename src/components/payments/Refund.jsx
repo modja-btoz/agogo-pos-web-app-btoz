@@ -58,7 +58,7 @@ const Refund = (props) => {
             <CalcNumericRefund
               cartStore={props.cartStore} 
               onEnterRefund={props.cartStore.onEnterRefund} 
-              inputName={props.cartStore.state.inputName}
+              // inputName={props.cartStore.state.inputName}
             />
             
           </Col>

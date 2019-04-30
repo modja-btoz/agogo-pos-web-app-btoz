@@ -11,7 +11,7 @@ const CartBookingTotal = (props) => {
             </tr>
             <tr className="cart-subtotal">
                 <td scope="row">Biaya Tambahan</td>
-                <td className="subtotal-price"><NumberFormat prefix={'Rp '} value={props.cartStore.state.expenseAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} /></td>
+                <td className="subtotal-price"><NumberFormat prefix={'Rp '} onChange={props.cartStore.handleBookingChange} value={props.cartStore.state.expenseAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} /></td>
             </tr>
             <tr className="cart-subtotal">
                 <td scope="row">Diskon</td>

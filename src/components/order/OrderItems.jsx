@@ -10,14 +10,14 @@ class OrderItems extends Component {
 
   componentDidMount(){
     console.log("ETSTTTTTT", this.props.transactionStore)
-
+    // this.props.transactionStore.fetchReservation()
   }
 
   render(){
 
     return (
 
-      <Row className="OrderItems row m-0">
+      <Row className="ReservationItems row m-0">
 
       { this.props.transactionStore.state.reservationStore.map((transaction, i) => 
       <Col xs="7">
