@@ -17,15 +17,15 @@ const DeleteBooking = (props) => {
                 <Row className="SidebarBodyBooking">
                     <Col sm={5}>
                         <h7 className="mb-0">PEMESAN</h7>
-                        <Input value={props.cartStore.state.dataTrx.nama} className="input pemesan" placeholder="NAMA"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input value={props.cartStore.state.dataTrx.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={3}>
                         <h7 className="mb-0">JAM SELESAI</h7>
-                        <Input value="JamSelesai" className="input jam" placeholder="HH-MM"></Input>
+                        <Input style={{ color: "white" }} value="JamSelesai" className="input jam" placeholder="HH-MM"></Input>
                     </Col>
                 </Row>
 

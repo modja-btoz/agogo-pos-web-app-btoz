@@ -25,6 +25,13 @@
     margin-left: 15px;
 }
 
+.img-product{
+    width: 250px;
+    height: 215px;
+    margin: auto;
+    background-color: orange;
+  }
+
 .select-view-product {
     font-weight: bold;
     font-style: italic;
@@ -66,7 +73,7 @@
 
 .edit {
     border-radius: 1px;
-    color: gray;
+    color: brown;
     padding-left: 10px;
     font-size: 20px;
 }
@@ -144,5 +151,5 @@ span.date {
      padding-left: 5px;
      color: white;
  }
-
+ 
 
