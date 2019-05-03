@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CartProductionTotal = () => {
+const CartProductionTotal = (props) => {
     return (
         <tfoot className="tfoot-booking">
             <tr className="cart-total">
@@ -12,7 +12,7 @@ const CartProductionTotal = () => {
                 <th>
                     SISA STOK
                 </th>
-                <th>-</th>
+                <th><h2>{props.cartStore.state.selectedProduct.stock ? props.cartStore.state.selectedProduct.stock : "-"}</h2></th>
             </tr>
         </tfoot>
     )

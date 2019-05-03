@@ -9,6 +9,7 @@ const initialState = {
   selectedItems: [],
   selectedProduct: {},
   selectedTransaction: {},
+  dataReservation : {},
   isAdded: false,
   isCalcNumericCartOpen: false,
   inputQtyCartItem: '',
@@ -30,9 +31,9 @@ const initialState = {
   isOrderBookingDeleteShow: false,
   isOrderBookingEditShow: false,
   isOrderBookingTakeShow: false,
-  isBookingDelete: false,
-  isBookingEdit: false,
-  isBookingTake: false,
+  isBookingDeleteShow: false,
+  isBookingEditShow: false,
+  isBookingTakeShow: false,
   isDeleteBookingShow: false,
   isEditBookingShow: false,
   isTakeBookingShow: false,
@@ -57,6 +58,7 @@ const initialState = {
   whatBooking: '',
   dpReservationAmount: 0,
   leftToPay: 0,
+  date: '',
   popStatus: false
 };
 
@@ -135,23 +137,32 @@ class CartsContainer extends Container {
   }
 
 
-  addSelectedProduct(idx, id, name, qty, price) {
-    this.setState(
-      {
-        selectedProduct: {
-          idx: idx,
-          id: id,
-          name: name,
-          qty: qty,
-          price: price
+  addSelectedProduct(idx, id, name, qty, price, active_path) {
+    if(active_path === '/cashier'){
+      this.setState(
+        {
+          selectedProduct: {
+            idx: idx,
+            id: id,
+            name: name,
+            qty: qty,
+            price: price
+          }
+        },
+        () => {
+          this.onAddToCart(this.state.selectedProduct);
+          console.log(this.state.selectedProduct)
+          console.log(this.state.items)
         }
-      },
-      () => {
-        this.onAddToCart(this.state.selectedProduct);
-        console.log(this.state.selectedProduct)
-        console.log(this.state.items)
-      }
-    );
+      );
+    }
+    if (active_path === '/production'){
+      axios.get('http://101.255.125.227:82/api/product/' + id).then(res => {
+        const product = res.data;
+        this.setState({selectedProduct: product})
+        console.log(product)
+      })
+    }
   }
 
 addSelectedTransaction(id, idx) {
@@ -238,6 +249,41 @@ addSelectedTransaction(id, idx) {
     })
     console.log(reservationCode)
     }
+
+
+  takeReservation(what_id) {
+    axios.put('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/' + what_id, {status: 'PAID'})
+  }
+
+  editReservation(user_now, data, what_id) {
+    console.log(user_now, data, what_id)
+    this.deleteReservation(what_id)
+    this.addReservation(user_now, data)
+  }
+  addReservation(user_now, data) {
+    let trx = this.state.items;
+    trx.forEach((trx) => this.state.selectedItems.push({
+    nama		: data.nama,
+    tgl_selesai	: data.tgl_selesai,
+    alamat	: data.alamat,
+    telepon	: data.telepon,
+    catatan	: data.catatan,
+    user_id	: user_now.id,
+    qty		: trx.qty,
+    product_id: trx.id,
+    price 	: trx.price,
+    subtotal	: this.state.totalAmount,
+    diskon	: this.state.discountAmount,
+    add_fee	: this.state.expenseAmount,
+    uang_muka	: this.state.dpReservationAmount,
+    total		: this.state.grandTotalAmountDiscount,
+    dibayar	: "",
+    kembali	: "",
+    status	: "UNPAID"
+    }
+    ))
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
+  }
 
   doRefund() {
     let refundCode = this.state.whatRefund + '-' + (this.state.valueInputRefund["refundCode"] || "")
@@ -362,6 +408,7 @@ addSelectedTransaction(id, idx) {
     let sumTotalAmount = this.state.totalAmount
     let otherExpenses = parseInt( this.state.expenseAmount )
     let grandTotalAmount = parseInt( sumTotalAmount - otherExpenses )
+    let dpReservationAmount = parseInt(this.state.dpReservationAmount)
     
     let discountAmount;
     if(this.state.discountType === '%'){
@@ -378,9 +425,10 @@ addSelectedTransaction(id, idx) {
     },
       () => {
         let grandTotalAmountDiscount = parseInt( sumTotalAmount - discountAmount + otherExpenses )
+        let leftToPay = parseInt (grandTotalAmountDiscount - dpReservationAmount)
         this.setState({
           grandTotalAmountDiscount: grandTotalAmountDiscount,
-          leftToPay: grandTotalAmountDiscount - this.state.dpReservationAmount
+          leftToPay: leftToPay
         },
           () => {
             this.sumChangePayment()
@@ -676,15 +724,49 @@ addSelectedTransaction(id, idx) {
     )
   }
 
+  // changeBook = event => {
+
+  // }
+
   onChangeBooking = valueInputBooking => {
-    this.setState({
-      valueInputBooking: valueInputBooking
-    },
-      () => {
-        this.sumGrandTotalAmount()
-      }
-    )
-    console.log("Input change", valueInputBooking)
+    valueInputBooking.preventDefault()
+    if(this.state.activeInputBooking === "bookingAddition"){
+      const add_fee = valueInputBooking.target.value
+      this.setState({expenseAmount: add_fee}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
+    }
+    if(this.state.activeInputBooking === "paymentDiscount"){
+      const discount = valueInputBooking.target.value
+      this.setState({discountAmount: discount}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+    }
+    if(this.state.activeInputBooking === "bookingPayment"){
+      const dp = valueInputBooking.target.value
+      this.state.dataReservation["status"] = "UNPAID";
+      this.setState({dpReservationAmount: dp}, () => this.sumGrandTotalAmount(), this.state.dataReservation["dibayar"] = this.state.dpReservationAmount)
+    } 
+    if (this.state.activeInputBooking === 'bookingName'){
+      const name = valueInputBooking.target.value
+      this.state.dataReservation["nama"] = name;
+    }
+    if (this.state.activeInputBooking === 'bookingDate'){
+      const date = valueInputBooking.target.value
+      this.state.dataReservation["tgl_selesai"] = date;
+    }
+    if (this.state.activeInputBooking === 'bookingTime'){
+      const time = valueInputBooking.target.value
+      this.state.dataReservation["jam_selesai"] = time;
+    }
+    if (this.state.activeInputBooking === 'bookingAddress'){
+      const address = valueInputBooking.target.value
+      this.state.dataReservation["alamat"] = address;
+    }
+    if (this.state.activeInputBooking === 'bookingPhone'){
+      const phone = valueInputBooking.target.value
+      this.state.dataReservation["telepon"] = phone;
+    }
+    if (this.state.activeInputBooking === 'bookingNote'){
+      const note = valueInputBooking.target.value
+      this.state.dataReservation["catatan"] = note;
+    }
   }
 
   setActiveInputEditBooking = (event) => {
@@ -833,6 +915,15 @@ addSelectedTransaction(id, idx) {
     }
   }
 
+  handleDiscountChange= (event) => {
+    if (this.state.discountType === 'Rp'){
+      this.setState({discountType: event.target.value})
+    }
+    if (this.state.discountType === '%'){
+      this.setState({discountType: event.target.value})
+    }
+  }
+
   // handleBookingChange= (event) => {
   //   if (this.state.activeInputEditBooking === 'biaya_tambahan'){
   //     this.setState({add_fee: event.target.value})
@@ -932,7 +1023,24 @@ addSelectedTransaction(id, idx) {
     console.log(id)
   }
 
+  getCurrentDate(){
+    var that = this;
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    var hours = new Date().getHours(); //Current Hours
+    var min = new Date().getMinutes(); //Current Minutes
+    var sec = new Date().getSeconds(); //Current Seconds
+    that.setState({
+      //Setting the value of the date time
+      date:
+        date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+    });
+  }
 
 }
+
+
+
 
 export default CartsContainer

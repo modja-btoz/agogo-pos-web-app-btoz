@@ -63,7 +63,7 @@ const TakeBooking = (props) => {
                             </FormGroup>
                             <FormGroup row>
                                 <Col className="btn btn-deleted">
-                                    <Button size="lg" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
+                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.takeReservation(props.cartStore.state.dataTrx.id)} size="lg" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
                                 </Col>
                             </FormGroup>
                         </Form>

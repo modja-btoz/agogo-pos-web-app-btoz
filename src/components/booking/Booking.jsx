@@ -25,8 +25,10 @@
 
             this.toggle = this.toggle.bind(this);
             this.state = {
-                popoverOpen: false
+                popoverOpen: false,
+                userLoggedIn: []
             };
+
         }
 
         toggle() {
@@ -39,6 +41,8 @@
         componentDidMount(){
             this.props.transactionStore.fetchReservation()
             console.log("UWOWO ~~~~~~~~~~~~~ ", this.props.transactionStore);
+            const user = JSON.parse(sessionStorage.getItem('usernow'))
+            this.setState({userLoggedIn: user});
         
         }
 
@@ -115,7 +119,7 @@
                             {this.props.cartStore.state.isOrderBookingShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <OrderBooking cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <OrderBooking userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isOrderBookingDeleteShow &&
@@ -145,7 +149,7 @@
                             {this.props.cartStore.state.isBookingEditShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <EditBooking transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <EditBooking userNow={this.state.userLoggedIn} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isBookingTakeShow &&

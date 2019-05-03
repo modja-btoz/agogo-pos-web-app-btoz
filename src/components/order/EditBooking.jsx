@@ -81,16 +81,12 @@ const EditBooking = (props) => {
                                     </div>
                                 </Col>
                                 <Col sm={2}>
-                                    <FormGroup check>
-                                        <Label check>
-                                            <Input className="radio sm" size="sm" type="radio" name="radio1" /> {' '} %
-                                        </Label>
-                                    </FormGroup>
-                                    <FormGroup check>
-                                        <Label check>
-                                            <Input className="radio sm" size="sm" type="radio" name="radio1" /> {' '} Rp
-                                        </Label>
-                                    </FormGroup>
+                                <FormGroup check>
+                                    <Input checked={props.cartStore.state.discountType === "Rp"} onChange={props.cartStore.handleDiscountChange} value="Rp" className="radio sm" size="sm" type="radio" name="Rp" id="Rp" /><Label check> Rp </Label>
+                                </FormGroup>
+                                <FormGroup check>
+                                    <Input checked={props.cartStore.state.discountType === "%"} onChange={props.cartStore.handleDiscountChange} value="%" className="radio sm" size="sm" type="radio" name="%" id="%" /><Label check> % </Label>
+                                </FormGroup>   
                                 </Col>
                             </FormGroup>
 
@@ -117,7 +113,7 @@ const EditBooking = (props) => {
                                     <Input type="password" className="input-lg approval" ></Input>
                                 </Col>
                                 <Col sm={3}>
-                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '')} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
+                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.editReservation(props.userNow, props.cartStore.state.dataTrx, props.cartStore.state.dataTrx.id)} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
                                 </Col>
                             </FormGroup>
                         </Form>

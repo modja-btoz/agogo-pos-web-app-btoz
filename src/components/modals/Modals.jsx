@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Subscribe } from 'unstated'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Input, Row } from 'reactstrap';
 import './Modal.scss';
+import CalcNumeric from '../calcs/CalcNumericRefund';
 
 import RootContainer from '../../containers/RootContainer'
 import ModalsContainer from '../../containers/ModalsContainer'
@@ -11,7 +12,36 @@ class Modals extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      //defauilt value of the date time
+      date: '',
+      days: [
+        "Minggu",
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Saturday"
+    ]
+    // console.log(days[new Date().getDay()]);
+    };
   };
+
+  componentDidMount() {
+    var that = this;
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    // var hours = new Date().getHours(); //Current Hours
+    // var min = new Date().getMinutes(); //Current Minutes
+    // var sec = new Date().getSeconds(); //Current Seconds
+    that.setState({
+      //Setting the value of the date time
+      date:
+        date + '/' + month + '/' + year,
+    });
+  }
 
   clearCartCloseModal = (props) => {
     this.props.cartStore.clearCart()
@@ -87,6 +117,64 @@ class Modals extends Component {
             <i className="fas fa-times font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil Disimpan!</h2>
             <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> OK</Button>
+          </ModalBody>
+        </Modal>
+      );
+      case 'production':
+        return (
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size="lg" centered style={{width: '1100px'}}>
+          <ModalBody className="p-5" style={{width: "1150px"}}>
+            <Row>
+              <div className="date"><span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
+            </Row>
+            <Row>
+            <div className="date">{this.props.cartStore.state.selectedProduct.name}</div>
+            </Row>
+            <Row className="SidebarBody" >
+
+              {/* LEFT */}
+              
+              <Col xs='3.5'>
+                <div className="view-img" centered>
+                    <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
+                </div>
+                </Col>
+                <Col xs='3'>
+                
+                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
+                <div className={this.props.cartStore.state.activeInputRefund === 'refundCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                  <Input className="input-masking mb-4" type="text" placeholder="Jumlah Produksi" bsSize="lg" 
+                    value={this.props.cartStore.state.valueInputRefund["refundCode"] || "" ? this.props.cartStore.state.valueInputRefund["refundCode"] || "" : ""}
+                    name="refundCode" id="refundCode"
+                    onFocus={this.props.cartStore.setActiveInputRefund}
+                    autoFocus
+                  />
+                </div>
+
+                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
+                <div className={this.props.cartStore.state.activeInputApproval === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                  <Input className="input-masking mb-4" type="text" placeholder="Approval" bsSize="lg" 
+                    value={this.props.cartStore.state.valueInputRefund["approvalCode"] || ""}
+                    name="approvalCode" id="approvalCode" type="password"
+                    onFocus={this.props.cartStore.setActiveInputRefund}
+                  />
+                </div>
+
+                <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> OK</Button>
+
+                </Col>
+
+                <Col xs='3'>
+                <CalcNumeric
+                  cartStore={this.props.cartStore} 
+                  onEnterRefund={this.props.cartStore.onEnterRefund} 
+                  // inputName={this.props.cartStore.state.inputName}
+                />
+                </Col>
+  
+              {/* RIGHT */}
+                     
+              </Row>
           </ModalBody>
         </Modal>
       );

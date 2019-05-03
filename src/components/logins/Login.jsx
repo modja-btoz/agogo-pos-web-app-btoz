@@ -21,7 +21,7 @@ class Login extends Component {
   state = {
     users: [],
     user: [],
-    userAvatar: 'https://cdn4.vectorstock.com/i/1000x1000/81/08/cook-chef-logo-or-label-restaurant-concept-vector-20578108.jpg',
+    userAvatar: '',
     password: '',
     username: '',
     redirect: false
@@ -46,7 +46,7 @@ class Login extends Component {
         console.log(this.state.user)
         this.setState({
           username: this.state.user.username,
-          // userAvatar: this.state.user.avatar_urls['96']
+          userAvatar: this.state.user.photo
         },
         () => {
           sessionStorage.setItem('usernow', JSON.stringify(this.state.user));

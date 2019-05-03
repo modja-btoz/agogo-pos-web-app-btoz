@@ -16,12 +16,14 @@ const ProductItems = (props) => {
           productName={product.name} 
           productQty={1} 
           productPrice={product.price}
+          productStok={product.stock}
           // productImage={product._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url} 
-          productImage="http://dev.wakwaw.com/agogo/wp-content/uploads/2018/11/donut.jpeg" 
+          productImage={product.photo} 
           colorTitle="text-white"
           products={props.products}
           cartStore={props.cartStore} 
           isAdded={props.cartStore.state.isAdded}
+          activePath={props.activePath}
         />
       </Col>
       )}    

@@ -14,7 +14,7 @@ const UserList = (props) => {
               user={user} 
               userID={user.id} 
               userName={user.username} 
-              userAvatar="https://cdn4.vectorstock.com/i/1000x1000/81/08/cook-chef-logo-or-label-restaurant-concept-vector-20578108.jpg"
+              userAvatar={user.photo}
               colorTitle="text-white" colorSubTitle="text-orange" 
             />
           </div>
