@@ -10,6 +10,9 @@ const initialState = {
   selectedProduct: {},
   selectedTransaction: {},
   dataReservation : {},
+  production: [],
+  product: {},
+  produksi: {total: 0, rusak: 0, lain: 0, catatan: ""},
   isAdded: false,
   isCalcNumericCartOpen: false,
   inputQtyCartItem: '',
@@ -72,6 +75,12 @@ class CartsContainer extends Container {
   clearCart = () => {
     console.log("CLEAR CART", this.state.selectedItems)
     this.setState(initialState);
+  }
+
+  resetProduct = () => {
+    console.log("CLEAR CART", this.state.selectedItems)
+    this.setState({valueInputRefund: '',
+                  activeInputRefund: '',});
   }
 
   componentWillMount(){
@@ -138,7 +147,7 @@ class CartsContainer extends Container {
 
 
   addSelectedProduct(idx, id, name, qty, price, active_path) {
-    if(active_path === '/cashier'){
+    if(active_path === '/cashier' || active_path === '/booking'){
       this.setState(
         {
           selectedProduct: {
@@ -161,7 +170,42 @@ class CartsContainer extends Container {
         const product = res.data;
         this.setState({selectedProduct: product})
         console.log(product)
+        // product["produksi1"] = 0
+        // product["produksi2"] = 0
+        // product["produksi3"] = 0
+        let index = this.state.production.findIndex( x => x.id === id);
+        
+        if(index === -1 || id === index){
+          this.state.production.push(product)
+          console.log(this.state.production)
+        } else {
+          console.log("produsk")
+          console.log(this.state.production)
+        }
+
       })
+      this.doProduction(id)
+      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/TrxByProduct/` + id).then(res => {
+      const pesan = res.data;
+      let index = this.state.production.findIndex( x => x.id === id)
+      this.state.produksi["total"+this.state.selectedProduct.name] = pesan.count_order
+      this.state.produksi["pemesanan"+this.state.selectedProduct.name] = pesan.count_preorder
+      this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
+      this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = pesan.stok_kemarin
+      this.setState({
+        production: [
+           ...this.state.production.slice(0,index),
+           Object.assign({}, this.state.production[index], {penjualan_toko: pesan.count_order},
+                                                           {penjualan_pemesanan: pesan.count_preorder},
+                                                           {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
+                                                           {stock_awal: pesan.stok_kemarin},
+                                                           {catatan: ""},
+                                                           {sisa_stock: parseInt(pesan.stok_kemarin || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)},
+                                                           {product_id: id}),
+           ...this.state.production.slice(index+1)
+        ]
+      })
+      }) 
     }
   }
 
@@ -767,6 +811,18 @@ addSelectedTransaction(id, idx) {
       const note = valueInputBooking.target.value
       this.state.dataReservation["catatan"] = note;
     }
+    if (this.state.activeInputBooking === 'note'+this.state.selectedProduct.name){
+      const note = valueInputBooking.target.value
+      this.state.produksi["note"+this.state.selectedProduct.name] = note;
+      let index = this.state.production.findIndex( x => x.id === this.state.selectedProduct.id)
+      this.setState({
+        production: [
+           ...this.state.production.slice(0,index),
+           Object.assign({}, this.state.production[index], {catatan: note || ""}),
+           ...this.state.production.slice(index+1)
+        ]
+      })
+    }
   }
 
   setActiveInputEditBooking = (event) => {
@@ -875,11 +931,20 @@ addSelectedTransaction(id, idx) {
     })
   }
 
+  resetActiveInputRefund = () => {
+    this.setState({
+      activeInputRefund: ""
+    },
+      () => {
+        console.log("resetActiveInput", this.state.activeInputRefund)
+      }
+    );
+  }
   setActiveInputRefund = (event) => {
     // console.log('event', event.target.id)
     document.getElementById(event.target.id).focus();
     this.setState({
-      activeInputRefund: event.target.id
+      activeInputRefund: event.target.id || 0
     },
       () => {
         console.log("setActiveInput", this.state.activeInputRefund)
@@ -888,7 +953,7 @@ addSelectedTransaction(id, idx) {
   }
   onChangeRefund = valueInputRefund => {
     this.setState({
-      valueInputRefund: valueInputRefund
+      valueInputRefund: valueInputRefund || 0
     });
     console.log("Input changed", valueInputRefund);
   };
@@ -1000,44 +1065,156 @@ addSelectedTransaction(id, idx) {
     console.log("do edit booking") 
   }
 
-  // deleteOrder = (id) => {
-  //   axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/' + id)
-  //   .then(res => {
-  //     const transaction = res.data;
-  //     if(this.state.whatBooking === 'deleteBooking'){
-  //       this.bookingDo()
-  //       this.addSelectedReservation(id)
-  //       console.log("edit", transaction, this.state.dataTrx)
-  //     }
-  //     if(this.state.whatBooking === 'editBooking') {
-  //       console.log("edit", transaction)
-  //     }
-  //     if(this.state.whatBooking === 'takeBooking') {
-  //       console.log("take", transaction)
-  //     }
-  //   })
-  // }
+  deleteSelectedOrder(id) {
+    axios.delete(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/` + id)
+    console.log(id)
+  }
 
   deleteReservation(id) {
     axios.delete(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/` + id)
     console.log(id)
   }
 
-  getCurrentDate(){
-    var that = this;
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    var sec = new Date().getSeconds(); //Current Seconds
-    that.setState({
-      //Setting the value of the date time
-      date:
-        date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
-    });
+  doProduction = (id) => {
+    let qty = this.state.valueInputRefund["refundCode1"] || this.state.valueInputRefund["refundCode2"] || this.state.valueInputRefund["refundCode3"]
+              || this.state.valueInputRefund["refundCode4"] || this.state.valueInputRefund["refundCode5"]
+    let index = this.state.production.findIndex( x => x.id === id);
+    
+    if(this.state.activeInputRefund === "refundCode1"){
+      this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty || 0
+      this.setState({
+        production: [
+           ...this.state.production.slice(0,index),
+           Object.assign({}, this.state.production[index], {produksi1: qty || 0}, {produksi2: this.state.production[index].produksi2 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+            {total_produksi: parseInt(qty || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+           {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
+           ...this.state.production.slice(index+1)
+        ]
+      })
+    }
+    if(this.state.activeInputRefund === "refundCode2"){
+      this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty || 0
+      this.setState({
+        production: [
+           ...this.state.production.slice(0,index),
+           Object.assign({}, this.state.production[index], {produksi2: qty || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+          {total_produksi: parseInt(qty || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+           {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
+           ...this.state.production.slice(index+1)
+        ]
+      })
+    }
+    if(this.state.activeInputRefund === "refundCode3"){
+      this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty || 0
+      this.setState({
+        production: [
+           ...this.state.production.slice(0,index),
+           Object.assign({}, this.state.production[index], {produksi3: qty || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi2: this.state.production[index].produksi2 || 0},
+           {total_produksi: parseInt(qty || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0)},
+           {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
+           ...this.state.production.slice(index+1)
+        ]
+      })
+    }
+    if(this.state.activeInputRefund === "refundCode4"){
+      this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty || 0
+      this.setState({
+        production: [
+           ...this.state.production.slice(0,index),
+           Object.assign({}, this.state.production[index], {ket_rusak: qty || 0}, {total_lain: parseInt(qty || 0) + parseInt(this.state.production[index].ket_lain || 0)},
+           {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
+           ...this.state.production.slice(index+1)
+        ]
+      })
+    }
+    if(this.state.activeInputRefund === "refundCode5"){
+      this.state.produksi[this.state.selectedProduct.name+"lain"] = qty || 0
+      this.setState({
+        production: [
+           ...this.state.production.slice(0,index),
+           Object.assign({}, this.state.production[index], {ket_lain: qty || 0}, {total_lain: parseInt(qty || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+           {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
+           ...this.state.production.slice(index+1)
+        ]
+      })
+    }
+    console.log(this.state.produksi)
+    console.log(this.state.production)
   }
 
+  // whatisit = (id) => {
+  //   let index = this.state.production.findIndex( x => x.id === id);
+  //   let produksi1 = this.state.production[index].produksi1
+  //   let produksi2 = this.state.production[index].produksi2
+  //   let produksi3 = this.state.production[index].produksi3
+  //   this.setState({produksi: {produksi1: produksi1, produksi2: produksi2, produksi3: produksi3}})
+  // }
+
+  // changeDate = () => {
+  //   this.state.product.push({
+  //       product_id: this.state.selectedProduct.id,
+  //       produksi1: this.state.produksi.produksi1,
+  //       produksi2: this.state.produksi.produksi2,
+  //       produksi3: this.state.produksi.produksi3,
+  //       total_produksi: this.state.produksi.produksi1+
+  //                       this.state.produksi.produksi2+
+  //                       this.state.produksi.produksi3,
+  //       penjualan_toko: this.state.produksi["total"+this.state.selectedProduct.name],
+  //       penjualan_pemesanan: this.state.produksi["pemesanan"+this.state.selectedProduct.name],
+  //       total_penjualan: this.state.produksi["total"+this.state.selectedProduct.name]+ 
+  //                         this.state.produksi["pemesanan"+this.state.selectedProduct.name],
+  //       ket_rusak: this.state.produksi[this.state.selectedProduct.name+"rusak"],
+  //       ket_lain: this.state.produksi[this.state.selectedProduct.name+"lain"],
+  //       total_lain: this.state.produksi[this.state.selectedProduct.name+"rusak"]+
+  //                   this.state.produksi[this.state.selectedProduct.name+"lain"],
+  //       catatan: "belum",
+  //       stock_awal: this.state.produksi["stok_kemarin"+this.state.selectedProduct.name],
+  //       sisa_stock: this.state.produksi["stok_kemarin"+this.state.selectedProduct.name]+
+  //                   this.state.produksi.produksi1+
+  //                   this.state.produksi.produksi2+
+  //                   this.state.produksi.produksi3-
+  //                   this.state.produksi["total"+this.state.selectedProduct.name]-
+  //                   this.state.produksi["pemesanan"+this.state.selectedProduct.name]
+  //   })
+  // }
+
+  changeDate = () => {
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, this.state.production)
+  }
+
+  // changeDate() {
+  //   axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orderByProduct/` + this.state.selectedProduct.id).then(res => {
+  //     const toko = res.data;
+  //   axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorderByProduct/` + this.state.selectedProduct.id).then(res => {
+  //     const pesan = res.data;
+  //     this.setState({
+  //       product: {
+  //         product_id: this.state.selectedProduct.id,
+  //         produksi1: this.state.produksi.produksi1,
+  //         produksi2: this.state.produksi.produksi2,
+  //         produksi3: this.state.produksi.produksi3,
+  //         total_produksi: this.state.produksi.produksi1+
+  //                         this.state.produksi.produksi2+
+  //                         this.state.produksi.produksi3,
+  //         penjualan_toko: toko,
+  //         penjualan_pemesanan: pesan,
+  //         total_penjualan: toko+pesan,
+  //         ket_rusak: this.state.produksi.rusak,
+  //         ket_lain: this.state.produksi.lain,
+  //         total_lain: this.state.produksi.rusak+
+  //                     this.state.produksi.lain,
+  //         catatan: this.state.produksi.catatan,
+  //         stock_awal: "30",
+  //         sisa_stock: this.state.selectedProduct+
+  //                     this.state.produksi.produksi1+
+  //                     this.state.produksi.produksi2+
+  //                     this.state.produksi.produksi3
+  //       }
+  //     })
+  //     }) 
+  //   })
+  //   console.log("Clicked")
+  // }
 }
 
 

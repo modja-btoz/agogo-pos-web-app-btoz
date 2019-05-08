@@ -13,7 +13,8 @@ const FooterNavRight = (props) => {
           <NavLink active={props.cartStore.state.isOpenReservationShow} onClick={() => props.cartStore.openReservation()}><i className="fas fa-edit"></i> <br />Pemesanan</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/logout"><i className="fas fa-sign-out-alt"></i> <br />Sign Out</NavLink>
+          <NavLink onClick={() => props.modalStore.toggleModal('logoutKasir', 'md')}><i className="fas fa-sign-out-alt"></i> <br />Sign Out</NavLink>
+          {/* <NavLink href="/logout" onClick={() => props.modalStore.doLogout()}><i className="fas fa-sign-out-alt"></i> <br />Sign Out</NavLink> */}
         </NavItem>
       </Nav>
     </Navbar>

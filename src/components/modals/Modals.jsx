@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Subscribe } from 'unstated'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Input, Row } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Input, Row, Label } from 'reactstrap';
 import './Modal.scss';
 import CalcNumeric from '../calcs/CalcNumericRefund';
 
@@ -29,6 +29,7 @@ class Modals extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props.cartStore.state)
     var that = this;
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
@@ -46,6 +47,11 @@ class Modals extends Component {
   clearCartCloseModal = (props) => {
     this.props.cartStore.clearCart()
     this.props.toggle()
+  }
+
+  clearToggle = () => {
+    this.props.toggle()
+    this.props.cartStore.resetProduct()
   }
 
   renderSwitch(type) {
@@ -80,14 +86,75 @@ class Modals extends Component {
       case 'logoutKasir':
         return (
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
-          <ModalHeader toggle={this.props.toggle} className="text-center d-block">Modal Logout Kasir</ModalHeader>
-          <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <ModalBody style={{margin: "10px"}}>
+            <Row>
+            <Col style={{margin: "auto"}} centered>
+            <a href="/logout">
+            <div className="my-icon">
+              <i className="fas fa-sign-out-alt mr-1 fa-7x"></i>
+              <Label className="label">Sign Out</Label>
+            </div>
+            </a>
+            </Col>
+            <Col style={{margin: "auto"}} centered>
+            <a href="#" onClick={() => this.props.toggleModal('hitungKas', 'lg')}>
+            <div className="my-icon">
+              <i className="fas fa-coins mr-1 fa-7x"></i>
+              <Label className="label">Hitung Kas</Label>
+            </div>
+            </a>
+            </Col>
+            </Row>
           </ModalBody>
           <ModalFooter className="text-center d-block">
-            <Button color="dark" onClick={this.props.toggle}>Do Something</Button>{' '}
-            <Button color="danger" onClick={this.props.toggle}>Cancel</Button>
+            <Button color="danger" style={{paddingLeft: "50px", paddingRight: "50px"}} onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i>Batal</Button>
           </ModalFooter>
+        </Modal>
+      );
+      case 'hitungKas':
+        return (
+        <Modal isOpen={!this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+        <ModalHeader className="text-center d-block">
+            Nama
+          </ModalHeader>
+        <ModalBody>
+        <Row>
+          <Col xs="8">
+          <div style={{textAlign: "left", paddingLeft: "30px"}}>
+            <h5>
+            <Label>Saldo Awal</Label>< br/>
+            <Label>Transaksi</Label>
+            <hr style={{width: 'auto'}} />
+            <Label>Saldo Akhir</Label></h5>
+          </div>
+
+          <h3>Approval</h3>
+          <div className={this.props.cartStore.state.activeInputApproval === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+              <Input className="input-masking mb-4" type="text" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
+                value={this.props.cartStore.state.valueInputRefund["approvalCode"] || ""}
+                name="approvalCode" id="approvalCode" type="password" 
+                onFocus={this.props.cartStore.setActiveInputRefund}
+              />
+          </div>
+          <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
+          <a href="/logout" color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
+          </Col>
+          <Col xs="4">
+          <CalcNumeric
+                  cartStore={this.props.cartStore} 
+                  onEnterRefund={this.props.cartStore.onEnterRefund} 
+                  // inputName={this.props.cartStore.state.inputName}
+                />
+          </Col>
+        </Row>
+        </ModalBody>
+
+
+          {/* <ModalBody className="p-5">
+            <i className="fas fa-check font-weight-bold display-3 text-red"></i>
+            <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
+            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
+          </ModalBody> */}
         </Modal>
       );
       case 'bayar':
@@ -120,47 +187,60 @@ class Modals extends Component {
           </ModalBody>
         </Modal>
       );
+      case 'changeDate':
+        return (
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          <ModalBody className="p-5">
+            <i className="fas fa-calendar-check font-weight-bold display-3 text-red"></i>
+            <h2 className="display-6 py-3">Apakah anda yakin akan mengubah posisi tanggal ke hari berikutnya ?</h2>
+            <Button className="mt-3 py-3 px-5" color="secondary" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> TIDAK</Button>{" "}
+            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={() => this.props.cartStore.changeDate()}><i class="fas fa-check mr-1"></i> YA</Button>
+          </ModalBody>
+        </Modal>
+      );
       case 'production':
         return (
-        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size="lg" centered style={{width: '1100px'}}>
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered style={{width: '1100px'}}>
           <ModalBody className="p-5" style={{width: "1150px"}}>
             <Row>
               <div className="date"><span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
             </Row>
             <Row>
-            <div className="date">{this.props.cartStore.state.selectedProduct.name}</div>
+            <div className="date">{"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name ? "Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name : ""}</div>
             </Row>
             <Row className="SidebarBody" >
 
               {/* LEFT */}
               
               <Col xs='3.5'>
-                <div className="view-img" centered>
+                <div centered>
                     <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
                 </div>
                 </Col>
                 <Col xs='3'>
                 
                 {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
-                <div className={this.props.cartStore.state.activeInputRefund === 'refundCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" type="text" placeholder="Jumlah Produksi" bsSize="lg" 
-                    value={this.props.cartStore.state.valueInputRefund["refundCode"] || "" ? this.props.cartStore.state.valueInputRefund["refundCode"] || "" : ""}
-                    name="refundCode" id="refundCode"
-                    onFocus={this.props.cartStore.setActiveInputRefund}
+                <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                  <Input className="input-masking mb-4" type="text" placeholder="Jumlah Produksi" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                    value={this.props.cartStore.state.valueInputRefund["refundCode1"] || this.props.cartStore.state.valueInputRefund["refundCode2"] || 
+                          this.props.cartStore.state.valueInputRefund["refundCode3"]  || this.props.cartStore.state.valueInputRefund["refundCode4"] ||
+                          this.props.cartStore.state.valueInputRefund["refundCode5"]}
+                    name="refundCode" id={"refundCode"+this.props.where}
+                    onFocus={this.props.cartStore.setActiveInputRefund || this.props.cartStore.resetActiveInputRefund}
                     autoFocus
                   />
                 </div>
 
                 {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
                 <div className={this.props.cartStore.state.activeInputApproval === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" type="text" placeholder="Approval" bsSize="lg" 
+                  <Input className="input-masking mb-4" type="text" placeholder="Approval" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalCode"] || ""}
                     name="approvalCode" id="approvalCode" type="password"
                     onFocus={this.props.cartStore.setActiveInputRefund}
                   />
                 </div>
 
-                <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> OK</Button>
+                <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={() => this.props.cartStore.doProduction(this.props.cartStore.state.selectedProduct.id) || this.clearToggle()}><i class="fas fa-check mr-1"></i> OK</Button>
 
                 </Col>
 
