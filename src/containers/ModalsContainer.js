@@ -6,12 +6,14 @@ class ModalsContainer extends Container {
     modal: false,
     modalType: 'reguler',
     modalSize: 'sm',
+    modalWhere : '',
   };
 
-  toggleModal = (type, size,) => {
+  toggleModal = (type, size, where) => {
     this.setState({
       modalType: type,
       modalSize: size,
+      modalWhere: where
     },
     () => {
       console.log("MODAL TYPE =>", this.state.modalType)

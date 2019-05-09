@@ -14,6 +14,7 @@ class CartProduction extends React.Component {
         this.state = {
           //defauilt value of the date time
           date: '',
+          prevDate : '',
           days: [
             "Minggu",
             "Senin",
@@ -22,7 +23,8 @@ class CartProduction extends React.Component {
             "Kamis",
             "Jumat",
             "Saturday"
-        ]
+        ],
+        index : this.props.cartStore.state.production.findIndex( x => x.id === this.props.cartStore.state.selectedProduct.id)
         // console.log(days[new Date().getDay()]);
         };
     }
@@ -39,61 +41,72 @@ class CartProduction extends React.Component {
           //Setting the value of the date time
           date:
             date + '/' + month + '/' + year,
+          prevDate:
+            (date -1) + '/' + month + '/' + year,
         });
       }
 
     render() {
         return (
             <Container className="cart mt-4 pt-5 pr-0 pl-0">
-                <Row>
-                    <Col xs="6" className="body-left">
+                <Row style={{height: "500px"}}>
+                    <Col xs="7" className="body-left">
                         <div className="date">Posisi per <span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
-                        <div className="change-date"><strong>Ubah Tanggal</strong></div>
-                        <div className="view-img">
+                        <div className="change-date" style={{marginTop: "5px"}}><a href="#" onClick={() => this.props.modalStore.toggleModal('changeDate', 'lg')}><strong>Ubah Tanggal</strong></a></div>
+                        <div className="view-img" style={{marginTop: "10px"}}>
                             <img className="img-product" src={this.props.cartStore.state.selectedProduct.photo}></img>
                         </div>
                         <div className="select-view-product">
-                            Pilih product untuk melihat stok
+                            { this.props.cartStore.state.selectedProduct.name ? this.props.cartStore.state.selectedProduct.name : "Pilih product untuk melihat stok"}
                         </div>
     
                     </Col>
-                    <Col xs="6" className="body-right">
+                    <Col xs="5" className="body-right">
                         <tr>
                             <th><i class="fas fa-plus-circle add-product"> Produksi</i></th>
                         </tr>
                         <tr>
                             <td className="production">Produksi 1</td>
-                            <td className="product-total text-right" >-</td>
-                            <td><a href="#" onClick={() => this.props.modalStore.toggleModal('production', 'md')}><i class="fas fa-pen-square edit"></i></a></td>
+                            <td className="product-total text-right" id="produksi1">{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi1"] || 0 || "-"}</td>
+                            <td><a href="#" onClick={() => this.props.modalStore.toggleModal('production', 'lg', "1")}><i class="fas fa-pen-square edit"></i></a></td>
                         </tr>
                         <tr>
                             <td className="production">Produksi 2</td>
-                            <td className="product-total text-right">-</td>
-                            <td><i class="fas fa-pen-square edit"></i></td>
+                            <td className="product-total text-right" id="produksi2">{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi2"] || 0 || "-"}</td>
+                            <td><a href="#" onClick={() => this.props.modalStore.toggleModal('production', 'lg', "2")}><i class="fas fa-pen-square edit"></i></a></td>
                         </tr>
                         <tr>
                             <td className="production">Produksi 3</td>
-                            <td className="product-total text-right">-</td>
-                            <td><i class="fas fa-pen-square edit"></i></td>
+                            <td className="product-total text-right" id="produksi3">{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi3"] || 0 || "-"}</td>
+                            <td><a href="#" onClick={() => this.props.modalStore.toggleModal('production', 'lg', "3")}><i class="fas fa-pen-square edit"></i></a></td>
                         </tr>
                         <hr/>
                         <tr>
-                            <td className="total-production">Total Produksi</td>
-                            <td className="calc-product-total text-right">-</td>
+                            <td className="production">Total Produksi</td>
+                            <td className="calc-product-total text-right">{parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi1"] || 0)+
+                                                                           parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi2"] || 0)+
+                                                                           parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi3"] || 0) || "-"
+                                                                           }</td>
                         </tr>
 
-                        <ProductionStore/>
-                        <OthersProduction/>
+                        <ProductionStore cartStore={this.props.cartStore} modalStore={this.props.modalStore}/>
+                        <OthersProduction cartStore={this.props.cartStore} modalStore={this.props.modalStore}/>
                     </Col>
                 </Row>
-                <Row>
+                <Row >
                     <Col>
-                        <Input className="note-production" type="textarea" name="catatan" placeholder="CATATAN" rows="3"></Input>
+                        <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                        <Input  value={this.props.cartStore.state.valueInputBooking["note"+this.props.cartStore.state.selectedProduct.name]}
+                                name="refundCode" id={"note"+this.props.cartStore.state.selectedProduct.name}
+                                onChange={this.props.cartStore.onChangeBooking}
+                                onFocus={this.props.cartStore.setActiveInputBooking} 
+                                className="note-production" type="textarea" name="catatan" placeholder="CATATAN" rows="7"></Input>
+                        </div>
                     </Col>
                 </Row>
 
                 <Table borderless striped>
-                    <CartProductionTotal cartStore={this.props.cartStore}/>
+                    <CartProductionTotal date={this.state} cartStore={this.props.cartStore}/>
                 </Table>
             </Container>
         )

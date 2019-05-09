@@ -46,7 +46,7 @@ class CartBooking extends React.Component {
                     autoHideDuration={200}
                     autoHeight
                     autoHeightMin={100}
-                    autoHeightMax={this.state.productItemsHeight}
+                    autoHeightMax={700}
                 >
                     <div className="scroll-wrapper">
                         <Table borderless striped className="mb-0">

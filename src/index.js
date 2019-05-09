@@ -25,6 +25,7 @@ ReactDOM.render(
         <React.Fragment>
           
           <Modals 
+            where={modalStore.state.modalWhere}
             type={modalStore.state.modalType} 
             modal={modalStore.state.modal} 
             toggle={() => modalStore.toggleModal(modalStore.state.modalType, modalStore.state.modalSize)} 

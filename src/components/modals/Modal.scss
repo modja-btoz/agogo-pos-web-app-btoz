@@ -14,6 +14,20 @@
   background-color: #fff;
 }
 
+.my-icon {
+  color: brown;
+  border-radius: 25px;
+  border: 2px solid black;
+  padding: 20px;
+  width: 200px;
+  height: 200px;
+
+  .label{
+    color: black;
+    font-size: 30px;
+  }
+}
+
 .Modal{
   color: white;
 

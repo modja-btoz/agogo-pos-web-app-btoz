@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react' 
 
 const CartProductionTotal = (props) => {
     return (
@@ -6,9 +6,9 @@ const CartProductionTotal = (props) => {
             <tr className="cart-total">
                 <th>
                     STOK AWAL <br/>
-                    <span className="date">Jum'at, 26 Oct 2018</span>    
+                    <span className="date">{props.date.days[new Date().getDay() - 1] + ", " + props.date.prevDate}</span>    
                 </th>
-                <th>-</th>
+                <th><h2>{props.cartStore.state.produksi["stok_kemarin"+ props.cartStore.state.selectedProduct.name] || "-"}</h2></th>
                 <th>
                     SISA STOK
                 </th>

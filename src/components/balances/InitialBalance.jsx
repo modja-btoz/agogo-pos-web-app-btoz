@@ -6,6 +6,7 @@ import "react-simple-keyboard/build/css/index.css";
 import "../calcs/CalcNumeric.scss";
 import '../logins/Login.scss';
 import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 import { Provider, Subscribe } from 'unstated'
 import ModalsContainer from '../modals/_ModalsContainer'
@@ -17,12 +18,21 @@ class SaldoAwal extends Component {
 
   state = {
     layoutName: 'default',
+    username: '',
     saldo: '',
     pin: '',
     keyboardSaldo: true,
     keyboardPIN: false,
-    redirect: false
+    redirect: false,
+    pos: {},
+    data: []
   };
+
+  componentDidMount(){
+    const user = JSON.parse(sessionStorage.getItem('usernow'))
+    this.setState({pos: Object.assign({}, this.state.pos, {user_id: user.id}, {saldo_akhir:0}, {transaksi:0})})
+    console.log(this)
+  }
 
   onFocus = whatInput => {
     if(whatInput === 'saldo'){
@@ -31,7 +41,14 @@ class SaldoAwal extends Component {
         keyboardPIN: false
       })
       console.log("What Input?", whatInput);
-    }else if(whatInput === 'pin'){
+    }else if(whatInput === 'username'){
+      this.setState({ 
+        keyboardPIN: false,
+        keyboardSaldo: false
+      })
+      console.log("What Input?", whatInput);
+    }
+    else if(whatInput === 'pin'){
       this.setState({ 
         keyboardPIN: true,
         keyboardSaldo: false
@@ -41,12 +58,21 @@ class SaldoAwal extends Component {
   };
 
   onChangeSaldo = saldo => {
+    this.state.pos['saldo_awal'] = saldo
     this.setState({
       saldo: saldo
     });
     console.log("Input Saldo changed", saldo);
   };
+  onChangeUsername = username => {
+    this.state.pos['username_approval'] = username
+    this.setState({
+      username: username
+    });
+    console.log("Input USERNAME changed", username);
+  };
   onChangePIN = pin => {
+    this.state.pos['pin_approval'] = pin
     this.setState({
       pin: pin
     });
@@ -55,6 +81,7 @@ class SaldoAwal extends Component {
 
   onChangeInputSaldo = event => {
     let saldo = event.target.value;
+    this.state.pos['saldo_awal'] = saldo
     this.setState(
       {
         saldo: saldo
@@ -64,8 +91,21 @@ class SaldoAwal extends Component {
       }
     );
   };
+  onChangeInputUsername = event => {
+    let username = event.target.value;
+    this.state.pos['username_approval'] = username
+    this.setState(
+      {
+        username: username
+      },
+      () => {
+        this.keyboard.setInput(username);
+      }
+    );
+  };
   onChangeInputPIN = event => {
     let pin = event.target.value;
+    this.state.pos['pin_approval'] = pin
     this.setState(
       {
         pin: pin
@@ -86,7 +126,8 @@ class SaldoAwal extends Component {
 
   onEnter = () => {
     console.log("ON ENTER")
-    this.setState({ redirect: true })
+    this.setState({ redirect: true, data: [this.state.pos] }, () => console.log(this))
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas`, this.state.data)
   }
   
 
@@ -129,16 +170,25 @@ class SaldoAwal extends Component {
                           onFocus={() => this.onFocus('saldo') } 
                           value={this.state.saldo} 
                           onChange={e => this.onChangeInputSaldo(e)}
-                          type="number" name="saldo" id="saldo" placeholder="0"  size="lg" className="text-center mt-3 mb-5" 
+                          type="number" name="saldo" id="saldo" placeholder="0"  size="lg" className="text-center mt-3 mb-3" 
                           readonly
                         />
 
+                        <Label for="pin" className="text-center d-block"><h3>Username</h3></Label>
+                        <Input 
+                          onFocus={() => this.onFocus('username') } 
+                          value={this.state.username} 
+                          onChange={e => this.onChangeInputUsername(e)}
+                          type="text" name="username" id="username" placeholder="USER"  size="lg" className="text-center mb-3" 
+                          readonly
+                        />
+                        
                         <Label for="pin" className="text-center d-block"><h3>Kode Approval</h3></Label>
                         <Input 
                           onFocus={() => this.onFocus('pin') } 
                           value={this.state.pin} 
                           onChange={e => this.onChangeInputPIN(e)}
-                          type="password" name="pin" id="pin" placeholder="PIN"  size="lg" className="text-center mb-5" 
+                          type="password" name="pin" id="pin" placeholder="PIN"  size="lg" className="text-center mb-3" 
                           readonly
                         />
 
@@ -146,7 +196,7 @@ class SaldoAwal extends Component {
                     </div>
                   </div>
 
-                  <div className={ this.state.keyboardSaldo ? "col-6 box-calc saldo" : "col-6 box-calc pin" }>
+                  <div style={{height: "auto"}} className={ this.state.keyboardSaldo ? "col-6 box-calc saldo" : "col-6 box-calc pin" }>
                     <div className="box-inner">
 
                       <div id="keyboardSaldo" className={ this.state.keyboardSaldo ? "d-block" : "d-none" }>
