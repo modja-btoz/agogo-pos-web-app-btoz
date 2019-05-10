@@ -12,7 +12,7 @@ const ReservationCheckout = (props) => {
       <Container>
         <Row className="SidebarHeader">
           <Col>
-            <NavLink onClick={() => props.cartStore.toggleReservationCheckoutShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
+            <NavLink onClick={() => props.cartStore.clearCart()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
           </Col>
         </Row>
 

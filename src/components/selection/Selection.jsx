@@ -6,6 +6,34 @@ import './Selection.css'
 
 class Selection extends Component {
 
+    constructor(props){
+        super(props)
+      }
+      state = {
+        userLoggedIn: {},
+        kasir: false,
+        stok: false,
+        pemesanan: false,
+      }
+
+    componentDidMount(){
+        console.log(this.state, sessionStorage)
+        const user = JSON.parse(sessionStorage.getItem('usernow'))
+        this.setState({userLoggedIn: user}, () => this.checkRole())
+    }
+
+    checkRole(){
+        if(this.state.userLoggedIn.role.includes("kasir")){
+            this.setState({kasir: !this.state.kasir})
+        }
+        if(this.state.userLoggedIn.role.includes("stok")){
+            this.setState({stok: !this.state.stok})
+        }
+        if(this.state.userLoggedIn.role.includes("pemesanan")){
+            this.setState({pemesanan: !this.state.pemesanan})
+        }
+    }
+
     render() {
 
         return (
@@ -13,7 +41,57 @@ class Selection extends Component {
             <Container >
                 <Row >
                     <Col sm="12" md={{ size: 6, offset: 3}} className="container-selection">
-                        <Link to={'/initial-balance'}>
+                        {/* {this.state.userLoggedIn.role.map(x => x)} */}
+                        {/* {this.props.transactionStore.state.isKasir &&
+                            <Link to={'/initial-balance'}>
+                            <button className="btn btn-size">KASIR</button>
+                            </Link>
+                        } */}
+
+                        {this.state.kasir &&
+                            <Link to={'/initial-balance'}>
+                            <button className="btn btn-size">KASIR</button>
+                            </Link>
+                        }
+                        {this.state.stok &&
+                            <Link to={'/production'}>
+                            <button className="btn btn-size">PRODUKSI</button>
+                            </Link>
+                        }
+                        {this.state.pemesanan &&
+                            <Link to={'/booking'}>
+                            <button className="btn btn-size">PEMESANAN</button>
+                            </Link>
+                        }
+                        {/* {this.state.userLoggedIn.role.map(role => 
+                         {if(role === "kasir"){
+                             return (
+                            <Link to={'/initial-balance'}>
+                            <button className="btn btn-size">KASIR</button>
+                            </Link>)
+                            }
+                            else if(role === "stok"){
+                                return (
+                                <Link to={'/production'}>
+                                <button className="btn btn-size">PRODUKSI</button>
+                                </Link>)
+                            }
+                            else if(role === "admin"){
+                                return (
+                                <Link to={'/booking'}>
+                                <button className="btn btn-size">PEMESANAN</button>
+                                </Link>)
+                            } else {
+                                return (
+                                <Link to={'/#'}>
+                                <button className="btn btn-size">KOSONG</button>
+                                </Link>
+                                )
+                            }
+                          }
+                         ) 
+                        } */}
+                        {/* <Link to={'/initial-balance'}>
                             <button className="btn btn-size">KASIR</button>
                         </Link>
                         <Link to={'/booking'}>
@@ -21,7 +99,8 @@ class Selection extends Component {
                         </Link>
                         <Link to={'/production'}>
                             <button className="btn btn-size">PRODUKSI</button>
-                        </Link>
+                        </Link> */}
+                        {/* {this.doFilter()} */}
                     </Col>
                 </Row>
             </Container>

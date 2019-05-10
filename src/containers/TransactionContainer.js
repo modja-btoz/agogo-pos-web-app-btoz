@@ -6,6 +6,9 @@ const initialState = {
   reservationStore: [],
   items: [],
   data: [],
+  isKasir: false,
+  isStok: false,
+  isAdmin: false,
   redirect: false,
 };
 
@@ -25,7 +28,7 @@ class TransactionContainer extends Container {
     axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`)
     .then(res => {
       const transaction = res.data;
-      this.setState({ transactionStore: transaction });
+      this.setState({ transactionStore: transaction});
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
     })
   }
@@ -55,7 +58,10 @@ addTransaction(user_id, items, total) {
       })
   )
   axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data)
-  this.setState({ redirect: true })
+  .then(res => {
+    console.log("A",res)
+  })
+this.setState({data: []})
 }
 
 }

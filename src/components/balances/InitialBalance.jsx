@@ -23,6 +23,7 @@ class SaldoAwal extends Component {
     pin: '',
     keyboardSaldo: true,
     keyboardPIN: false,
+    keyboardUser: false,
     redirect: false,
     pos: {},
     data: []
@@ -38,20 +39,23 @@ class SaldoAwal extends Component {
     if(whatInput === 'saldo'){
       this.setState({ 
         keyboardSaldo: true,
-        keyboardPIN: false
+        keyboardPIN: false,
+        keyboardUser: false,
       })
       console.log("What Input?", whatInput);
     }else if(whatInput === 'username'){
       this.setState({ 
         keyboardPIN: false,
-        keyboardSaldo: false
+        keyboardSaldo: false,
+        keyboardUser: true,
       })
       console.log("What Input?", whatInput);
     }
     else if(whatInput === 'pin'){
       this.setState({ 
         keyboardPIN: true,
-        keyboardSaldo: false
+        keyboardSaldo: false,
+        keyboardUser: false
       })
       console.log("What Input?", whatInput);
     }
@@ -249,6 +253,33 @@ class SaldoAwal extends Component {
                             }
                           ]}
                           onChange={pin => this.onChangePIN(pin)}
+                          onKeyPress={button => this.onKeyPress(button)}
+                        />
+                      </div>
+
+                      <div id="keyboardUser" className={ this.state.keyboardUser ? "d-block" : "d-none" }>
+                        <Keyboard baseClass={"keyboard3"}
+                          ref={s => (this.keyboard = s)}
+                          layoutName={this.state.layoutName}
+                          layout={{
+                            default: ["1 2 3", "4 5 6", "7 8 9", "{bksp} 0 {enter}"]
+                          }}
+                          display={{
+                            '{bksp}': '<i class="fas fa-backspace"></i>',
+                            '{enter}': '<i class="fas fa-level-down-alt"></i>',
+                            '{shift}': 'shift'
+                          }}
+                          buttonTheme={[
+                            {
+                              class: "bg-orange",
+                              buttons: "{enter}"
+                            },
+                            {
+                              class: "bg-black text-light-grey",
+                              buttons: "{bksp}"
+                            }
+                          ]}
+                          onChange={user => this.onChangeUsername(user)}
                           onKeyPress={button => this.onKeyPress(button)}
                         />
                       </div>

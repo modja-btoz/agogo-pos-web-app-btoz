@@ -78,7 +78,7 @@
                                         </Button>
                                         <Popover placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
                                             <PopoverBody >
-                                                <Products cartStore={this.props.cartStore} productStore={this.props.productStore} />
+                                                <Products cartStore={this.props.cartStore} productStore={this.props.productStore} activePath={this.props.activePath}/>
                                             </PopoverBody>
                                         </Popover>
                                     </div>

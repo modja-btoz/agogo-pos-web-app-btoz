@@ -5,6 +5,7 @@ import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 import CartHeader from './CartHeader';
 import CartItems from './CartItems';
 import CartTotal from './CartTotal';
+import CartBookingTotal from './CartBookingTotal';
 
 import './Cart.scss';
 
@@ -55,9 +56,25 @@ class Cart extends Component {
             </div>
           </ShadowScrollbars>
 
-          <Table borderless striped>
+          {/* <Table borderless striped>
             <CartTotal cartStore={this.props.cartStore} />
+          </Table> */}
+          
+          
+          <Table borderless striped>
+          {this.props.cartStore.state.isRefundTKShow &&
+            <aside >
+              <CartTotal cartStore={this.props.cartStore} />
+            </aside>
+          }
+          {this.props.cartStore.state.isRefundPSShow &&
+            <aside >
+              <CartBookingTotal what="Total Refund" cartStore={this.props.cartStore} />
+            </aside>
+          }
+            
           </Table>
+
       </Container>
     );
   }

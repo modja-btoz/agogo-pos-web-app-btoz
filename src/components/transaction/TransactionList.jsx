@@ -18,13 +18,6 @@ class TransactionList extends Component {
     productItemsHeight: 0,
   }
 
-  componentDidMount(){
-    console.log("TRANSACTION LIST ~~~~~~~~~~~~~ ", this.props.transactionStore)
-    this.setState({
-      transactionStore: [...this.state.transactionStore, this.props.transactionStore]
-    });
-  }
-
   componentWillMount(){
     this.setState({
       windowInnerHeight: window.innerHeight

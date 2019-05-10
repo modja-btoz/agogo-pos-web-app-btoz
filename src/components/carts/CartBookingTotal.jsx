@@ -3,7 +3,8 @@ import NumberFormat from 'react-number-format'
 
 const CartBookingTotal = (props) => {
     return (
-        <tfoot className="tfoot-booking">
+        // <tfoot className="tfoot-booking">
+        <tfoot className={props.name}>
             <tr className="table-spacer-booking"><td></td></tr>
             <tr className="cart-subtotal">
                 <td scope="row">Sub Total</td>

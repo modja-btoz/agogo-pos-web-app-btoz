@@ -5,6 +5,7 @@ import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 
 import ReservationHeader from './ReservationHeader';
 import ReservationItems from './ReservationItems';
+import FooterNavRight from '../navigations/FooterNavRight';
 
 const ReservationList = (props) => {
   
@@ -29,6 +30,12 @@ const ReservationList = (props) => {
                 </Table>
               </div>
             </ShadowScrollbars>
+
+            <Row className="product-nav no-gutters">
+              <Col xs="12">
+                <FooterNavRight cartStore={props.cartStore}/>
+              </Col>
+            </Row>
         </Container>
   )
 }

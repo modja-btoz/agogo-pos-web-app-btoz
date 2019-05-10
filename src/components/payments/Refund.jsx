@@ -11,19 +11,19 @@ const Refund = (props) => {
       <Container>
         <Row className="SidebarHeader">
           <Col>
-            <NavLink onClick={() => props.cartStore.toggleOpenRefundShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Refund</NavLink>
+            <NavLink onClick={() => props.cartStore.toggleOpenRefundShow() || props.cartStore.clearCart()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Refund</NavLink>
           </Col>
         </Row>
 
-        <Row sm={3}>
+        <Row sm={4}>
+        <FormGroup check>
+              <Label style={{marginLeft:"4px", marginRight:"10px"}} check> Toko </Label>
+              <Input style={{position: "relative"}} checked={props.cartStore.state.selectedRefund === "TK"} onChange={props.cartStore.handleRefundChange} value="TK" className="radio sm" size="sm" type="radio" name="TK" id="TK" /> {' '}
+            </FormGroup>  
           <FormGroup check>
-              <Label check> Pesanan </Label>
-              <Input checked={props.cartStore.state.selectedRefund === "PS"} onChange={props.cartStore.handleRefundChange} value="PS" className="radio sm" size="sm" type="radio" name="PS" id="PS" /> {' '}
-            </FormGroup>
-            <FormGroup check>
-              <Label check> Toko </Label>
-              <Input checked={props.cartStore.state.selectedRefund === "TK"} onChange={props.cartStore.handleRefundChange} value="TK" className="radio sm" size="sm" type="radio" name="TK" id="TK" /> {' '}
-            </FormGroup>                      
+              <Label style={{marginLeft:"4px", marginRight:"10px"}} check> Pesanan </Label>
+              <Input style={{position: "relative"}} checked={props.cartStore.state.selectedRefund === "PS"} onChange={props.cartStore.handleRefundChange} value="PS" className="radio sm" size="sm" type="radio" name="PS" id="PS" /> {' '}
+            </FormGroup>                    
           </Row>
 
         <Row className="SidebarBody" >
@@ -72,7 +72,7 @@ const Refund = (props) => {
         </Row> */}
         <Row className="SidebarFooter mt-4">
           <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <Button onClick={() => props.modalStore.toggleModal('bayar', '') } color="danger" size="lg" className="py-3 px-5"><i className="fas fa-retweet mr-2"></i> REFUND</Button>
+            <Button onClick={() => props.cartStore.doNextRefund() || props.modalStore.toggleModal('bayar', '') } color="danger" size="lg" className="py-3 px-5"><i className="fas fa-retweet mr-2"></i> REFUND</Button>
           </Col>
         </Row>
       </Container>
