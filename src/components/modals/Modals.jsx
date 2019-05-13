@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios'
 import { Subscribe } from 'unstated'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Input, Row, Label } from 'reactstrap';
 import './Modal.scss';
@@ -23,12 +24,17 @@ class Modals extends Component {
         "Kamis",
         "Jumat",
         "Saturday"
-    ]
+    ],
+    userLoggedIn :[],
+    name: '',
+    transaction: {}
     // console.log(days[new Date().getDay()]);
     };
   };
 
   componentDidMount() {
+    const user = JSON.parse(sessionStorage.getItem('usernow'))
+    // this.setState({userLoggedIn: user, name: user.username.toUpperCase() || null});
     console.log(this.props.cartStore.state)
     var that = this;
     var date = new Date().getDate(); //Current Date
@@ -42,6 +48,10 @@ class Modals extends Component {
       date:
         date + '/' + month + '/' + year,
     });
+  }
+
+  getTransaction() {
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`).then(res => {return res.data})
   }
 
   clearCartCloseModal = (props) => {
@@ -112,20 +122,21 @@ class Modals extends Component {
         </Modal>
       );
       case 'hitungKas':
+      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`).then(res => this.setState({transaction: res.data}))
         return (
         <Modal isOpen={!this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
         <ModalHeader className="text-center d-block">
-            Nama
+            {this.state.name}
           </ModalHeader>
         <ModalBody>
         <Row>
           <Col xs="8">
           <div style={{textAlign: "left", paddingLeft: "30px"}}>
             <h5>
-            <Label>Saldo Awal</Label>< br/>
-            <Label>Transaksi</Label>
+            <Label>Saldo Awal : {this.state.transaction.saldo_awal}</Label>< br/>
+            <Label>Transaksi : {this.state.transaction.total_transaksi}</Label>
             <hr style={{width: 'auto'}} />
-            <Label>Saldo Akhir</Label></h5>
+            <Label>Saldo Akhir : {parseInt(this.state.transaction.total_transaksi) - parseInt(this.state.transaction.saldo_awal)}</Label></h5>
           </div>
 
           <h3>Approval</h3>

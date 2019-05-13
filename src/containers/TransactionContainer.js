@@ -1,4 +1,4 @@
-import { Container } from 'unstated';
+import { Container, Subscribe } from 'unstated';
 import axios from 'axios'
 
 const initialState = {
@@ -60,6 +60,9 @@ addTransaction(user_id, items, total) {
   axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data)
   .then(res => {
     console.log("A",res)
+  })
+  .catch(res => {
+    console.log(res.response.data.message)
   })
 this.setState({data: []})
 }

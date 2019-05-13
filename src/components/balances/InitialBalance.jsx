@@ -131,7 +131,7 @@ class SaldoAwal extends Component {
   onEnter = () => {
     console.log("ON ENTER")
     this.setState({ redirect: true, data: [this.state.pos] }, () => console.log(this))
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas`, this.state.data)
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas`, this.state.data).then(res => console.log(res))
   }
   
 
@@ -175,7 +175,7 @@ class SaldoAwal extends Component {
                           value={this.state.saldo} 
                           onChange={e => this.onChangeInputSaldo(e)}
                           type="number" name="saldo" id="saldo" placeholder="0"  size="lg" className="text-center mt-3 mb-3" 
-                          readonly
+                          readonly autoComplete="off"
                         />
 
                         <Label for="pin" className="text-center d-block"><h3>Username</h3></Label>
@@ -184,7 +184,7 @@ class SaldoAwal extends Component {
                           value={this.state.username} 
                           onChange={e => this.onChangeInputUsername(e)}
                           type="text" name="username" id="username" placeholder="USER"  size="lg" className="text-center mb-3" 
-                          readonly
+                          readonly autoComplete="off"
                         />
                         
                         <Label for="pin" className="text-center d-block"><h3>Kode Approval</h3></Label>
@@ -193,7 +193,7 @@ class SaldoAwal extends Component {
                           value={this.state.pin} 
                           onChange={e => this.onChangeInputPIN(e)}
                           type="password" name="pin" id="pin" placeholder="PIN"  size="lg" className="text-center mb-3" 
-                          readonly
+                          readonly autoComplete="off"
                         />
 
                       </FormGroup>

@@ -2,10 +2,10 @@ import React from 'react'
 import CartItem from './CartItem';
 import RefundItem from './RefundItem';
 
-const CartItems = (props) => {
+const RefundItems = (props) => {
   return (
     <tbody>
-      {props.cartStore.state.items.map((item, i) => (
+      {/* {props.cartStore.state.items.map((item, i) => (
         <CartItem
           idx={i}
           id={item.id}
@@ -14,9 +14,8 @@ const CartItems = (props) => {
           price={item.price}
           cartStore={props.cartStore}  
         />
-      ))}
-      {/* {props.cartStore.state.isRefundItem && 
-        props.cartStore.state.refundItems.map((item, i) => (
+      ))} */}
+      {props.cartStore.state.refundItems.map((item, i) => (
         <RefundItem 
           idx={i}
           id={item.id}
@@ -25,9 +24,9 @@ const CartItems = (props) => {
           price={item.price}
           cartStore={props.cartStore}  
         />
-        ))} */}
+        ))}
     </tbody>
   )
 }
 
-export default CartItems
+export default RefundItems

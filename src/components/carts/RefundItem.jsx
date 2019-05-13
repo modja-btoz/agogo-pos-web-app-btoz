@@ -2,18 +2,10 @@ import React from 'react'
 import { Input } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 
-const CartItem = (props) => {
+const RefundItem = (props) => {
   return (
     <tr>
       <td className="item-name" scope="row">{props.title}</td>
-      { props.cartStore.state.isRefundItem ?
-        <td className="item-refund text-right">
-          <i className="fas fa-undo btn-delete-item" onClick={() => props.cartStore.onRemoveToRefund(props.idx)} />
-        </td> : 
-        <td className="item-delete text-right">
-          <i className="fas fa-backspace btn-delete-item" onClick={() => props.cartStore.onRemoveFromCart(props.idx)} />
-        </td>
-      }
       <td className="item-qty text-center">
         <Input 
           className={props.cartStore.state.activeItem === props.idx ? 'btn btn-danger focus' : 'btn btn-danger'}
@@ -31,10 +23,10 @@ const CartItem = (props) => {
         {/* <Button onClick={() => props.cartStore.onUpdateItem(props.id)}> + </Button> */}
       </td>
       <td className="text-right item-price">
-        <NumberFormat value={props.cartStore.sumTotalAmountPerItem(props.idx)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','}  />
+        <NumberFormat value={props.cartStore.sumTotalAmountPerRefund(props.idx)} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','}  />
       </td>
     </tr>
   )
 }
 
-export default CartItem
+export default RefundItem

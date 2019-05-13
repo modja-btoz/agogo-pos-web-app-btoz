@@ -11,7 +11,7 @@ const UserCard = (props) => {
         <CardImg top width="100%" src={props.userAvatar} alt={props.userName} />
         <CardBody>
           <CardTitle className={props.colorTitle}>{props.userName ? props.userName : 'User Name'}</CardTitle>
-          <CardSubtitle className={props.colorSubTitle}>Kasir</CardSubtitle>
+          <CardSubtitle className={props.colorSubTitle}>{props.userRole}</CardSubtitle>
         </CardBody> 
       </Link>
     </Card>
