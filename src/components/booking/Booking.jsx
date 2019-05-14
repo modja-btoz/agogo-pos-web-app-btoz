@@ -26,7 +26,8 @@
             this.toggle = this.toggle.bind(this);
             this.state = {
                 popoverOpen: false,
-                userLoggedIn: []
+                userLoggedIn: [],
+                name: ''
             };
 
         }
@@ -42,7 +43,7 @@
             this.props.transactionStore.fetchReservation()
             console.log("UWOWO ~~~~~~~~~~~~~ ", this.props.transactionStore);
             const user = JSON.parse(sessionStorage.getItem('usernow'))
-            this.setState({userLoggedIn: user});
+            this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
         
         }
 
@@ -55,10 +56,10 @@
                             <Row className="cart-header no-gutters">
                                 <Col xs="12">
                                     <Navbar expand="md">
-                                        <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Hapsa</NavbarBrand>
+                                        <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> {" " +this.state.name}</NavbarBrand>
                                         <Nav className="ml-auto" navbar>
                                             <NavItem>
-                                                <NavLink href="/pemesanan">Order #TK-1800000014</NavLink>
+                                                <NavLink href="/pemesanan">{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
                                             </NavItem>
                                             <NavItem>
                                                 <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>
@@ -78,7 +79,7 @@
                                         </Button>
                                         <Popover placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
                                             <PopoverBody >
-                                                <Products cartStore={this.props.cartStore} productStore={this.props.productStore} />
+                                                <Products cartStore={this.props.cartStore} productStore={this.props.productStore} activePath={this.props.activePath}/>
                                             </PopoverBody>
                                         </Popover>
                                     </div>

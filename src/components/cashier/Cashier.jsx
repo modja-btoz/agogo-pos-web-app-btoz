@@ -23,6 +23,7 @@ class Kasir extends Component {
   }
   state = {
     userLoggedIn: [],
+    name : ''
   }
   
   componentDidMount(){
@@ -33,8 +34,8 @@ class Kasir extends Component {
     console.log('A', sessionStorage);
 
     const user = JSON.parse(sessionStorage.getItem('usernow'))
-    this.setState({userLoggedIn: user});
-
+    this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
+    
   }
 
   // componentWillUpdate(){
@@ -50,10 +51,10 @@ class Kasir extends Component {
             <Row className="cart-header no-gutters">
               <Col xs="12">
                 <Navbar expand="md">
-                  <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Welcome {this.state.userLoggedIn.username}</NavbarBrand>
+                  <NavbarBrand href="#" className="ml-4"><i className="fas fa-user-alt mr-1"></i>{" " +this.state.name}</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
-                      <NavLink href="/pemesanan">Order #TK-1800000015</NavLink>
+                      <NavLink href="/pemesanan">{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>

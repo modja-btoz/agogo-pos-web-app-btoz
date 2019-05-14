@@ -3,7 +3,8 @@ import NumberFormat from 'react-number-format'
 
 const CartBookingTotal = (props) => {
     return (
-        <tfoot className="tfoot-booking">
+        // <tfoot className="tfoot-booking">
+        <tfoot className={props.name}>
             <tr className="table-spacer-booking"><td></td></tr>
             <tr className="cart-subtotal">
                 <td scope="row">Sub Total</td>
@@ -32,12 +33,20 @@ const CartBookingTotal = (props) => {
                 </td>
             </tr>
             <tr className="table-spacer"><td></td></tr>
+            {props.cartStore.state.isRefundPSShow ?
+            <tr className="cart-total">
+                <th className="header grand-total-label">Total Refund</th>
+                <th className="header text-right grand-total">
+                    <NumberFormat value={props.cartStore.state.dpReservationAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
+                </th>
+            </tr> :
             <tr className="cart-total">
                 <th className="header grand-total-label">Sisa Pembayaran</th>
                 <th className="header text-right grand-total">
-                    <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
+                <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
                 </th>
             </tr>
+            }
         </tfoot>
     )
 }

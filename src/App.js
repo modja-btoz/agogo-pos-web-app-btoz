@@ -173,6 +173,7 @@ class App extends Component {
                     ? <Selection {...props}
                       rootStore={this.props.rootStore}
                       modalStore={this.props.modalStore}
+                      transactionStore={this.props.transactionStore}
                       activePath={props.match.path} />
                     : <Redirect to={{ pathname: '/', state: {from: props.location} }} />
                   )

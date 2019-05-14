@@ -15,6 +15,7 @@ const UserList = (props) => {
               userID={user.id} 
               userName={user.username} 
               userAvatar={user.photo}
+              userRole={user.role}
               colorTitle="text-white" colorSubTitle="text-orange" 
             />
           </div>

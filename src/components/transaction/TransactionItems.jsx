@@ -9,10 +9,9 @@ class TransactionItems extends Component {
   }
 
   componentDidMount(){
-    console.log("ETSTTTTTT", this.props.transactionStore)
+    console.log("A", this.props.transactionStore)
     this.props.transactionStore.fetchTransaction()
-    
-  }
+  }  
 
   render(){
 

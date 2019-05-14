@@ -24,6 +24,7 @@ class Login extends Component {
     userAvatar: '',
     password: '',
     username: '',
+    userRole: '',
     redirect: false
   };
 
@@ -46,7 +47,8 @@ class Login extends Component {
         console.log(this.state.user)
         this.setState({
           username: this.state.user.username,
-          userAvatar: this.state.user.photo
+          userAvatar: this.state.user.photo,
+          userRole: this.state.user.role,
         },
         () => {
           sessionStorage.setItem('usernow', JSON.stringify(this.state.user));
@@ -136,7 +138,8 @@ class Login extends Component {
                       user={this.state.user} 
                       userID={this.state.user.id} 
                       userName={this.state.user.username} 
-                      userAvatar={this.state.userAvatar} 
+                      userAvatar={this.state.userAvatar}
+                      userRole={this.state.userRole} 
                       colorTitle="text-black" 
                       colorSubTitle="text-red" 
                     />
