@@ -8,6 +8,7 @@
     import CartBooking from '../carts/cartsBooking/CartBooking'
     import CartBookingTotal from '../carts/CartBookingTotal'
     import CartTotal from '../carts/CartTotal'
+    import axios from 'axios'
 
     import '../booking/Booking.scss'
     import '../cashier/SidebarComponentsWrapper.scss'
@@ -27,7 +28,8 @@
             this.state = {
                 popoverOpen: false,
                 userLoggedIn: [],
-                name: ''
+                name: '',
+                currentTrx: ''
             };
 
         }
@@ -44,7 +46,16 @@
             console.log("UWOWO ~~~~~~~~~~~~~ ", this.props.transactionStore);
             const user = JSON.parse(sessionStorage.getItem('usernow'))
             this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
-        
+            axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+                const trx = res.data;
+                this.setState({ currentTrx: trx.current_invoice});
+            })
+        }
+        doUpdate(){
+            axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+                const trx = res.data;
+                this.setState({ currentTrx: trx.current_invoice});
+            })
         }
 
         render() {
@@ -56,10 +67,10 @@
                             <Row className="cart-header no-gutters">
                                 <Col xs="12">
                                     <Navbar expand="md">
-                                        <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> {" " +this.state.name}</NavbarBrand>
+                                        <NavbarBrand href="#" className="ml-4"><i className="fas fa-user-alt mr-1"></i> {" " +this.state.name}</NavbarBrand>
                                         <Nav className="ml-auto" navbar>
                                             <NavItem>
-                                                <NavLink href="/pemesanan">{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
+                                                <NavLink href="#">{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
                                             </NavItem>
                                             <NavItem>
                                                 <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>

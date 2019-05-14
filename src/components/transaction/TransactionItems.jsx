@@ -8,8 +8,7 @@ class TransactionItems extends Component {
     super(props)
   }
 
-  componentDidMount(){
-    console.log("A", this.props.transactionStore)
+  componentWillUpdate(){
     this.props.transactionStore.fetchTransaction()
   }  
 

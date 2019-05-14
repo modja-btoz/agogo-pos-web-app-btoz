@@ -34,7 +34,7 @@ class Modals extends Component {
 
   componentDidMount() {
     const user = JSON.parse(sessionStorage.getItem('usernow'))
-    // this.setState({userLoggedIn: user, name: user.username.toUpperCase() || null});
+    // this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
     console.log(this.props.cartStore.state)
     var that = this;
     var date = new Date().getDate(); //Current Date
@@ -77,6 +77,18 @@ class Modals extends Component {
           <ModalFooter className="text-center d-block">
             <Button color="dark" size="lg" onClick={this.props.toggle}>Do Something</Button>{' '}
             <Button color="danger" size="lg" onClick={this.props.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      );
+      case 'alert':
+        return (
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          <ModalHeader toggle={this.props.toggle} className="text-center d-block mt-2"><h3>ALERT !</h3></ModalHeader>
+          <ModalBody>
+            {this.props.message || "Input tidak sesuai"}
+          </ModalBody>
+          <ModalFooter className="text-center d-block">
+            <Button color="danger" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Close</Button>
           </ModalFooter>
         </Modal>
       );
@@ -192,9 +204,9 @@ class Modals extends Component {
         return (
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
           <ModalBody className="p-5">
-            <i className="fas fa-times font-weight-bold display-3 text-red"></i>
+            <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil Disimpan!</h2>
-            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> OK</Button>
+            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}> OK</Button>
           </ModalBody>
         </Modal>
       );

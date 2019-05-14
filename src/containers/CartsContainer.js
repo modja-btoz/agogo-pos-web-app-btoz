@@ -156,11 +156,20 @@ class CartsContainer extends Container {
 
   addSelectedProduct(idx, id, name, qty, price, active_path) {
     if(active_path === '/cashier' || active_path === '/booking'){
+      if(active_path === '/cashier'){
       axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekInvoice`).then(res => {
       const trx = res.data;
       this.setState({ currentTrx: trx.current_invoice});
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
       })
+      }
+      if(active_path === '/booking'){
+        axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+        const trx = res.data;
+        this.setState({ currentTrx: trx.current_invoice});
+        // sessionStorage.setItem('transaction', JSON.stringify(transaction));
+        })
+        }
       this.setState(
         {
           selectedProduct: {
@@ -287,12 +296,20 @@ addSelectedTransaction(id, current, idx) {
                           price: trx.product.price,
                           product_id: trx.product_id,
                           user_id: user_id,
-                          total: total,
-                          order_id: id
+                          total: reservationData[0].subtotal + reservationData[0].add_fee - reservationData[0].discount,
+                          order_id: id,
+                          nama: reservationData[0].nama,
+                          alamat: reservationData[0].alamat,
+                          tgl_selesai: reservationData[0].tgl_selesai,
+                          telepon: reservationData[0].telepon,
+                          catatan: reservationData[0].catatan,
+                          add_fee: reservationData[0].add_fee,
+                          uang_muka: reservationData[0].uang_muka,
+                          waktu_selesai: reservationData[0].waktu_selesai,
                         })
                       )
                       console.log("INI ", this.state.selectedItems)
-                      this.setState({items: this.state.selectedItems}, 
+                      this.setState({items: this.state.selectedItems, currentTrx: reservationData[0].invoice}, 
                         () => {this.sumTotalAmount() 
                               this.setState({
                                 isAdded: true,
@@ -313,10 +330,9 @@ addSelectedTransaction(id, current, idx) {
       }
     })
     this.setState({
-      currentTrx: current,
       selectedItems: []
     })
-    console.log(reservationCode)
+    console.log(reservationCode, current)
     }
 
 
@@ -333,8 +349,10 @@ addSelectedTransaction(id, current, idx) {
     let trx = this.state.items;
     trx.forEach((trx) => this.state.selectedItems.push({
     nama		: data.nama,
+    invoice	: data.invoice,
     tgl_selesai	: data.tgl_selesai,
     alamat	: data.alamat,
+    waktu_selesai	: data.jam_selesai,
     telepon	: data.telepon,
     catatan	: data.catatan,
     user_id	: user_now.id,
@@ -346,6 +364,7 @@ addSelectedTransaction(id, current, idx) {
     add_fee	: this.state.expenseAmount,
     uang_muka	: this.state.dpReservationAmount,
     total		: this.state.grandTotalAmountDiscount,
+    sisa_harus_bayar	: this.state.leftToPay,
     dibayar	: "",
     kembali	: "",
     status	: "UNPAID"
@@ -1137,7 +1156,8 @@ addSelectedTransaction(id, current, idx) {
 
   doTransaction(user_id, items) {
     let whatBooking = this.state.refund
-    if(whatBooking === ""){
+    if(whatBooking.length === 0){
+      console.log("A")
       items.forEach((x) => 
       this.state.data.push({
             user_id: user_id,
@@ -1153,25 +1173,54 @@ addSelectedTransaction(id, current, idx) {
           })
       )
     }else{
-    this.deleteSelectedOrder(whatBooking[0])
-    items.forEach((x) => 
-    this.state.data.push({
-          invoice: whatBooking[1],
-          user_id: user_id,
-          product_id: x.id,
-          qty: x.qty,
-          price: x.price,
-          subtotal: this.state.totalAmount,
-          diskon: this.state.discountAmount,
-          total: this.state.grandTotalAmountDiscount,
-          dibayar: this.state.payment,
-          kembali: this.state.changePayment,
-          status: "PAID",
+      console.log("B")
+      this.deleteSelectedOrder(whatBooking[0])
+      items.forEach((x) => 
+      this.state.data.push({
+            invoice: whatBooking[1],
+            user_id: user_id,
+            product_id: x.id,
+            qty: x.qty,
+            price: x.price,
+            subtotal: this.state.totalAmount,
+            diskon: this.state.discountAmount,
+            total: this.state.grandTotalAmountDiscount,
+            dibayar: this.state.payment,
+            kembali: this.state.changePayment,
+            status: "PAID",
         })
       )
     }
     axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data).then(res => console.log(this, res))
-    this.setState({refund: "", data: []})
+    this.setState({refund: [], data: []})
+  }
+
+  doReservation(user_id, items) {
+    console.log(items)
+      items.forEach((x) => 
+      this.state.data.push({
+            nama: x.nama,
+            alamat: x.alamat,
+            tgl_selesai: x.tgl_selesai,
+            telepon: x.telepon,
+            catatan: x.catatan,
+            add_fee: x.add_fee,
+            user_id: user_id,
+            product_id: x.id,
+            qty: x.qty,
+            price: x.price,
+            waktu_selesai: x.waktu_selesai,
+            subtotal: this.state.totalAmount,
+            diskon: this.state.discountAmount,
+            total: this.state.grandTotalAmountDiscount,
+            dibayar: this.state.payment,
+            kembali: this.state.changePayment,
+            uang_muka: this.state.dpReservationAmount,
+            status: "PAID",
+        })
+      )
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`, this.state.data).then(res => console.log(this, res)).catch(res => console.log(res.response))
+    this.setState({refund: [], data: []})
   }
   
   doOrder = (id) => {

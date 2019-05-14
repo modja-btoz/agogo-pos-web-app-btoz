@@ -10,7 +10,7 @@ const DeleteBooking = (props) => {
             <Container>
                 <Row className="SidebarHeader">
                     <Col>
-                        <NavLink onClick={() => props.cartStore.toggleBookingDeleteShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
+                        <NavLink onClick={() => props.cartStore.toggleBookingDeleteShow() || props.cartStore.clearCart()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
                     </Col>
                 </Row>
 
