@@ -35,7 +35,7 @@ class Modals extends Component {
   componentDidMount() {
     const user = JSON.parse(sessionStorage.getItem('usernow'))
     // this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
-    console.log(this.props.cartStore.state)
+    console.log("AWODKOPWAKDPO",this.props.cartStore.state)
     var that = this;
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
@@ -50,12 +50,12 @@ class Modals extends Component {
     });
   }
 
-  getTransaction() {
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`).then(res => {return res.data})
+  componentWillUnmount(){
+    this.props.cartStore.clearCart()
   }
 
   clearCartCloseModal = (props) => {
-    this.props.cartStore.clearCart()
+    this.props.cartStore.clearCart() 
     this.props.toggle()
   }
 
@@ -223,7 +223,7 @@ class Modals extends Component {
       );
       case 'production':
         return (
-        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered style={{width: '1100px'}}>
+        <Modal isOpen={this.props.modal} onClosed={this.props.cartStore.resetActiveInputRefund} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered style={{width: '1100px'}}>
           <ModalBody className="p-5" style={{width: "1150px"}}>
             <Row>
               <div className="date"><span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
@@ -249,7 +249,8 @@ class Modals extends Component {
                           this.props.cartStore.state.valueInputRefund["refundCode3"]  || this.props.cartStore.state.valueInputRefund["refundCode4"] ||
                           this.props.cartStore.state.valueInputRefund["refundCode5"]}
                     name="refundCode" id={"refundCode"+this.props.where}
-                    onFocus={this.props.cartStore.setActiveInputRefund || this.props.cartStore.resetActiveInputRefund}
+                    onFocus={this.props.cartStore.setActiveInputRefund}
+                    // onBlur={this.props.cartStore.resetActiveInputRefund}
                     autoFocus
                   />
                 </div>

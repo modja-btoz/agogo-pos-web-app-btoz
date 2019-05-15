@@ -69,7 +69,9 @@ const initialState = {
   leftToPay: 0,
   date: '',
   currentTrx: '',
-  popStatus: false
+  popStatus: false,
+  isDisabled: true,
+  productNote: ""
 };
 
 class CartsContainer extends Container {
@@ -80,7 +82,7 @@ class CartsContainer extends Container {
   }
 
   clearCart = () => {
-    console.log("CLEAR CART", this.state)
+    console.log("CLEAR CART", this)
     this.setState(initialState);
   }
 
@@ -159,7 +161,7 @@ class CartsContainer extends Container {
       if(active_path === '/cashier'){
       axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekInvoice`).then(res => {
       const trx = res.data;
-      this.setState({ currentTrx: trx.current_invoice});
+      this.setState({ currentTrx: trx.current_invoice, isDisabled: false});
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
       })
       }
@@ -221,7 +223,6 @@ class CartsContainer extends Container {
                                                            {penjualan_pemesanan: pesan.count_preorder},
                                                            {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
                                                            {stock_awal: pesan.stok_kemarin},
-                                                           {catatan: ""},
                                                            {sisa_stock: parseInt(pesan.stok_kemarin || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)},
                                                            {product_id: id}),
            ...this.state.production.slice(index+1)
@@ -521,11 +522,15 @@ addSelectedTransaction(id, current, idx) {
       items: newArray
     },
       () => {
+        if(this.state.currentTrx !==null && this.state.items.length === 0){
+          this.setState({isDisabled: true})
+        }else{
         this.sumTotalAmount()
         setTimeout(() => {
           this.sumGrandTotalAmount()
         }, 10);
       }
+    }
     );
   }
 
@@ -892,7 +897,7 @@ addSelectedTransaction(id, current, idx) {
       activeInputPayment: event.target.id
     },
       () => {
-        console.log("setActiveInput", this.state.activeInputPayment)
+        console.log("setActiveInput", this.state.activeInputPayment, this.state)
       }
     );
   }
@@ -1115,6 +1120,10 @@ addSelectedTransaction(id, current, idx) {
     console.log("Input changed", valueInputRefund);
   };
 
+  productNote = () => {
+    return "A"
+  }
+
   // handleChange= (event) => {
   //   if (this.state.activeInputBooking === 'bookingAddition'){
   //     this.setState({expenseAmount: event.target.value})
@@ -1283,68 +1292,72 @@ addSelectedTransaction(id, current, idx) {
   }
 
   doProduction = (id) => {
-    let qty = this.state.valueInputRefund["refundCode1"] || this.state.valueInputRefund["refundCode2"] || this.state.valueInputRefund["refundCode3"]
-              || this.state.valueInputRefund["refundCode4"] || this.state.valueInputRefund["refundCode5"]
+    let qty1 = this.state.valueInputRefund["refundCode1"] || 0
+    let qty2 = this.state.valueInputRefund["refundCode2"] || 0
+    let qty3 = this.state.valueInputRefund["refundCode3"] || 0
+    let qty4 = this.state.valueInputRefund["refundCode4"] || 0
+    let qty5 = this.state.valueInputRefund["refundCode5"] || 0
     let index = this.state.production.findIndex( x => x.id === id);
     
     if(this.state.activeInputRefund === "refundCode1"){
-      this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty || 0
+      this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty1 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {produksi1: qty || 0}, {produksi2: this.state.production[index].produksi2 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
-            {total_produksi: parseInt(qty || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+           Object.assign({}, this.state.production[index], {produksi1: qty1 || 0}, {produksi2: this.state.production[index].produksi2 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+           {total_produksi: parseInt(qty1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
            {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
            ...this.state.production.slice(index+1)
         ]
       })
     }
     if(this.state.activeInputRefund === "refundCode2"){
-      this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty || 0
+      this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty2 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {produksi2: qty || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
-          {total_produksi: parseInt(qty || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+           Object.assign({}, this.state.production[index], {produksi2: qty2 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+           {total_produksi: parseInt(qty2 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
            {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
            ...this.state.production.slice(index+1)
         ]
       })
     }
     if(this.state.activeInputRefund === "refundCode3"){
-      this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty || 0
+      this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty3 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {produksi3: qty || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi2: this.state.production[index].produksi2 || 0},
-           {total_produksi: parseInt(qty || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0)},
+           Object.assign({}, this.state.production[index], {produksi3: qty3 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi2: this.state.production[index].produksi2 || 0},
+           {total_produksi: parseInt(qty3 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0)},
            {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
            ...this.state.production.slice(index+1)
         ]
       })
     }
     if(this.state.activeInputRefund === "refundCode4"){
-      this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty || 0
+      this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty4 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {ket_rusak: qty || 0}, {total_lain: parseInt(qty || 0) + parseInt(this.state.production[index].ket_lain || 0)},
+           Object.assign({}, this.state.production[index], {ket_rusak: qty4 || 0}, {total_lain: parseInt(qty4 || 0) + parseInt(this.state.production[index].ket_lain || 0)},
            {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
            ...this.state.production.slice(index+1)
         ]
       })
     }
     if(this.state.activeInputRefund === "refundCode5"){
-      this.state.produksi[this.state.selectedProduct.name+"lain"] = qty || 0
+      this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {ket_lain: qty || 0}, {total_lain: parseInt(qty || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+           Object.assign({}, this.state.production[index], {ket_lain: qty5 || 0}, {total_lain: parseInt(qty5 || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
            {sisa_stock: parseInt(this.state.production[index].sisa_stock || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)}),
            ...this.state.production.slice(index+1)
         ]
       })
     }
+    console.log(this.state)
     console.log(this.state.produksi)
     console.log(this.state.production)
   }

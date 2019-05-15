@@ -185,7 +185,7 @@ class SaldoAwal extends Component {
                           readonly autoComplete="off"
                         />
 
-                        <Label for="pin" className="text-center d-block"><h3>Username</h3></Label>
+                        <Label for="username" className="text-center d-block"><h3>Username</h3></Label>
                         <Input 
                           onFocus={() => this.onFocus('username') } 
                           value={this.state.username} 

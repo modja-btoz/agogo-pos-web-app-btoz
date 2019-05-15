@@ -37,6 +37,7 @@ ReactDOM.render(
             modalStore={modalStore} 
             cartStore={cartStore}
             productStore={productStore}
+            transactionStore={transactionStore}
           />
 
           <App 
