@@ -63,7 +63,7 @@ addTransaction(user_id, items, total) {
     console.log("A",res)
   })
   .catch(res => {
-    console.log(res.response.data.message, this)
+    console.log(res.response.data.message, this.state)
   })
 }
 
