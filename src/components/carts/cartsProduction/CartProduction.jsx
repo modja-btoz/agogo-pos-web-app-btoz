@@ -96,7 +96,8 @@ class CartProduction extends React.Component {
                 <Row >
                     <Col>
                         <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                        <Input  value={this.props.cartStore.state.valueInputBooking["note"+this.props.cartStore.state.selectedProduct.name]}
+                        <Input  
+                                value={this.props.cartStore.state.valueInputBooking["note"+this.props.cartStore.state.selectedProduct.name]}
                                 name="refundCode" id={"note"+this.props.cartStore.state.selectedProduct.name}
                                 onChange={this.props.cartStore.onChangeBooking}
                                 onFocus={this.props.cartStore.setActiveInputBooking} 

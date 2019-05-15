@@ -12,6 +12,9 @@ class ReservationItems extends Component {
     console.log("ETSTTTTTT", this.props.transactionStore)
 
   }
+  componentWillUpdate(){
+    this.props.transactionStore.fetchReservation()
+  }
 
   render(){
 

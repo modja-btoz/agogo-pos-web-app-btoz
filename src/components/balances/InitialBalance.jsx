@@ -129,9 +129,16 @@ class SaldoAwal extends Component {
   };
 
   onEnter = () => {
-    console.log("ON ENTER")
-    this.setState({ redirect: true, data: [this.state.pos] }, () => console.log(this))
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas`, this.state.data).then(res => console.log(res))
+    console.log("ON ENTER", this.state)
+    this.setState({data: [this.state.pos] }, () => console.log(this))
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas`, this.state.data)
+    .then(res => {
+      if(res.status === 200) {
+      this.setState({redirect: true})
+      } 
+      console.log(res)
+    })
+    .catch(res => this.props.modalStore.toggleModal('alert', '', '', res.response.data.message))
   }
   
 
@@ -178,7 +185,7 @@ class SaldoAwal extends Component {
                           readonly autoComplete="off"
                         />
 
-                        <Label for="pin" className="text-center d-block"><h3>Username</h3></Label>
+                        <Label for="username" className="text-center d-block"><h3>Username</h3></Label>
                         <Input 
                           onFocus={() => this.onFocus('username') } 
                           value={this.state.username} 

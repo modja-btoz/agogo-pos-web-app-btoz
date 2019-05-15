@@ -79,6 +79,12 @@
     .nav-link{
       color: black;
       text-align: center;
+      &.disabled{
+        color: $lightGrey;
+        &:hover{
+          background-color: #f1f1f1;
+        }
+      }
       &:hover{
         background-color: $orange;
       }

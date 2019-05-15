@@ -12,7 +12,7 @@ const OrderBooking = (props) => {
                 <Container>
                     <Row className="SidebarHeader">
                         <Col>
-                            <NavLink onClick={() => props.cartStore.toggleOrderBookingShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
+                            <NavLink onClick={() => props.cartStore.toggleOrderBookingShow() || props.cartStore.clearCart()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Pemesanan</NavLink>
                         </Col>
                     </Row>
 
@@ -21,7 +21,7 @@ const OrderBooking = (props) => {
                             <h7 className="mb-0">PEMESAN</h7>
                             {/* <Input className="input pemesan" placeholder="NAMA" text-color="white"></Input> */}
                             <Input className="input-masking mb-4" type="text" name="bookingName" id="bookingName" placeholder="NAMA" bsSize="lg"
-                                value={props.cartStore.state.valueInputBooking["bookingDate"]}
+                                value={props.cartStore.state.valueInputBooking["bookingName"]}
                                 name="bookingName" id="bookingName"
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}

@@ -33,7 +33,7 @@ const ReservationList = (props) => {
 
             <Row className="product-nav no-gutters">
               <Col xs="12">
-                <FooterNavRight cartStore={props.cartStore}/>
+                <FooterNavRight modalStore={props.modalStore} cartStore={props.cartStore}/>
               </Col>
             </Row>
         </Container>

@@ -54,7 +54,7 @@ class Kasir extends Component {
                   <NavbarBrand href="#" className="ml-4"><i className="fas fa-user-alt mr-1"></i>{" " +this.state.name}</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
-                      <NavLink href="/pemesanan">{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
+                      <NavLink href="#">{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>

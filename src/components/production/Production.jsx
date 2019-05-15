@@ -12,6 +12,20 @@ import CartTotal from '../carts/CartTotal'
 import FooterNavRightProduction from '../navigations/FooterNavRightProduction';
 
 class Production extends React.Component {
+
+    constructor(props){
+        super(props)
+      }
+      state = {
+        userLoggedIn: [],
+        name : ''
+      }
+
+    componentDidMount(){
+    const user = JSON.parse(sessionStorage.getItem('usernow'))
+    this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
+    
+}
     render() {
         return (
             <Container fluid="true" className="kasir container-fluid h-100">
@@ -21,11 +35,8 @@ class Production extends React.Component {
                         <Row className="cart-header no-gutters">
                             <Col xs="12">
                                 <Navbar expand="md">
-                                    <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> Hapsa</NavbarBrand>
+                                    <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> {" " +this.state.name}</NavbarBrand>
                                     <Nav className="ml-auto" navbar>
-                                        <NavItem>
-                                            <NavLink href="/pemesanan">Order #TK-1800000014</NavLink>
-                                        </NavItem>
                                         <NavItem>
                                             <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>
                                         </NavItem>
