@@ -35,6 +35,11 @@ class Kasir extends Component {
 
     const user = JSON.parse(sessionStorage.getItem('usernow'))
     this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
+
+    let transactionStoreModal = this.props.transactionStore.state.showModal
+    if(transactionStoreModal){
+      this.props.modalStore.toggleModal('clearCart', '')
+    }
     
   }
 
@@ -107,7 +112,7 @@ class Kasir extends Component {
             {this.props.cartStore.state.isTransactionListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* TRANSACTION COMPONENTS */}
-                <TransactionList transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} />
+                <TransactionList transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore}/>
               </aside>
             }
 

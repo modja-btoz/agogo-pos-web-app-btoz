@@ -8,6 +8,7 @@ import CalcNumeric from '../calcs/CalcNumericRefund';
 import RootContainer from '../../containers/RootContainer'
 import ModalsContainer from '../../containers/ModalsContainer'
 import CartsContainer from '../../containers/CartsContainer'
+import TransactionContainer from '../../containers/TransactionContainer'
 
 class Modals extends Component {
 
@@ -64,6 +65,12 @@ class Modals extends Component {
     this.props.cartStore.resetProduct()
   }
 
+  hideModalTransaction = (props) => {
+    this.props.transactionStore.clearCart() 
+    this.props.toggle()
+  }
+
+
   renderSwitch(type) {
     // console.log(type)
     switch(type) {
@@ -72,11 +79,24 @@ class Modals extends Component {
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
           <ModalHeader toggle={this.props.toggle} className="text-center d-block"><h3>Modal Reguler</h3></ModalHeader>
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            {this.props.message}
           </ModalBody>
           <ModalFooter className="text-center d-block">
             <Button color="dark" size="lg" onClick={this.props.toggle}>Do Something</Button>{' '}
             <Button color="danger" size="lg" onClick={this.props.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      );
+      case 'simpanKasir':
+        return (
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          <ModalHeader toggle={this.props.toggle} className="text-center d-block"><h3>Modal Reguler</h3></ModalHeader>
+          <ModalBody>
+            {this.props.message}
+          </ModalBody>
+          <ModalFooter className="text-center d-block">
+            <Button color="dark" size="lg" onClick={this.hideModalTransaction}>Do Something</Button>{' '}
+            <Button color="danger" size="lg" onClick={this.hideModalTransaction}>Cancel</Button>
           </ModalFooter>
         </Modal>
       );
@@ -300,8 +320,8 @@ class Modals extends Component {
 
   render() {
     return (
-      <Subscribe to={[RootContainer, ModalsContainer, CartsContainer]}>
-      {(rootStore, modalStore, cartStore) => (
+      <Subscribe to={[RootContainer, ModalsContainer, CartsContainer, TransactionContainer]}>
+      {(rootStore, modalStore, cartStore, transactionStore) => (
         <div>
           {this.renderSwitch(modalStore.state.modalType)}
         </div>
