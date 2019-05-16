@@ -234,6 +234,7 @@ class CartsContainer extends Container {
 
 addSelectedTransaction(id, current, idx) {
   axios.get('http://101.255.125.227:82/api/order/' + id).then(res => {
+    this.setState({isDisabled: false})
     const transaction = res.data;
     console.log(id, current, id)
     transaction.forEach((trx, i) =>
@@ -272,6 +273,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   addSelectedReservation(id, current, user_id, total) {
+    this.setState({isDisabled: false})
     let reservationCode = id
     axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -1163,7 +1165,7 @@ addSelectedTransaction(id, current, idx) {
   //   }
   // }
 
-  doTransaction(user_id, items) {
+  doTransaction(user_id, items, modal) {
     let whatBooking = this.state.refund
     if(whatBooking.length === 0){
       console.log("A")
@@ -1200,8 +1202,26 @@ addSelectedTransaction(id, current, idx) {
         })
       )
     }
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data).then(res => console.log(this, res))
-    this.setState({refund: [], data: []})
+    this.doPayment(modal)
+  }
+  doPayment(modal){
+    let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"])
+    if(isNaN(totalPayment)){
+      modal('alert','','','Harap masukkan uang pembayaran')
+    }
+    else if(totalPayment < this.state.leftToPay){
+      modal('alert','','','Uang pembayaran anda kurang')
+    }
+    else{
+      axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data)
+      .then(res => {
+      console.log(res)
+      modal('bayar')
+      this.setState({refund: [], data: []})})
+      .catch(res => {
+      modal('alert','','',res.response.data.message)
+      this.setState({refund: [], data: []})})
+    }
   }
 
   doReservation(user_id, items) {
