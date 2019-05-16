@@ -9,7 +9,6 @@ const initialState = {
   isKasir: false,
   isStok: false,
   isAdmin: false,
-  redirect: false,
 };
 
 class TransactionContainer extends Container {
@@ -42,7 +41,7 @@ class TransactionContainer extends Container {
     })
   }
 
-addTransaction(user_id, items, total) {
+addTransaction(user_id, items, total, modal) {
   items.forEach((x) => 
   this.state.data.push({
         user_id: user_id,
@@ -59,12 +58,14 @@ addTransaction(user_id, items, total) {
   )
   axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data)
   .then(res => {
-    this.setState({data: []})
+    modal('bayar')
     console.log("A",res)
+    this.setState({data: []})
   })
   .catch(res => {
-    
+    modal('alert', '', '', res.response.data.message)
     console.log(res.response.data.message, this.state)
+    this.setState({data: []})
   })
 }
 
