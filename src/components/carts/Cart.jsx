@@ -56,12 +56,12 @@ class Cart extends Component {
                 <CartItems cartStore={this.props.cartStore} />
               </Table>
               {this.props.cartStore.state.isRefundItem &&
-                    <div>
-                    <h3 style={{textAlign: "center"}}>Refund</h3>
-                    <Table borderless striped className="mb-0">
-                    <RefundItems cartStore={this.props.cartStore}  />
-                    </Table>
-                    </div>
+                <div>
+                <h3 style={{textAlign: "center"}}>Refund</h3>
+                <Table borderless striped className="mb-0">
+                <RefundItems cartStore={this.props.cartStore}  />
+                </Table>
+                </div>
                   }
             </div>
           </ShadowScrollbars>
@@ -79,7 +79,7 @@ class Cart extends Component {
           }
           {this.props.cartStore.state.isRefundPSShow &&
             <aside >
-              <CartBookingTotal what="Total Refund" cartStore={this.props.cartStore} />
+              <CartBookingTotal refund="Total Refund" pembayaran="Sisa Pembayaran" cartStore={this.props.cartStore} />
             </aside>
           }
             

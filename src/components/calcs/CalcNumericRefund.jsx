@@ -21,7 +21,7 @@ class CalcNumeric extends Component {
     console.log("Button ENTER pressed", button);
 
     // JALANKAN FUNGSI DARI PARENT
-    this.props.onEnterRefund()
+    this.props.onEnterRefund(this.props.modalStore)
   };
 
   render() {

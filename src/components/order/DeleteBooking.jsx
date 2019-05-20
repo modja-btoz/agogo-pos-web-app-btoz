@@ -17,11 +17,11 @@ const DeleteBooking = (props) => {
                 <Row className="SidebarBodyBooking">
                     <Col sm={5}>
                         <h7 className="mb-0">PEMESAN</h7>
-                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.nama} className="input pemesan" placeholder="NAMA"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataReservation.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataReservation.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={3}>
                         <h7 className="mb-0">JAM SELESAI</h7>
@@ -39,7 +39,7 @@ const DeleteBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                    <Input bsSize="lg" value={props.cartStore.state.dataTrx.catatan} type="textarea" name="note" rows="3" ></Input>
+                                    <Input bsSize="lg" value={props.cartStore.state.dataReservation.catatan} type="textarea" name="note" rows="3" ></Input>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -52,12 +52,12 @@ const DeleteBooking = (props) => {
                                 <Col sm={9}>
                                 <div className='input-keyboard-wrapper'>
                                 <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
-                                    value={props.cartStore.state.dataTrx.uang_muka}
+                                    value={props.cartStore.state.dataReservation.uang_muka}
                                     name="uang_muka" id="uang_muka"
                                     prefix={'Rp '} disabled
                                 />
                                 <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
-                                    value={props.cartStore.state.dataTrx.uang_muka}
+                                    value={props.cartStore.state.dataReservation.uang_muka}
                                     name="uang_muka" id="uang_muka" disabled
                                 />
                                 </div>
@@ -75,7 +75,7 @@ const DeleteBooking = (props) => {
                             </FormGroup>
                             <FormGroup row>
                                 <Col className="btn btn-deleted">
-                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.deleteReservation(props.cartStore.state.dataTrx.id)} 
+                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.deleteReservation(props.cartStore.state.dataReservation.id)} 
                                     size="lg" name="btn-del" className="btn-del"><i class="fas fa-trash-alt del"></i>HAPUS</Button>
                                 </Col>
                             </FormGroup>

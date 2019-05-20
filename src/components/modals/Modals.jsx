@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { Subscribe } from 'unstated'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Input, Row, Label } from 'reactstrap';
+import { Redirect } from 'react-router-dom'
 import './Modal.scss';
 import CalcNumeric from '../calcs/CalcNumericRefund';
 
@@ -35,7 +36,9 @@ class Modals extends Component {
 
   componentDidMount() {
     const user = JSON.parse(sessionStorage.getItem('usernow'))
-    // this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
+    this.setState({userLoggedIn: user});
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`)
+    .then(res => this.setState({transaction: res.data}))
     console.log("AWODKOPWAKDPO",this.props.cartStore.state)
     var that = this;
     var date = new Date().getDate(); //Current Date
@@ -62,6 +65,7 @@ class Modals extends Component {
 
   clearToggle = () => {
     this.props.toggle()
+    console.log("ABC")
     this.props.cartStore.resetProduct()
   }
 
@@ -139,7 +143,7 @@ class Modals extends Component {
             </a>
             </Col>
             <Col style={{margin: "auto"}} centered>
-            <a href="#" onClick={() => this.props.toggleModal('hitungKas', 'lg')}>
+            <a href="#" onClick={() => this.props.toggleModal('hitungKas', 'lg') || this.props.modalStore.clearModal()}>
             <div className="my-icon">
               <i className="fas fa-coins mr-1 fa-7x"></i>
               <Label className="label">Hitung Kas</Label>
@@ -154,11 +158,10 @@ class Modals extends Component {
         </Modal>
       );
       case 'hitungKas':
-      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`).then(res => this.setState({transaction: res.data}))
         return (
-        <Modal isOpen={!this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
         <ModalHeader className="text-center d-block">
-            {this.state.name}
+            {this.state.userLoggedIn.username.toUpperCase()}
           </ModalHeader>
         <ModalBody>
         <Row>
@@ -168,9 +171,17 @@ class Modals extends Component {
             <Label>Saldo Awal : {this.state.transaction.saldo_awal}</Label>< br/>
             <Label>Transaksi : {this.state.transaction.total_transaksi}</Label>
             <hr style={{width: 'auto'}} />
-            <Label>Saldo Akhir : {parseInt(this.state.transaction.total_transaksi) - parseInt(this.state.transaction.saldo_awal)}</Label></h5>
+            <Label>Saldo Akhir : {parseInt(this.state.transaction.total_transaksi) + parseInt(this.state.transaction.saldo_awal)}</Label></h5>
           </div>
 
+          <h3>USER</h3>
+            <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+              <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
+                name="approvalUser" id="approvalUser"
+                onFocus={this.props.cartStore.setActiveInputRefund}
+                onChange={this.props.cartStore.onChangeBooking}
+              />
+            </div>
           <h3>Approval</h3>
           <div className={this.props.cartStore.state.activeInputApproval === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <Input className="input-masking mb-4" type="text" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
@@ -180,7 +191,7 @@ class Modals extends Component {
               />
           </div>
           <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
-          <a href="/logout" color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
+          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.state.transaction, this.state.userLoggedIn, <Redirect to={'/logout'}/>)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
           </Col>
           <Col xs="4">
           <CalcNumeric
@@ -238,6 +249,25 @@ class Modals extends Component {
             <h2 className="display-6 py-3">Apakah anda yakin akan mengubah posisi tanggal ke hari berikutnya ?</h2>
             <Button className="mt-3 py-3 px-5" color="secondary" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> TIDAK</Button>{" "}
             <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={() => this.props.cartStore.changeDate()}><i class="fas fa-check mr-1"></i> YA</Button>
+          </ModalBody>
+        </Modal>
+      );
+      case 'catatan':
+        return (
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          <ModalBody className="p-5">
+            <h4 className="display-6 py-3">Tambah Catatan</h4>
+            <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                            <Input  
+                                    value={this.props.cartStore.state.valueInputBooking["note"]}
+                                    id={"note"+this.props.cartStore.state.selectedProduct.name}
+                                    onChange={this.props.cartStore.onChangeBooking}
+                                    onFocus={this.props.cartStore.setActiveInputBooking} 
+                                    className="note-production" type="textarea" name="catatan" placeholder="TAMBAH CATATAN" rows="7"
+                                    autoFocus
+                                    ></Input>
+                            </div>
+            <Button className="mt-3 py-3 px-5" color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-check mr-1"></i> Selesai</Button>{" "}
           </ModalBody>
         </Modal>
       );

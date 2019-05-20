@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
-import ReservationItem from './Reservationtem';
+import ReservationItem from './ReservationItem';
 
 class ReservationItems extends Component {
 
   constructor(props){
     super(props)
-  }
-
-  componentDidMount(){
-    console.log("ETSTTTTTT", this.props.transactionStore)
-
-  }
-  componentWillUpdate(){
-    this.props.transactionStore.fetchReservation()
   }
 
   render(){
@@ -22,7 +14,7 @@ class ReservationItems extends Component {
 
       <Row className="TransactionItems row m-0">
 
-      { this.props.transactionStore.state.reservationStore.map((transaction, i) => 
+      { this.props.cartStore.state.reservation.map((transaction, i) => 
       <Col xs="12">
         <ReservationItem 
           trxIndex={i}

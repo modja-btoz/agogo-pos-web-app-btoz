@@ -15,11 +15,11 @@ const TakeBooking = (props) => {
                 <Row className="SidebarBodyBooking">
                     <Col sm={5}>
                         <h7 className="mb-0">PEMESAN</h7>
-                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.nama} className="input pemesan" placeholder="NAMA"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataReservation.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input style={{ color: "white" }} value={props.cartStore.state.dataTrx.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input style={{ color: "white" }} value={props.cartStore.state.dataReservation.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={3}>
                         <h7 className="mb-0">JAM SELESAI</h7>
@@ -37,7 +37,7 @@ const TakeBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                    <Input value={props.cartStore.state.dataTrx.catatan} bsSize="lg" type="textarea" name="note" rows="3" ></Input>
+                                    <Input value={props.cartStore.state.dataReservation.catatan} bsSize="lg" type="textarea" name="note" rows="3" ></Input>
                                 </Col>
                             </FormGroup>
                             {/* <FormGroup row>
@@ -63,7 +63,7 @@ const TakeBooking = (props) => {
                             </FormGroup>
                             <FormGroup row>
                                 <Col className="btn btn-deleted">
-                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.takeReservation(props.cartStore.state.dataTrx.id)} size="lg" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
+                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.takeReservation(props.cartStore.state.dataReservation.id)} size="lg" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
                                 </Col>
                             </FormGroup>
                         </Form>

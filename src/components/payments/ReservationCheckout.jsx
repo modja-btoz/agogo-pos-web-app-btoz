@@ -71,7 +71,7 @@ const ReservationCheckout = (props) => {
 
         <Row className="SidebarFooter mt-4">
           <Col>
-            <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.doReservation(props.userNow.id, props.cartStore.state.selectedItems)} 
+            <Button onClick={() => props.cartStore.doReservation(props.userNow.id, props.modalStore.toggleModal)} 
             color="danger" size="lg" className="py-3 px-5"><i className="fas fa-coins mr-2"></i> BAYAR</Button>
           </Col>
         </Row>

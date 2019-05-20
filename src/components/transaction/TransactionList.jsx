@@ -18,6 +18,11 @@ class TransactionList extends Component {
     productItemsHeight: 0,
   }
 
+  componentDidMount(){
+    this.props.cartStore.fetchTransaction()
+  }
+
+
   componentWillMount(){
     this.setState({
       windowInnerHeight: window.innerHeight

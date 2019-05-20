@@ -2,9 +2,9 @@
 .OrderBooking{
     color: white;
   
-    input{
-      margin-left: -1rem;
-    }
+    // input{
+    //   margin-left: -1rem;
+    // }
   
     .input-data-wrapper{
       position: relative;
@@ -17,9 +17,21 @@
     }
   }
 
-// .SidebarBody {
-//     margin-top: 10px;
-// }
+.SidebarBody {
+    margin-top: 10px;
+}
+
+.Sidebar{
+  .input-alamat{
+    margin-top: 10px;
+  }
+  .input-telepon{
+    margin-top: 10px;
+  }
+  .input-note{
+    position: relative;
+  }
+}
 
 // .input {
 //     margin-top: 5px;
