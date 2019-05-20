@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Container, Row, Col, Input} from 'reactstrap'
+import { Table, Container, Row, Col, Input, Button, Popover, PopoverBody} from 'reactstrap'
 import CartHeader from '../CartHeader'
 import CartProductionTotal from '../CartProductionTotal'
 
@@ -24,9 +24,17 @@ class CartProduction extends React.Component {
             "Jumat",
             "Saturday"
         ],
+        popoverOpen: false,
         index : this.props.cartStore.state.production.findIndex( x => x.id === this.props.cartStore.state.selectedProduct.id)
         // console.log(days[new Date().getDay()]);
         };
+    }
+
+    toggle() {
+        this.setState({
+        popoverOpen: !this.state.popoverOpen
+        });
+        console.log("A")
     }
 
     componentDidMount() {
@@ -95,14 +103,16 @@ class CartProduction extends React.Component {
                 </Row>
                 <Row >
                     <Col>
-                        <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                        <h5>Catatan {this.props.cartStore.state.selectedProduct.name} : {this.props.cartStore.state.produksi["note"+this.props.cartStore.state.selectedProduct.name] || ""} </h5>
+
+                        {/* <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                         <Input  
-                                value={this.props.cartStore.state.valueInputBooking["note"+this.props.cartStore.state.selectedProduct.name]}
+                                value={this.props.cartStore.state.valueInputBooking["note"]}
                                 name="refundCode" id={"note"+this.props.cartStore.state.selectedProduct.name}
                                 onChange={this.props.cartStore.onChangeBooking}
                                 onFocus={this.props.cartStore.setActiveInputBooking} 
-                                className="note-production" type="textarea" name="catatan" placeholder="CATATAN" rows="7"></Input>
-                        </div>
+                                className="note-production" type="textarea" name="catatan" placeholder="TAMBAH CATATAN" rows="7"></Input>
+                        </div> */}
                     </Col>
                 </Row>
 

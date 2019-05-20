@@ -56,7 +56,7 @@ class CartBooking extends React.Component {
                 </ShadowScrollbars>
                 
                 <Table borderless striped>
-                    <CartBookingTotal name="tfoot-booking" what="Sisa Pembayaran" cartStore={this.props.cartStore} />
+                    <CartBookingTotal name="tfoot-booking" refund="Total Refund" pembayaran="Sisa Pembayaran" cartStore={this.props.cartStore} />
                 </Table>  
                 
             </Container>

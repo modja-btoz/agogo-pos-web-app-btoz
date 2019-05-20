@@ -1,9 +1,9 @@
 .editBooking {
     color: white;
     
-    input{
-    margin-left: -1rem;
-    }
+    // input{
+    // margin-left: -1rem;
+    // }
 
     .input-keyboard-wrapper{
     position: relative;
@@ -17,9 +17,21 @@
 }
 
 .SidebarBodyBooking {
-    margin-top: 5px;
+    margin-top: 10px;
     color: white;
 }
+
+.Sidebar{
+    .input-alamat{
+      margin-top: 10px;
+    }
+    .input-telepon{
+      margin-top: 10px;
+    }
+    .input-note{
+      position: relative;
+    }
+  }
 
 h7.mb-0 {
     color: rgb(136, 135, 135);

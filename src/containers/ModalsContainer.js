@@ -24,6 +24,11 @@ class ModalsContainer extends Container {
       });
     })
   } 
+
+  clearModal = () => {
+    this.setState({modal: false})
+    console.log("IEE")
+  }
   
 }
 

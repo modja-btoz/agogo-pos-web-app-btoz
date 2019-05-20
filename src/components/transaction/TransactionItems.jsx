@@ -8,8 +8,8 @@ class TransactionItems extends Component {
     super(props)
   }
 
-  componentWillUpdate(){
-    this.props.transactionStore.fetchTransaction()
+  componentDidMount(){
+    this.props.cartStore.fetchTransaction()
   }  
 
   render(){
@@ -18,7 +18,7 @@ class TransactionItems extends Component {
 
       <Row className="TransactionItems row m-0">
 
-      { this.props.transactionStore.state.transactionStore.map((transaction, i) => 
+      { this.props.cartStore.state.transaction.map((transaction, i) => 
       <Col xs="12">
         <TransactionItem 
           trxIndex={i}

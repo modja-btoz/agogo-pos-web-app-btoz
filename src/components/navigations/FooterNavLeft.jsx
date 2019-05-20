@@ -22,7 +22,7 @@ class FooterNavLeft  extends Component {
             <NavLink active={this.props.cartStore.state.isTransactionListShow} onClick={() => this.props.cartStore.openTransaction()}><i className="fas fa-folder-open"></i><br />Buka Trx</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink disabled={this.props.cartStore.state.isDisabled} onClick={() => this.props.transactionStore.addTransaction(this.props.userNow.id, this.props.cartStore.state.items, this.props.cartStore.state.totalAmount, this.props.modalStore.toggleModal)}><i className="fas fa-save"></i><br />Simpan</NavLink>
+            <NavLink disabled={this.props.cartStore.state.isDisabled} onClick={() => this.props.cartStore.addTransaction(this.props.userNow.id, this.props.modalStore.toggleModal)}><i className="fas fa-save"></i><br />Simpan</NavLink>
           </NavItem>
           <NavItem>
             <NavLink disabled={this.props.cartStore.state.isDisabled} active={this.props.cartStore.state.isPaymentCheckoutShow} onClick={() => this.props.cartStore.paymentCheckout()}><i className="fas fa-coins"></i><br/>Bayar</NavLink>

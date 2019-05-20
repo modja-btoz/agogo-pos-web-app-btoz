@@ -17,22 +17,20 @@ const OrderBooking = (props) => {
                     </Row>
 
                     <Row className="SidebarBody">
-                        <Col sm={5}>
+                        <Col xs="5">
                             <h7 className="mb-0">PEMESAN</h7>
                             {/* <Input className="input pemesan" placeholder="NAMA" text-color="white"></Input> */}
-                            <Input className="input-masking mb-4" type="text" name="bookingName" id="bookingName" placeholder="NAMA" bsSize="lg"
-                                value={props.cartStore.state.valueInputBooking["bookingName"]}
-                                name="bookingName" id="bookingName"
+                            <Input className="input-nama" type="text" name="bookingName" id="bookingName" placeholder="NAMA" 
+                                value={props.cartStore.state.valueInputBooking["bookingName"]} 
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}
                                 />
                         </Col>
-                        <Col sm={4}>
+                        <Col xs="5">
                             <h7 className="mb-0">TANGGAL SELESAI</h7>
                             {/* <Input className="input tgl" placeholder="DD-MM-YYYY"></Input> */}
                             <Input className="input-tgl" type="date" name="bookingDate" id="bookingDate" placeholder="DD-MM-YYYY"
                                 value={props.cartStore.state.valueInputBooking["bookingDate"]}
-                                name="bookingDate" id="bookingDate"
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}
                                 />
@@ -41,12 +39,11 @@ const OrderBooking = (props) => {
                                 onChange={this.handleChange}
                             /> */}
                         </Col>
-                        <Col sm={3}>
+                        <Col xs="2">
                             <h7 className="mb-0">JAM SELESAI</h7>
                             {/* <Input className="input jam" placeholder="HH-MM"></Input> */}
                             <Input className="input-jam" type="time" name="bookingTime" id="bookingTime" placeholder="HH-MM"
                                 value={props.cartStore.state.valueInputBooking["bookingTime"]}
-                                name="bookingTime" id="bookingTime"
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}
                                 />
@@ -54,27 +51,24 @@ const OrderBooking = (props) => {
                     </Row>
 
                     <Row className="Sidebar">
-                        <Col sm={5}>
+                        <Col >
                             {/* <Input className="input alamat" type="textarea" placeholder="ALAMAT"></Input> */}
                             <Input className="input-alamat" type="textarea" name="bookingAddress" id="bookingAddress" placeholder="ALAMAT"
                                 value={props.cartStore.state.valueInputBooking["bookingAddress"]}
-                                name="bookingAddress" id="bookingAddress"
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}
                                 />
                             {/* <Input className="input telepon" placeholder="TELEPON"></Input> */}
                             <Input className="input-telepon" type="text" name="bookingPhone" id="bookingPhone" placeholder="TELEPON"
                                 value={props.cartStore.state.valueInputBooking["bookingPhone"]}
-                                name="bookingPhone" id="bookingPhone"
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}
                                 />
                         </Col>
-                        <Col sm={7}>
+                        <Col xs="auto">
                             {/* <Input className="input-note" type="textarea" placeholder="CATATAN"></Input> */}
                             <Input className="input-note" type="textarea" name="bookingNote" id="bookingNote" placeholder="CATATAN"
-                                value={props.cartStore.state.valueInputBooking["bookingNote"]}
-                                name="bookingNote" id="bookingNote"
+                                value={props.cartStore.state.valueInputBooking["bookingNote"]} style={{marginTop:"10px", minHeight:"110px"}}
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}
                                 />
@@ -120,8 +114,8 @@ const OrderBooking = (props) => {
                                 </FormGroup>
 
                                 <FormGroup row>
-                                    <Label sm={3} className="control-label">DISKON</Label>
-                                    <Col sm={7}>
+                                    <Label sm={2} className="control-label">DISKON</Label>
+                                    <Col sm={7} style={{float: "left"}}>
                                     {props.cartStore.state.discountType === 'Rp' &&
                                     <div className={props.cartStore.state.activeInputBooking === 'paymentDiscount' ? 'input-data-wrapper active-input' : 'input-data-wrapper'}>
                                     <Input type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
@@ -198,12 +192,12 @@ const OrderBooking = (props) => {
                                 </FormGroup>
 
                                 <FormGroup row>
-                                    <Label sm={3} className="approval">APPROVAL</Label>
+                                    <Label sm={2} className="approval">APPROVAL</Label>
                                     <Col sm={6}>
                                         <Input type="password" className="input-lg approval" ></Input>
                                     </Col>
                                     <Col sm={3}>
-                                        <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.addReservation(props.userNow, props.cartStore.state.dataReservation)} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
+                                        <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "doOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
                                     </Col>
                                 </FormGroup>
                             </Form>
