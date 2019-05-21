@@ -43,6 +43,12 @@
       .fas{
         font-size: 2rem;
       }
+      &.disabled{
+        color: grey;
+        &:hover{
+          background-color: black;
+        }
+      }
       &:hover{
         background-color: $red;
       }

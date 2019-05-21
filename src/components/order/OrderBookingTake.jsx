@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Row, Col, NavLink, Button, Input, Table } from 'reactstrap';
 import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
+import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
 
 import OrderHeader from './OrderHeader';
 import OrderItems from './OrderItems';
@@ -28,6 +29,11 @@ const OrderBookingTake = (props) => {
                 </Table>
               </div>
             </ShadowScrollbars>
+            <Row className="product-nav no-gutters">
+              <Col xs="12">
+                  <FooterNavRightBooking cartStore={props.cartStore} />
+              </Col>
+          </Row>
         </Container>
   )
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 import './Selection.css'
 
@@ -11,12 +12,17 @@ class Selection extends Component {
       }
       state = {
         userLoggedIn: {},
+        where: {},
         kasir: false,
         stok: false,
         pemesanan: false,
       }
 
     componentDidMount(){
+        axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekKas')
+        .then(res => {
+            this.setState({where: res.data})
+        })
         console.log(this.state, sessionStorage)
         const user = JSON.parse(sessionStorage.getItem('usernow'))
         this.setState({userLoggedIn: user}, () => this.checkRole())
@@ -49,9 +55,17 @@ class Selection extends Component {
                         } */}
 
                         {this.state.kasir &&
-                            <Link to={'/initial-balance'}>
-                            <button className="btn btn-size">KASIR</button>
-                            </Link>
+                            <div>
+                            {this.state.where.status === 'success' ?
+                                <Link to={'/initial-balance'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link> : 
+                                <Link to={'/cashier'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link>
+                            }
+                            
+                            </div>
                         }
                         {this.state.stok &&
                             <Link to={'/production'}>

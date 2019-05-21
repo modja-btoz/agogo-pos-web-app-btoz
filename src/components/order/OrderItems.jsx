@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import OrderItem from './OrderItem';
 
+
 class OrderItems extends Component {
 
   constructor(props){
@@ -9,18 +10,18 @@ class OrderItems extends Component {
   }
 
   componentDidMount(){
-    console.log("ETSTTTTTT", this.props.transactionStore)
-    // this.props.transactionStore.fetchReservation()
+    // console.log("ETSTTTTTT", this.props.transactionStore)
+    this.props.cartStore.fetchReservation()
   }
 
   render(){
 
     return (
 
-      <Row className="ReservationItems row m-0">
+      <Row className="TransactionItems row m-0">
 
-      { this.props.transactionStore.state.reservationStore.map((transaction, i) => 
-      <Col xs="7">
+      { this.props.cartStore.state.reservation.map((transaction, i) => 
+      <Col xs="12">
         <OrderItem 
           trxIndex={i}
           trxID={transaction.id} 
@@ -32,9 +33,9 @@ class OrderItems extends Component {
           cartStore={this.props.cartStore} 
         />
       </Col>
-      )}    
-
+      )}   
     </Row>
+    
 
 
       // <div>

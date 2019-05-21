@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, Input, Label, Button, NavLink, Form, FormGroup } from 'reactstrap'
+import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
 
 const TakeBooking = (props) => {
     return (
@@ -15,15 +16,15 @@ const TakeBooking = (props) => {
                 <Row className="SidebarBodyBooking">
                     <Col sm={5}>
                         <h7 className="mb-0">PEMESAN</h7>
-                        <Input style={{ color: "white" }} value={props.cartStore.state.dataReservation.nama} className="input pemesan" placeholder="NAMA"></Input>
+                        <Input disabled value={props.cartStore.state.dataReservation.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input style={{ color: "white" }} value={props.cartStore.state.dataReservation.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input disabled value={props.cartStore.state.dataReservation.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={3}>
                         <h7 className="mb-0">JAM SELESAI</h7>
-                        <Input style={{ color: "white" }} value="JamSelesai" className="input jam" placeholder="HH-MM"></Input>
+                        <Input disabled value={props.cartStore.state.dataReservation.waktu_selesai} className="input jam" placeholder="HH-MM"></Input>
                     </Col>
                 </Row>
 
@@ -37,7 +38,7 @@ const TakeBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                    <Input value={props.cartStore.state.dataReservation.catatan} bsSize="lg" type="textarea" name="note" rows="3" ></Input>
+                                    <Input disabled value={props.cartStore.state.dataReservation.catatan} bsSize="lg" type="textarea" name="note" rows="3" ></Input>
                                 </Col>
                             </FormGroup>
                             {/* <FormGroup row>
@@ -54,11 +55,29 @@ const TakeBooking = (props) => {
                             <FormGroup row>
                                 <Col sm={3}>
                                     <Label>
+                                        <h7 className="mb-0">USER</h7>
+                                    </Label>
+                                </Col>
+                                <Col sm={9}>
+                                <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg"
+                                        name="approvalUser" id="approvalUser"
+                                        onFocus={props.cartStore.setActiveInputRefund}
+                                        onChange={props.cartStore.onChangeBooking}
+                                        autoComplete="off"
+                                    />
+                                </Col>
+                                <Col sm={3}>
+                                    <Label>
                                         <h7 className="mb-0">APPROVAL</h7>
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                    <Input bsSize="lg" type="password" name="approval" className="approval"></Input>
+                                <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg"
+                                        // value={props.cartStore.state.valueInputBooking["approvalCode"]}
+                                        name="approvalCode" id="approvalCode"
+                                        onFocus={props.cartStore.setActiveInputBooking}
+                                        onChange={props.cartStore.onChangeBooking}
+                                    />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -67,6 +86,11 @@ const TakeBooking = (props) => {
                                 </Col>
                             </FormGroup>
                         </Form>
+                        <Row className="product-nav no-gutters">
+                                <Col xs="12">
+                                    <FooterNavRightBooking cartStore={props.cartStore} />
+                                </Col>
+                            </Row>
                     </Col>
                 </Row>
             </Container>

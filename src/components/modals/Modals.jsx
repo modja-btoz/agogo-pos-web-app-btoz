@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { Subscribe } from 'unstated'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Input, Row, Label } from 'reactstrap';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import './Modal.scss';
 import CalcNumeric from '../calcs/CalcNumericRefund';
 
@@ -53,6 +53,11 @@ class Modals extends Component {
         date + '/' + month + '/' + year,
     });
   }
+
+  // componentDidUpdate() {
+  //   axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`)
+  //   .then(res => this.setState({transaction: res.data}, () => console.log("AA")))
+  // }
 
   componentWillUnmount(){
     this.props.cartStore.clearCart()
@@ -161,7 +166,7 @@ class Modals extends Component {
         return (
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
         <ModalHeader className="text-center d-block">
-            {this.state.userLoggedIn.username.toUpperCase()}
+            {this.state.userLoggedIn.username.toUpperCase() || "nama user"}
           </ModalHeader>
         <ModalBody>
         <Row>
@@ -180,6 +185,7 @@ class Modals extends Component {
                 name="approvalUser" id="approvalUser"
                 onFocus={this.props.cartStore.setActiveInputRefund}
                 onChange={this.props.cartStore.onChangeBooking}
+                autoComplete="off"
               />
             </div>
           <h3>Approval</h3>
@@ -191,7 +197,7 @@ class Modals extends Component {
               />
           </div>
           <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
-          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.state.transaction, this.state.userLoggedIn, <Redirect to={'/logout'}/>)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
+          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.state.transaction, this.state.userLoggedIn, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
           </Col>
           <Col xs="4">
           <CalcNumeric
@@ -217,6 +223,16 @@ class Modals extends Component {
           <ModalBody className="p-5">
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
+            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
+          </ModalBody>
+        </Modal>
+      );
+      case 'simpan':
+        return (
+        <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          <ModalBody className="p-5">
+            <i className="fas fa-check font-weight-bold display-3 text-red"></i>
+            <h2 className="display-6 py-3">Data Berhasil Disimpan!</h2>
             <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
           </ModalBody>
         </Modal>
@@ -259,7 +275,8 @@ class Modals extends Component {
             <h4 className="display-6 py-3">Tambah Catatan</h4>
             <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                             <Input  
-                                    value={this.props.cartStore.state.valueInputBooking["note"]}
+                                    // value={this.props.cartStore.state.valueInputBooking["note"]}
+                                    defaultValue={this.props.cartStore.state.produksi["note"+this.props.cartStore.state.selectedProduct.name]}
                                     id={"note"+this.props.cartStore.state.selectedProduct.name}
                                     onChange={this.props.cartStore.onChangeBooking}
                                     onFocus={this.props.cartStore.setActiveInputBooking} 
