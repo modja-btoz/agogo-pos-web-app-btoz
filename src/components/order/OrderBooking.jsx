@@ -3,6 +3,8 @@ import React from 'react'
 import { Container, Row, Col, NavLink, Button, Input, Form, FormGroup, Label } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import './OrderBooking.scss';
+import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
+
 
 const OrderBooking = (props) => {
 
@@ -92,7 +94,8 @@ const OrderBooking = (props) => {
                                     onChange={props.cartStore.onChangeBooking}                                  
                                     onFocus={props.cartStore.setActiveInputBooking} 
                                     />
-                                    {/* <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="mb-4 form-control-lg form-control" placeholder="Rp 0"  
+                                    {/* <div className={props.cartStore.state.activeInputBooking === 'bookingAddition' ? 'input-data-wrapper active-input' : 'input-data-wrapper'}>
+                                    <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="mb-4 form-control-lg form-control" placeholder="Rp 0"  
                                     name="bookingAddition" id="bookingAddition" 
                                     value={props.cartStore.state.valueInputBooking["bookingAddition"]}  
                                     onChange={props.cartStore.onChangeBooking}                                  
@@ -191,16 +194,39 @@ const OrderBooking = (props) => {
                                     </Col>
                                 </FormGroup>
 
-                                <FormGroup row>
-                                    <Label sm={2} className="approval">APPROVAL</Label>
-                                    <Col sm={6}>
-                                        <Input type="password" className="input-lg approval" ></Input>
-                                    </Col>
-                                    <Col sm={3}>
-                                        <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "doOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
-                                    </Col>
-                                </FormGroup>
+                                <FormGroup>
+                                <Row>
+                                <Label sm={2} className="approval">USER</Label>
+                                <Col sm={6}>
+                                <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="lg"
+                                        name="approvalUser" id="approvalUser"
+                                        onFocus={props.cartStore.setActiveInputRefund}
+                                        onChange={props.cartStore.onChangeBooking}
+                                        autoComplete="off"
+                                    />
+                                </Col>
+                                </Row>
+                                <Row>
+                                <Label sm={2} className="approval">APPROVAL</Label>
+                                <Col sm={6}>
+                                <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg"
+                                        // value={props.cartStore.state.valueInputBooking["approvalCode"]}
+                                        name="approvalCode" id="approvalCode"
+                                        onFocus={props.cartStore.setActiveInputBooking}
+                                        onChange={props.cartStore.onChangeBooking}
+                                    />
+                                </Col>
+                                <Col sm={3}>
+                                <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "editOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
+                                </Col>
+                                </Row>
+                            </FormGroup>
                             </Form>
+                            <Row className="product-nav no-gutters">
+                                <Col xs="12">
+                                    <FooterNavRightBooking cartStore={props.cartStore} />
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>

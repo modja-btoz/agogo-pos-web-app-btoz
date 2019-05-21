@@ -2,6 +2,8 @@ import React from 'react'
 import { Container, Row, Col, Input, Label, Button, NavLink, Form, FormGroup } from 'reactstrap'
 import NumberFormat from 'react-number-format';
 import './EditBooking.scss'
+import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
+
 
 const EditBooking = (props) => {
     return (
@@ -169,17 +171,39 @@ const EditBooking = (props) => {
                                 </Col>
                             </FormGroup>
 
-                            <FormGroup row>
+                            <FormGroup>
+                                <Row>
+                                <Label sm={3} className="approval">USER</Label>
+                                <Col sm={6}>
+                                <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="lg"
+                                        name="approvalUser" id="approvalUser"
+                                        onFocus={props.cartStore.setActiveInputRefund}
+                                        onChange={props.cartStore.onChangeBooking}
+                                        autoComplete="off"
+                                    />
+                                </Col>
+                                </Row>
+                                <Row>
                                 <Label sm={3} className="approval">APPROVAL</Label>
                                 <Col sm={6}>
-                                    <Input type="password" className="input-lg approval" ></Input>
+                                <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg"
+                                        // value={props.cartStore.state.valueInputBooking["approvalCode"]}
+                                        name="approvalCode" id="approvalCode"
+                                        onFocus={props.cartStore.setActiveInputBooking}
+                                        onChange={props.cartStore.onChangeBooking}
+                                    />
                                 </Col>
                                 <Col sm={3}>
-                                    <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "editOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
+                                <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "editOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
                                 </Col>
+                                </Row>
                             </FormGroup>
                         </Form>
-
+                        <Row className="product-nav no-gutters">
+                                <Col xs="12">
+                                    <FooterNavRightBooking cartStore={props.cartStore} />
+                                </Col>
+                            </Row>
                     </Col>
 
                 </Row>

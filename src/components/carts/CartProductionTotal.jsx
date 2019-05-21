@@ -1,4 +1,5 @@
 import React from 'react' 
+import NumberFormat from 'react-number-format';
 
 const CartProductionTotal = (props) => {
     return (
@@ -12,7 +13,8 @@ const CartProductionTotal = (props) => {
                 <th>
                     SISA STOK
                 </th>
-                <th><h2>{props.cartStore.state.selectedProduct.stock ? props.cartStore.state.selectedProduct.stock : "-"}</h2></th>
+                <th><h2><NumberFormat value={props.cartStore.getStok() || "-"} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','}  />
+                </h2></th>
             </tr>
         </tfoot>
     )

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { Subscribe } from 'unstated'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Col, Input, Row, Label } from 'reactstrap';
-import { Redirect } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import './Modal.scss';
 import CalcNumeric from '../calcs/CalcNumericRefund';
 
@@ -161,7 +161,7 @@ class Modals extends Component {
         return (
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
         <ModalHeader className="text-center d-block">
-            {this.state.userLoggedIn.username.toUpperCase()}
+            {this.state.userLoggedIn.username.toUpperCase() || "nama user"}
           </ModalHeader>
         <ModalBody>
         <Row>
@@ -191,7 +191,7 @@ class Modals extends Component {
               />
           </div>
           <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
-          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.state.transaction, this.state.userLoggedIn, <Redirect to={'/logout'}/>)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
+          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.state.transaction, this.state.userLoggedIn, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
           </Col>
           <Col xs="4">
           <CalcNumeric

@@ -24,17 +24,8 @@ class CartProduction extends React.Component {
             "Jumat",
             "Saturday"
         ],
-        popoverOpen: false,
-        index : this.props.cartStore.state.production.findIndex( x => x.id === this.props.cartStore.state.selectedProduct.id)
         // console.log(days[new Date().getDay()]);
         };
-    }
-
-    toggle() {
-        this.setState({
-        popoverOpen: !this.state.popoverOpen
-        });
-        console.log("A")
     }
 
     componentDidMount() {

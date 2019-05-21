@@ -78,6 +78,8 @@ const initialState = {
   popStatus: false,
   isDisabled: true,
   isDisabledRefund: true,
+  disabledOrder: true,
+  disabledOther: false,
   productNote: "",
   payRefundTK: true,
   abasa: false
@@ -195,7 +197,7 @@ class CartsContainer extends Container {
       else if(active_path === '/booking'){
         axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
         const trx = res.data;
-        this.setState({ currentTrx: trx.current_invoice});
+        this.setState({ currentTrx: trx.current_invoice, disabledOrder: false, disabledOther: true});
         // sessionStorage.setItem('transaction', JSON.stringify(transaction));
         })
       }
@@ -532,7 +534,7 @@ addSelectedTransaction(id, current, idx) {
     // axios.put('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + dataRefund.id, this.state.items)
   }
 
-  doPostKas(transaction, user, logout){
+  doPostKas(transaction, user, modal){
     const saldo_akhir = transaction.total_transaksi + transaction.saldo_awal
     this.setState({
       postData: {
@@ -545,8 +547,15 @@ addSelectedTransaction(id, current, idx) {
       }
     })
     axios.post('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas', [this.state.postData])
-    .then(res => logout)
-    .catch(res => console.log(res, [this.state.postData]))
+    .then(res => {
+      document.location.href = '/logout'
+      console.log(res, [this.state.postData])
+    })
+    .catch(res => {
+      modal.clearModal()
+      modal.toggleModal('alert','','',res.response.data.message)
+      console.log(res, [this.state.postData])
+    })
   }
 
   doRefundPost(modal){
@@ -1135,6 +1144,11 @@ addSelectedTransaction(id, current, idx) {
       this.state.dataReservation["user"] = user;
       console.log(user,this.state.dataReservation["user"],this.state.dataReservation.user,this.state.valueInputRefund["approvalUser"])
     }
+    else if (this.state.activeInputBooking === 'approvalCode'){
+      const code = valueInputBooking.target.value
+      this.state.dataReservation["code"] = code;
+      console.log(code,this.state.dataReservation["code"],this.state.dataReservation.code,this.state.valueInputBooking["approvalCode"])
+    }
   }
 
   setActiveInputEditBooking = (event) => {
@@ -1411,7 +1425,7 @@ addSelectedTransaction(id, current, idx) {
   }
   
   doOrder = (id) => {
-    this.setState({isRefundPSShow: true})
+    this.setState({isRefundPSShow: true, disabledOrder: true, disabledOther: true})
     let orderCode = id
     axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -1545,6 +1559,17 @@ addSelectedTransaction(id, current, idx) {
     console.log(this.state.production)
   }
 
+  getStok(){
+    let total = 0
+    const stok = parseInt(this.state.selectedProduct.stock)
+    const produksi1 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi1"] || 0)
+    const produksi2 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi2"] || 0)
+    const produksi3 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi3"] || 0)
+    // let index = this.state.production.findIndex(x => x.id === this.state.selectedProduct.id)
+    total = stok+produksi1+ produksi2+ produksi3
+
+    return total
+  }
   // whatisit = (id) => {
   //   let index = this.state.production.findIndex( x => x.id === id);
   //   let produksi1 = this.state.production[index].produksi1

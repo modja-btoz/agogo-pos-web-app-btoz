@@ -60,7 +60,7 @@
 
         render() {
             return (
-                <Container fluid="true" className="kasir container-fluid h-100">
+                <Container fluid="true" className="booking container-fluid h-100">
                     <Row className="h-100">
 
                         <Col xs="6" className="booking-cart">

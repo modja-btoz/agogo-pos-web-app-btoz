@@ -15,8 +15,8 @@ const ReservationItem = (props) => {
               {props.trxDate}</a>
           </Col>
           <Col sm="2" className="transaction-list">
-          <a href="#"  onClick={() => props.cartStore.deleteReservation(props.trxID, props.trxIndex)}><i className="fas fa-backspace btn-delete-item" style={{ color: "black" }} /></a>
-        </Col>
+            <a href="#"  onClick={() => props.cartStore.deleteReservation(props.trxID, props.trxIndex)}><i className="fas fa-backspace btn-delete-item" style={{ color: "black" }} /></a>
+          </Col>
         </Row>
         <hr className="garis-pembatas"/>
           
