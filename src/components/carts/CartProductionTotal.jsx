@@ -9,11 +9,12 @@ const CartProductionTotal = (props) => {
                     STOK AWAL <br/>
                     <span className="date">{props.date.days[new Date().getDay() - 1] + ", " + props.date.prevDate}</span>    
                 </th>
-                <th><h2>{props.cartStore.state.produksi["stok_kemarin"+ props.cartStore.state.selectedProduct.name] || "-"}</h2></th>
+                <th><h2><NumberFormat value={props.cartStore.getStokAwal() || "-"} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','}  />
+                </h2></th>
                 <th>
                     SISA STOK
                 </th>
-                <th><h2><NumberFormat value={props.cartStore.getStok() || "-"} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','}  />
+                <th><h2><NumberFormat value={props.cartStore.getStokNow() || "-"} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','}  />
                 </h2></th>
             </tr>
         </tfoot>
