@@ -54,7 +54,7 @@
 }
 
 .total-production {
-    padding-right: 0px;
+    padding-right: 102px;
     text-align: left;
     color: black;
     font-style: italic;
@@ -68,7 +68,7 @@
 
 .calc-product-total {
     text-align: right;
-    padding-left: 10px;
+    // padding-left: 10px;
 }
 
 .edit {
@@ -81,7 +81,6 @@
 hr {
     margin: 0px;
     color: black;
-    width: 230px;
 }
 
 .production-store {
@@ -96,7 +95,15 @@ hr {
 }
 
 .total-sales {
-    padding-right: 100px;
+    padding-right: 83px;
+    text-align: left;
+    color: black;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.total-others {
+    padding-right: 97px;
     text-align: left;
     color: black;
     font-style: italic;
@@ -116,7 +123,7 @@ hr {
 
 .calc-product-others {
     text-align: right;
-    padding-left: 10px;
+    // padding-left: 10px;
 }
 
 .note-production {
