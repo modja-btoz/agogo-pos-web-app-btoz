@@ -782,6 +782,7 @@ addSelectedTransaction(id, current, idx) {
     
     let discountAmount;
     if(this.state.discountType === '%'){
+      console.log("this.discountPrice", this.discountPercentage())
       discountAmount = parseInt( sumTotalAmount * (this.discountPercentage()/100) )
     }
     if(this.state.discountType === 'Rp'){
@@ -809,7 +810,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   discountPercentage(){
-    let discount = this.state.valueInputPayment["paymentDiscount"] || this.state.valueInputBooking["paymentDiscount"]
+    let discount = this.state.valueInputPayment["paymentDiscount"] || this.state.discountPercentage
     if(discount === undefined || discount === ''){
       discount = 0;
     }
@@ -832,6 +833,7 @@ addSelectedTransaction(id, current, idx) {
     if(discount >= sumTotalAmount){
       discount = sumTotalAmount;
     }
+    console.log("DISCOUNT PRICE", discount)
     return discount
   }
 
@@ -1126,16 +1128,29 @@ addSelectedTransaction(id, current, idx) {
     valueInputBooking.preventDefault()
     if(this.state.activeInputBooking === "bookingAddition"){
       const add_fee = valueInputBooking.target.value
-      this.setState({expenseAmount: add_fee}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
+      const split = add_fee.split('Rp')
+      const data = split[1].split('.')
+      this.setState({expenseAmount: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
     }
     if(this.state.activeInputBooking === "paymentDiscount"){
       const discount = valueInputBooking.target.value
-      this.setState({discountAmount: discount}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+      if(this.state.discountType === 'Rp'){
+      const split = discount.split('Rp')
+      const data = split[1].split('.')
+        this.setState({discountAmount: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+      }
+      else if(this.state.discountType === '%'){
+      const split = discount.split('%')
+      const data = split[0].split('.')
+        this.setState({discountPercentage: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+      }
     }
     if(this.state.activeInputBooking === "bookingPayment"){
       const dp = valueInputBooking.target.value
+      const split = dp.split('Rp')
+      const data = split[1].split('.')
       this.state.dataReservation["status"] = "UNPAID";
-      this.setState({dpReservationAmount: dp}, () => this.sumGrandTotalAmount(), this.state.dataReservation["dibayar"] = this.state.dpReservationAmount)
+      this.setState({dpReservationAmount: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["dibayar"] = this.state.dpReservationAmount)
     } 
     if (this.state.activeInputBooking === 'bookingName'){
       const name = valueInputBooking.target.value
@@ -1348,9 +1363,11 @@ addSelectedTransaction(id, current, idx) {
   handleDiscountChange= (event) => {
     if (this.state.discountType === 'Rp'){
       this.setState({discountType: event.target.value})
+      console.log(this.state.discountType, this.state.discountAmount)
     }
     if (this.state.discountType === '%'){
       this.setState({discountType: event.target.value})
+      console.log(this.state.discountType, this.state.discountPercentage)
     }
   }
 
