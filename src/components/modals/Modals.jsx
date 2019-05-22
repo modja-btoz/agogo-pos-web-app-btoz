@@ -10,6 +10,7 @@ import RootContainer from '../../containers/RootContainer'
 import ModalsContainer from '../../containers/ModalsContainer'
 import CartsContainer from '../../containers/CartsContainer'
 import TransactionContainer from '../../containers/TransactionContainer'
+import { get } from 'http';
 
 class Modals extends Component {
 
@@ -35,11 +36,6 @@ class Modals extends Component {
   };
 
   componentDidMount() {
-    const user = JSON.parse(sessionStorage.getItem('usernow'))
-    this.setState({userLoggedIn: user});
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`)
-    .then(res => this.setState({transaction: res.data}))
-    console.log("AWODKOPWAKDPO",this.props.cartStore.state)
     var that = this;
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
@@ -163,10 +159,15 @@ class Modals extends Component {
         </Modal>
       );
       case 'hitungKas':
+        const user = sessionStorage.getItem('usernow')
+        const data = JSON.parse(user)
+        axios({timeout: 1000, method: 'get', url: `https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`})
+        .then(res => this.setState({transaction: res.data}))
+        console.log("AWODKOPWAKDPO",this.props.cartStore.state)
         return (
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
         <ModalHeader className="text-center d-block">
-            {this.state.userLoggedIn.username.toUpperCase() || "nama user"}
+            {data.username.toUpperCase() || "nama user"}
           </ModalHeader>
         <ModalBody>
         <Row>
@@ -197,7 +198,7 @@ class Modals extends Component {
               />
           </div>
           <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
-          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.state.transaction, this.state.userLoggedIn, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
+          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.state.transaction, data, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
           </Col>
           <Col xs="4">
           <CalcNumeric

@@ -16,6 +16,7 @@ class Selection extends Component {
         kasir: false,
         stok: false,
         pemesanan: false,
+        admin: false,
       }
 
     componentDidMount(){
@@ -32,11 +33,17 @@ class Selection extends Component {
         if(this.state.userLoggedIn.role.includes("kasir")){
             this.setState({kasir: !this.state.kasir})
         }
-        if(this.state.userLoggedIn.role.includes("stok")){
+        else if(this.state.userLoggedIn.role.includes("stok")){
             this.setState({stok: !this.state.stok})
         }
-        if(this.state.userLoggedIn.role.includes("pemesanan")){
+        else if(this.state.userLoggedIn.role.includes("pemesanan")){
             this.setState({pemesanan: !this.state.pemesanan})
+        }
+        else if(this.state.userLoggedIn.role.includes("admin")){
+            this.setState({admin: !this.state.admin})
+        }
+        else if(this.state.userLoggedIn.role.includes("manager")){
+            this.setState({admin: !this.state.admin})
         }
     }
 
@@ -64,7 +71,6 @@ class Selection extends Component {
                                     <button className="btn btn-size">KASIR</button>
                                 </Link>
                             }
-                            
                             </div>
                         }
                         {this.state.stok &&
@@ -76,6 +82,24 @@ class Selection extends Component {
                             <Link to={'/booking'}>
                             <button className="btn btn-size">PEMESANAN</button>
                             </Link>
+                        }
+                        {this.state.admin &&
+                            <div>
+                            {this.state.where.status === 'success' ?
+                                <Link to={'/initial-balance'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link> : 
+                                <Link to={'/cashier'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link>
+                            }
+                            <Link to={'/production'}>
+                            <button className="btn btn-size">PRODUKSI</button>
+                            </Link>
+                            <Link to={'/booking'}>
+                            <button className="btn btn-size">PEMESANAN</button>
+                            </Link>
+                            </div>
                         }
                         {/* {this.state.userLoggedIn.role.map(role => 
                          {if(role === "kasir"){

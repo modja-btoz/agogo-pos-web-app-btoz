@@ -34,8 +34,8 @@ class OthersProduction extends React.Component {
                 </tr>
                 <hr />
                 <tr>
-                    <td className="total-sales">Total Lain-lain</td>
-                    <td className="calc-product-others text-right">{parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "rusak"] || 0)+
+                    <td className="total-others">Total Lain-lain</td>
+                    <td className="calc-product-total text-right">{parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "rusak"] || 0)+
                                                                     parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "lain"] || 0) || "-"}</td>
                 </tr>
                 <tr>

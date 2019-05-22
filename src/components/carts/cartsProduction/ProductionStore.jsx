@@ -21,7 +21,7 @@ class ProductionStore extends React.Component {
                 <hr />
                 <tr>
                     <td className="total-sales">Total Penjualan</td>
-                    <td className="calc-product-sales text-right">{parseInt(this.props.cartStore.state.produksi["total"+this.props.cartStore.state.selectedProduct.name] || 0)+
+                    <td className="calc-product-total text-right">{parseInt(this.props.cartStore.state.produksi["total"+this.props.cartStore.state.selectedProduct.name] || 0)+
                                                                     parseInt(this.props.cartStore.state.produksi["pemesanan"+this.props.cartStore.state.selectedProduct.name] || 0) || "-"}</td>
                 </tr>
             </div>

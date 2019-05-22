@@ -59,7 +59,7 @@ const TakeBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg"
+                                <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="lg"
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeBooking}
