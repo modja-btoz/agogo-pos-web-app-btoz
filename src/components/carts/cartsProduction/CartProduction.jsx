@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Container, Row, Col, Input, Button, Popover, PopoverBody} from 'reactstrap'
-import CartHeader from '../CartHeader'
+import axios from 'axios'
 import CartProductionTotal from '../CartProductionTotal'
 
 import './CartProduction.scss'
@@ -15,6 +15,7 @@ class CartProduction extends React.Component {
           //defauilt value of the date time
           date: '',
           prevDate : '',
+          lastDate: '',
           days: [
             "Minggu",
             "Senin",
@@ -29,20 +30,33 @@ class CartProduction extends React.Component {
     }
 
     componentDidMount() {
-        var that = this;
-        var date = new Date().getDate(); //Current Date
-        var month = new Date().getMonth() + 1; //Current Month
-        var year = new Date().getFullYear(); //Current Year
-        // var hours = new Date().getHours(); //Current Hours
-        // var min = new Date().getMinutes(); //Current Minutes
-        // var sec = new Date().getSeconds(); //Current Seconds
-        that.setState({
-          //Setting the value of the date time
-          date:
-            date + '/' + month + '/' + year,
-          prevDate:
-            (date -1) + '/' + month + '/' + year,
-        });
+        axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/GetLastDate`)
+        .then(res => { this.setState({date: res.data.created_at}, 
+            () => {
+                var month = new Date().getMonth() + 1; //Current Month
+                var year = new Date().getFullYear(); 
+                var date = this.state.date
+                var splitDate = date.split(" ")
+                var takeDate = splitDate[0]
+                var tanggal = new Date(takeDate).getDate()
+                console.log(tanggal)
+                this.setState({lastDate: takeDate, prevDate: year + '/' + month + '/' + (tanggal - 1)})
+            })})
+            // this.props.cartStore.getDataNyoba()
+    //     var that = this;
+    //     var date = new Date().getDate(); //Current Date
+    //     var month = new Date().getMonth() + 1; //Current Month
+    //     var year = new Date().getFullYear(); //Current Year
+    //     // var hours = new Date().getHours(); //Current Hours
+    //     // var min = new Date().getMinutes(); //Current Minutes
+    //     // var sec = new Date().getSeconds(); //Current Seconds
+    //     // that.setState({
+    //     //   //Setting the value of the date time
+    //     //   date:
+    //     //     date + '/' + month + '/' + year,
+    //     // //   prevDate:
+    //     // //     date + '/' + month + '/' + year,
+    //     // });
       }
 
     render() {
@@ -50,8 +64,9 @@ class CartProduction extends React.Component {
             <Container className="cart mt-4 pt-5 pr-0 pl-0">
                 <Row style={{height: "500px"}}>
                     <Col xs="7" className="body-left">
-                        <div className="date">Posisi per <span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
-                        <div className="change-date" style={{marginTop: "5px"}}><a href="#" onClick={() => this.props.modalStore.toggleModal('changeDate', 'lg')}><strong>Ubah Tanggal</strong></a></div>
+                        {/* <div className="date">Posisi per <span className="date-update">{this.state.prevDate}</span></div> */}
+                        <div className="date">Posisi per <span className="date-update">{this.state.days[new Date(this.state.lastDate).getDay()]+ ", " + this.state.lastDate}</span></div>
+                        <div className="change-date" style={{marginTop: "5px"}}><a href="#" onClick={() => this.props.modalStore.toggleModal('changeDate', 'lg')}><strong>Set Tanggal</strong></a></div>
                         <div className="view-img" style={{marginTop: "10px"}}>
                             <img className="img-product" src={this.props.cartStore.state.selectedProduct.photo}></img>
                         </div>

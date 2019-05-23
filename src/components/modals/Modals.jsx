@@ -265,7 +265,7 @@ class Modals extends Component {
             <i className="fas fa-calendar-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Apakah anda yakin akan mengubah posisi tanggal ke hari berikutnya ?</h2>
             <Button className="mt-3 py-3 px-5" color="secondary" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> TIDAK</Button>{" "}
-            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={() => this.props.cartStore.changeDate()}><i class="fas fa-check mr-1"></i> YA</Button>
+            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={() => this.props.cartStore.changeAllDate()}><i class="fas fa-check mr-1"></i> YA</Button>
           </ModalBody>
         </Modal>
       );

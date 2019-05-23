@@ -166,7 +166,7 @@ const OrderBooking = (props) => {
                                     />
                                 </Col>
                                 <Col sm={3}>
-                                <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "editOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
+                                <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "doOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
                                 </Col>
                                 </Row>
                             </FormGroup>

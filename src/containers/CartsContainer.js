@@ -2,6 +2,8 @@ import { Container } from 'unstated'
 import axios from 'axios'
 
 const initialState = {
+  dataNyoba: [],
+  nyoBa: [],
   data: [],
   dataTrx: [],
   dataRefund: {},
@@ -13,6 +15,7 @@ const initialState = {
   selectedProduct: {},
   selectedTransaction: {},
   dataReservation : {},
+  clearProduction: [],
   production: [],
   product: {},
   postData: {},
@@ -232,6 +235,18 @@ class CartsContainer extends Container {
         
         if(index === -1 || id === index){
           this.state.production.push(product)
+          const reset = {
+            product_id: id,
+            produksi1: "",
+            produksi2: "",
+            produksi3: "",
+            total_produksi: "",
+            ket_rusak: "",
+            ket_lain: "",
+            catatan: null,
+          }
+          const productKosong = Object.assign(product, reset)
+          this.state.clearProduction.push(productKosong)
           console.log(this.state.production)
         } else {
           console.log("produsk")
@@ -290,12 +305,41 @@ class CartsContainer extends Container {
                                                            {ket_lain: parseInt(pesan.production.ket_lain || 0)},
                                                            {total_lain: parseInt(pesan.production.ket_rusak || 0) + parseInt(pesan.production.ket_lain || 0)},),
            ...this.state.production.slice(index+1)
+        ],
+        clearProduction: [
+          ...this.state.clearProduction.slice(0,index),
+          Object.assign({}, this.state.clearProduction[index], {penjualan_toko: pesan.count_order},
+                                                               {penjualan_pemesanan: pesan.count_preorder},
+                                                               {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
+                                                               {total_lain: 0},{stock_awal: this.getStokNow()},{sisa_stock: this.getStokNow()}),
+          ...this.state.clearProduction.slice(index+1)
         ]
       })
       }
       }) 
     }
   }
+
+  // getDataNyoba() {
+  //   axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+  //   .then(res => {
+  //     const products = res.data;
+  //     products.forEach(trx => 
+  //       this.state.dataNyoba.push({
+  //       product_id: trx.id,
+  //       produksi1: "",
+  //       produksi2: "",
+  //       produksi3: "",
+  //       total_produksi: "",
+  //       ket_rusak: "",
+  //       ket_lain: "",
+  //       catatan: null,
+  //       })
+  //     )
+  //     this.setState({nyoBa: this.state.dataNyoba}, 
+  //       () => console.log("COBA",this.state.nyoBa))
+  //   })
+  // }
 
 addSelectedTransaction(id, current, idx) {
   axios.get('http://101.255.125.227:82/api/order/' + id).then(res => {
@@ -482,7 +526,7 @@ addSelectedTransaction(id, current, idx) {
           .catch(res => {
             this.setState({selectedItems: []})
             console.log(res, this.state.selectedItems, this.state.items)
-            modal.toggleModal('alert','','',res.response.data.message)
+            modal('alert','','',res.response.data.message)
           })
         } else {
           axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
@@ -494,7 +538,7 @@ addSelectedTransaction(id, current, idx) {
           .catch(res => {
             this.setState({selectedItems: []})
             console.log(res, this.state.selectedItems, this.state.items)
-            modal.toggleModal('alert','','',res.response.data.message)
+            modal('alert','','',res.response.data.message)
           })
         }
     })
@@ -711,6 +755,10 @@ addSelectedTransaction(id, current, idx) {
       () => {
         if(this.state.currentTrx !==null && this.state.items.length === 0){
           this.setState({isDisabled: true})
+          this.sumTotalAmount()
+          setTimeout(() => {
+          this.sumGrandTotalAmount()
+        }, 10);
         }else{
         this.sumTotalAmount()
         setTimeout(() => {
@@ -1437,16 +1485,24 @@ addSelectedTransaction(id, current, idx) {
       modal('bayar')
       this.setState({refund: [], data: []})})
       .catch(res => {
-      modal('alert')
+      modal('alert', '' , '', res.response.data.message)
       this.setState({refund: [], data: []})})
     }
   }
 
   doReservation(user_id, modal) {
     let items = this.state.selectedItems
+    let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"])
     let index = items.findIndex( x => x.preorder_id === items[0].preorder_id);
     // this.deleteReservation(items[0].preorder_id)
     console.log(items)
+    if(isNaN(totalPayment)){
+      modal('alert','','','Harap masukkan uang pembayaran')
+    }
+    else if(totalPayment < this.state.leftToPay){
+      modal('alert','','','Uang pembayaran anda kurang')
+    }
+    else{
     this.setState({
       selectedItems: [
         ...this.state.selectedItems.slice(0,index),
@@ -1473,6 +1529,7 @@ addSelectedTransaction(id, current, idx) {
         console.log(res.response,)
       })
     })
+   }
   }
   
   doOrder = (id) => {
@@ -1681,6 +1738,35 @@ addSelectedTransaction(id, current, idx) {
 
   changeDate = () => {
     axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, this.state.production)
+  }
+
+  changeAllDate = () => {
+    console.log(this.state.clearProduction)
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+    .then(res => {
+      const data = res.data
+      console.log(data)
+    })
+    // axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+    // .then(res => {
+    //   const products = res.data;
+    //   products.forEach(trx => 
+    //     this.state.dataNyoba.push({
+    //     product_id: trx.id,
+    //     produksi1: "",
+    //     produksi2: "",
+    //     produksi3: "",
+    //     total_produksi: "",
+    //     ket_rusak: "",
+    //     ket_lain: "",
+    //     catatan: null,
+    //     })
+    //   )
+    //   this.setState({nyoBa: this.state.dataNyoba}, 
+    //     () => {console.log("COBA",this.state.nyoBa) 
+    //           this.setState({nyoBa: [], dataNyoba: []})})
+    // })
+    // axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, this.state.clearProduction)
   }
 
   // changeDate() {
