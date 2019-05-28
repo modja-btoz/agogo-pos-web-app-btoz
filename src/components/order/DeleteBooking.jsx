@@ -95,7 +95,7 @@ const DeleteBooking = (props) => {
                             </FormGroup>
                             <FormGroup row>
                                 <Col className="btn btn-deleted">
-                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.deleteReservation(props.cartStore.state.dataReservation.id)} 
+                                    <Button onClick={() => props.cartStore.deleteReservationModal(props.modalStore.toggleModal)} 
                                     size="lg" name="btn-del" className="btn-del"><i class="fas fa-trash-alt del"></i>HAPUS</Button>
                                 </Col>
                             </FormGroup>

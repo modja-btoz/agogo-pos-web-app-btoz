@@ -88,9 +88,9 @@ const OrderBooking = (props) => {
                                     <Col sm={10}>
                                     <div className={props.cartStore.state.activeInputBooking === 'bookingAddition' ? 'input-data-wrapper active-input' : 'input-data-wrapper'}>
                                     <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="mb-4 form-control-lg form-control" placeholder="Rp 0"  
-                                    name="bookingAddition" id="bookingAddition" 
+                                    name="bookingAddition" id="bookingAddition"
                                     value={props.cartStore.state.valueInputBooking["bookingAddition"]}  
-                                    onChange={props.cartStore.onChangeBooking}                                  
+                                    onValueChange={props.cartStore.onChangeBooking}                                  
                                     onFocus={props.cartStore.setActiveInputBooking}/>
                                     </div>
                                     </Col>
@@ -104,7 +104,7 @@ const OrderBooking = (props) => {
                                     <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
                                     value={props.cartStore.state.valueInputBooking["paymentDiscount"]}
                                     name="paymentDiscount" id="paymentDiscount" 
-                                    onChange={props.cartStore.onChangeBooking}
+                                    onValueChange={props.cartStore.onChangeBooking}
                                     onFocus={props.cartStore.setActiveInputBooking}
                                     prefix={'Rp '}/>
                                     </div>
@@ -114,7 +114,7 @@ const OrderBooking = (props) => {
                                     <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="0%" 
                                     value={props.cartStore.state.valueInputBooking["paymentDiscount"]}
                                     name="paymentDiscount" id="paymentDiscount"
-                                    onChange={props.cartStore.onChangeBooking}
+                                    onValueChange={props.cartStore.onChangeBooking}
                                     onFocus={props.cartStore.setActiveInputBooking}
                                     suffix={'%'}/>
                                     </div>
@@ -137,7 +137,7 @@ const OrderBooking = (props) => {
                                         <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="mb-4 form-control-lg form-control" placeholder="Rp 0"  
                                         name="bookingPayment" id="bookingPayment"
                                         value={props.cartStore.state.valueInputBooking["bookingPayment"]}
-                                        onChange={props.cartStore.onChangeBooking}
+                                        onValueChange={props.cartStore.onChangeBooking}
                                         onFocus={props.cartStore.setActiveInputBooking}/>
                                         </div>
                                     </Col>
@@ -161,12 +161,12 @@ const OrderBooking = (props) => {
                                 <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg"
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
-                                        onFocus={props.cartStore.setActiveInputBooking}
+                                        onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeBooking}
                                     />
                                 </Col>
                                 <Col sm={3}>
-                                <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "editOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
+                                <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal, "doOrder")} color="danger" className="input-lg"><i className="fas fa-edit"></i> SIMPAN</Button>
                                 </Col>
                                 </Row>
                             </FormGroup>

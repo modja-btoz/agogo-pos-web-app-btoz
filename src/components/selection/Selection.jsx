@@ -33,7 +33,7 @@ class Selection extends Component {
         if(this.state.userLoggedIn.role.includes("kasir")){
             this.setState({kasir: !this.state.kasir})
         }
-        else if(this.state.userLoggedIn.role.includes("stok")){
+        else if(this.state.userLoggedIn.role.includes("produksi")){
             this.setState({stok: !this.state.stok})
         }
         else if(this.state.userLoggedIn.role.includes("pemesanan")){

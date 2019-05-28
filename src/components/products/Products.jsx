@@ -19,6 +19,7 @@ class Products extends Component {
   componentDidMount() {
     this.props.productStore.setFilteredKeyword("Semua Item")
     this.props.productStore.fetchProducts()
+    this.props.cartStore.fetchProducts()
   }
 
   render() {
@@ -35,7 +36,7 @@ class Products extends Component {
           autoHeightMax={this.props.productStore.state.productItemsHeight}
           isBlack
         >
-          <ProductItems activePath={this.props.activePath} productStore={this.props.productStore} cartStore={this.props.cartStore}  />
+          <ProductItems modalStore={this.props.modalStore} activePath={this.props.activePath} productStore={this.props.productStore} cartStore={this.props.cartStore}  />
         </ShadowScrollbars>
 
       </Container>

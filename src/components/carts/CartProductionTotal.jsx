@@ -7,7 +7,10 @@ const CartProductionTotal = (props) => {
             <tr className="cart-total">
                 <th>
                     STOK AWAL <br/>
-                    <span className="date">{props.date.days[new Date().getDay() - 1] + ", " + props.date.prevDate}</span>    
+                    <span className="date">{props.cartStore.state.days[new Date(props.cartStore.state.lastDate).getDay() - 1] + ", " + props.cartStore.state.prevDate}</span>  
+                    {/* <span className="date">{props.date.days[new Date(props.date.lastDate).getDay() - 1] + ", " + props.date.prevDate}</span>   */}
+
+                    {/* this.state.days[new Date(this.state.lastDate).getDay()]+ ", " + this.state.lastDate   */}
                 </th>
                 <th><h2><NumberFormat value={props.cartStore.getStokAwal() || "-"} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','}  />
                 </h2></th>

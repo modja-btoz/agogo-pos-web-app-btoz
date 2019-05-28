@@ -24,6 +24,7 @@ const ProductItems = (props) => {
           cartStore={props.cartStore} 
           isAdded={props.cartStore.state.isAdded}
           activePath={props.activePath}
+          modalStore={props.modalStore}
         />
       </Col>
       )}    

@@ -2,6 +2,8 @@ import { Container } from 'unstated'
 import axios from 'axios'
 
 const initialState = {
+  dataNyoba: [],
+  nyoBa: [],
   data: [],
   dataTrx: [],
   dataRefund: {},
@@ -13,6 +15,7 @@ const initialState = {
   selectedProduct: {},
   selectedTransaction: {},
   dataReservation : {},
+  clearProduction: [],
   production: [],
   product: {},
   postData: {},
@@ -20,10 +23,12 @@ const initialState = {
   trxRefund: [],
   transaction: [],
   reservation: [],
+  products: [],
   produksi: {total: 0, rusak: 0, lain: 0, catatan: ""},
   isAdded: false,
   isCalcNumericCartOpen: false,
   inputQtyCartItem: '',
+  searchCode: '',
   selectedQtyID: '',
   layoutName: "default",
   onReset: false,
@@ -82,7 +87,19 @@ const initialState = {
   disabledOther: false,
   productNote: "",
   payRefundTK: true,
-  abasa: false
+  abasa: false,
+  date: '',
+  prevDate : '',
+  lastDate: '',
+  days: [
+    "Minggu",
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Saturday"
+],
 };
 
 class CartsContainer extends Container {
@@ -91,6 +108,73 @@ class CartsContainer extends Container {
     super(props)
     this.state = initialState;
   }
+
+  fetchProducts() {
+    // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+    .then(res => {
+      const products = res.data;
+      this.setState({ 
+        products: products,
+        }
+      );
+    })
+  }
+
+  setSearchCode(code) {
+    console.log("CATEGORY => ", code)
+    this.setState({ 
+      searchCode: code
+    }, 
+      () => {
+        this.codeSearch()
+      }
+    )
+  }
+
+  codeSearch() {
+    let products = this.state.products
+    let searchCode = this.state.searchCode
+
+    let productsCode =  products.filter(function(product) {
+      // return product.title.rendered === searchKeyword;
+      return product.code === searchCode;
+    });
+    if(productsCode.length === 1){
+      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekInvoice`).then(res => {
+      const trx = res.data;
+      this.setState({ currentTrx: trx.current_invoice, isDisabled: false});
+      // sessionStorage.setItem('transaction', JSON.stringify(transaction));
+      })
+      this.setState(
+        {
+          selectedProduct: {
+            // idx: idx,
+            id: productsCode[0].id,
+            name: productsCode[0].name,
+            qty: 1,
+            price: productsCode[0].price
+          }
+        },
+        () => {
+          this.onAddToCart(this.state.selectedProduct);
+          console.log(this.state.selectedProduct)
+          console.log(this.state.items)
+        })
+    }else{
+      console.log(productsCode)
+    }
+
+    // this.setState({ 
+    //   productsFiltered: productsCode,
+    //   activeCatClass: ''
+    // },()=>{
+    //   console.log("searchKeyword => ", searchCode)
+    //   console.log("productsFiltered => ", productsCode)
+    // })
+    
+  }
+
 
   clearCart = () => {
     console.log("CLEAR CART", this)
@@ -140,7 +224,7 @@ class CartsContainer extends Container {
   onAddToCart = this.onAddToCart.bind(this);
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
   onRemoveToRefund = this.onRemoveToRefund.bind(this);
-  onAddToCart(selectedProduct) {
+  onAddToCart(selectedProduct, jml) {
 
     let id = selectedProduct.id
     let user_id = selectedProduct.user_id
@@ -185,7 +269,7 @@ class CartsContainer extends Container {
   }
 
 
-  addSelectedProduct(idx, id, name, qty, price, active_path) {
+  addSelectedProduct(idx, id, name, qty, price, active_path, modal) {
     if(active_path === '/cashier' || active_path === '/booking'){
       if(active_path === '/cashier' && this.state.items.length === 0){
       axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekInvoice`).then(res => {
@@ -232,14 +316,30 @@ class CartsContainer extends Container {
         
         if(index === -1 || id === index){
           this.state.production.push(product)
-          console.log(this.state.production)
+          const reset = {
+            product_id: id,
+            produksi1: "",
+            produksi2: "",
+            produksi3: "",
+            total_produksi: "",
+            ket_rusak: "",
+            ket_lain: "",
+            total_lain: "",
+            username_approval: 'adi',
+            pin_approval: '123456',
+            catatan: null,
+          }
+          const productKosong = Object.assign(product, reset)
+          this.state.clearProduction.push(productKosong)
+          console.log(this.state.production, this.state.clearProduction)
         } else {
+          axios.get('http://101.255.125.227:82/api/product/' + id)
           console.log("produsk")
           console.log(this.state.production)
         }
 
       })
-      this.doProduction(id)
+      this.doProduction(id, modal)
       axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/TrxByProduct/` + id).then(res => {
       const pesan = res.data;
       let index = this.state.production.findIndex( x => x.id === id)
@@ -247,17 +347,34 @@ class CartsContainer extends Container {
       this.state.produksi["total"+this.state.selectedProduct.name] = pesan.count_order
       this.state.produksi["pemesanan"+this.state.selectedProduct.name] = pesan.count_preorder
       this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
-      this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = pesan.stok_kemarin
+      this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = pesan.stok_awal
+      this.state.produksi["order"+this.state.selectedProduct.name] = pesan.count_order
+      this.state.produksi["pesanan"+this.state.selectedProduct.name] = pesan.count_preorder
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
            Object.assign({}, this.state.production[index], {penjualan_toko: pesan.count_order},
                                                            {penjualan_pemesanan: pesan.count_preorder},
                                                            {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
-                                                           {stock_awal: pesan.stok_kemarin},
-                                                           {sisa_stock: parseInt(pesan.stok_kemarin || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)},
+                                                           {stock_awal: pesan.stok_awal},
+                                                           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+                                                            + parseInt(this.state.production[index].produksi1 || 0)
+                                                            + parseInt(this.state.production[index].produksi2 || 0)
+                                                            + parseInt(this.state.production[index].produksi3 || 0) 
+                                                            - parseInt(pesan.count_order || 0) 
+                                                            - parseInt(pesan.count_preorder || 0) 
+                                                            - parseInt(this.state.production[index].ket_lain || 0) 
+                                                            - parseInt(this.state.production[index].ket_rusak || 0)},
                                                            {product_id: id}),
            ...this.state.production.slice(index+1)
+        ],
+        clearProduction: [
+          ...this.state.clearProduction.slice(0,index),
+          Object.assign({}, this.state.clearProduction[index], {penjualan_toko: ""},
+                                                               {penjualan_pemesanan: ""},
+                                                               {total_penjualan: ""},
+                                                               {total_lain: 0},{stock_awal: this.getStokNow() || 0},{sisa_stock: this.getStokNow()}),
+          ...this.state.clearProduction.slice(index+1)
         ]
       })
         console.log("ABASA")
@@ -272,15 +389,23 @@ class CartsContainer extends Container {
       this.state.produksi["pemesanan"+this.state.selectedProduct.name] = pesan.count_preorder
       this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
       this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = pesan.stok_kemarin
+      this.state.produksi["order"+this.state.selectedProduct.name] = pesan.count_order
+      this.state.produksi["pesanan"+this.state.selectedProduct.name] = pesan.count_preorder
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
            Object.assign({}, this.state.production[index], {penjualan_toko: pesan.count_order},
                                                            {penjualan_pemesanan: pesan.count_preorder},
                                                            {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
-                                                           {stock_awal: pesan.stok_kemarin},
-                                                           {sisa_stock: parseInt(pesan.stok_kemarin || 0) + parseInt(this.state.production[index].total_produksi || 0) - parseInt(this.state.production[index].total_penjualan || 0)},
-                                                           {product_id: id},
+                                                           {stock_awal: pesan.production.stock_awal},
+                                                           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+                                                            + parseInt(this.state.production[index].produksi1 || 0)
+                                                            + parseInt(this.state.production[index].produksi2 || 0)
+                                                            + parseInt(this.state.production[index].produksi3 || 0) 
+                                                            - parseInt(pesan.count_order || 0) 
+                                                            - parseInt(pesan.count_preorder || 0) 
+                                                            - parseInt(this.state.production[index].ket_lain || 0) 
+                                                            - parseInt(this.state.production[index].ket_rusak || 0)},                                                           {product_id: id},
                                                            {catatan: pesan.production.catatan || "tidak ada catatan"},
                                                            {produksi1: parseInt(pesan.production.produksi1 || 0)},
                                                            {produksi2: parseInt(pesan.production.produksi2 || 0)},
@@ -290,12 +415,42 @@ class CartsContainer extends Container {
                                                            {ket_lain: parseInt(pesan.production.ket_lain || 0)},
                                                            {total_lain: parseInt(pesan.production.ket_rusak || 0) + parseInt(pesan.production.ket_lain || 0)},),
            ...this.state.production.slice(index+1)
+        ],
+        clearProduction: [
+          ...this.state.clearProduction.slice(0,index),
+          Object.assign({}, this.state.clearProduction[index], {penjualan_toko: ""},
+                                                               {penjualan_pemesanan: ""},
+                                                               {total_penjualan: ""},
+                                                               {total_lain: 0},{stock_awal: pesan.production.sisa_stock},{sisa_stock: pesan.production.sisa_stock}),
+          ...this.state.clearProduction.slice(index+1)
         ]
       })
       }
+      console.log("PRODUCTION",this.state.production)
       }) 
     }
   }
+
+  // getDataNyoba() {
+  //   axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+  //   .then(res => {
+  //     const products = res.data;
+  //     products.forEach(trx => 
+  //       this.state.dataNyoba.push({
+  //       product_id: trx.id,
+  //       produksi1: "",
+  //       produksi2: "",
+  //       produksi3: "",
+  //       total_produksi: "",
+  //       ket_rusak: "",
+  //       ket_lain: "",
+  //       catatan: null,
+  //       })
+  //     )
+  //     this.setState({nyoBa: this.state.dataNyoba}, 
+  //       () => console.log("COBA",this.state.nyoBa))
+  //   })
+  // }
 
 addSelectedTransaction(id, current, idx) {
   axios.get('http://101.255.125.227:82/api/order/' + id).then(res => {
@@ -435,8 +590,42 @@ addSelectedTransaction(id, current, idx) {
     }
 
 
-  takeReservation(what_id) {
-    axios.put('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/' + what_id, {status: 'PAID'})
+  takeReservation(what_id, modal) {
+    // console.log(this.state.selectedItems, this.state.dataReservation)
+    let data = this.state.dataReservation
+    let item = this.state.selectedItems
+    let ref = item.map(trx => ({
+      ...trx,
+      subtotal: data.subtotal,
+      diskon: data.discount,
+      user_id: what_id,
+      invoice: data.invoice,
+      uang_dibayar: this.state.leftToPay,
+      uang_kembali: 0,
+      status: 'PAID',
+      username_approval: this.state.dataReservation["user"],
+      pin_approval: this.state.dataReservation["code"]
+    }))
+
+    console.log(ref)
+    if(ref[0].username_approval === undefined){
+      modal('alert','','','User tidak boleh kosong')
+    } else if (ref[0].pin_approval === undefined){
+      modal('alert','','','Pin tidak boleh kosong')
+    } else {
+      axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/editPreorders`, ref)
+      .then(res => {
+        modal('bayar')
+        this.setState({selectedItems: []})
+        console.log(res, this.state.selectedItems, this.state.items)
+      })
+      .catch(res => {
+        this.setState({selectedItems: []})
+        console.log(res, this.state.selectedItems, this.state.items)
+        modal('alert','','',res.response.data.message)
+      })
+    this.setState({selectedItems: [], dataReservation: {}})
+    }
   }
 
   // editReservation(user_now, data, what_id) {
@@ -465,14 +654,24 @@ addSelectedTransaction(id, current, idx) {
         diskon	: this.state.discountAmount,
         add_fee	: this.state.expenseAmount,
         uang_muka	: this.state.dpReservationAmount,
+        uang_dibayar	: 0,
+        uang_kembali	: 0,
         total		: this.state.grandTotalAmountDiscount,
         sisa_harus_bayar	: this.state.leftToPay,
-        dibayar	: "",
-        kembali	: "",
-        status	: "UNPAID"
+        // dibayar	: "",
+        // kembali	: "",
+        status	: "UNPAID",
+        username_approval: this.state.dataReservation["user"],
+        pin_approval: this.state.dataReservation["code"]
         }
         ))
         if(where === 'doOrder'){
+          if(this.state.selectedItems[0].username_approval === undefined){
+            modal('alert','','','User tidak boleh kosong')
+          } else if (this.state.selectedItems[0].pin_approval === undefined){
+            modal('alert','','','Pin tidak boleh kosong')
+            console.log(this.state.selectedItems)
+          }else{
           axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
           .then(res => {
             modal('bayar')
@@ -482,9 +681,16 @@ addSelectedTransaction(id, current, idx) {
           .catch(res => {
             this.setState({selectedItems: []})
             console.log(res, this.state.selectedItems, this.state.items)
-            modal.toggleModal('alert','','',res.response.data.message)
+            modal('alert','','',res.response.data.message)
           })
+          }
         } else {
+          if(this.state.selectedItems[0].username_approval === undefined){
+            modal('alert','','','User tidak boleh kosong')
+          } else if (this.state.selectedItems[0].pin_approval === undefined){
+            modal('alert','','','Pin tidak boleh kosong')
+            console.log(this.state.selectedItems)
+          }else{
           axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
           .then(res => {
             modal('bayar')
@@ -494,8 +700,9 @@ addSelectedTransaction(id, current, idx) {
           .catch(res => {
             this.setState({selectedItems: []})
             console.log(res, this.state.selectedItems, this.state.items)
-            modal.toggleModal('alert','','',res.response.data.message)
+            modal('alert','','',res.response.data.message)
           })
+        }
         }
     })
   }
@@ -570,8 +777,7 @@ addSelectedTransaction(id, current, idx) {
 
   doPostKas(transaction, user, modal){
     const saldo_akhir = transaction.total_transaksi + transaction.saldo_awal
-    this.setState({
-      postData: {
+    let postData = {
         user_id: user.id,
         saldo_awal: transaction.saldo_awal,
         transaksi: transaction.total_transaksi,
@@ -579,17 +785,25 @@ addSelectedTransaction(id, current, idx) {
         username_approval: this.state.dataReservation["user"],
         pin_approval: this.state.valueInputRefund["approvalCode"]
       }
-    })
-    axios.post('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas', [this.state.postData])
+    console.log(postData.username_approval)
+    if(!postData.username_approval){
+      modal.clearModal()
+      modal.toggleModal('alert','','','User tidak boleh kosong')
+    } else if (!postData.pin_approval) {
+      modal.clearModal()
+      modal.toggleModal('alert','','','Pin tidak boleh kosong')
+    } else {
+    axios.post('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas', [postData])
     .then(res => {
       document.location.href = '/logout'
-      console.log(res, [this.state.postData])
+      console.log(res, [postData])
     })
     .catch(res => {
       modal.clearModal()
       modal.toggleModal('alert','','',res.response.data.message)
-      console.log(res, [this.state.postData])
+      console.log(res, [postData])
     })
+    }
   }
 
   doRefundPost(modal){
@@ -711,6 +925,10 @@ addSelectedTransaction(id, current, idx) {
       () => {
         if(this.state.currentTrx !==null && this.state.items.length === 0){
           this.setState({isDisabled: true})
+          this.sumTotalAmount()
+          setTimeout(() => {
+          this.sumGrandTotalAmount()
+        }, 10);
         }else{
         this.sumTotalAmount()
         setTimeout(() => {
@@ -1125,58 +1343,59 @@ addSelectedTransaction(id, current, idx) {
   // }
 
   onChangeBooking = valueInputBooking => {
-    valueInputBooking.preventDefault()
-    if(this.state.activeInputBooking === "bookingAddition"){
-      const add_fee = valueInputBooking.target.value
-      const split = add_fee.split('Rp')
-      const data = split[1].split('.')
-      this.setState({expenseAmount: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
+    if (this.state.activeInputRefund === 'approvalUser'){
+      const user = valueInputBooking.target.value
+      this.state.dataReservation["user"] = user;
+      console.log(user,this.state.dataReservation["user"],this.state.dataReservation.user,this.state.valueInputRefund["approvalUser"])
     }
-    if(this.state.activeInputBooking === "paymentDiscount"){
-      const discount = valueInputBooking.target.value
+    else if (this.state.activeInputRefund === 'approvalCode'){
+      const code = valueInputBooking.target.value
+      this.state.dataReservation["code"] = code;
+      console.log(code,this.state.dataReservation["code"],this.state.dataReservation.code,this.state.valueInputBooking["approvalCode"])
+    }
+    else if(this.state.activeInputBooking === "bookingAddition"){
+      const add_fee = valueInputBooking.value
+      this.setState({expenseAmount: add_fee}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
+    }
+    else if(this.state.activeInputBooking === "paymentDiscount"){
+      const discount = valueInputBooking.value
       if(this.state.discountType === 'Rp'){
-      const split = discount.split('Rp')
-      const data = split[1].split('.')
-        this.setState({discountAmount: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+        this.setState({discountAmount: discount}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
       }
       else if(this.state.discountType === '%'){
-      const split = discount.split('%')
-      const data = split[0].split('.')
-        this.setState({discountPercentage: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+        this.setState({discountPercentage: discount}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
       }
     }
-    if(this.state.activeInputBooking === "bookingPayment"){
-      const dp = valueInputBooking.target.value
-      const split = dp.split('Rp')
-      const data = split[1].split('.')
+    else if(this.state.activeInputBooking === "bookingPayment"){
+      const dp = valueInputBooking.value
       this.state.dataReservation["status"] = "UNPAID";
-      this.setState({dpReservationAmount: data.join('')}, () => this.sumGrandTotalAmount(), this.state.dataReservation["dibayar"] = this.state.dpReservationAmount)
+      this.setState({dpReservationAmount: dp}, () => this.sumGrandTotalAmount(), this.state.dataReservation["dibayar"] = this.state.dpReservationAmount)
     } 
-    if (this.state.activeInputBooking === 'bookingName'){
+    else if (this.state.activeInputBooking === 'bookingName'){
       const name = valueInputBooking.target.value
       this.state.dataReservation["nama"] = name;
     }
-    if (this.state.activeInputBooking === 'bookingDate'){
+    else if (this.state.activeInputBooking === 'bookingDate'){
       const date = valueInputBooking.target.value
       this.state.dataReservation["tgl_selesai"] = date;
     }
-    if (this.state.activeInputBooking === 'bookingTime'){
+    else if (this.state.activeInputBooking === 'bookingTime'){
       const time = valueInputBooking.target.value
       this.state.dataReservation["waktu_selesai"] = time;
     }
-    if (this.state.activeInputBooking === 'bookingAddress'){
+    else if (this.state.activeInputBooking === 'bookingAddress'){
       const address = valueInputBooking.target.value
       this.state.dataReservation["alamat"] = address;
     }
-    if (this.state.activeInputBooking === 'bookingPhone'){
+    else if (this.state.activeInputBooking === 'bookingPhone'){
       const phone = valueInputBooking.target.value
       this.state.dataReservation["telepon"] = phone;
     }
-    if (this.state.activeInputBooking === 'bookingNote'){
+    else if (this.state.activeInputBooking === 'bookingNote'){
       const note = valueInputBooking.target.value
       this.state.dataReservation["catatan"] = note;
     }
-    if (this.state.activeInputBooking === 'note'+this.state.selectedProduct.name){
+    else if (this.state.activeInputBooking === 'note'+this.state.selectedProduct.name){
       const note = valueInputBooking.target.value
       this.state.produksi["note"+this.state.selectedProduct.name] = note;
       let index = this.state.production.findIndex( x => x.id === this.state.selectedProduct.id)
@@ -1187,16 +1406,6 @@ addSelectedTransaction(id, current, idx) {
            ...this.state.production.slice(index+1)
         ]
       })
-    }
-    if (this.state.activeInputRefund === 'approvalUser'){
-      const user = valueInputBooking.target.value
-      this.state.dataReservation["user"] = user;
-      console.log(user,this.state.dataReservation["user"],this.state.dataReservation.user,this.state.valueInputRefund["approvalUser"])
-    }
-    else if (this.state.activeInputBooking === 'approvalCode'){
-      const code = valueInputBooking.target.value
-      this.state.dataReservation["code"] = code;
-      console.log(code,this.state.dataReservation["code"],this.state.dataReservation.code,this.state.valueInputBooking["approvalCode"])
     }
   }
 
@@ -1437,16 +1646,24 @@ addSelectedTransaction(id, current, idx) {
       modal('bayar')
       this.setState({refund: [], data: []})})
       .catch(res => {
-      modal('alert')
+      modal('alert', '' , '', res.response.data.message)
       this.setState({refund: [], data: []})})
     }
   }
 
   doReservation(user_id, modal) {
     let items = this.state.selectedItems
+    let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"])
     let index = items.findIndex( x => x.preorder_id === items[0].preorder_id);
     // this.deleteReservation(items[0].preorder_id)
     console.log(items)
+    if(isNaN(totalPayment)){
+      modal('alert','','','Harap masukkan uang pembayaran')
+    }
+    else if(totalPayment < this.state.leftToPay){
+      modal('alert','','','Uang pembayaran anda kurang')
+    }
+    else{
     this.setState({
       selectedItems: [
         ...this.state.selectedItems.slice(0,index),
@@ -1468,11 +1685,12 @@ addSelectedTransaction(id, current, idx) {
         this.setState({refund: [], selectedItems: []}) 
         console.log(this, res)})
       .catch(res => {
-        modal.toggleModal('alert','','',res.response.data.message)
+        modal('alert','','',res.response.data.message)
         this.setState({refund: [], selectedItems: []})
         console.log(res.response,)
       })
     })
+   }
   }
   
   doOrder = (id) => {
@@ -1538,85 +1756,182 @@ addSelectedTransaction(id, current, idx) {
     newTrx.splice(idx, 1);
     this.setState({reservation: newTrx})
   }
+  deleteReservationModal(modal) {
+    let id = this.state.dataReservation.id
+    axios.delete(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/` + id)
+    .then(res => {
+      modal('hapus')
+    })
+    .catch(res => {
+      modal('alert', '', '',res.response.data.message)
+    })
+  }
 
-  doProduction = (id) => {
 
+  doProduction = (id, modal) => {
+    this.getStokNow()
     let qty1 = this.state.valueInputRefund["refundCode1"] || 0
     let qty2 = this.state.valueInputRefund["refundCode2"] || 0
     let qty3 = this.state.valueInputRefund["refundCode3"] || 0
     let qty4 = this.state.valueInputRefund["refundCode4"] || 0
     let qty5 = this.state.valueInputRefund["refundCode5"] || 0
+    let user = this.state.dataReservation['user']
+    let pin = this.state.dataReservation['code']
     let index = this.state.production.findIndex( x => x.id === id);
     
     if(this.state.activeInputRefund === "refundCode1"){
+      if(qty1 === 0){
+        modal.clearModal()
+        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+      }
+      else{
       this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty1 || 0
       this.setState({
         production : [
            ...this.state.production.slice(0,index),
            Object.assign({}, this.state.production[index], {produksi1: qty1 || 0}, {produksi2: this.state.production[index].produksi2 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
            {total_produksi: parseInt(qty1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {sisa_stock: this.getStokNow()},
+           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+            + parseInt(qty1 || 0)
+            + parseInt(this.state.production[index].produksi2 || 0)
+            + parseInt(this.state.production[index].produksi3 || 0) 
+            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+            - parseInt(this.state.production[index].ket_lain || 0) 
+            - parseInt(this.state.production[index].ket_rusak || 0)},           
            {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"}),
+           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+           {username_approval: user},
+           {pin_approval: pin}),
            ...this.state.production.slice(index+1)
         ]
-      }, () => this.changeDate())
+      }, () => this.changeDate(id, modal))
+      }
     }
-    if(this.state.activeInputRefund === "refundCode2"){
+    else if(this.state.activeInputRefund === "refundCode2"){
+      if(qty2 === 0){
+        modal.clearModal()
+        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+      }
+      else{
       this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty2 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
            Object.assign({}, this.state.production[index], {produksi2: qty2 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
            {total_produksi: parseInt(qty2 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {sisa_stock: this.getStokNow()},
+           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+            + parseInt(qty2 || 0)
+            + parseInt(this.state.production[index].produksi1 || 0)
+            + parseInt(this.state.production[index].produksi3 || 0) 
+            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+            - parseInt(this.state.production[index].ket_lain || 0) 
+            - parseInt(this.state.production[index].ket_rusak || 0)},           
            {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"}),
+           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+           {username_approval: user},
+           {pin_approval: pin}),
            ...this.state.production.slice(index+1)
         ]
-      }, () => this.changeDate())
+      }, () => this.changeDate(id, modal))
+      }
     }
-    if(this.state.activeInputRefund === "refundCode3"){
+    else if(this.state.activeInputRefund === "refundCode3"){
+      if(qty3 === 0 || qty3 === ''){
+        modal.clearModal()
+        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+      }
+      else{
       this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty3 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
            Object.assign({}, this.state.production[index], {produksi3: qty3 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi2: this.state.production[index].produksi2 || 0},
            {total_produksi: parseInt(qty3 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0)},
-           {sisa_stock: this.getStokNow()},
-           {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"}),
+           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+            + parseInt(qty3 || 0)
+            + parseInt(this.state.production[index].produksi2 || 0)
+            + parseInt(this.state.production[index].produksi1 || 0) 
+            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+            - parseInt(this.state.production[index].ket_lain || 0) 
+            - parseInt(this.state.production[index].ket_rusak || 0)},           
+            {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+           {username_approval: user},
+           {pin_approval: pin}),
            ...this.state.production.slice(index+1)
         ]
-      }, () => this.changeDate())
+      }, () => this.changeDate(id, modal))
+      }
     }
-    if(this.state.activeInputRefund === "refundCode4"){
+    else if(this.state.activeInputRefund === "refundCode4"){
+      if(qty4 === 0){
+        modal.clearModal()
+        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+      }
+      else{
       this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty4 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
            Object.assign({}, this.state.production[index], {ket_rusak: qty4 || 0}, {total_lain: parseInt(qty4 || 0) + parseInt(this.state.production[index].ket_lain || 0)},
-           {sisa_stock: this.getStokNow()},
+           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+            + parseInt(this.state.production[index].produksi1 || 0)
+            + parseInt(this.state.production[index].produksi2 || 0)
+            + parseInt(this.state.production[index].produksi3 || 0) 
+            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
+            - parseInt(this.state.production[index].qty4 || 0) 
+            - parseInt(this.state.production[index].ket_rusak || 0)},           
            {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
            {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"}),
+           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+           {username_approval: user},
+           {pin_approval: pin}),
            ...this.state.production.slice(index+1)
         ]
-      }, () => this.changeDate())
+      }, () => this.changeDate(id, modal))
+      }
     }
-    if(this.state.activeInputRefund === "refundCode5"){
+    else if(this.state.activeInputRefund === "refundCode5"){
+      if(qty5 === 0){
+        modal.clearModal()
+        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+      }
+      else{
       this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
       this.setState({
         production: [
            ...this.state.production.slice(0,index),
            Object.assign({}, this.state.production[index], {ket_lain: qty5 || 0}, {total_lain: parseInt(qty5 || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {sisa_stock: this.getStokNow()},
+           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+            + parseInt(this.state.production[index].produksi1 || 0)
+            + parseInt(this.state.production[index].produksi2 || 0)
+            + parseInt(this.state.production[index].produksi3 || 0) 
+            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
+            - parseInt(this.state.production[index].qty4 || 0) 
+            - parseInt(this.state.production[index].ket_rusak || 0)},           
            {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
            {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"}),
+           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+           {username_approval: user},
+           {pin_approval: pin}),
            ...this.state.production.slice(index+1)
         ]
-      }, () => this.changeDate())
+      }, () => this.changeDate(id, modal))
+      }
+    }
+    // else if(this.state.activeInputRefund === "refundCode5")
+    else if(user === undefined ){
+      modal.clearModal()
+      modal.toggleModal('alert','','','User tidak boleh kosong')
+    }
+    else if (pin === undefined){
+      modal.clearModal()
+      modal.toggleModal('alert','','','Pin tidak boleh kosong')
     }
     console.log(this.state)
     console.log(this.state.produksi)
@@ -1624,23 +1939,63 @@ addSelectedTransaction(id, current, idx) {
   }
 
   getStokNow(){
+    // let total = 0
+    // const stok = parseInt(this.state.selectedProduct.stock)
+    // const produksi1 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi1"] || 0)
+    // const produksi2 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi2"] || 0)
+    // const produksi3 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi3"] || 0)
+    // const rusak = parseInt(this.state.produksi[this.state.selectedProduct.name + "rusak"] || 0)
+    // const lain = parseInt(this.state.produksi[this.state.selectedProduct.name + "lain"] || 0)
+    // total = stok+produksi1+ produksi2+ produksi3-rusak-lain
+    
     let total = 0
-    const stok = parseInt(this.state.selectedProduct.stock)
-    const produksi1 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi1"] || 0)
-    const produksi2 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi2"] || 0)
-    const produksi3 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi3"] || 0)
-    const rusak = parseInt(this.state.produksi[this.state.selectedProduct.name + "rusak"] || 0)
-    const lain = parseInt(this.state.produksi[this.state.selectedProduct.name + "lain"] || 0)
-    total = stok+produksi1+ produksi2+ produksi3-rusak-lain
-
-    return total
+    let data = this.state.production
+    let whatId = this.state.selectedProduct.id
+    let filterData = data.filter(function(data){
+      return data.id === whatId
+    })
+    if(filterData.length === 0){
+      return total
+    } else {
+      const stok = parseInt(filterData[0].stock_awal || 0)
+      const produksi1 = parseInt(filterData[0].produksi1 || 0)
+      const produksi2 = parseInt(filterData[0].produksi2 || 0)
+      const produksi3 = parseInt(filterData[0].produksi3 || 0)
+      const total_penjualan = parseInt(filterData[0].total_penjualan || 0)
+      const total_lain = parseInt(filterData[0].total_lain || 0)
+      total = stok+produksi1+produksi2+produksi3-total_penjualan-total_lain
+      console.log(total)
+      return total
+    }
+    
   }
   getStokAwal(){
     let total = 0
-    const stokAwal = parseInt(this.state.produksi["stok_kemarin"+ this.state.selectedProduct.name] || 0)
-    total = stokAwal
+    let data = this.state.production
+    let whatId = this.state.selectedProduct.id
+    let filterData = data.filter(function(data){
+      return data.id === whatId
+    })
+    if(filterData.length === 0){
+      return total
+    } else {
+    return parseInt(filterData[0].stock_awal)
+    }
 
-    return total
+    // let total = 0
+    // const stokAwal = parseInt(this.state.produksi["stok_kemarin"+ this.state.selectedProduct.name] || 0)
+    // total = stokAwal
+
+    // let data = this.state.production
+    // let whatId = this.state.selectedProduct.id
+    // let filterData = data.filter(function(data){
+    //   return data.id === whatId
+    // })
+    // if(filterData.length === 0){
+    //   return 0
+    // } else {
+    //   return parseInt(filterData[0].stock)
+    // }
   }
 
   // whatisit = (id) => {
@@ -1679,8 +2034,80 @@ addSelectedTransaction(id, current, idx) {
   //   })
   // }
 
-  changeDate = () => {
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, this.state.production)
+  changeDate = (id, modal) => {
+    let data = this.state.production
+    let dataFiltered = data.filter(function(data){
+      return data.id === id
+    })
+    console.log(this.getStokNow(), dataFiltered)
+    // this.setState({production: []})
+    axios.put(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/updateStock/` + id, [{sisa_stock: this.getStokNow()}])
+    .then(res=> console.log(res))
+    .catch(res => console.log(res))
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, dataFiltered)
+    .then(modal.clearModal())
+  }
+
+  changeAllDate(modal, close){
+    console.log("AWLOALWOALWOALWOWLO",this.state.clearProduction, modal)
+    // modal('bayar')
+    // axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+    // .then(res => {
+    //   const data = res.data
+    //   console.log(data)
+    // })
+    // axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+    // .then(res => {
+    //   const products = res.data;
+    //   products.forEach(trx => 
+    //     this.state.dataNyoba.push({
+    //     product_id: trx.id,
+    //     produksi1: "",
+    //     produksi2: "",
+    //     produksi3: "",
+    //     total_produksi: "",
+    //     ket_rusak: "",
+    //     ket_lain: "",
+    //     catatan: null,
+    //     })
+    //   )
+    //   this.setState({nyoBa: this.state.dataNyoba}, 
+    //     () => {console.log("COBA",this.state.nyoBa) 
+    //           this.setState({nyoBa: [], dataNyoba: []})})
+    // })
+
+    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, this.state.clearProduction)
+    .then(res => {
+      this.clearCart()
+      this.getDateTrx()
+      close()
+      // modal()
+    })
+    .catch(res => {
+      modal('alert')
+    })
+  }
+
+  getDateTrx(){
+    axios({timeout: 4000, method: 'get', url:`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/GetLastDate`})
+    .then(res => {
+      this.setState({date: res.data}, () => {
+        console.log("AAVV")
+        console.log(this.state.date)
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); 
+        var date = this.state.date.date
+        if(date === 'no production') {
+          this.setState({date: "TimeOut"})
+        }else{
+        var splitDate = date.created_at.split(" ")
+        var takeDate = splitDate[0]
+        var tanggal = new Date(takeDate).getDate()
+        console.log(date, tanggal)
+          this.setState({lastDate: takeDate, prevDate: year + '/' + month + '/' + (tanggal - 1)})
+        }
+      })
+    })
   }
 
   // changeDate() {

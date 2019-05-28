@@ -69,7 +69,7 @@ class Production extends React.Component {
                     <Col xs="6" className="kasir-product">
                         <Row className="no-gutters">
                             <Col xs="9">
-                                <Products activePath={this.props.activePath} cartStore={this.props.cartStore} productStore={this.props.productStore} />
+                                <Products modalStore={this.props.modalStore} activePath={this.props.activePath} cartStore={this.props.cartStore} productStore={this.props.productStore} />
                             </Col>
                             <Col xs="3">
                                 <ProductCategories productStore={this.props.productStore} />
