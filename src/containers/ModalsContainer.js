@@ -1,4 +1,5 @@
 import { Container } from 'unstated'
+import axios from 'axios'
 
 class ModalsContainer extends Container {
 
@@ -7,7 +8,8 @@ class ModalsContainer extends Container {
     modalType: 'reguler',
     modalSize: 'sm',
     modalWhere : '',
-    modalMessage: ''
+    modalMessage: '',
+    transaction: ''
   };
 
   toggleModal = (type, size, where, message) => {
@@ -26,8 +28,13 @@ class ModalsContainer extends Container {
   } 
 
   clearModal = () => {
-    this.setState({modal: false})
+    this.setState({modal: !this.state.modal})
     console.log("IEE")
+  }
+
+  getData(){
+    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`)
+    .then(res => this.setState({transaction: res.data}, () => console.log("AA")))
   }
   
 }

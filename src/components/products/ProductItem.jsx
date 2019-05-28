@@ -8,7 +8,7 @@ const ProductItem = (props) => {
   return (
     <CardDeck className="product-item p-1">
       {/* idx, id, name, qty, price */}
-      <a href="#" onClick={() => props.cartStore.addSelectedProduct(props.productIndex, props.productID, props.productName, props.productQty, props.productPrice, props.activePath)}>
+      <a href="#" onClick={() => props.cartStore.addSelectedProduct(props.productIndex, props.productID, props.productName, props.productQty, props.productPrice, props.activePath, props.modalStore)}>
         <CardImg top width="100%" src={props.productImage} alt={props.productName} />
         <CardImgOverlay>
           <CardBody className="p-0">

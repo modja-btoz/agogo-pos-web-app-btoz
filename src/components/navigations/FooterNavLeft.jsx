@@ -6,6 +6,25 @@ class FooterNavLeft  extends Component {
   constructor(props){
     super(props)
   }
+
+  handleChange = (e) => {
+    this.props.cartStore.setState({
+      searchCode: e.target.value
+    }, () => {
+      this.buttonSetSearchCode(this.props.cartStore.state.searchCode)
+    })
+  }
+
+  buttonSetSearchCode(code){
+    this.props.cartStore.setSearchCode(code)
+  }
+
+  resetSearchCode(){
+    this.props.cartStore.setState({
+      searchCode: ''
+    })
+  }
+
   render() {
     
     return (
@@ -13,7 +32,10 @@ class FooterNavLeft  extends Component {
       <Navbar expand="md">
 
         <NavbarBrand className="ml-4 mr-0">
-          <Input className="cart-nav-input mr-2" type="input" name="qrcode" id="productQRCode" placeholder="QR Code ..." />
+          <Input className="cart-nav-input mr-2" type="input" name="qrcode" id="productQRCode" placeholder="QR Code ..." 
+            value={this.props.cartStore.state.searchCode}
+            onChange={this.handleChange}
+            ref={el => this.inputTitle = el}/>
           <Input className="cart-nav-input" type="number" name="qrcodeQty" id="productQRCodeQty" placeholder="0" readonly />
         </NavbarBrand>
 

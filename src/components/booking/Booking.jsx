@@ -167,7 +167,7 @@
                             {this.props.cartStore.state.isBookingTakeShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <TakeBooking transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <TakeBooking userNow={this.state.userLoggedIn} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
 

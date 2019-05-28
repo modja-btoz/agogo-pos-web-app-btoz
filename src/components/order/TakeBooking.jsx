@@ -75,14 +75,14 @@ const TakeBooking = (props) => {
                                 <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg"
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
-                                        onFocus={props.cartStore.setActiveInputBooking}
+                                        onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeBooking}
                                     />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Col className="btn btn-deleted">
-                                    <Button onClick={() => props.modalStore.toggleModal('bayar', '') || props.cartStore.takeReservation(props.cartStore.state.dataReservation.id)} size="lg" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
+                                    <Button onClick={() => props.cartStore.takeReservation(props.userNow.id, props.modalStore.toggleModal)} size="lg" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
                                 </Col>
                             </FormGroup>
                         </Form>

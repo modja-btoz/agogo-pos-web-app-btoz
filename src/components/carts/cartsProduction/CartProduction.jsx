@@ -30,18 +30,27 @@ class CartProduction extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/GetLastDate`)
-        .then(res => { this.setState({date: res.data.created_at}, 
-            () => {
-                var month = new Date().getMonth() + 1; //Current Month
-                var year = new Date().getFullYear(); 
-                var date = this.state.date
-                var splitDate = date.split(" ")
-                var takeDate = splitDate[0]
-                var tanggal = new Date(takeDate).getDate()
-                console.log(tanggal)
-                this.setState({lastDate: takeDate, prevDate: year + '/' + month + '/' + (tanggal - 1)})
-            })})
+        this.props.cartStore.getDateTrx()
+        // axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/GetLastDate`)
+        // .then(res => { this.setState({date: res.data}, 
+        //     () => {
+        //         var month = new Date().getMonth() + 1; //Current Month
+        //         var year = new Date().getFullYear(); 
+        //         var date = this.state.date.date
+        //         if(date === 'no production') {
+        //             this.setState({date: "TimeOut"})
+        //             console.log(res)
+        //         }else{
+        //         var splitDate = date.created_at.split(" ")
+        //         var takeDate = splitDate[0]
+        //         var tanggal = new Date(takeDate).getDate()
+        //         console.log(date, tanggal)
+        //         this.setState({lastDate: takeDate, prevDate: year + '/' + month + '/' + (tanggal - 1)})
+        //         }
+        //     })})
+        // .catch(res => {
+        //     this.setState({date: "TimeOut", lastDate: "TimeOut", prevDate: "TimeOut"})
+        // })
             // this.props.cartStore.getDataNyoba()
     //     var that = this;
     //     var date = new Date().getDate(); //Current Date
@@ -64,8 +73,8 @@ class CartProduction extends React.Component {
             <Container className="cart mt-4 pt-5 pr-0 pl-0">
                 <Row style={{height: "500px"}}>
                     <Col xs="7" className="body-left">
-                        {/* <div className="date">Posisi per <span className="date-update">{this.state.prevDate}</span></div> */}
-                        <div className="date">Posisi per <span className="date-update">{this.state.days[new Date(this.state.lastDate).getDay()]+ ", " + this.state.lastDate}</span></div>
+                        <div className="date">Posisi per <span className="date-update">{this.props.cartStore.state.days[new Date(this.props.cartStore.state.lastDate).getDay()] + ", " +this.props.cartStore.state.lastDate}</span></div>
+                        {/* <div className="date">Posisi per <span className="date-update">{this.state.date.date === 'no production' ? "Belum ada Produksi" : this.state.days[new Date(this.state.lastDate).getDay()]+ ", " + this.state.lastDate}</span></div> */}
                         <div className="change-date" style={{marginTop: "5px"}}><a href="#" onClick={() => this.props.modalStore.toggleModal('changeDate', 'lg')}><strong>Set Tanggal</strong></a></div>
                         <div className="view-img" style={{marginTop: "10px"}}>
                             <img className="img-product" src={this.props.cartStore.state.selectedProduct.photo}></img>

@@ -91,7 +91,7 @@ class Kasir extends Component {
 
             <Row className="cart-nav no-gutters">
               <Col xs="12">
-                <FooterNavLeft modalStore={this.props.modalStore} transactionStore={this.props.transactionStore} userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} />
+                <FooterNavLeft productStore={this.props.productStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore} userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} />
               </Col>
             </Row>
             
