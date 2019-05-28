@@ -344,40 +344,46 @@ class CartsContainer extends Container {
       const pesan = res.data;
       let index = this.state.production.findIndex( x => x.id === id)
       if(pesan.production === null){
-      this.state.produksi["total"+this.state.selectedProduct.name] = pesan.count_order
-      this.state.produksi["pemesanan"+this.state.selectedProduct.name] = pesan.count_preorder
-      this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
-      this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = pesan.stok_awal
-      this.state.produksi["order"+this.state.selectedProduct.name] = pesan.count_order
-      this.state.produksi["pesanan"+this.state.selectedProduct.name] = pesan.count_preorder
-      this.setState({
-        production: [
-           ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {penjualan_toko: pesan.count_order},
-                                                           {penjualan_pemesanan: pesan.count_preorder},
-                                                           {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
-                                                           {stock_awal: pesan.stok_awal},
-                                                           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
-                                                            + parseInt(this.state.production[index].produksi1 || 0)
-                                                            + parseInt(this.state.production[index].produksi2 || 0)
-                                                            + parseInt(this.state.production[index].produksi3 || 0) 
-                                                            - parseInt(pesan.count_order || 0) 
-                                                            - parseInt(pesan.count_preorder || 0) 
-                                                            - parseInt(this.state.production[index].ket_lain || 0) 
-                                                            - parseInt(this.state.production[index].ket_rusak || 0)},
-                                                           {product_id: id}),
-           ...this.state.production.slice(index+1)
-        ],
-        clearProduction: [
-          ...this.state.clearProduction.slice(0,index),
-          Object.assign({}, this.state.clearProduction[index], {penjualan_toko: ""},
-                                                               {penjualan_pemesanan: ""},
-                                                               {total_penjualan: ""},
-                                                               {total_lain: 0},{stock_awal: this.getStokNow() || 0},{sisa_stock: this.getStokNow()}),
-          ...this.state.clearProduction.slice(index+1)
-        ]
-      })
-        console.log("ABASA")
+        this.state.produksi[this.state.selectedProduct.name + "produksi1"] = 0
+        this.state.produksi[this.state.selectedProduct.name + "produksi2"] = 0
+        this.state.produksi[this.state.selectedProduct.name + "produksi3"] = 0
+        this.state.produksi[this.state.selectedProduct.name + "rusak"] = 0
+        this.state.produksi[this.state.selectedProduct.name + "lain"] = 0
+        this.state.produksi["note" + this.state.selectedProduct.name] = 0
+        this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
+        this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = 0
+        this.state.produksi["order"+this.state.selectedProduct.name] = pesan.count_order
+        this.state.produksi["pesanan"+this.state.selectedProduct.name] = pesan.count_preorder
+        this.setState({
+          production: [
+             ...this.state.production.slice(0,index),
+             Object.assign({}, this.state.production[index], {penjualan_toko: pesan.count_order},
+                                                             {penjualan_pemesanan: pesan.count_preorder},
+                                                             {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
+                                                             {stock_awal: parseInt(this.state.selectedProduct.stock)},
+                                                             {sisa_stock: parseInt(this.state.selectedProduct.stock)},
+                                                             {product_id: id},
+                                                             {catatan: "tidak ada catatan"},
+                                                             {produksi1: 0},
+                                                             {produksi2: 0},
+                                                             {produksi3: 0},
+                                                             {total_produksi: 0},
+                                                             {ket_rusak: 0},
+                                                             {ket_lain: 0},
+                                                             {total_lain: 0}),
+             ...this.state.production.slice(index+1)
+          ],
+          clearProduction: [
+            ...this.state.clearProduction.slice(0,index),
+            Object.assign({}, this.state.clearProduction[index], {penjualan_toko: ""},
+                                                                 {penjualan_pemesanan: ""},
+                                                                 {total_penjualan: ""},
+                                                                 {total_lain: 0},
+                                                                 {stock_awal: parseInt(this.state.selectedProduct.stock)},
+                                                                 {sisa_stock: parseInt(this.state.selectedProduct.stock)}),
+            ...this.state.clearProduction.slice(index+1)
+          ]
+        })
       } else {
       this.state.produksi[this.state.selectedProduct.name + "produksi1"] = pesan.production.produksi1
       this.state.produksi[this.state.selectedProduct.name + "produksi2"] = pesan.production.produksi2
@@ -388,7 +394,7 @@ class CartsContainer extends Container {
       this.state.produksi["total"+this.state.selectedProduct.name] = pesan.count_order
       this.state.produksi["pemesanan"+this.state.selectedProduct.name] = pesan.count_preorder
       this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
-      this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = pesan.stok_kemarin
+      this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = pesan.production.stock_awal
       this.state.produksi["order"+this.state.selectedProduct.name] = pesan.count_order
       this.state.produksi["pesanan"+this.state.selectedProduct.name] = pesan.count_preorder
       this.setState({
@@ -398,14 +404,11 @@ class CartsContainer extends Container {
                                                            {penjualan_pemesanan: pesan.count_preorder},
                                                            {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
                                                            {stock_awal: pesan.production.stock_awal},
-                                                           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
-                                                            + parseInt(this.state.production[index].produksi1 || 0)
-                                                            + parseInt(this.state.production[index].produksi2 || 0)
-                                                            + parseInt(this.state.production[index].produksi3 || 0) 
-                                                            - parseInt(pesan.count_order || 0) 
-                                                            - parseInt(pesan.count_preorder || 0) 
-                                                            - parseInt(this.state.production[index].ket_lain || 0) 
-                                                            - parseInt(this.state.production[index].ket_rusak || 0)},                                                           {product_id: id},
+                                                           {sisa_stock: 
+                                                              parseInt(pesan.production.stock_awal || 0) 
+                                                            + parseInt(pesan.production.total_produksi || 0)
+                                                            - parseInt(pesan.count_order )
+                                                            - parseInt(pesan.count_preorder)},                                                     {product_id: id},
                                                            {catatan: pesan.production.catatan || "tidak ada catatan"},
                                                            {produksi1: parseInt(pesan.production.produksi1 || 0)},
                                                            {produksi2: parseInt(pesan.production.produksi2 || 0)},
@@ -421,14 +424,25 @@ class CartsContainer extends Container {
           Object.assign({}, this.state.clearProduction[index], {penjualan_toko: ""},
                                                                {penjualan_pemesanan: ""},
                                                                {total_penjualan: ""},
-                                                               {total_lain: 0},{stock_awal: pesan.production.sisa_stock},{sisa_stock: pesan.production.sisa_stock}),
+                                                               {total_lain: 0},
+                                                               {stock_awal: 
+                                                                parseInt(pesan.production.stock_awal || 0) 
+                                                              + parseInt(pesan.production.total_produksi || 0)
+                                                              - parseInt(pesan.count_order )
+                                                              - parseInt(pesan.count_preorder)},
+                                                              {sisa_stock: 
+                                                                parseInt(pesan.production.stock_awal || 0) 
+                                                              + parseInt(pesan.production.total_produksi || 0)
+                                                              - parseInt(pesan.count_order )
+                                                              - parseInt(pesan.count_preorder)}),
           ...this.state.clearProduction.slice(index+1)
         ]
       })
       }
-      console.log("PRODUCTION",this.state.production)
-      }) 
+      
+      })    
     }
+    console.log("PRODUCTION BERISI",this.state.production, this.state.clearProduction) 
   }
 
   // getDataNyoba() {
@@ -1884,7 +1898,7 @@ addSelectedTransaction(id, current, idx) {
             - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
             - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
             - parseInt(this.state.production[index].qty4 || 0) 
-            - parseInt(this.state.production[index].ket_rusak || 0)},           
+            - parseInt(this.state.production[index].ket_lain || 0)},           
            {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
            {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
            {catatan: this.state.production[index].catatan || "tidak ada catatan"},
@@ -1912,7 +1926,7 @@ addSelectedTransaction(id, current, idx) {
             + parseInt(this.state.production[index].produksi3 || 0) 
             - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
             - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
-            - parseInt(this.state.production[index].qty4 || 0) 
+            - parseInt(this.state.production[index].qty5 || 0) 
             - parseInt(this.state.production[index].ket_rusak || 0)},           
            {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
            {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
@@ -1938,7 +1952,7 @@ addSelectedTransaction(id, current, idx) {
     console.log(this.state.production)
   }
 
-  getStokNow(){
+  getStokNow = () => {
     // let total = 0
     // const stok = parseInt(this.state.selectedProduct.stock)
     // const produksi1 = parseInt(this.state.produksi[this.state.selectedProduct.name+"produksi1"] || 0)
@@ -1954,9 +1968,7 @@ addSelectedTransaction(id, current, idx) {
     let filterData = data.filter(function(data){
       return data.id === whatId
     })
-    if(filterData.length === 0){
-      return total
-    } else {
+    if(filterData.length !== 0){
       const stok = parseInt(filterData[0].stock_awal || 0)
       const produksi1 = parseInt(filterData[0].produksi1 || 0)
       const produksi2 = parseInt(filterData[0].produksi2 || 0)
@@ -1964,7 +1976,9 @@ addSelectedTransaction(id, current, idx) {
       const total_penjualan = parseInt(filterData[0].total_penjualan || 0)
       const total_lain = parseInt(filterData[0].total_lain || 0)
       total = stok+produksi1+produksi2+produksi3-total_penjualan-total_lain
-      console.log(total)
+      console.log(total, filterData, this.state.clearProduction)
+      return total
+    } else {
       return total
     }
     
