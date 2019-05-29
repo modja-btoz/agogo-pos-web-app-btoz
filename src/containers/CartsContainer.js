@@ -352,6 +352,8 @@ class CartsContainer extends Container {
         this.state.produksi["note" + this.state.selectedProduct.name] = 0
         this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
         this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = 0
+        this.state.produksi["total"+this.state.selectedProduct.name] = pesan.count_order
+        this.state.produksi["pemesanan"+this.state.selectedProduct.name] = pesan.count_preorder
         this.state.produksi["order"+this.state.selectedProduct.name] = pesan.count_order
         this.state.produksi["pesanan"+this.state.selectedProduct.name] = pesan.count_preorder
         this.setState({
@@ -408,7 +410,8 @@ class CartsContainer extends Container {
                                                               parseInt(pesan.production.stock_awal || 0) 
                                                             + parseInt(pesan.production.total_produksi || 0)
                                                             - parseInt(pesan.count_order )
-                                                            - parseInt(pesan.count_preorder)},                                                     {product_id: id},
+                                                            - parseInt(pesan.count_preorder)
+                                                            - parseInt(pesan.production.total_lain || 0)},                                                     {product_id: id},
                                                            {catatan: pesan.production.catatan || "tidak ada catatan"},
                                                            {produksi1: parseInt(pesan.production.produksi1 || 0)},
                                                            {produksi2: parseInt(pesan.production.produksi2 || 0)},
@@ -429,12 +432,14 @@ class CartsContainer extends Container {
                                                                 parseInt(pesan.production.stock_awal || 0) 
                                                               + parseInt(pesan.production.total_produksi || 0)
                                                               - parseInt(pesan.count_order )
-                                                              - parseInt(pesan.count_preorder)},
+                                                              - parseInt(pesan.count_preorder)
+                                                              - parseInt(pesan.production.total_lain || 0)},
                                                               {sisa_stock: 
                                                                 parseInt(pesan.production.stock_awal || 0) 
                                                               + parseInt(pesan.production.total_produksi || 0)
                                                               - parseInt(pesan.count_order )
-                                                              - parseInt(pesan.count_preorder)}),
+                                                              - parseInt(pesan.count_preorder)
+                                                              - parseInt(pesan.production.total_lain || 0)}),
           ...this.state.clearProduction.slice(index+1)
         ]
       })
@@ -1897,7 +1902,7 @@ addSelectedTransaction(id, current, idx) {
             + parseInt(this.state.production[index].produksi3 || 0) 
             - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
             - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
-            - parseInt(this.state.production[index].qty4 || 0) 
+            - parseInt(qty4 || 0) 
             - parseInt(this.state.production[index].ket_lain || 0)},           
            {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
            {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
@@ -1926,7 +1931,7 @@ addSelectedTransaction(id, current, idx) {
             + parseInt(this.state.production[index].produksi3 || 0) 
             - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
             - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
-            - parseInt(this.state.production[index].qty5 || 0) 
+            - parseInt(qty5 || 0) 
             - parseInt(this.state.production[index].ket_rusak || 0)},           
            {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
            {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
