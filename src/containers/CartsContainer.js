@@ -233,14 +233,15 @@ class CartsContainer extends Container {
     let qty = selectedProduct.qty
     let index = this.state.items.findIndex( x => x.id === id);
 
-    if (index === -1 || id === index){
+    // if (index === -1 || id === index){
+      if (index === -1){
       console.log("ADD NEW", index, id)
       this.setState({
         items: [...this.state.items, selectedProduct]
       },
         () => {
-          // console.log('ITEMS Updated!');
-          // console.log(this.state.items)
+          console.log('ITEMS Updated!');
+          console.log(this.state.items)
 
           this.sumTotalAmount()
 
@@ -262,9 +263,9 @@ class CartsContainer extends Container {
       );
     }else{
       let currentQty = this.state.items[index].qty
-      // console.log("CURRENT QTY", currentQty)
+      console.log("CURRENT QTY", currentQty)
 
-      // console.log("UPDATE w/ SELECTED ID", qty, id)
+      console.log("UPDATE w/ SELECTED ID", qty, id)
       this.onUpdateItem(id, Number(currentQty) + 1)
     }
     
@@ -918,6 +919,7 @@ addSelectedTransaction(id, current, idx) {
       console.log("ERROR")
       // handle error
     }else{
+      console.log(index)
       this.setState({
         items: [
            ...this.state.items.slice(0,index),
