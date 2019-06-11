@@ -10,7 +10,7 @@ class LoginSplashScreen extends Component {
   }
   render = this.render.bind(this);
   componentDidMount() {
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/users`)
+    axios.get(`http://101.255.125.227:82/api/users`)
     .then(res => {
       const users = res.data;
       this.setState({ users });

@@ -85,6 +85,8 @@ const initialState = {
   isDisabledRefund: true,
   disabledOrder: true,
   disabledOther: false,
+  disabledProduction: "disabled",
+  disabledProductionNote: true,
   productNote: "",
   payRefundTK: true,
   abasa: false,
@@ -331,6 +333,7 @@ class CartsContainer extends Container {
           }
           const productKosong = Object.assign(product, reset)
           this.state.clearProduction.push(productKosong)
+          this.setState({disabledProduction: "enabled", disabledProductionNote: false})
           console.log(this.state.production, this.state.clearProduction)
         } else {
           axios.get('http://101.255.125.227:82/api/product/' + id)

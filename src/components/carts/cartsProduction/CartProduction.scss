@@ -159,4 +159,10 @@ span.date {
      color: white;
  }
  
-
+ a.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+ a.enabled {
+    cursor: pointer;
+  }

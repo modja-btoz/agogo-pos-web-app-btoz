@@ -91,17 +91,17 @@ class CartProduction extends React.Component {
                         <tr>
                             <td className="production">Produksi 1</td>
                             <td className="product-total text-right" id="produksi1">{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi1"] || 0 || "-"}</td>
-                            <td><a href="#" onClick={() => this.props.modalStore.toggleModal('production', 'lg', "1")}><i class="fas fa-pen-square edit"></i></a></td>
+                            <td><a className={this.props.cartStore.state.disabledProduction} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "1")}><i class="fas fa-pen-square edit"></i></a></td>
                         </tr>
                         <tr>
                             <td className="production">Produksi 2</td>
                             <td className="product-total text-right" id="produksi2">{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi2"] || 0 || "-"}</td>
-                            <td><a href="#" onClick={() => this.props.modalStore.toggleModal('production', 'lg', "2")}><i class="fas fa-pen-square edit"></i></a></td>
+                            <td><a className={this.props.cartStore.state.disabledProduction} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "2")}><i class="fas fa-pen-square edit"></i></a></td>
                         </tr>
                         <tr>
                             <td className="production">Produksi 3</td>
                             <td className="product-total text-right" id="produksi3">{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi3"] || 0 || "-"}</td>
-                            <td><a href="#" onClick={() => this.props.modalStore.toggleModal('production', 'lg', "3")}><i class="fas fa-pen-square edit"></i></a></td>
+                            <td><a className={this.props.cartStore.state.disabledProduction} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "3")}><i class="fas fa-pen-square edit"></i></a></td>
                         </tr>
                         <hr/>
                         <tr>
