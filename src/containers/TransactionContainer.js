@@ -24,7 +24,7 @@ class TransactionContainer extends Container {
   }
 
   fetchTransaction() {
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`)
+    axios.get(`http://101.255.125.227:82/api/orders`)
     .then(res => {
       const transaction = res.data;
       this.setState({ transactionStore: transaction});
@@ -33,7 +33,7 @@ class TransactionContainer extends Container {
   }
 
   fetchReservation() {
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
+    axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
       const transaction = res.data;
       this.setState({ reservationStore: transaction });
@@ -56,7 +56,7 @@ addTransaction(user_id, items, total, modal) {
         status: "UNPAID",
       })
   )
-  axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data)
+  axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
   .then(res => {
     modal('bayar')
     console.log("A",res)

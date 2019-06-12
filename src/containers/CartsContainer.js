@@ -113,7 +113,7 @@ class CartsContainer extends Container {
 
   fetchProducts() {
     // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
+    axios.get(`http://101.255.125.227:82/api/products`)
     .then(res => {
       const products = res.data;
       this.setState({ 
@@ -143,7 +143,7 @@ class CartsContainer extends Container {
       return product.code === searchCode;
     });
     if(productsCode.length === 1){
-      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekInvoice`).then(res => {
+      axios.get(`http://101.255.125.227:82/api/cekInvoice`).then(res => {
       const trx = res.data;
       this.setState({ currentTrx: trx.current_invoice, isDisabled: false});
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
@@ -202,7 +202,7 @@ class CartsContainer extends Container {
   }
 
   fetchTransaction() {
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`)
+    axios.get(`http://101.255.125.227:82/api/orders`)
     .then(res => {
       const transaction = res.data;
       this.setState({ transaction: transaction});
@@ -211,7 +211,7 @@ class CartsContainer extends Container {
   }
 
   fetchReservation() {
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
+    axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
       const transaction = res.data;
       this.setState({ reservation: transaction });
@@ -275,14 +275,14 @@ class CartsContainer extends Container {
   addSelectedProduct(idx, id, name, qty, price, active_path, modal) {
     if(active_path === '/cashier' || active_path === '/booking'){
       if(active_path === '/cashier' && this.state.items.length === 0){
-      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekInvoice`).then(res => {
+      axios.get(`http://101.255.125.227:82/api/cekInvoice`).then(res => {
       const trx = res.data;
       this.setState({ currentTrx: trx.current_invoice, isDisabled: false});
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
       })
       }
       else if(active_path === '/booking'){
-        axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+        axios.get(`http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
         const trx = res.data;
         this.setState({ currentTrx: trx.current_invoice, disabledOrder: false, disabledOther: true});
         // sessionStorage.setItem('transaction', JSON.stringify(transaction));
@@ -344,7 +344,7 @@ class CartsContainer extends Container {
 
       })
       this.doProduction(id, modal)
-      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/TrxByProduct/` + id).then(res => {
+      axios.get(`http://101.255.125.227:82/api/TrxByProduct/` + id).then(res => {
       const pesan = res.data;
       let index = this.state.production.findIndex( x => x.id === id)
       if(pesan.production === null){
@@ -518,7 +518,7 @@ addSelectedTransaction(id, current, idx) {
   addSelectedReservation(id, current, user_id, total) {
     this.setState({isDisabled: false, isRefundPSShow: true, selectedItems: []})
     let reservationCode = id
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
+    axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
       const transaction = res.data;
       let reservationData = transaction.filter(function(data) {
@@ -599,7 +599,7 @@ addSelectedTransaction(id, current, idx) {
             status: "UNPAID",
           })
       )
-      axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data)
+      axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
       .then(res => {
         modal('simpan')
         console.log("A",res)
@@ -636,7 +636,7 @@ addSelectedTransaction(id, current, idx) {
     } else if (ref[0].pin_approval === undefined){
       modal('alert','','','Pin tidak boleh kosong')
     } else {
-      axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/editPreorders`, ref)
+      axios.post(`http://101.255.125.227:82/api/editPreorders`, ref)
       .then(res => {
         modal('bayar')
         this.setState({selectedItems: []})
@@ -695,7 +695,7 @@ addSelectedTransaction(id, current, idx) {
             modal('alert','','','Pin tidak boleh kosong')
             console.log(this.state.selectedItems)
           }else{
-          axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
+          axios.post(`http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
           .then(res => {
             modal('bayar')
             this.setState({selectedItems: []})
@@ -714,7 +714,7 @@ addSelectedTransaction(id, current, idx) {
             modal('alert','','','Pin tidak boleh kosong')
             console.log(this.state.selectedItems)
           }else{
-          axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
+          axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
           .then(res => {
             modal('bayar')
             this.setState({selectedItems: []})
@@ -733,7 +733,7 @@ addSelectedTransaction(id, current, idx) {
   doRefund(modal) {
     let refundCode = this.state.whatRefund + '-' + (this.state.valueInputRefund["refundCode"])
     if(this.state.whatRefund === 'PS'){
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
+    axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
       const transaction = res.data;
       let refundData = transaction.filter(function(data) {
@@ -749,7 +749,7 @@ addSelectedTransaction(id, current, idx) {
     console.log(refundCode)
     }
     else if(this.state.whatRefund === 'TK'){
-      axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`)
+      axios.get(`http://101.255.125.227:82/api/orders`)
       .then(res => {
         const transaction = res.data;
         let refundData = transaction.filter(function(data) {
@@ -816,7 +816,7 @@ addSelectedTransaction(id, current, idx) {
       modal.clearModal()
       modal.toggleModal('alert','','','Pin tidak boleh kosong')
     } else {
-    axios.post('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postKas', [postData])
+    axios.post('http://101.255.125.227:82/api/postKas', [postData])
     .then(res => {
       document.location.href = '/logout'
       console.log(res, [postData])
@@ -839,7 +839,7 @@ addSelectedTransaction(id, current, idx) {
       modal('alert','','','USER & APPROVAL tidak boleh kosong')
       console.log(this.state.trxRefund)
     } else {
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/refunds`, this.state.trxRefund)
+    axios.post(`http://101.255.125.227:82/api/refunds`, this.state.trxRefund)
     .then(res => {
       modal('bayar')
       console.log(this.state.trxRefund, this.state.selectedItems)
@@ -1664,7 +1664,7 @@ addSelectedTransaction(id, current, idx) {
       modal('alert','','','Uang pembayaran anda kurang')
     }
     else{
-      axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/orders`, this.state.data)
+      axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
       .then(res => {
       console.log(res, modal)
       modal('bayar')
@@ -1703,7 +1703,7 @@ addSelectedTransaction(id, current, idx) {
       ]
     }, () => {
       console.log(this.state.selectedItems)
-      axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
+      axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
       .then(res => {
         modal('bayar')
         this.setState({refund: [], selectedItems: []}) 
@@ -1720,7 +1720,7 @@ addSelectedTransaction(id, current, idx) {
   doOrder = (id) => {
     this.setState({isRefundPSShow: true, disabledOrder: true, disabledOther: true})
     let orderCode = id
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorders`)
+    axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
       const transaction = res.data;
       let orderData = transaction.filter(function(data) {
@@ -1768,21 +1768,21 @@ addSelectedTransaction(id, current, idx) {
   }
 
   deleteSelectedOrder(id, idx) {
-    axios.delete(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/` + id)
+    axios.delete(`http://101.255.125.227:82/api/order/` + id)
     const newTrx = [...this.state.transaction];
     newTrx.splice(idx, 1);
     this.setState({transaction: newTrx})
   }
 
   deleteReservation(id, idx) {
-    axios.delete(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/` + id)
+    axios.delete(`http://101.255.125.227:82/api/preorder/` + id)
     const newTrx = [...this.state.reservation];
     newTrx.splice(idx, 1);
     this.setState({reservation: newTrx})
   }
   deleteReservationModal(modal) {
     let id = this.state.dataReservation.id
-    axios.delete(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/preorder/` + id)
+    axios.delete(`http://101.255.125.227:82/api/preorder/` + id)
     .then(res => {
       modal('hapus')
     })
@@ -2065,10 +2065,10 @@ addSelectedTransaction(id, current, idx) {
     })
     console.log(this.getStokNow(), dataFiltered)
     // this.setState({production: []})
-    axios.put(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/updateStock/` + id, [{sisa_stock: this.getStokNow()}])
+    axios.put(`http://101.255.125.227:82/api/updateStock/` + id, [{sisa_stock: this.getStokNow()}])
     .then(res=> console.log(res))
     .catch(res => console.log(res))
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, dataFiltered)
+    axios.post(`http://101.255.125.227:82/api/postProduction`, dataFiltered)
     .then(modal.clearModal())
   }
 
@@ -2100,7 +2100,7 @@ addSelectedTransaction(id, current, idx) {
     //           this.setState({nyoBa: [], dataNyoba: []})})
     // })
 
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/postProduction`, this.state.clearProduction)
+    axios.post(`http://101.255.125.227:82/api/postProduction`, this.state.clearProduction)
     .then(res => {
       this.clearCart()
       this.getDateTrx()
@@ -2113,7 +2113,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   getDateTrx(){
-    axios({timeout: 4000, method: 'get', url:`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/GetLastDate`})
+    axios({timeout: 4000, method: 'get', url:`http://101.255.125.227:82/api/GetLastDate`})
     .then(res => {
       this.setState({date: res.data}, () => {
         console.log("AAVV")

@@ -20,7 +20,7 @@ class Selection extends Component {
       }
 
     componentDidMount(){
-        axios.get('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/cekKas')
+        axios.get('http://101.255.125.227:82/api/cekKas')
         .then(res => {
             this.setState({where: res.data})
         })
