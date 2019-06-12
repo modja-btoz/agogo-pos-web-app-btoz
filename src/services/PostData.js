@@ -1,6 +1,6 @@
 export function PostData(type, encodedDataUser) {
 
-    let BaseURL = `https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/`;
+    let BaseURL = `http://101.255.125.227:82/api/`;
     // let BaseURL = `https://apipipipol.btoz.co.id/api/`;
     //let BaseURL = 'http://localhost/PHP-Slim-Restful/api/';
 

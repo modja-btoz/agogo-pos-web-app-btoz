@@ -33,7 +33,7 @@ class ModalsContainer extends Container {
   }
 
   getData(){
-    axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`)
+    axios.get(`http://101.255.125.227:82/api/getTrx`)
     .then(res => this.setState({transaction: res.data}, () => console.log("AA")))
   }
   
