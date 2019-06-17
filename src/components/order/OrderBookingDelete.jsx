@@ -10,7 +10,7 @@ const OrderBookingDelete = (props) => {
   
   return (
 <Container className="reservation mt-4 pt-5 pr-0 pl-0">
-        <NavLink onClick={() => props.cartStore.toggleOrderBookingDeleteShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
+        <NavLink onClick={() => props.cartStore.toggleOrderBookingDeleteShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Delete Pemesanan</NavLink>
             <Table borderless striped>
               <OrderHeader cartStore={props.cartStore}/>
             </Table>

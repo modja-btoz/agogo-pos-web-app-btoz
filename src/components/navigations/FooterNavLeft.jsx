@@ -7,7 +7,11 @@ class FooterNavLeft  extends Component {
     super(props)
   }
 
+  tes = (e) => {
+    console.log(e.charCode)
+  }
   handleChange = (e) => {
+    console.log()
     this.props.cartStore.setState({
       searchCode: e.target.value
     }, () => {
@@ -34,6 +38,7 @@ class FooterNavLeft  extends Component {
         <NavbarBrand className="ml-4 mr-0">
           <Input className="cart-nav-input mr-2" type="input" name="qrcode" id="productQRCode" placeholder="QR Code ..." 
             value={this.props.cartStore.state.searchCode}
+            onKeyPress={this.tes}
             onChange={this.handleChange}
             ref={el => this.inputTitle = el}/>
           {/* <Input className="cart-nav-input" type="number" name="qrcodeQty" id="productQRCodeQty" placeholder="0" readonly /> */}
