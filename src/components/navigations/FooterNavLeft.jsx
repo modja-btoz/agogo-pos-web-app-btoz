@@ -36,7 +36,7 @@ class FooterNavLeft  extends Component {
             value={this.props.cartStore.state.searchCode}
             onChange={this.handleChange}
             ref={el => this.inputTitle = el}/>
-          <Input className="cart-nav-input" type="number" name="qrcodeQty" id="productQRCodeQty" placeholder="0" readonly />
+          {/* <Input className="cart-nav-input" type="number" name="qrcodeQty" id="productQRCodeQty" placeholder="0" readonly /> */}
         </NavbarBrand>
 
         <Nav className="ml-auto" navbar>
