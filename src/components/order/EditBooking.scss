@@ -1,9 +1,11 @@
 .editBooking {
     color: white;
     
-    // input{
-    // margin-left: -1rem;
-    // }
+    input{
+        width: 100%;
+        font-weight: bold;
+        font-size: 15px
+      }
 
     .input-keyboard-wrapper{
     position: relative;
@@ -16,50 +18,43 @@
     }
 }
 
-.SidebarBodyBooking {
+.SidebarBody {
+    padding-left: 0px;
     margin-top: 10px;
-    color: white;
 }
 
 .Sidebar{
-    .input-alamat{
-      margin-top: 10px;
-    }
-    .input-telepon{
-      margin-top: 10px;
-    }
-    .input-note{
-      position: relative;
-    }
+  .input-uangTambah{
+    width: 100%;
+    max-height: 40px
   }
-
-h7.mb-0 {
-    color: rgb(136, 135, 135);
-    font-size: 10pt;
+  .input-uangDiskon{
+    width: 100%;
+    max-height: 40px
+  }
+  .input-uangMuka{
+    width: 100%;
+    max-height: 40px
+  }
+  .input-user{
+    width: 100%;
+    max-height: 40px
+  }
+  .input-password{
+    width: 100%;
+    max-height: 40px
+  }
 }
 
-.SidebarBottom {
-    margin-top: 20px;
-}
-
-.notif-close {
-    font-size: 8pt;
-    color: orange;
-}
-
-.notif {
-    font-size: 9pt;
-    color: orange;
-    font-style: italic;
-}
-
-.del, .check {
-    padding-right: 15px;
-}
-
-.btn-del {
-    background-color: brown;
-    width: 200px;
-    color: white;
-    padding: 20px;
+input[type=date]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
 }
