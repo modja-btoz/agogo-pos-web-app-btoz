@@ -21,7 +21,12 @@ const FooterNavRightProduction = (props) => {
                     </NavItem>
 
                 <NavItem>
-                    <NavLink href="/logout"><i class="fas fa-sign-out-alt"></i><br />Sign Out</NavLink>
+                    <NavLink href="/logout"><i class="fas fa-sign-out-alt"></i><br />Logout</NavLink>
+                </NavItem>
+                <NavItem>
+                    <a href="#" className="btn-fullscreen-other" onClick={props.rootStore.goFull} >
+                        <i className="fas fa-expand-arrows-alt"></i>
+                    </a>
                 </NavItem>
             </Nav>
         </Navbar>

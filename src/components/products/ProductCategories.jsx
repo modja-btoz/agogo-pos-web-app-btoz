@@ -87,6 +87,7 @@ class ProductCategories extends Component {
           </NavItem>
         )}
       </Nav>
+      
     );
   }
 }

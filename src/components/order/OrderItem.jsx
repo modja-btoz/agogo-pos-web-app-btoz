@@ -6,12 +6,12 @@ const OrderItem = (props) => {
   return (
     <div>
       <Row>
-        <Col sm="6" className="transaction-list">
-          <a className="open-transaction" href="#" style={{ color: "black" }} onClick={() => props.cartStore.doOrder(props.trxID)}>
+        <Col sm="6" className="row-trx" onClick={() => props.cartStore.doOrder(props.trxID)}>
+          <a className="open-transaction" href="#" style={{ color: "black" }} >
             {props.trxName}</a>
         </Col>
         <Col sm="6" className="transaction-list">
-          <a className="open-transaction" href="#" style={{ color: "black" }} onClick={() => props.cartStore.doOrder(props.trxID)}>
+          <a className="open-transaction" href="#" style={{ color: "black" }} >
             {props.trxDate}</a>
         </Col>
       </Row>

@@ -60,7 +60,7 @@ class ReservationList extends Component {
 
             <Row className="product-nav no-gutters">
               <Col xs="12">
-                <FooterNavRight modalStore={this.props.modalStore} cartStore={this.props.cartStore}/>
+                <FooterNavRight modalStore={this.props.modalStore} cartStore={this.props.cartStore} rootStore={this.props.rootStore}/>
               </Col>
             </Row>
         </Container>

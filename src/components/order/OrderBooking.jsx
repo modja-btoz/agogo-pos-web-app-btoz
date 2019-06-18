@@ -173,7 +173,7 @@ const OrderBooking = (props) => {
                             </Form>
                             <Row className="product-nav no-gutters">
                                 <Col xs="12">
-                                    <FooterNavRightBooking cartStore={props.cartStore} />
+                                    <FooterNavRightBooking cartStore={props.cartStore} rootStore={props.rootStore}/>
                                 </Col>
                             </Row>
                         </Col>

@@ -112,14 +112,14 @@ class Kasir extends Component {
             {this.props.cartStore.state.isTransactionListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* TRANSACTION COMPONENTS */}
-                <TransactionList transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore}/>
+                <TransactionList rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore}/>
               </aside>
             }
 
             {this.props.cartStore.state.isReservationListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* RESERVATION COMPONENTS */}
-                <ReservationList transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <ReservationList rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 
@@ -144,7 +144,7 @@ class Kasir extends Component {
 
             <Row className="product-nav no-gutters">
               <Col xs="12">
-                <FooterNavRight modalStore={this.props.modalStore} cartStore={this.props.cartStore} />
+                <FooterNavRight rootStore={this.props.rootStore} modalStore={this.props.modalStore} cartStore={this.props.cartStore} />
               </Col>
             </Row>
 

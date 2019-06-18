@@ -29,6 +29,7 @@ class TransactionItems extends Component {
           trxDate={transaction.created_at} 
           transactionStore={this.props.transactionStore} 
           cartStore={this.props.cartStore} 
+          rootStore={this.props.rootStore}
         />
       </Col>
       )}    
