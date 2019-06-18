@@ -749,7 +749,7 @@ addSelectedTransaction(id, current, idx) {
     console.log(refundCode)
     }
     else if(this.state.whatRefund === 'TK'){
-      axios.get(`http://101.255.125.227:82/api/orders`)
+      axios.get(`http://101.255.125.227:82/api/PaidOrders`)
       .then(res => {
         const transaction = res.data;
         let refundData = transaction.filter(function(data) {
@@ -857,7 +857,7 @@ addSelectedTransaction(id, current, idx) {
     if(this.state.whatRefund === "TK"){
       let dataRefund = this.state.dataRefund[0]
       this.addSelectedTransaction(dataRefund.id, dataRefund.invoice)
-      console.log("BBBBBBBBBBBBB", this.state)
+      console.log("BBBBBBBBBBBBB", dataRefund)
     }
     else if(this.state.whatRefund === "PS"){
       let dataRefund = this.state.dataRefund[0]
