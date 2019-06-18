@@ -7,13 +7,14 @@ import './TransactionItem.scss'
 const TransactionItem = (props) => {
   return (
     <div>
-      <Row>
-        <Col sm="5" className="transaction-list">
-          <a className="open-transaction" href="#" style={{ color: "black" }} onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxName, props.trxIndex)}>
-            {props.trxName}</a>
+      <Row >
+        <Col sm="5" className="row-trx" onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxName, props.trxIndex)}>
+          <a className="open-transaction" href="#" style={{ color: "black" }} >
+            {props.trxName}
+          </a>
         </Col>
         <Col sm="5" className="transaction-list">
-          <a className="open-transaction" href="#" style={{ color: "black" }} onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxName, props.trxIndex)}>
+          <a className="open-transaction" href="#" style={{ color: "black" }} >
             {props.trxDate}</a>
         </Col>
         <Col sm="2" className="transaction-list">

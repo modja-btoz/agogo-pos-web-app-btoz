@@ -38,7 +38,7 @@ class ReservationList extends Component {
   render(){
   return (
 <Container className="reservation">
-        <NavLink onClick={() => this.props.cartStore.toggleOpenReservationShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
+        <NavLink onClick={() => this.props.cartStore.toggleOpenReservationShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Pemesanan</NavLink>
             <Table borderless striped>
               <ReservationHeader transactionStore={this.props.transactionStore}/>
             </Table>
@@ -60,7 +60,7 @@ class ReservationList extends Component {
 
             <Row className="product-nav no-gutters">
               <Col xs="12">
-                <FooterNavRight modalStore={this.props.modalStore} cartStore={this.props.cartStore}/>
+                <FooterNavRight modalStore={this.props.modalStore} cartStore={this.props.cartStore} rootStore={this.props.rootStore}/>
               </Col>
             </Row>
         </Container>

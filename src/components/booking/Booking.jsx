@@ -124,50 +124,50 @@
 
                             <Row className="product-nav no-gutters">
                                 <Col xs="12">
-                                    <FooterNavRightBooking cartStore={this.props.cartStore} />
+                                    <FooterNavRightBooking rootStore={this.props.rootStore} cartStore={this.props.cartStore} />
                                 </Col>
                             </Row>
                             
                             {this.props.cartStore.state.isOrderBookingShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <OrderBooking userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <OrderBooking rootStore={this.props.rootStore} userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isOrderBookingDeleteShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <OrderBookingDelete transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <OrderBookingDelete rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isOrderBookingEditShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <OrderBookingEdit transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <OrderBookingEdit rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isOrderBookingTakeShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <OrderBookingTake transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <OrderBookingTake rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isBookingDeleteShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <DeleteBooking transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <DeleteBooking rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isBookingEditShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <EditBooking userNow={this.state.userLoggedIn} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <EditBooking rootStore={this.props.rootStore} userNow={this.state.userLoggedIn} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
                             {this.props.cartStore.state.isBookingTakeShow &&
                                 <aside className="SidebarComponentsWrapper">
                                     {/* PAYEMNT COMPONENTS */}
-                                    <TakeBooking userNow={this.state.userLoggedIn} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                                    <TakeBooking rootStore={this.props.rootStore} userNow={this.state.userLoggedIn} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </aside>
                             }
 

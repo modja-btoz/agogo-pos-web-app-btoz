@@ -139,7 +139,7 @@ class Modals extends Component {
             <a href="/logout">
             <div className="my-icon">
               <i className="fas fa-sign-out-alt mr-1 fa-7x"></i>
-              <Label className="label">Sign Out</Label>
+              <Label className="label">Logout</Label>
             </div>
             </a>
             </Col>
