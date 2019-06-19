@@ -30,7 +30,7 @@ class Modals extends Component {
     ],
     userLoggedIn :[],
     name: '',
-    transaction: {}
+    transaction: {},
     // console.log(days[new Date().getDay()]);
     };
   };
@@ -299,7 +299,7 @@ class Modals extends Component {
       );
       case 'production':
         return (
-        <Modal isOpen={this.props.modal} onClosed={this.props.cartStore.resetActiveInputRefund} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered style={{width: '1100px'}}>
+        <Modal unmountOnClose={true} isOpen={this.props.modal} onClosed={this.props.cartStore.resetActiveInputRefund} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered style={{width: '1100px'}}>
           <ModalBody className="p-5" style={{width: "1150px"}}>
             <Row>
               <div className="date"><span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
