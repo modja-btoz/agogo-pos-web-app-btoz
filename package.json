@@ -15,6 +15,7 @@
     "react-dom": "^16.6.3",
     "react-full-screen": "^0.2.3",
     "react-leaflet": "^2.4.0",
+    "react-modal": "^3.8.1",
     "react-number-format": "^4.0.5",
     "react-responsive-modal": "^4.0.1",
     "react-router-dom": "^4.3.1",

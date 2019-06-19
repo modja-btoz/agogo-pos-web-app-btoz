@@ -11,8 +11,9 @@ class ModalsContainer extends Container {
     modalSize: 'sm',
     modalWhere : '',
     modalMessage: '',
-    transaction: ''
+    transaction: '',
   };
+  this.toggleModal = this.toggleModal.bind(this);
 }
 
   toggleModal = (type, size, where, message) => {

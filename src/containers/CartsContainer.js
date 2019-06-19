@@ -733,7 +733,7 @@ addSelectedTransaction(id, current, idx) {
   doRefund(modal) {
     let refundCode = this.state.whatRefund + '-' + (this.state.valueInputRefund["refundCode"])
     if(this.state.whatRefund === 'PS'){
-    axios.get(`http://101.255.125.227:82/api/preorders`)
+    axios.get(`http://101.255.125.227:82/api/PaidOrders`)
     .then(res => {
       const transaction = res.data;
       let refundData = transaction.filter(function(data) {
@@ -1693,13 +1693,15 @@ addSelectedTransaction(id, current, idx) {
         ...this.state.selectedItems.slice(0,index),
         Object.assign({}, this.state.selectedItems[index],
           {user_id: user_id},
-          {dibayar: this.state.payment},
+          {uang_dibayar: this.state.payment},
           {preorder_id: items[0].preorder_id},
-          {kembali: this.state.changePayment},
+          {uang_kembali: this.state.changePayment},
           {diskon: this.state.discountAmount},
           {subtotal: this.state.totalAmount},
-          {status: "PAID"}),
-        ...this.state.selectedItems.slice(index+1)
+          {status: "PAID"},
+          {username_approval: "adi"},
+          {pin_approval: "123456"},
+        ...this.state.selectedItems.slice(index+1))
       ]
     }, () => {
       console.log(this.state.selectedItems)
