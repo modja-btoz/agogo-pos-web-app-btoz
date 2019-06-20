@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch, Redirect, Link } from 'react-router-dom'
 import { Button } from 'reactstrap';
+import Modal from 'react-modal'
 
 import decode from 'jwt-decode';
 
@@ -13,7 +14,9 @@ import Booking from './components/booking/Booking'
 
 import Fullscreen from "react-full-screen";
 import Production from './components/production/Production';
+import Modals from './components/modals/Modals';
 
+Modal.setAppElement("#root");
 
 const isTokenExpired = (token) => {
   try {
@@ -64,17 +67,20 @@ const isLoggedIn = () => {
 //     )
 //   }} />
 // );
+// );
 
+const root = document.getElementById("root");
 
 class App extends Component {
-
+  // modal = React.createRef()
   // componentDidMount(){
   //   console.log("TES ~~~~~~~~~~~~~ ", this.props.transactionStore)
   // }
-
+  
   state = {
     activePath: '/'
   }
+  modal = React.createRef()
 
   logout = () => {
     // console.log("LOGOUT")
@@ -114,15 +120,14 @@ class App extends Component {
           </a>
           }
         </footer>
-
+          
         <BrowserRouter>
-          <div className="App">
+          <div className="App" style={{position: "relative",}}>
 
             {/* <h1 className="text-primary text-center">Page = {this.props.rootStore.state.page}</h1> */}
             
             {/* GAKTAUNYA BISA KASIH FUNCTION DI ROUTE
             INI GAK BSIA KRN ROUTENYA DI PROTECT */}
-
             <Switch>
               <Route exact path='/'
                 render={(props) => {
@@ -183,11 +188,13 @@ class App extends Component {
               <Route path='/cashier'
                 render={(props) => {
                   this.activePath(props);
+                  // console.log(this.props.myModal.props)
                   return(
                     isLoggedIn() === true
                     ? <Cashier {...props} 
                         rootStore={this.props.rootStore} 
-                        modalStore={this.props.modalStore} 
+                        modalStore={this.props.modalStore}
+                        // myModal={this.props.myModal}
                         cartStore={this.props.cartStore} 
                         productStore={this.props.productStore} 
                         transactionStore={this.props.transactionStore} 
@@ -242,7 +249,7 @@ class App extends Component {
             
           </div>
         </BrowserRouter>
-
+        <div ref={this.root} id="myModal">{this.props.myModal}</div>
       </Fullscreen>
     );
   }

@@ -26,29 +26,31 @@ ReactDOM.render(
       {(rootStore, modalStore, cartStore, productStore, transactionStore) => (
         <React.Fragment>
           
-          <Modals 
-            where={modalStore.state.modalWhere}
-            type={modalStore.state.modalType} 
-            modal={modalStore.state.modal} 
-            toggle={() => modalStore.toggleModal(modalStore.state.modalType, modalStore.state.modalSize)} 
-            toggleModal={modalStore.toggleModal} 
-            size={modalStore.state.modalSize} 
-            message={modalStore.state.modalMessage} 
-            className="text-center" 
-            rootStore={rootStore} 
-            modalStore={modalStore} 
-            cartStore={cartStore}
-            productStore={productStore}
-            transactionStore={transactionStore}
-          />
-
           <App 
             rootStore={rootStore} 
             modalStore={modalStore} 
             cartStore={cartStore}
             productStore={productStore}
             transactionStore={transactionStore}
+            myModal={
+            <Modals 
+              where={modalStore.state.modalWhere}
+              type={modalStore.state.modalType} 
+              modal={modalStore.state.modal} 
+              toggle={() => modalStore.toggleModal(modalStore.state.modalType, modalStore.state.modalSize)} 
+              toggleModal={modalStore.toggleModal} 
+              size={modalStore.state.modalSize} 
+              message={modalStore.state.modalMessage} 
+              // className="text-center" 
+              rootStore={rootStore} 
+              modalStore={modalStore} 
+              cartStore={cartStore}
+              productStore={productStore}
+              transactionStore={transactionStore}
+            />
+          }
           />
+          
 
         </React.Fragment>
 

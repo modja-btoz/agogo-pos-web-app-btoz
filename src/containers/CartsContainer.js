@@ -135,7 +135,7 @@ class CartsContainer extends Container {
   }
 
   codeSearch() {
-    let products = this.state.products
+    let products = JSON.parse(sessionStorage.getItem('products'))
     let searchCode = this.state.searchCode
 
     let productsCode =  products.filter(function(product) {
@@ -695,7 +695,7 @@ addSelectedTransaction(id, current, idx) {
             modal('alert','','','Pin tidak boleh kosong')
             console.log(this.state.selectedItems)
           }else{
-          axios.post(`http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
+          axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
           .then(res => {
             modal('bayar')
             this.setState({selectedItems: []})
@@ -714,7 +714,7 @@ addSelectedTransaction(id, current, idx) {
             modal('alert','','','Pin tidak boleh kosong')
             console.log(this.state.selectedItems)
           }else{
-          axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
+          axios.post(`http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
           .then(res => {
             modal('bayar')
             this.setState({selectedItems: []})
@@ -733,7 +733,7 @@ addSelectedTransaction(id, current, idx) {
   doRefund(modal) {
     let refundCode = this.state.whatRefund + '-' + (this.state.valueInputRefund["refundCode"])
     if(this.state.whatRefund === 'PS'){
-    axios.get(`http://101.255.125.227:82/api/PaidOrders`)
+    axios.get(`http://101.255.125.227:82/api/paid_preorders`)
     .then(res => {
       const transaction = res.data;
       let refundData = transaction.filter(function(data) {
@@ -856,16 +856,83 @@ addSelectedTransaction(id, current, idx) {
   addSelectedRefund() {
     if(this.state.whatRefund === "TK"){
       let dataRefund = this.state.dataRefund[0]
-      this.addSelectedTransaction(dataRefund.id, dataRefund.invoice)
+      this.addSelectedReservation(dataRefund.id, dataRefund.invoice)
       console.log("BBBBBBBBBBBBB", dataRefund)
     }
     else if(this.state.whatRefund === "PS"){
       let dataRefund = this.state.dataRefund[0]
-      this.addSelectedReservation(dataRefund.id, dataRefund.invoice, dataRefund.user_id, dataRefund.total)  
-      console.log("AAAAAAAAAAAAA", this.state)
+      this.doPSRefund(dataRefund.id, dataRefund.invoice, dataRefund.user_id, "refund")  
+      console.log("AAAAAAAAAAAAA", dataRefund)
     }
-    
   }
+
+  doPSRefundCAT(id, current, user_id){
+    this.setState({isDisabled: false, isRefundPSShow: true, selectedItems: []})
+    let reservationCode = id
+    axios.get(`http://101.255.125.227:82/api/paid_preorders`)
+    .then(res => {
+      const transaction = res.data;
+      let reservationData = transaction.filter(function(data) {
+        return data.id === reservationCode
+      });
+      if(reservationData.length === 0){
+        console.log("GAGAL COY", id)
+      } else {
+      this.setState({dpReservationAmount: reservationData[0].uang_muka,  
+                    changePayment: reservationData[0].subtotal - reservationData[0].uang_muka,
+                    expenseAmount: reservationData[0].add_fee,
+                    discountAmount: reservationData[0].discount},
+                    () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
+                      const transaction = res.data;
+                      transaction.forEach((trx, i) => 
+                        this.state.selectedItems.push({
+                          idx: i,
+                          id: trx.product_id,
+                          invoice: current,
+                          name: trx.product.name,
+                          qty: trx.qty,
+                          price: trx.product.price,
+                          product_id: trx.product_id,
+                          user_id: user_id,
+                          total: reservationData[0].subtotal + reservationData[0].add_fee - reservationData[0].discount,
+                          preorder_id: id,
+                          nama: reservationData[0].nama,
+                          alamat: reservationData[0].alamat,
+                          tgl_selesai: reservationData[0].tgl_selesai,
+                          telepon: reservationData[0].telepon,
+                          catatan: reservationData[0].catatan,
+                          add_fee: reservationData[0].add_fee,
+                          uang_muka: reservationData[0].uang_muka,
+                          waktu_selesai: reservationData[0].waktu_selesai,
+                          sisa_harus_bayar: this.state.leftToPay,
+                        })
+                      )
+                      console.log("INI ", this.state.selectedItems)
+                      this.setState({items: this.state.selectedItems, currentTrx: reservationData[0].invoice}, 
+                        () => {this.sumTotalAmount() 
+                              this.setState({
+                                isAdded: true,
+                                  }, 
+                                  () => {
+                                    this.sumGrandTotalAmount()
+                                    setTimeout(() => {
+                                    this.setState({
+                                      isAdded: false,
+                                  });
+                                }, 3500);
+                              }
+                            )
+                          }
+                        )
+                      }))
+      console.log(reservationData, id)
+      }
+    })
+    // this.setState({
+    //   selectedItems: []
+    // })
+    console.log(reservationCode, current)
+    }
 
   // addSelectedRefundTK(dataParent) {
   //   let dataRefund = this.state.dataRefundTK[0]
@@ -1699,13 +1766,11 @@ addSelectedTransaction(id, current, idx) {
           {diskon: this.state.discountAmount},
           {subtotal: this.state.totalAmount},
           {status: "PAID"},
-          {username_approval: "adi"},
-          {pin_approval: "123456"},
         ...this.state.selectedItems.slice(index+1))
       ]
     }, () => {
       console.log(this.state.selectedItems)
-      axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
+      axios.post(`http://101.255.125.227:82/api/bayarPreorder`, this.state.selectedItems)
       .then(res => {
         modal('bayar')
         this.setState({refund: [], selectedItems: []}) 

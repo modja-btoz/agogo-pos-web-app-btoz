@@ -11,7 +11,7 @@ const OrderBookingDelete = (props) => {
   return (
 <Container className="reservation mt-4 pt-5 pr-0 pl-0">
         <NavLink onClick={() => props.cartStore.toggleOrderBookingDeleteShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Delete Pemesanan</NavLink>
-            <Table borderless striped>
+            <Table style={{color: "white"}} borderless striped>
               <OrderHeader cartStore={props.cartStore}/>
             </Table>
   
@@ -24,7 +24,7 @@ const OrderBookingDelete = (props) => {
               autoHeightMax={0}
             >
               <div className="scroll-wrapper">
-                <Table borderless striped className="mb-0">
+                <Table style={{color: "white"}} borderless striped className="mb-0">
                   <OrderItems transactionStore={props.transactionStore} cartStore={props.cartStore}/>
                 </Table>
               </div>
