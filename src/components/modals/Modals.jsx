@@ -109,12 +109,14 @@ class Modals extends Component {
 
   renderSwitch(type) {
     // console.log(type)
+    const externalCloseBtn = <button className="close" style={{ zIndex:'20', position: 'absolute', top: '20px', right: '20px' }} onClick={this.props.toggle}>&times;</button>;
     switch(type) {
       case 'reguler':
         return (
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalHeader toggle={this.props.toggle} className="text-center d-block"><h3>Modal Reguler</h3></ModalHeader>
           <ModalBody>
             {this.props.message}
@@ -132,7 +134,8 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
-          <ModalHeader toggle={this.props.toggle} className="text-center d-block"><h3>Modal Reguler</h3></ModalHeader>
+        {externalCloseBtn}
+        <ModalHeader toggle={this.props.toggle} className="text-center d-block"><h3>Modal Reguler</h3></ModalHeader>
           <ModalBody>
             {this.props.message}
           </ModalBody>
@@ -149,6 +152,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalHeader toggle={this.props.toggle} className="text-center d-block mt-2"><h3>ALERT !</h3></ModalHeader>
           <ModalBody>
             {this.props.message || "Input tidak sesuai"}
@@ -165,6 +169,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalHeader toggle={this.props.toggle} className="text-center d-block mt-2"><h3>Modal Logout</h3></ModalHeader>
           <ModalBody>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -182,6 +187,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} className={this.props.className}toggle={this.props.toggle} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalBody style={{margin: "10px"}}>
             <Row>
             <Col style={{margin: "auto"}} centered>
@@ -217,6 +223,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+        {externalCloseBtn}
         <ModalHeader className="text-center d-block">
             {data.username.toUpperCase() || "nama user"}
           </ModalHeader>
@@ -276,6 +283,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalBody className="p-5">
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
@@ -290,6 +298,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalBody className="p-5">
             <i className="fas fa-times font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Pesanan Berhasil Dihapus!</h2>
@@ -304,6 +313,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalBody className="p-5">
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Data Berhasil Disimpan!</h2>
@@ -314,13 +324,12 @@ class Modals extends Component {
         </div>
       );
       case 'clearCart':
-        const externalCloseBtn = <button className="close" style={{ position: 'absolute', top: '15px', right: '15px' }} onClick={this.props.toggle}>&times;</button>;
         return (
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
-          <ModalBody className="p-5">
           {externalCloseBtn}
+          <ModalBody className="p-5">
             <i className="fas fa-times font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Apakah Anda yakin ingin menghapus Cart?</h2>
             <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> Ya, Hapus!</Button>
@@ -334,6 +343,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalBody className="p-5">
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil Disimpan!</h2>
@@ -348,6 +358,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalBody className="p-5">
             <i className="fas fa-calendar-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Apakah anda yakin akan mengubah posisi tanggal ke hari berikutnya ?</h2>
@@ -363,6 +374,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalBody className="p-5">
             <h4 className="display-6 py-3">Tambah Catatan</h4>
             <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
@@ -387,7 +399,8 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} onClosed={this.props.cartStore.resetActiveInputRefund} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered >
-          <ModalBody className="p-5" style={{width: "1150px"}}>
+          {externalCloseBtn}
+          <ModalBody className="p-5">
             <Row>
               <div className="date"><span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
             </Row>
@@ -398,12 +411,12 @@ class Modals extends Component {
 
               {/* LEFT */}
               
-              <Col xs='3.5'>
+              <Col xs='4'>
                 <div centered>
                     <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
                 </div>
                 </Col>
-                <Col xs='3'>
+                <Col xs='4'>
                 
                 {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
 
@@ -441,7 +454,7 @@ class Modals extends Component {
 
                 </Col>
 
-                <Col xs='3'>
+                <Col xs='4'>
                 <CalcNumeric
                   cartStore={this.props.cartStore} 
                   onEnterRefund={this.props.cartStore.onEnterRefund} 
@@ -462,6 +475,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
           <ModalHeader toggle={this.props.toggle} className="text-center d-block">Shutdown</ModalHeader>
           <ModalBody>
             Apakah Anda yakin ingin mematikan mesin ? 
