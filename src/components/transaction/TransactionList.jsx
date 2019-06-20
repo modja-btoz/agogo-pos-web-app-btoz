@@ -40,7 +40,7 @@ class TransactionList extends Component {
       return (
         <Container className="transaction d-block">
         <NavLink onClick={() => this.props.cartStore.toggleOpenTransactionShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
-            <Table borderless striped>
+            <Table style={{color: "white"}} borderless striped>
               <TransactionHeader transactionStore={this.props.transactionStore}/>
             </Table>
   
@@ -53,7 +53,7 @@ class TransactionList extends Component {
               autoHeightMax={this.state.productItemsHeight}
             >
               <div className="scroll-wrapper">
-                <Table borderless striped className="mb-0">
+                <Table style={{color: "white"}} borderless striped className="mb-0">
                   <TransactionItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
                 </Table>
               </div>

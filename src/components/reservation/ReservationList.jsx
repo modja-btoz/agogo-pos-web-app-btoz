@@ -39,7 +39,7 @@ class ReservationList extends Component {
   return (
 <Container className="reservation">
         <NavLink onClick={() => this.props.cartStore.toggleOpenReservationShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Pemesanan</NavLink>
-            <Table borderless striped>
+            <Table style={{color: "white"}} borderless striped>
               <ReservationHeader transactionStore={this.props.transactionStore}/>
             </Table>
   
@@ -52,7 +52,7 @@ class ReservationList extends Component {
               autoHeightMax={0}
             >
               <div className="scroll-wrapper">
-                <Table borderless striped className="mb-0">
+                <Table style={{color: "white"}} borderless striped className="mb-0">
                   <ReservationItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
                 </Table>
               </div>
