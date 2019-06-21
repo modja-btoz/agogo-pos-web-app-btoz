@@ -56,6 +56,7 @@ const initialState = {
   isTakeBookingShow: false,
   isRefundTKShow: true,
   isRefundPSShow: false,
+  onRefund: false,
   activeInputPayment: '',
   valueInputPayment: '',
   activeInputBooking: '',
@@ -767,7 +768,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   doNextRefund(modal) {
-    this.setState({trxRefund: []})
+    this.setState({trxRefund: [], onRefund: true})
     if(this.state.whatRefund === "PS"){
     let dataReservation = this.state.selectedItems
     dataReservation.forEach(data => 
