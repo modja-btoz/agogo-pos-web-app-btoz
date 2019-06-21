@@ -1471,7 +1471,7 @@ addSelectedTransaction(id, current, idx) {
       this.state.dataReservation["tgl_selesai"] = date;
     }
     else if (this.state.activeInputBooking === 'bookingTime'){
-      const time = valueInputBooking.target.value
+      const time = valueInputBooking
       this.state.dataReservation["waktu_selesai"] = time;
     }
     else if (this.state.activeInputBooking === 'bookingAddress'){
@@ -1609,7 +1609,8 @@ addSelectedTransaction(id, current, idx) {
 
   resetActiveInputRefund = () => {
     this.setState({
-      activeInputRefund: ""
+      activeInputRefund: "",
+      valueInputRefund : ""
     },
       () => {
         console.log("resetActiveInput", this.state.activeInputRefund)
@@ -1735,10 +1736,10 @@ addSelectedTransaction(id, current, idx) {
       .then(res => {
       console.log(res, modal)
       modal('bayar')
-      this.setState({refund: [], data: []})})
+      this.setState({refund: [], data: [], items: []})})
       .catch(res => {
       modal('alert', '' , '', res.response.data.message)
-      this.setState({refund: [], data: []})})
+      this.setState({refund: [], data: [], items: []})})
     }
   }
 
