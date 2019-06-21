@@ -297,7 +297,8 @@ class CartsContainer extends Container {
             name: name,
             qty: qty,
             price: price
-          }
+          },
+          onRefund: false
         },
         () => {
           this.onAddToCart(this.state.selectedProduct);
@@ -732,6 +733,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   doRefund(modal) {
+    this.setState({onRefund: true})
     let refundCode = this.state.whatRefund + '-' + (this.state.valueInputRefund["refundCode"])
     if(this.state.whatRefund === 'PS'){
     axios.get(`http://101.255.125.227:82/api/paid_preorders`)
@@ -768,7 +770,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   doNextRefund(modal) {
-    this.setState({trxRefund: [], onRefund: true})
+    this.setState({trxRefund: []})
     if(this.state.whatRefund === "PS"){
     let dataReservation = this.state.selectedItems
     dataReservation.forEach(data => 

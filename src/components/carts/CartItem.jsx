@@ -16,7 +16,7 @@ const CartItem = (props) => {
       }
       <td className="item-qty text-center">
         <Input 
-          disabled
+          disabled={props.cartStore.state.onRefund}
           className={props.cartStore.state.activeItem === props.idx ? 'btn btn-danger focus' : 'btn btn-danger'}
           id={"qty"+props.id} 
           name={"qty"+props.id} 
