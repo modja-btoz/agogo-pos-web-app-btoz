@@ -17,7 +17,7 @@ const DeleteBooking = (props) => {
                 </Row>
 
                 <Row className="SidebarBodyBooking">
-                    <Col sm={5}>
+                    <Col sm={4}>
                         <h7 className="mb-0">PEMESAN</h7>
                         <Input disabled value={props.cartStore.state.dataReservation.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
@@ -25,9 +25,9 @@ const DeleteBooking = (props) => {
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
                         <Input disabled value={props.cartStore.state.dataReservation.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={4}>
                         <h7 className="mb-0">JAM SELESAI</h7>
-                        <Input disabled value={props.cartStore.state.dataReservation.tgl_selesai} className="input jam" placeholder="HH-MM"></Input>
+                        <Input disabled value={props.cartStore.state.dataReservation.waktu_selesai} className="input jam" placeholder="HH-MM"></Input>
                     </Col>
                 </Row>
 
@@ -41,51 +41,47 @@ const DeleteBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                    <Input bsSize="lg" disabled value={props.cartStore.state.dataReservation.catatan} type="textarea" name="note" rows="3" ></Input>
+                                    <Input bsSize="md" disabled value={props.cartStore.state.dataReservation.catatan} type="textarea" name="note" rows="3" ></Input>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Col sm={3}>
+                                <Col sm={4}>
                                     <Label>
                                         <h7 className="mb-0">UANG MUKA</h7><br />
                                         <i className="far fa-times-circle notif-close"></i><span className="notif"> Belum dibayar</span>
                                     </Label>
                                 </Col>
-                                <Col sm={9}>
+                                <Col sm={8}>
                                 <div className='input-keyboard-wrapper'>
-                                <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
-                                    value={props.cartStore.state.dataReservation.uang_muka}
+                                <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="form-control-lg form-control" placeholder="Rp 0" 
+                                    value={props.cartStore.state.dataReservation.uang_muka} bsSize="md"
                                     name="uang_muka" id="uang_muka"
                                     prefix={'Rp '} disabled
-                                />
-                                <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
-                                    value={props.cartStore.state.dataReservation.uang_muka}
-                                    name="uang_muka" id="uang_muka" disabled
                                 />
                                 </div>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Col sm={3}>
+                                <Col sm={4} style={{paddingTop: "10px"}}>
                                     <Label>
                                     <h7 className="mb-0">USER</h7>
                                     </Label>
                                 </Col>
-                                <Col sm={9}>
-                                    <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="lg"
+                                <Col sm={8} style={{paddingTop: "10px"}}>
+                                    <Input className="input-user" type="text" placeholder="USER" bsSize="md"
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeBooking}
                                         autoComplete="off"
                                     />
                                 </Col>
-                                <Col sm={3}>
+                                <Col sm={4} style={{paddingTop: "10px"}}>
                                     <Label>
                                     <h7 className="mb-0">APPROVAL</h7>
                                     </Label>
                                 </Col>
-                                <Col sm={9}>
-                                    <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg" 
+                                <Col sm={8} style={{paddingTop: "10px"}}>
+                                    <Input className="input-password" type="password" placeholder="PIN" bsSize="md" 
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputBooking}
@@ -96,7 +92,7 @@ const DeleteBooking = (props) => {
                             <FormGroup row>
                                 <Col className="btn btn-deleted">
                                     <Button onClick={() => props.cartStore.deleteReservationModal(props.modalStore.toggleModal)} 
-                                    size="lg" name="btn-del" className="btn-del"><i class="fas fa-trash-alt del"></i>HAPUS</Button>
+                                    size="md" name="btn-del" className="btn-del"><i class="fas fa-trash-alt del"></i>HAPUS</Button>
                                 </Col>
                             </FormGroup>
                         </Form>

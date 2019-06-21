@@ -14,7 +14,7 @@ const TakeBooking = (props) => {
                 </Row>
 
                 <Row className="SidebarBodyBooking">
-                    <Col sm={5}>
+                    <Col sm={4}>
                         <h7 className="mb-0">PEMESAN</h7>
                         <Input disabled value={props.cartStore.state.dataReservation.nama} className="input pemesan" placeholder="NAMA"></Input>
                     </Col>
@@ -22,7 +22,7 @@ const TakeBooking = (props) => {
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
                         <Input disabled value={props.cartStore.state.dataReservation.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={4}>
                         <h7 className="mb-0">JAM SELESAI</h7>
                         <Input disabled value={props.cartStore.state.dataReservation.waktu_selesai} className="input jam" placeholder="HH-MM"></Input>
                     </Col>
@@ -37,8 +37,8 @@ const TakeBooking = (props) => {
                                         <h7 className="mb-0">CATATAN</h7>
                                     </Label>
                                 </Col>
-                                <Col sm={9}>
-                                    <Input disabled value={props.cartStore.state.dataReservation.catatan} bsSize="lg" type="textarea" name="note" rows="3" ></Input>
+                                <Col sm={9} style={{paddingLeft:'0'}}>
+                                    <Input disabled value={props.cartStore.state.dataReservation.catatan} bsSize="md" type="textarea" name="note" rows="3" ></Input>
                                 </Col>
                             </FormGroup>
                             {/* <FormGroup row>
@@ -59,7 +59,7 @@ const TakeBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="lg"
+                                <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="md"
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeBooking}
@@ -72,7 +72,7 @@ const TakeBooking = (props) => {
                                     </Label>
                                 </Col>
                                 <Col sm={9}>
-                                <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg"
+                                <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="md"
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
@@ -82,7 +82,7 @@ const TakeBooking = (props) => {
                             </FormGroup>
                             <FormGroup row>
                                 <Col className="btn btn-deleted">
-                                    <Button onClick={() => props.cartStore.takeReservation(props.userNow.id, props.modalStore.toggleModal)} size="lg" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
+                                    <Button onClick={() => props.cartStore.takeReservation(props.userNow.id, props.modalStore.toggleModal)} size="md" name="btn-del" className="btn-del"><i class="fas fa-check check"></i>AMBIL</Button>
                                 </Col>
                             </FormGroup>
                         </Form>

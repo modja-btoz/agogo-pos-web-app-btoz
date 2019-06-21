@@ -398,7 +398,7 @@ class Modals extends Component {
         return (
           <div id="A" ref={this.root}>
           {this.root.current && (
-        <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} onClosed={this.props.cartStore.resetActiveInputRefund} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered >
+        <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} onAfterClose={this.props.cartStore.resetActiveInputRefund} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered >
           {externalCloseBtn}
           <ModalBody className="p-5">
             <Row>

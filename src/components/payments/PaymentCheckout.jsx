@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Container, Row, Col, NavLink, Button, Input } from 'reactstrap';
+import { Container, Row, Col, NavLink, Button, Input, Label } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import CalcNumericPayment from '../calcs/CalcNumericPayment'
 import './PaymentCheckout.scss';
@@ -25,7 +25,7 @@ const PaymentCheckout = (props) => {
       <Container>
         <Row className="SidebarHeader">
           <Col>
-            <NavLink onClick={() => props.cartStore.togglePaymentCheckoutShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Lanjut Belanja</NavLink>
+            <NavLink onClick={() => props.cartStore.togglePaymentCheckoutShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i><Label style={{fontSize: "1em"}}>Lanjut Belanja</Label></NavLink>
           </Col>
         </Row>
 

@@ -22,6 +22,7 @@
     "react-scripts": "2.1.1",
     "react-scrollbar": "^0.5.4",
     "react-simple-keyboard": "^1.12.0",
+    "react-time-picker": "^3.5.2",
     "reactstrap": "^6.5.0",
     "unstated": "^2.1.1"
   },
