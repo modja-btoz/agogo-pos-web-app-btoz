@@ -49,8 +49,8 @@ class TransactionList extends Component {
               autoHideTimeout={1000}
               autoHideDuration={200}
               autoHeight
-              autoHeightMin={600}
-              autoHeightMax={this.state.productItemsHeight}
+              autoHeightMin={500}
+              autoHeightMax={500}
             >
               <div className="scroll-wrapper">
                 <Table style={{color: "white"}} borderless striped className="mb-0">

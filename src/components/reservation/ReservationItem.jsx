@@ -6,11 +6,11 @@ const ReservationItem = (props) => {
   return (
     <div>
         <Row>
-          <Col sm="5" className="row-trx" onClick={() => props.cartStore.addSelectedReservation(props.trxID, props.trxName) || props.cartStore.reservationCheckout()}>
+          <Col sm="4" className="row-trx" onClick={() => props.cartStore.addSelectedReservation(props.trxID, props.trxName) || props.cartStore.reservationCheckout()}>
             <a className="open-booking" href="#" >
               {props.trxName}</a>
           </Col>
-          <Col sm="5" className="transaction-list">
+          <Col sm="6" className="transaction-list">
             <a className="open-booking" href="#" >
               {props.trxDate}</a>
           </Col>
