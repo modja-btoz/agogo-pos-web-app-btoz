@@ -16,6 +16,7 @@ const RefundItem = (props) => {
           placeholder={props.qty} 
           onClick={() => props.cartStore.setSelectedQtyID(props.idx, props.id, props.qty)}
           readonly
+          disabled
         />
         {/* <input id="input1" onFocus={this.setActiveInput} value={this.state.input['input1'] || ""}/>
         <input id="input2" onFocus={this.setActiveInput} value={this.state.input['input2'] || ""}/> */}
