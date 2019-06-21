@@ -7,7 +7,7 @@ const CartItem = (props) => {
     <tr>
       <td className="item-name" scope="row">{props.title}</td>
       { props.cartStore.state.isRefundItem ?
-        <td className="item-refund text-right">
+        <td className="item-delete text-right">
           <i className="fas fa-undo btn-delete-item" onClick={() => props.cartStore.onRemoveToRefund(props.idx)} />
         </td> : 
         <td className="item-delete text-right">

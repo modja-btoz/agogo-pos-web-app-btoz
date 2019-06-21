@@ -1037,7 +1037,6 @@ addSelectedTransaction(id, current, idx) {
     this.setState({isDisabledRefund: false})
     const newArray = [...this.state.items];
     const selected = newArray.splice(item, 1);
-    newArray.splice(item, 1);
     const newRefund = [...this.state.refundItems, selected[0]];
 
     this.setState({
