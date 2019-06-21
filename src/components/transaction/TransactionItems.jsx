@@ -15,10 +15,11 @@ class TransactionItems extends Component {
   render(){
 
     return (
-    <div style={{height: "80%"}}>
+
       <Row className="TransactionItems row m-0">
+
       { this.props.cartStore.state.transaction.map((transaction, i) => 
-      <Col xs="12" >
+      <Col xs="12">
         <TransactionItem 
           trxIndex={i}
           trxID={transaction.id} 
@@ -34,7 +35,6 @@ class TransactionItems extends Component {
       )}    
 
     </Row>
-    </div>
 
 
       // <div>

@@ -8,12 +8,12 @@ const TransactionItem = (props) => {
   return (
     <div>
       <Row >
-        <Col sm="5" className="row-trx" onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxName, props.trxIndex)}>
+        <Col sm="4" className="row-trx" onClick={() => props.cartStore.addSelectedTransaction(props.trxID, props.trxName, props.trxIndex)}>
           <a className="open-transaction" href="#" style={{ color: "black" }} >
             {props.trxName}
           </a>
         </Col>
-        <Col sm="5" className="transaction-list">
+        <Col sm="6" className="transaction-list">
           <a className="open-transaction" href="#" style={{ color: "black" }} >
             {props.trxDate}</a>
         </Col>
