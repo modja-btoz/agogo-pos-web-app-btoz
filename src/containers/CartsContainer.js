@@ -742,7 +742,7 @@ addSelectedTransaction(id, current, idx) {
       if(refundData.length === 0){
         modal.toggleModal('alert','','','Nomor order tidak ditemukan')
       } else {
-      this.setState({dataRefund: refundData, isDisabledRefund: false}, () => this.addSelectedRefund())
+      this.setState({dataRefund: refundData, isDisabledRefund: false, isRefundItem: true}, () => this.addSelectedRefund())
       console.log("HU",refundData )
       }
     })
@@ -856,7 +856,7 @@ addSelectedTransaction(id, current, idx) {
   addSelectedRefund() {
     if(this.state.whatRefund === "TK"){
       let dataRefund = this.state.dataRefund[0]
-      this.addSelectedReservation(dataRefund.id, dataRefund.invoice)
+      this.addSelectedTransaction(dataRefund.id, dataRefund.invoice)
       console.log("BBBBBBBBBBBBB", dataRefund)
     }
     else if(this.state.whatRefund === "PS"){
@@ -866,7 +866,7 @@ addSelectedTransaction(id, current, idx) {
     }
   }
 
-  doPSRefundCAT(id, current, user_id){
+  doPSRefund(id, current, user_id){
     this.setState({isDisabled: false, isRefundPSShow: true, selectedItems: []})
     let reservationCode = id
     axios.get(`http://101.255.125.227:82/api/paid_preorders`)

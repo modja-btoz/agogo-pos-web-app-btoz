@@ -43,10 +43,10 @@ const OrderBooking = (props) => {
                         <Col>
                             <h7 className="mb-0">JAM SELESAI</h7>
                             {/* <Input className="input jam" placeholder="HH-MM"></Input> */}
-                            <TimePicker onChange={props.cartStore.onChangeBooking}
-                                        value={props.cartStore.state.valueInputBooking["bookingTime"]}
-                                        format="HH"
-                                // onFocus={props.cartStore.setActiveInputBooking}
+                            <Input className="input-waktu" type="time" name="bookingTime" id="bookingTime" placeholder="HH-MM"
+                                value={props.cartStore.state.valueInputBooking["bookingTime"]}
+                                onChange={props.cartStore.onChangeBooking}
+                                onFocus={props.cartStore.setActiveInputBooking}
                                 />
                         </Col>
                         <Col>
