@@ -82,9 +82,9 @@ const OrderBooking = (props) => {
                         <Col className="pr-0">
                             <Form>
                                 <FormGroup row>
-                                    {/* <Label sm={2} className="control-label">BIAYA TAMBAHAN</Label> */}
-                                    <Col sm={11}>
-                                    <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="input-uangTambah" placeholder="BIAYA TAMBAHAN"  
+                                    <Label sm={4} style={{paddingRight: "0"}} className="control-label">BIAYA TAMBAHAN</Label>
+                                    <Col sm={7} style={{paddingLeft: "0", paddingRight: "0"}}>
+                                    <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="input-uangTambah" placeholder="Rp 0"  
                                     name="bookingAddition" id="bookingAddition"
                                     value={props.cartStore.state.valueInputBooking["bookingAddition"]}  
                                     onValueChange={props.cartStore.onChangeBooking}                                  
@@ -93,10 +93,10 @@ const OrderBooking = (props) => {
                                 </FormGroup>
 
                                 <FormGroup row>
-                                    {/* <Label sm={2} className="control-label">DISKON</Label> */}
-                                    <Col sm={9} style={{float: "left"}}>
+                                    <Label sm={4} className="control-label">DISKON</Label>
+                                    <Col sm={6} style={{float: "left", paddingLeft: "0", paddingRight: "0"}} >
                                     {props.cartStore.state.discountType === 'Rp' &&
-                                    <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="input-uangDiskon" placeholder="DISKON RP" 
+                                    <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="input-uangDiskon" placeholder="Rp 0" 
                                     value={props.cartStore.state.valueInputBooking["paymentDiscount"]}
                                     name="paymentDiscount" id="paymentDiscount" 
                                     onValueChange={props.cartStore.onChangeBooking}
@@ -104,7 +104,7 @@ const OrderBooking = (props) => {
                                     prefix={'Rp '}/>
                                     }
                                     {props.cartStore.state.discountType === '%' &&
-                                    <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="input-uangDiskon" placeholder="DISKON %" 
+                                    <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="input-uangDiskon" placeholder="Rp %" 
                                     value={props.cartStore.state.valueInputBooking["paymentDiscount"]}
                                     name="paymentDiscount" id="paymentDiscount"
                                     onValueChange={props.cartStore.onChangeBooking}
@@ -114,18 +114,18 @@ const OrderBooking = (props) => {
                                     </Col>
                                     <Col sm={2}>
                                     <FormGroup check className="pl-0">
-                                        <Input checked={props.cartStore.state.discountType === "Rp"} onChange={props.cartStore.handleDiscountChange} value="Rp" className="radio sm pl-0" size="sm" type="radio" name="Rp" id="Rp" /><Label check> Rp </Label>
+                                        <Input checked={props.cartStore.state.discountType === "Rp"} onChange={props.cartStore.handleDiscountChange} value="Rp" className="radio sm " size="sm" type="radio" name="Rp" id="Rp" /><Label check> Rp </Label>
                                     </FormGroup>
                                     <FormGroup check className="pl-0">
-                                    <Input checked={props.cartStore.state.discountType === "%"} onChange={props.cartStore.handleDiscountChange} value="%" className="radio sm pl-0" size="sm" type="radio" name="%" id="%" /><Label check> % </Label>
-                                        </FormGroup>   
+                                        <Input checked={props.cartStore.state.discountType === "%"} onChange={props.cartStore.handleDiscountChange} value="%" className="radio sm " size="sm" type="radio" name="%" id="%" /><Label check> % </Label>
+                                    </FormGroup>   
                                     </Col>
                                 </FormGroup>
 
                                 <FormGroup row>
-                                    {/* <Label sm={2} className="control-label">UANG MUKA</Label> */}
-                                    <Col sm={11}>
-                                        <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="input-uangMuka" placeholder="UANG MUKA"  
+                                    <Label sm={4} className="control-label">UANG MUKA</Label>
+                                    <Col style={{paddingLeft: "0", paddingRight: "0"}} sm={7}>
+                                        <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="input-uangMuka" placeholder="RP 0"  
                                         name="bookingPayment" id="bookingPayment"
                                         value={props.cartStore.state.valueInputBooking["bookingPayment"]}
                                         onValueChange={props.cartStore.onChangeBooking}
@@ -136,7 +136,7 @@ const OrderBooking = (props) => {
                                 <FormGroup>
                                 <Row >
                                 {/* <Label sm={2} className="approval">USER</Label> */}
-                                <Col sm={6}>
+                                <Col sm={6} style={{paddingRight: "9%"}}>
                                 <Input className="input-user" type="text" placeholder="USER" 
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
@@ -144,10 +144,7 @@ const OrderBooking = (props) => {
                                         autoComplete="off"
                                     />
                                 </Col>
-                                </Row>
-                                <Row style={{paddingTop: "10px"}}>
-                                {/* <Label sm={2} className="approval">APPROVAL</Label> */}
-                                <Col sm={6}>
+                                <Col sm={6} style={{paddingLeft: '1%', paddingRight: "9%"}}>
                                 <Input className="input-password" type="password" placeholder="PIN" 
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
@@ -155,9 +152,12 @@ const OrderBooking = (props) => {
                                         onChange={props.cartStore.onChangeBooking}
                                     />
                                 </Col>
-                                <Col sm={3}>
+                                </Row>
+                                <Row style={{paddingTop: "10px", paddingLeft:"3%"}}>
+                                {/* <Label sm={2} className="approval">APPROVAL</Label> */}
+                                
                                 <Button onClick={() => props.cartStore.addReservation(props.userNow, props.modalStore.toggleModal)} color="danger"><i className="fas fa-edit"></i> SIMPAN</Button>
-                                </Col>
+                                
                                 </Row>
                             </FormGroup>
                             </Form>
