@@ -108,18 +108,6 @@ class App extends Component {
     return (
 
       <Fullscreen enabled={this.props.rootStore.state.isFull} onChange={isFull => this.props.rootStore.setState({isFull})}>
-
-        <footer className="Footer right">                    
-          <a href="#" className="btn-fullscreen" onClick={this.props.rootStore.goFull} >
-            <i className="fas fa-expand-arrows-alt"></i>
-          </a>
-
-          {this.state.activePath === '/initial-balance' &&
-          <a href="#" className="btn-logout" onClick={() => this.props.modalStore.toggleModal('saldo', '')} >
-            <i className="fas fa-power-off"></i>
-          </a>
-          }
-        </footer>
           
         <BrowserRouter>
           <div className="App" style={{position: "relative",}}>
@@ -249,6 +237,17 @@ class App extends Component {
             
           </div>
         </BrowserRouter>
+        <footer className="Footer right">                    
+          <a href="#" className="btn-fullscreen" onClick={this.props.rootStore.goFull} >
+            <i className="fas fa-expand-arrows-alt"></i>
+          </a>
+
+          {/* {this.state.activePath === '/initial-balance' &&
+          <a href="#" className="btn-logout" onClick={() => this.props.modalStore.toggleModal('saldo', '')} >
+            <i className="fas fa-power-off"></i>
+          </a>
+          } */}
+        </footer>
         <div ref={this.root} id="myModal">{this.props.myModal}</div>
       </Fullscreen>
     );
