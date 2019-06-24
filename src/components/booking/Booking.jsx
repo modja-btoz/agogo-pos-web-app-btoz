@@ -85,10 +85,10 @@
                                     <CartBooking cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                     {this.props.cartStore.state.popStatus && 
                                     <div>
-                                        <Button toggle="false" block="true" id="Popover1" type="button" onClick={() => this.toggle()}>
+                                        <Button toggle="false" block="true" type="button" id="Popover1" onClick={() => this.toggle()}>
                                         Tambah Item
                                         </Button>
-                                        <Popover placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
+                                        <Popover container={'#A'} placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
                                             <PopoverBody >
                                                 <Products cartStore={this.props.cartStore} productStore={this.props.productStore} activePath={this.props.activePath}/>
                                             </PopoverBody>

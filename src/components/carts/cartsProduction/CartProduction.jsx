@@ -71,7 +71,7 @@ class CartProduction extends React.Component {
     render() {
         return (
             <Container className="cart mt-4 pt-5 pr-0 pl-0">
-                <Row style={{height: "500px"}}>
+                <Row style={{height: "400px"}}>
                     <Col xs="7" className="body-left">
                         <div className="date">Posisi per <span className="date-update">{this.props.cartStore.state.days[new Date(this.props.cartStore.state.lastDate).getDay()] + ", " +this.props.cartStore.state.lastDate}</span></div>
                         {/* <div className="date">Posisi per <span className="date-update">{this.state.date.date === 'no production' ? "Belum ada Produksi" : this.state.days[new Date(this.state.lastDate).getDay()]+ ", " + this.state.lastDate}</span></div> */}
@@ -92,7 +92,7 @@ class CartProduction extends React.Component {
                         <tr className="full">
                             <td className="production">Produksi 1</td>
                             <td className="product-total text-right" id="produksi1">{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "produksi1"] || 0 || "-"}</td>
-                            <td className="button"><a className={this.props.cartStore.state.disabledProduction} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "1")}><i class="fas fa-pen-square edit"></i></a></td>
+                            <td className="button text-right"><a className={this.props.cartStore.state.disabledProduction} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "1")}><i class="fas fa-pen-square edit"></i></a></td>
                         </tr>
                         <tr>
                             <td className="production">Produksi 2</td>
