@@ -337,7 +337,7 @@ class CartsContainer extends Container {
           }
           const productKosong = Object.assign(product, reset)
           this.state.clearProduction.push(productKosong)
-          this.setState({disabledProduction: "enabled", disabledProductionNote: false})
+          this.setState({disabledProductionNote: false})
           console.log(this.state.production, this.state.clearProduction)
         } else {
           axios.get('http://101.255.125.227:82/api/product/' + id)
@@ -393,6 +393,7 @@ class CartsContainer extends Container {
             ...this.state.clearProduction.slice(index+1)
           ]
         })
+        // this.productionButton()
       } else {
       this.state.produksi[this.state.selectedProduct.name + "produksi1"] = pesan.production.produksi1
       this.state.produksi[this.state.selectedProduct.name + "produksi2"] = pesan.production.produksi2
@@ -451,10 +452,46 @@ class CartsContainer extends Container {
         ]
       })
       }
-      
+      // this.productionButton()
       })    
     }
     console.log("PRODUCTION BERISI",this.state.production, this.state.clearProduction, active_path) 
+  }
+
+  productionButton1(){
+    if(this.state.produksi[this.state.selectedProduct.name + "produksi1"] !== 0){
+      return "disabled"
+    } else{
+      return "enabled"
+    }
+  }
+  productionButton2(){
+    if(this.state.produksi[this.state.selectedProduct.name + "produksi2"] !== 0){
+      return "disabled"
+    } else{
+      return "enabled"
+    }
+  }
+  productionButton3(){
+    if(this.state.produksi[this.state.selectedProduct.name + "produksi3"] !== 0){
+      return "disabled"
+    } else{
+      return "enabled"
+    }
+  }
+  productionButton4(){
+    if(this.state.produksi[this.state.selectedProduct.name + "rusak"] !== 0){
+      return "disabled"
+    } else{
+      return "enabled"
+    }
+  }
+  productionButton5(){
+    if(this.state.produksi[this.state.selectedProduct.name + "lain"] !== 0){
+      return "disabled"
+    } else{
+      return "enabled"
+    }
   }
 
   // getDataNyoba() {
