@@ -19,18 +19,19 @@ class OthersProduction extends React.Component {
     render() {
         return (
             <div>
+                <div>
                 <tr>
                     <th><i class="fas fa-minus-circle add-product"> Lain-lain</i></th>
                 </tr>
                 <tr>
                     <td className="broken-production">Rusak</td>
                     <td className="product-total-broken text-right" >{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "rusak"] || "-"}</td>
-                    <td><a className={this.props.cartStore.state.disabledProduction} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "4")}><i class="fas fa-pen-square edit"></i></a></td>
+                    <td><a className={this.props.cartStore.productionButton4()} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "4")}><i class="fas fa-pen-square edit"></i></a></td>
                 </tr>
                 <tr>
                     <td className="others-production">Lain-lain</td>
                     <td className="product-total-others text-right" >{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "lain"] || "-"}</td>
-                    <td><a className={this.props.cartStore.state.disabledProduction} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "5")}><i class="fas fa-pen-square edit"></i></a></td>
+                    <td><a className={this.props.cartStore.productionButton5()} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "5")}><i class="fas fa-pen-square edit"></i></a></td>
                 </tr>
                 <hr />
                 <tr>
@@ -38,6 +39,8 @@ class OthersProduction extends React.Component {
                     <td className="calc-product-total text-right">{parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "rusak"] || 0)+
                                                                     parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "lain"] || 0) || "-"}</td>
                 </tr>
+                </div>
+                <div>
                 <tr>
                 <Button disabled={this.props.cartStore.state.disabledProductionNote} onClick={() => this.props.modalStore.toggleModal('catatan')}>
                     Tambah Catatan
@@ -55,6 +58,7 @@ class OthersProduction extends React.Component {
                         </PopoverBody>
                     </Popover> */}
                 </tr>
+                </div>
             </div>
         )
     }
