@@ -275,6 +275,7 @@ class CartsContainer extends Container {
 
   addSelectedProduct(idx, id, name, qty, price, active_path, modal) {
     if(active_path === '/cashier' || active_path === '/booking'){
+      console.log(active_path)
       if(active_path === '/cashier' && this.state.items.length === 0){
       axios.get(`http://101.255.125.227:82/api/cekInvoice`).then(res => {
       const trx = res.data;
@@ -453,7 +454,7 @@ class CartsContainer extends Container {
       
       })    
     }
-    console.log("PRODUCTION BERISI",this.state.production, this.state.clearProduction) 
+    console.log("PRODUCTION BERISI",this.state.production, this.state.clearProduction, active_path) 
   }
 
   // getDataNyoba() {
@@ -1473,7 +1474,7 @@ addSelectedTransaction(id, current, idx) {
       this.state.dataReservation["tgl_selesai"] = date;
     }
     else if (this.state.activeInputBooking === 'bookingTime'){
-      const time = valueInputBooking
+      const time = valueInputBooking.target.value
       this.state.dataReservation["waktu_selesai"] = time;
     }
     else if (this.state.activeInputBooking === 'bookingAddress'){
@@ -1852,11 +1853,13 @@ addSelectedTransaction(id, current, idx) {
   }
   deleteReservationModal(modal) {
     let id = this.state.dataReservation.id
-    axios.delete(`http://101.255.125.227:82/api/preorder/` + id)
+    axios.put(`http://101.255.125.227:82/api/cancelPreorder/` + id, [{username_approval: this.state.dataReservation["user"],
+                                                                      pin_approval: this.state.dataReservation["code"]}])
     .then(res => {
       modal('hapus')
     })
     .catch(res => {
+      console.log(id)
       modal('alert', '', '',res.response.data.message)
     })
   }

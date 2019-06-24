@@ -2,7 +2,7 @@ import React from 'react'
 // import {DatePicker} from 'react-datepicker'
 import { Container, Row, Col, NavLink, Button, Input, Form, FormGroup, Label } from 'reactstrap';
 import NumberFormat from 'react-number-format';
-import TimePicker from 'react-time-picker'
+// import TimePicker from 'react-time-picker'
 
 import './OrderBooking.scss';
 import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
@@ -43,7 +43,7 @@ const OrderBooking = (props) => {
                         <Col>
                             <h7 className="mb-0">JAM SELESAI</h7>
                             {/* <Input className="input jam" placeholder="HH-MM"></Input> */}
-                            <Input className="input-waktu" type="time" name="bookingTime" id="bookingTime" placeholder="HH-MM"
+                            <Input className="input-jam" type="time" name="bookingTime" id="bookingTime" placeholder="HH-MM"
                                 value={props.cartStore.state.valueInputBooking["bookingTime"]}
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}

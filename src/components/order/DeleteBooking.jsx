@@ -84,7 +84,7 @@ const DeleteBooking = (props) => {
                                     <Input className="input-password" type="password" placeholder="PIN" bsSize="md" 
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
-                                        onFocus={props.cartStore.setActiveInputBooking}
+                                        onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeBooking}
                                     />
                                 </Col>
