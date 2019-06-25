@@ -405,9 +405,36 @@ class Modals extends Component {
               <div className="date"><span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
             </Row>
             <Row>
-            <div className="date">{"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name ? "Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name : ""}</div>
+            <div className="date">
+              {this.props.where === "1" && 
+              <div>
+                {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name}
+              </div>
+              } 
+              {this.props.where === "2" && 
+              <div>
+                {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name}
+              </div>
+              } 
+              {this.props.where === "3" && 
+              <div>
+                {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name}
+              </div>
+              } 
+              {this.props.where === "4" && 
+              <div>
+                {"Rusak : " + this.props.cartStore.state.selectedProduct.name}
+              </div>
+              } 
+              {this.props.where === "5" && 
+              <div>
+                {"Lain-lain : " + this.props.cartStore.state.selectedProduct.name}
+              </div>
+              } 
+            </div>
             </Row>
             <Row className="SidebarBody" >
+            {/* {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name ? "Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name : ""} */}
 
               {/* LEFT */}
               
@@ -421,13 +448,23 @@ class Modals extends Component {
                 {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
 
                 {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
+                <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                  <Input className="input-masking mb-4" type="text" placeholder="Jumlah" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                    value={this.props.cartStore.state.valueInputRefund["refundCode1"] || this.props.cartStore.state.valueInputRefund["refundCode2"] || 
+                          this.props.cartStore.state.valueInputRefund["refundCode3"]  || this.props.cartStore.state.valueInputRefund["refundCode4"] ||
+                          this.props.cartStore.state.valueInputRefund["refundCode5"]}
+                    name="refundCode" id={"refundCode"+this.props.where}
+                    onFocus={this.props.cartStore.setActiveInputRefund}
+                    autoFocus
+                    // onBlur={this.props.cartStore.resetActiveInputRefund}
+                  />
+                </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                   <Input className="input-masking mb-4" placeholder="User" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalUser"]}
                     name="approvalUser" id="approvalUser" type="text"
                     onChange={this.props.cartStore.onChangeBooking}
                     onFocus={this.props.cartStore.setActiveInputRefund}
-                    autoFocus
                   />
                 </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
@@ -436,17 +473,6 @@ class Modals extends Component {
                     name="approvalCode" id="approvalCode" type="password"
                     onChange={this.props.cartStore.onChangeBooking}
                     onFocus={this.props.cartStore.setActiveInputRefund}
-                  />
-                </div>
-                <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" type="text" placeholder="Jumlah Produksi" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
-                    value={this.props.cartStore.state.valueInputRefund["refundCode1"] || this.props.cartStore.state.valueInputRefund["refundCode2"] || 
-                          this.props.cartStore.state.valueInputRefund["refundCode3"]  || this.props.cartStore.state.valueInputRefund["refundCode4"] ||
-                          this.props.cartStore.state.valueInputRefund["refundCode5"]}
-                    name="refundCode" id={"refundCode"+this.props.where}
-                    onFocus={this.props.cartStore.setActiveInputRefund}
-                    // onBlur={this.props.cartStore.resetActiveInputRefund}
-                    
                   />
                 </div>
 
