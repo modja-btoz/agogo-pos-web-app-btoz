@@ -1913,160 +1913,348 @@ addSelectedTransaction(id, current, idx) {
     let pin = this.state.dataReservation['code']
     let index = this.state.production.findIndex( x => x.id === id);
     
-    if(this.state.activeInputRefund === "refundCode1"){
-      if(qty1 === 0){
-        modal.clearModal()
-        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
-      }
-      else{
-      this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty1 || 0
-      this.setState({
-        production : [
-           ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {produksi1: qty1 || 0}, {produksi2: this.state.production[index].produksi2 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
-           {total_produksi: parseInt(qty1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
-            + parseInt(qty1 || 0)
-            + parseInt(this.state.production[index].produksi2 || 0)
-            + parseInt(this.state.production[index].produksi3 || 0) 
-            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
-            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
-            - parseInt(this.state.production[index].ket_lain || 0) 
-            - parseInt(this.state.production[index].ket_rusak || 0)},           
-           {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
-           {username_approval: user},
-           {pin_approval: pin}),
-           ...this.state.production.slice(index+1)
-        ]
-      }, () => this.changeDate(id, modal))
-      }
-    }
-    else if(this.state.activeInputRefund === "refundCode2"){
-      if(qty2 === 0){
-        modal.clearModal()
-        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
-      }
-      else{
-      this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty2 || 0
-      this.setState({
-        production: [
-           ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {produksi2: qty2 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
-           {total_produksi: parseInt(qty2 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
-            + parseInt(qty2 || 0)
-            + parseInt(this.state.production[index].produksi1 || 0)
-            + parseInt(this.state.production[index].produksi3 || 0) 
-            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
-            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
-            - parseInt(this.state.production[index].ket_lain || 0) 
-            - parseInt(this.state.production[index].ket_rusak || 0)},           
-           {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
-           {username_approval: user},
-           {pin_approval: pin}),
-           ...this.state.production.slice(index+1)
-        ]
-      }, () => this.changeDate(id, modal))
-      }
-    }
-    else if(this.state.activeInputRefund === "refundCode3"){
-      if(qty3 === 0 || qty3 === ''){
-        modal.clearModal()
-        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
-      }
-      else{
-      this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty3 || 0
-      this.setState({
-        production: [
-           ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {produksi3: qty3 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi2: this.state.production[index].produksi2 || 0},
-           {total_produksi: parseInt(qty3 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0)},
-           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
-            + parseInt(qty3 || 0)
-            + parseInt(this.state.production[index].produksi2 || 0)
-            + parseInt(this.state.production[index].produksi1 || 0) 
-            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
-            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
-            - parseInt(this.state.production[index].ket_lain || 0) 
-            - parseInt(this.state.production[index].ket_rusak || 0)},           
-            {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
-           {username_approval: user},
-           {pin_approval: pin}),
-           ...this.state.production.slice(index+1)
-        ]
-      }, () => this.changeDate(id, modal))
-      }
-    }
-    else if(this.state.activeInputRefund === "refundCode4"){
-      if(qty4 === 0){
-        modal.clearModal()
-        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
-      }
-      else{
-      this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty4 || 0
-      this.setState({
-        production: [
-           ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {ket_rusak: qty4 || 0}, {total_lain: parseInt(qty4 || 0) + parseInt(this.state.production[index].ket_lain || 0)},
-           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
-            + parseInt(this.state.production[index].produksi1 || 0)
-            + parseInt(this.state.production[index].produksi2 || 0)
-            + parseInt(this.state.production[index].produksi3 || 0) 
-            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
-            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
-            - parseInt(qty4 || 0) 
-            - parseInt(this.state.production[index].ket_lain || 0)},           
-           {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
-           {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
-           {username_approval: user},
-           {pin_approval: pin}),
-           ...this.state.production.slice(index+1)
-        ]
-      }, () => this.changeDate(id, modal))
-      }
-    }
-    else if(this.state.activeInputRefund === "refundCode5"){
-      if(qty5 === 0){
-        modal.clearModal()
-        modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
-      }
-      else{
-      this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
-      this.setState({
-        production: [
-           ...this.state.production.slice(0,index),
-           Object.assign({}, this.state.production[index], {ket_lain: qty5 || 0}, {total_lain: parseInt(qty5 || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
-           {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
-            + parseInt(this.state.production[index].produksi1 || 0)
-            + parseInt(this.state.production[index].produksi2 || 0)
-            + parseInt(this.state.production[index].produksi3 || 0) 
-            - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
-            - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
-            - parseInt(qty5 || 0) 
-            - parseInt(this.state.production[index].ket_rusak || 0)},           
-           {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
-           {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
-           {catatan: this.state.production[index].catatan || "tidak ada catatan"},
-           {username_approval: user},
-           {pin_approval: pin}),
-           ...this.state.production.slice(index+1)
-        ]
-      }, () => this.changeDate(id, modal))
-      }
-    }
-    // else if(this.state.activeInputRefund === "refundCode5")
-    else if(user === undefined ){
-      modal.clearModal()
-      modal.toggleModal('alert','','','User tidak boleh kosong')
-    }
-    else if (pin === undefined){
-      modal.clearModal()
-      modal.toggleModal('alert','','','Pin tidak boleh kosong')
-    }
+    // if(this.state.activeInputRefund === "refundCode1"){
+      // if(qty1 === 0){
+      //   modal.clearModal()
+      //   modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+      // }
+      // else{
+      // this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty1 || 0
+      // this.setState({
+      //   production : [
+      //      ...this.state.production.slice(0,index),
+      //      Object.assign({}, this.state.production[index], {produksi1: qty1 || 0}, {produksi2: this.state.production[index].produksi2 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+      //      {total_produksi: parseInt(qty1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+      //      {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+      //       + parseInt(qty1 || 0)
+      //       + parseInt(this.state.production[index].produksi2 || 0)
+      //       + parseInt(this.state.production[index].produksi3 || 0) 
+      //       - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+      //       - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+      //       - parseInt(this.state.production[index].ket_lain || 0) 
+      //       - parseInt(this.state.production[index].ket_rusak || 0)},           
+      //      {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+      //      {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+      //      {username_approval: user},
+      //      {pin_approval: pin}),
+      //      ...this.state.production.slice(index+1)
+      //   ]
+      // }, () => this.changeDate(id, modal))
+      // }
+    // }
+    // else if(this.state.activeInputRefund === "refundCode2"){
+    //   if(qty2 === 0){
+    //     modal.clearModal()
+    //     modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+    //   }
+    //   else{
+      // this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty2 || 0
+      // this.setState({
+      //   production: [
+      //      ...this.state.production.slice(0,index),
+      //      Object.assign({}, this.state.production[index], {produksi2: qty2 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+      //      {total_produksi: parseInt(qty2 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+      //      {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+      //       + parseInt(qty2 || 0)
+      //       + parseInt(this.state.production[index].produksi1 || 0)
+      //       + parseInt(this.state.production[index].produksi3 || 0) 
+      //       - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+      //       - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+      //       - parseInt(this.state.production[index].ket_lain || 0) 
+      //       - parseInt(this.state.production[index].ket_rusak || 0)},           
+      //      {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+      //      {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+      //      {username_approval: user},
+      //      {pin_approval: pin}),
+      //      ...this.state.production.slice(index+1)
+      //   ]
+      // }, () => this.changeDate(id, modal))
+      // }
+    // }
+    // else if(this.state.activeInputRefund === "refundCode3"){
+    //   if(qty3 === 0 || qty3 === ''){
+    //     modal.clearModal()
+    //     modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+    //   }
+    //   else{
+      // this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty3 || 0
+      // this.setState({
+      //   production: [
+      //      ...this.state.production.slice(0,index),
+      //      Object.assign({}, this.state.production[index], {produksi3: qty3 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi2: this.state.production[index].produksi2 || 0},
+      //      {total_produksi: parseInt(qty3 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0)},
+      //      {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+      //       + parseInt(qty3 || 0)
+      //       + parseInt(this.state.production[index].produksi2 || 0)
+      //       + parseInt(this.state.production[index].produksi1 || 0) 
+      //       - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+      //       - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+      //       - parseInt(this.state.production[index].ket_lain || 0) 
+      //       - parseInt(this.state.production[index].ket_rusak || 0)},           
+      //       {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+      //      {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+      //      {username_approval: user},
+      //      {pin_approval: pin}),
+      //      ...this.state.production.slice(index+1)
+      //   ]
+      // }, () => this.changeDate(id, modal))
+      // }
+    // }
+    // else if(this.state.activeInputRefund === "refundCode4"){
+    //   if(qty4 === 0){
+    //     modal.clearModal()
+    //     modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+    //   }
+    //   else{
+      // this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty4 || 0
+      // this.setState({
+      //   production: [
+      //      ...this.state.production.slice(0,index),
+      //      Object.assign({}, this.state.production[index], {ket_rusak: qty4 || 0}, {total_lain: parseInt(qty4 || 0) + parseInt(this.state.production[index].ket_lain || 0)},
+      //      {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+      //       + parseInt(this.state.production[index].produksi1 || 0)
+      //       + parseInt(this.state.production[index].produksi2 || 0)
+      //       + parseInt(this.state.production[index].produksi3 || 0) 
+      //       - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+      //       - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
+      //       - parseInt(qty4 || 0) 
+      //       - parseInt(this.state.production[index].ket_lain || 0)},           
+      //      {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
+      //      {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+      //      {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+      //      {username_approval: user},
+      //      {pin_approval: pin}),
+      //      ...this.state.production.slice(index+1)
+      //   ]
+      // }, () => this.changeDate(id, modal))
+    //   }
+    // }
+    // else if(this.state.activeInputRefund === "refundCode5"){
+    //   if(qty5 === 0){
+    //     modal.clearModal()
+    //     modal.toggleModal('alert','','','Jumlah produksi tidak boleh kosong')
+    //   }
+    //   else{
+      // this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
+      // this.setState({
+      //   production: [
+      //      ...this.state.production.slice(0,index),
+      //      Object.assign({}, this.state.production[index], {ket_lain: qty5 || 0}, {total_lain: parseInt(qty5 || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+      //      {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+      //       + parseInt(this.state.production[index].produksi1 || 0)
+      //       + parseInt(this.state.production[index].produksi2 || 0)
+      //       + parseInt(this.state.production[index].produksi3 || 0) 
+      //       - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+      //       - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
+      //       - parseInt(qty5 || 0) 
+      //       - parseInt(this.state.production[index].ket_rusak || 0)},           
+      //      {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
+      //      {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+      //      {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+      //      {username_approval: user},
+      //      {pin_approval: pin}),
+      //      ...this.state.production.slice(index+1)
+      //   ]
+      // }, () => this.changeDate(id, modal))
+    //   }
+    // }
+    // else if(this.state.activeInputRefund === "approvalUser" || this.state.activeInputRefund === "approvalCode"){
+    //   if(qty2 !== 0){
+    //     document.getElementById("refundCode2").focus()
+    //     this.changeDate()
+    //   }
+    // }
+    // // else if(this.state.activeInputRefund === "refundCode5")
+    // else if(user === undefined ){
+    //   modal.clearModal()
+    //   modal.toggleModal('alert','','','User tidak boleh kosong')
+    // }
+    // else if (pin === undefined){
+    //   modal.clearModal()
+    //   modal.toggleModal('alert','','','Pin tidak boleh kosong')
+    // }
+
+
+    if(this.state.activeInputRefund === "approvalCode" ||
+      this.state.activeInputRefund === "approvalUser" ||
+      this.state.activeInputRefund === "refundCode1" ||
+      this.state.activeInputRefund === "refundCode2" ||
+      this.state.activeInputRefund === "refundCode3" ||
+      this.state.activeInputRefund === "refundCode4" ||
+      this.state.activeInputRefund === "refundCode5"){
+      // this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty1 || 0
+      // this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty2 || 0
+      // this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty3 || 0
+      // this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty4 || 0
+      // this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
+        if(qty1 !== 0){
+          if(user === undefined ){
+            modal.clearModal()
+            modal.toggleModal('alert','','','User tidak boleh kosong')
+          }
+          else if (pin === undefined){
+            modal.clearModal()
+            modal.toggleModal('alert','','','Pin tidak boleh kosong')
+          }else{
+          this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty1 || 0
+          this.setState({
+            production : [
+               ...this.state.production.slice(0,index),
+               Object.assign({}, this.state.production[index], {produksi1: qty1 || 0}, {produksi2: this.state.production[index].produksi2 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+               {total_produksi: parseInt(qty1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+               {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+                + parseInt(qty1 || 0)
+                + parseInt(this.state.production[index].produksi2 || 0)
+                + parseInt(this.state.production[index].produksi3 || 0) 
+                - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+                - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+                - parseInt(this.state.production[index].ket_lain || 0) 
+                - parseInt(this.state.production[index].ket_rusak || 0)},           
+               {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+               {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+               {username_approval: user},
+               {pin_approval: pin}),
+               ...this.state.production.slice(index+1)
+            ]
+          }, () => this.changeDate(id, modal))
+          }
+        }
+          else if(qty2 !== 0){
+            if(user === undefined ){
+              modal.clearModal()
+              modal.toggleModal('alert','','','User tidak boleh kosong')
+            }
+            else if (pin === undefined){
+              modal.clearModal()
+              modal.toggleModal('alert','','','Pin tidak boleh kosong')
+            }else{
+            this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty2 || 0
+            this.setState({
+              production: [
+                 ...this.state.production.slice(0,index),
+                 Object.assign({}, this.state.production[index], {produksi2: qty2 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi3: this.state.production[index].produksi3 || 0},
+                 {total_produksi: parseInt(qty2 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+                 {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+                  + parseInt(qty2 || 0)
+                  + parseInt(this.state.production[index].produksi1 || 0)
+                  + parseInt(this.state.production[index].produksi3 || 0) 
+                  - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+                  - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+                  - parseInt(this.state.production[index].ket_lain || 0) 
+                  - parseInt(this.state.production[index].ket_rusak || 0)},           
+                 {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+                 {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+                 {username_approval: user},
+                 {pin_approval: pin}),
+                 ...this.state.production.slice(index+1)
+              ]
+            }, () => this.changeDate(id, modal))
+            }
+          }
+            else if(qty3 !== 0){
+              if(user === undefined ){
+                modal.clearModal()
+                modal.toggleModal('alert','','','User tidak boleh kosong')
+              }
+              else if (pin === undefined){
+                modal.clearModal()
+                modal.toggleModal('alert','','','Pin tidak boleh kosong')
+              }
+              else{
+              this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty3 || 0
+              this.setState({
+                production: [
+                   ...this.state.production.slice(0,index),
+                   Object.assign({}, this.state.production[index], {produksi3: qty3 || 0}, {produksi1: this.state.production[index].produksi1 || 0}, {produksi2: this.state.production[index].produksi2 || 0},
+                   {total_produksi: parseInt(qty3 || 0) + parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0)},
+                   {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+                    + parseInt(qty3 || 0)
+                    + parseInt(this.state.production[index].produksi2 || 0)
+                    + parseInt(this.state.production[index].produksi1 || 0) 
+                    - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+                    - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0) 
+                    - parseInt(this.state.production[index].ket_lain || 0) 
+                    - parseInt(this.state.production[index].ket_rusak || 0)},           
+                    {ket_rusak: parseInt(this.state.production[index].ket_rusak || 0)}, {ket_lain: parseInt(this.state.production[index].ket_lain || 0)}, {total_lain: parseInt(this.state.production[index].ket_lain || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+                   {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+                   {username_approval: user},
+                   {pin_approval: pin}),
+                   ...this.state.production.slice(index+1)
+                ]
+              }, () => this.changeDate(id, modal))
+              }
+            }
+              else if(qty4 !== 0){
+                if(user === undefined ){
+                  modal.clearModal()
+                  modal.toggleModal('alert','','','User tidak boleh kosong')
+                }
+                else if (pin === undefined){
+                  modal.clearModal()
+                  modal.toggleModal('alert','','','Pin tidak boleh kosong')
+                }
+                else{
+                this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty4 || 0
+                this.setState({
+                  production: [
+                     ...this.state.production.slice(0,index),
+                     Object.assign({}, this.state.production[index], {ket_rusak: qty4 || 0}, {total_lain: parseInt(qty4 || 0) + parseInt(this.state.production[index].ket_lain || 0)},
+                     {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+                      + parseInt(this.state.production[index].produksi1 || 0)
+                      + parseInt(this.state.production[index].produksi2 || 0)
+                      + parseInt(this.state.production[index].produksi3 || 0) 
+                      - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+                      - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
+                      - parseInt(qty4 || 0) 
+                      - parseInt(this.state.production[index].ket_lain || 0)},           
+                     {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
+                     {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+                     {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+                     {username_approval: user},
+                     {pin_approval: pin}),
+                     ...this.state.production.slice(index+1)
+                  ]
+                }, () => this.changeDate(id, modal))
+              }
+            }
+              else if(qty5 !== 0){
+                if(user === undefined ){
+                  modal.clearModal()
+                  modal.toggleModal('alert','','','User tidak boleh kosong')
+                }
+                else if (pin === undefined){
+                  modal.clearModal()
+                  modal.toggleModal('alert','','','Pin tidak boleh kosong')
+                }
+                else{
+                this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
+                this.setState({
+                  production: [
+                     ...this.state.production.slice(0,index),
+                     Object.assign({}, this.state.production[index], {ket_lain: qty5 || 0}, {total_lain: parseInt(qty5 || 0) + parseInt(this.state.production[index].ket_rusak || 0)},
+                     {sisa_stock: parseInt(this.state.production[index].stock_awal || 0) 
+                      + parseInt(this.state.production[index].produksi1 || 0)
+                      + parseInt(this.state.production[index].produksi2 || 0)
+                      + parseInt(this.state.production[index].produksi3 || 0) 
+                      - parseInt(this.state.produksi["order"+this.state.selectedProduct.name] ||0 )
+                      - parseInt(this.state.produksi["pesanan"+this.state.selectedProduct.name] || 0)
+                      - parseInt(qty5 || 0) 
+                      - parseInt(this.state.production[index].ket_rusak || 0)},           
+                     {produksi1: parseInt(this.state.production[index].produksi1 || 0)}, {produksi2: parseInt(this.state.production[index].produksi2 || 0)}, {produksi3: parseInt(this.state.production[index].produksi3 || 0)},
+                     {total_produksi: parseInt(this.state.production[index].produksi1 || 0) + parseInt(this.state.production[index].produksi2 || 0) + parseInt(this.state.production[index].produksi3 || 0)},
+                     {catatan: this.state.production[index].catatan || "tidak ada catatan"},
+                     {username_approval: user},
+                     {pin_approval: pin}),
+                     ...this.state.production.slice(index+1)
+                  ]
+                }, () => this.changeDate(id, modal))
+              }
+            }
+              else {
+                modal.clearModal()
+                modal.toggleModal('alert','','','Input data tidak sesuai')
+              }
+          }
     console.log(this.state)
     console.log(this.state.produksi)
     console.log(this.state.production)
