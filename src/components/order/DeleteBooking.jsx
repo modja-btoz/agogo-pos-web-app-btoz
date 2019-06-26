@@ -71,7 +71,7 @@ const DeleteBooking = (props) => {
                                     <Input className="input-user" type="text" placeholder="USER" bsSize="md"
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeBooking}
+                                        onChange={props.cartStore.onChangeApprove}
                                         autoComplete="off"
                                     />
                                 </Col>
@@ -85,7 +85,7 @@ const DeleteBooking = (props) => {
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeBooking}
+                                        onChange={props.cartStore.onChangeApprove}
                                     />
                                 </Col>
                             </FormGroup>

@@ -80,6 +80,7 @@ const initialState = {
   dpReservationAmount: 0,
   leftToPay: 0,
   date: '',
+  time: '00:00',
   currentTrx: '',
   popStatus: false,
   isDisabled: true,
@@ -91,7 +92,6 @@ const initialState = {
   productNote: "",
   payRefundTK: true,
   abasa: false,
-  date: '',
   prevDate : '',
   lastDate: '',
   days: [
@@ -227,6 +227,7 @@ class CartsContainer extends Container {
   onAddToCart = this.onAddToCart.bind(this);
   onRemoveFromCart = this.onRemoveFromCart.bind(this);
   onRemoveToRefund = this.onRemoveToRefund.bind(this);
+  // onChangeTime = this.onChangeTime.bind(this);
   onAddToCart(selectedProduct, jml) {
 
     let id = selectedProduct.id
@@ -310,7 +311,7 @@ class CartsContainer extends Container {
     }
     else if (active_path === '/production'){
       this.setState({valueInputBooking: ""})
-      console.log(this.state.valueInputBooking["note"])
+      console.log(this.state.produksi)
       axios.get('http://101.255.125.227:82/api/product/' + id).then(res => {
         const product = res.data;
         this.setState({selectedProduct: product})
@@ -319,21 +320,43 @@ class CartsContainer extends Container {
         // product["produksi2"] = 0
         // product["produksi3"] = 0
         let index = this.state.production.findIndex( x => x.id === id);
-        
-        if(index === -1 || id === index){
+        // if(this.state.production.length === 0){
+        //   const reset = {
+        //         product_id: id,
+        //         produksi1: 0,
+        //         produksi2: 0,
+        //         produksi3: 0,
+        //         total_produksi: 0,
+        //         ket_rusak: 0,
+        //         ket_lain: 0,
+        //         total_lain: 0,
+        //         username_approval: 'adi',
+        //         pin_approval: '123456',
+        //         catatan: "tidak ada catatan",
+        //       }
+        //   const produk = JSON.parse(sessionStorage.getItem('products'))
+        //   const productKosong = Object.assign(product, reset)
+        //   this.state.clearProduction = productKosong
+        //   this.state.production = produk
+        //   // console.log(productKosong)
+        //   this.setState({disabledProductionNote: false})
+        // }else{
+        //   this.setState({disabledProductionNote: false})
+        // }
+        if(index === -1){
           this.state.production.push(product)
           const reset = {
             product_id: id,
-            produksi1: "",
-            produksi2: "",
-            produksi3: "",
-            total_produksi: "",
-            ket_rusak: "",
-            ket_lain: "",
-            total_lain: "",
-            username_approval: 'adi',
-            pin_approval: '123456',
-            catatan: null,
+              produksi1: 0,
+              produksi2: 0,
+              produksi3: 0,
+              total_produksi: 0,
+              ket_rusak: 0,
+              ket_lain: 0,
+              total_lain: 0,
+              username_approval: 'adi',
+              pin_approval: '123456',
+              catatan: "tidak ada catatan",
           }
           const productKosong = Object.assign(product, reset)
           this.state.clearProduction.push(productKosong)
@@ -436,18 +459,8 @@ class CartsContainer extends Container {
                                                                {penjualan_pemesanan: ""},
                                                                {total_penjualan: ""},
                                                                {total_lain: 0},
-                                                               {stock_awal: 
-                                                                parseInt(pesan.production.stock_awal || 0) 
-                                                              + parseInt(pesan.production.total_produksi || 0)
-                                                              - parseInt(pesan.count_order )
-                                                              - parseInt(pesan.count_preorder)
-                                                              - parseInt(pesan.production.total_lain || 0)},
-                                                              {sisa_stock: 
-                                                                parseInt(pesan.production.stock_awal || 0) 
-                                                              + parseInt(pesan.production.total_produksi || 0)
-                                                              - parseInt(pesan.count_order )
-                                                              - parseInt(pesan.count_preorder)
-                                                              - parseInt(pesan.production.total_lain || 0)}),
+                                                               {stock_awal: parseInt(this.state.selectedProduct.stock)},
+                                                              {sisa_stock: parseInt(this.state.selectedProduct.stock)}),
           ...this.state.clearProduction.slice(index+1)
         ]
       })
@@ -1474,17 +1487,7 @@ addSelectedTransaction(id, current, idx) {
   // }
 
   onChangeBooking = valueInputBooking => {
-    if (this.state.activeInputRefund === 'approvalUser'){
-      const user = valueInputBooking.target.value
-      this.state.dataReservation["user"] = user;
-      console.log(user,this.state.dataReservation["user"],this.state.dataReservation.user,this.state.valueInputRefund["approvalUser"])
-    }
-    else if (this.state.activeInputRefund === 'approvalCode'){
-      const code = valueInputBooking.target.value
-      this.state.dataReservation["code"] = code;
-      console.log(code,this.state.dataReservation["code"],this.state.dataReservation.code,this.state.valueInputBooking["approvalCode"])
-    }
-    else if(this.state.activeInputBooking === "bookingAddition"){
+    if(this.state.activeInputBooking === "bookingAddition"){
       const add_fee = valueInputBooking.value
       this.setState({expenseAmount: add_fee}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
     }
@@ -1510,10 +1513,11 @@ addSelectedTransaction(id, current, idx) {
       const date = valueInputBooking.target.value
       this.state.dataReservation["tgl_selesai"] = date;
     }
-    else if (this.state.activeInputBooking === 'bookingTime'){
-      const time = valueInputBooking.target.value
-      this.state.dataReservation["waktu_selesai"] = time;
-    }
+    // else if (this.state.activeInputBooking === 'bookingTime'){
+    //   this.setState({valueInputBooking})
+    //   const time = valueInputBooking
+    //   this.state.dataReservation["waktu_selesai"] = time;
+    // }
     else if (this.state.activeInputBooking === 'bookingAddress'){
       const address = valueInputBooking.target.value
       this.state.dataReservation["alamat"] = address;
@@ -1539,6 +1543,22 @@ addSelectedTransaction(id, current, idx) {
       })
     }
   }
+
+  onChangeApprove = valueInputApprove => {
+    if (this.state.activeInputRefund === 'approvalUser'){
+      const user = valueInputApprove.target.value
+      this.state.dataReservation["user"] = user;
+      console.log(user,this.state.dataReservation["user"],this.state.dataReservation.user,this.state.valueInputRefund["approvalUser"])
+    }
+    else if (this.state.activeInputRefund === 'approvalCode'){
+      const code = valueInputApprove.target.value
+      this.state.dataReservation["code"] = code;
+      console.log(code,this.state.dataReservation["code"],this.state.dataReservation.code,this.state.valueInputBooking["approvalCode"])
+    }
+  }
+
+  onChangeTime = (time) => this.setState({time}, 
+    () => this.state.dataReservation["waktu_selesai"] = time)
 
   setActiveInputEditBooking = (event) => {
     document.getElementById(event.target.id).focus();
@@ -2371,7 +2391,45 @@ addSelectedTransaction(id, current, idx) {
   }
 
   changeAllDate(modal, close){
-    console.log("AWLOALWOALWOALWOWLO",this.state.clearProduction, modal)
+    axios.get(`http://101.255.125.227:82/api/products`)
+    .then(res => {
+      const allProduct = res.data;
+      var result = allProduct.map(function(el) {
+        var o = Object.assign({}, el);
+        o.product_id= o.id
+        o.produksi1= 0;
+        o.produksi2= 0
+        o.produksi3= 0;
+        o.total_produksi= 0;
+        o.ket_rusak= 0;
+        o.ket_lain= 0;
+        o.total_lain= 0;
+        o.username_approval= 'adi';
+        o.pin_approval= '123456';
+        o.catatan= "tidak ada catatan";
+        o.sisa_stock = o.stock;
+        o.stock_awal = o.stock;
+        o.penjualan_pemesanan = 0;
+        o.penjualan_toko = 0;
+        o.total_penjualan = 0;
+        return o;
+      })
+      console.log(result)
+      axios.post(`http://101.255.125.227:82/api/postProduction`, result)
+    .then(res => {
+      this.clearCart()
+      this.getDateTrx()
+      close()
+      // modal()
+    })
+    .catch(res => {
+      modal('alert')
+    })
+    })
+    
+    
+    
+
     // modal('bayar')
     // axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/products`)
     // .then(res => {
@@ -2398,16 +2456,16 @@ addSelectedTransaction(id, current, idx) {
     //           this.setState({nyoBa: [], dataNyoba: []})})
     // })
 
-    axios.post(`http://101.255.125.227:82/api/postProduction`, this.state.clearProduction)
-    .then(res => {
-      this.clearCart()
-      this.getDateTrx()
-      close()
-      // modal()
-    })
-    .catch(res => {
-      modal('alert')
-    })
+    // axios.post(`http://101.255.125.227:82/api/postProduction`, this.state.clearProduction)
+    // .then(res => {
+    //   this.clearCart()
+    //   this.getDateTrx()
+    //   close()
+    //   // modal()
+    // })
+    // .catch(res => {
+    //   modal('alert')
+    // })
   }
 
   getDateTrx(){

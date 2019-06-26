@@ -62,7 +62,7 @@ const TakeBooking = (props) => {
                                 <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="md"
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeBooking}
+                                        onChange={props.cartStore.onChangeApprove}
                                         autoComplete="off"
                                     />
                                 </Col>
@@ -76,7 +76,7 @@ const TakeBooking = (props) => {
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeBooking}
+                                        onChange={props.cartStore.onChangeApprove}
                                     />
                                 </Col>
                             </FormGroup>
