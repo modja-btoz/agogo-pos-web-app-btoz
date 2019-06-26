@@ -2,9 +2,10 @@ import React from 'react'
 // import DatePicker from 'react-datepicker'
 import { Container, Row, Col, NavLink, Button, Input, Form, FormGroup, Label } from 'reactstrap';
 import NumberFormat from 'react-number-format';
-// import TimePicker from 'react-time-picker'
+import TimePicker from 'react-time-picker'
 
 import './OrderBooking.scss';
+import 'react-times/css/material/default.css'
 import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
 
 
@@ -43,11 +44,9 @@ const OrderBooking = (props) => {
                         <Col>
                             <h7 className="mb-0">JAM SELESAI</h7>
                             {/* <Input className="input jam" placeholder="HH-MM"></Input> */}
-                            <Input className="input-jam" type="time" name="bookingTime" id="bookingTime" placeholder="HH-MM"
-                                value={props.cartStore.state.valueInputBooking["bookingTime"]}
-                                onChange={props.cartStore.onChangeBooking}
-                                onFocus={props.cartStore.setActiveInputBooking}
-                                />
+                            <TimePicker onChange={props.cartStore.onChangeTime} 
+                                        format="HH:mm" value={props.cartStore.state.time}
+                                        locale="sv-sv" />
                         </Col>
                         <Col>
                             <h7 className="mb-0">TELEPON</h7>
@@ -142,7 +141,7 @@ const OrderBooking = (props) => {
                                 <Input className="input-user" type="text" placeholder="USER" 
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeBooking}
+                                        onChange={props.cartStore.onChangeApprove}
                                         autoComplete="off"
                                     />
                                 </Col>
@@ -151,7 +150,7 @@ const OrderBooking = (props) => {
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeBooking}
+                                        onChange={props.cartStore.onChangeApprove}
                                     />
                                 </Col>
                                 </Row>

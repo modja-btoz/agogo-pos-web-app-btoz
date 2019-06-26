@@ -109,3 +109,19 @@ input.radio.sm.for.-control-sm.form-check-input {
 label.form-check-label {
     margin-left: 45%;
 }
+
+.react-time-picker{
+  color: black;
+  padding-left: 10px;
+  font-size: 1rem;
+  background-color: white;
+  width: 100%;
+
+  &__wrapper{
+    width: 100%;
+    height: 2.4em;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}

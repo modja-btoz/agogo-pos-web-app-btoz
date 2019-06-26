@@ -229,7 +229,7 @@ class Modals extends Component {
           </ModalHeader>
         <ModalBody>
         <Row>
-          <Col xs="8">
+          <Col xs="7">
           <div style={{textAlign: "left", paddingLeft: "30px"}}>
             <h5>
             <Label>Saldo Awal : {this.props.modalStore.state.transaction.saldo_awal}</Label>< br/>
@@ -243,7 +243,7 @@ class Modals extends Component {
               <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
                 name="approvalUser" id="approvalUser"
                 onFocus={this.props.cartStore.setActiveInputRefund}
-                onChange={this.props.cartStore.onChangeBooking}
+                onChange={this.props.cartStore.onChangeApprove}
                 autoComplete="off"
               />
             </div>
@@ -258,7 +258,7 @@ class Modals extends Component {
           <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
           <a href="#" onClick={() => this.props.cartStore.doPostKas(this.props.modalStore.state.transaction, data, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
           </Col>
-          <Col xs="4">
+          <Col xs="5">
           <CalcNumeric
                   cartStore={this.props.cartStore} 
                   onEnterRefund={this.props.cartStore.onEnterRefund} 
@@ -463,7 +463,7 @@ class Modals extends Component {
                   <Input className="input-masking mb-4" placeholder="User" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalUser"]}
                     name="approvalUser" id="approvalUser" type="text"
-                    onChange={this.props.cartStore.onChangeBooking}
+                    onChange={this.props.cartStore.onChangeApprove}
                     onFocus={this.props.cartStore.setActiveInputRefund}
                   />
                 </div>
@@ -471,7 +471,7 @@ class Modals extends Component {
                   <Input className="input-masking mb-4" placeholder="Approval" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalCode"]}
                     name="approvalCode" id="approvalCode" type="password"
-                    onChange={this.props.cartStore.onChangeBooking}
+                    onChange={this.props.cartStore.onChangeApprove}
                     onFocus={this.props.cartStore.setActiveInputRefund}
                   />
                 </div>
