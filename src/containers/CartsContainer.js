@@ -144,6 +144,7 @@ class CartsContainer extends Container {
       return product.code === searchCode;
     });
     if(productsCode.length === 1){
+      this.setState({searchCode: ''})
       axios.get(`http://101.255.125.227:82/api/cekInvoice`).then(res => {
       const trx = res.data;
       this.setState({ currentTrx: trx.current_invoice, isDisabled: false});
@@ -402,7 +403,8 @@ class CartsContainer extends Container {
                                                              {total_produksi: 0},
                                                              {ket_rusak: 0},
                                                              {ket_lain: 0},
-                                                             {total_lain: 0}),
+                                                             {total_lain: 0},
+                                                             {ubah_tanggal: "no"}),
              ...this.state.production.slice(index+1)
           ],
           clearProduction: [
@@ -411,6 +413,7 @@ class CartsContainer extends Container {
                                                                  {penjualan_pemesanan: ""},
                                                                  {total_penjualan: ""},
                                                                  {total_lain: 0},
+                                                                 {ubah_tanggal: "no"},
                                                                  {stock_awal: parseInt(this.state.selectedProduct.stock)},
                                                                  {sisa_stock: parseInt(this.state.selectedProduct.stock)}),
             ...this.state.clearProduction.slice(index+1)
@@ -450,7 +453,8 @@ class CartsContainer extends Container {
                                                            {total_produksi: parseInt(pesan.production.produksi1 || 0) + parseInt(pesan.production.produksi2 || 0) + parseInt(pesan.production.produksi3 || 0)},
                                                            {ket_rusak: parseInt(pesan.production.ket_rusak || 0)},
                                                            {ket_lain: parseInt(pesan.production.ket_lain || 0)},
-                                                           {total_lain: parseInt(pesan.production.ket_rusak || 0) + parseInt(pesan.production.ket_lain || 0)},),
+                                                           {total_lain: parseInt(pesan.production.ket_rusak || 0) + parseInt(pesan.production.ket_lain || 0)},
+                                                           {ubah_tanggal: "no"}),
            ...this.state.production.slice(index+1)
         ],
         clearProduction: [
@@ -459,6 +463,7 @@ class CartsContainer extends Container {
                                                                {penjualan_pemesanan: ""},
                                                                {total_penjualan: ""},
                                                                {total_lain: 0},
+                                                               {ubah_tanggal: "no"},
                                                                {stock_awal: parseInt(this.state.selectedProduct.stock)},
                                                               {sisa_stock: parseInt(this.state.selectedProduct.stock)}),
           ...this.state.clearProduction.slice(index+1)
@@ -652,7 +657,7 @@ addSelectedTransaction(id, current, idx) {
             status: "UNPAID",
           })
       )
-      axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
+      axios.post(`http://101.255.125.227:82/api/keepOrders`, this.state.data)
       .then(res => {
         modal('simpan')
         console.log("A",res)
@@ -2412,6 +2417,7 @@ addSelectedTransaction(id, current, idx) {
         o.penjualan_pemesanan = 0;
         o.penjualan_toko = 0;
         o.total_penjualan = 0;
+        o.ubah_tanggal = "yes"
         return o;
       })
       console.log(result)
