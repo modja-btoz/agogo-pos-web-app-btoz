@@ -414,7 +414,7 @@ class CartsContainer extends Container {
                                                                  {total_penjualan: ""},
                                                                  {total_lain: 0},
                                                                  {ubah_tanggal: "no"},
-                                                                 {stock_awal: parseInt(this.state.selectedProduct.stock)},
+                                                                 {stock_awal: parseInt(pesan.sisa_stock)},
                                                                  {sisa_stock: parseInt(this.state.selectedProduct.stock)}),
             ...this.state.clearProduction.slice(index+1)
           ]
@@ -464,8 +464,8 @@ class CartsContainer extends Container {
                                                                {total_penjualan: ""},
                                                                {total_lain: 0},
                                                                {ubah_tanggal: "no"},
-                                                               {stock_awal: parseInt(this.state.selectedProduct.stock)},
-                                                              {sisa_stock: parseInt(this.state.selectedProduct.stock)}),
+                                                               {stock_awal: parseInt(pesan.sisa_stock)},
+                                                               {sisa_stock: parseInt(this.state.selectedProduct.stock)}),
           ...this.state.clearProduction.slice(index+1)
         ]
       })
@@ -643,8 +643,9 @@ addSelectedTransaction(id, current, idx) {
 
     addTransaction(user_id, modal) {
       const items = this.state.items
-      items.forEach((x) => 
-      this.state.data.push({
+      this.setState({data: []}, () => {
+        items.forEach((x) => 
+        this.state.data.push({
             user_id: user_id,
             product_id: x.id,
             qty: x.qty,
@@ -667,6 +668,7 @@ addSelectedTransaction(id, current, idx) {
         modal('alert', '', '', res.response.data.message)
         console.log(res.response.data.message, this.state)
         this.setState({data: []})
+      })
       })
     }
 
@@ -1145,7 +1147,7 @@ addSelectedTransaction(id, current, idx) {
     let sumTotalAmount = this.state.totalAmount
     let otherExpenses = parseInt( this.state.expenseAmount )
     let grandTotalAmount = parseInt( sumTotalAmount - otherExpenses )
-    let dpReservationAmount = parseInt(this.state.dpReservationAmount)
+    let dpReservationAmount = parseInt(this.dpPrice())
     
     let discountAmount;
     if(this.state.discountType === '%'){
@@ -1202,6 +1204,19 @@ addSelectedTransaction(id, current, idx) {
     }
     console.log("DISCOUNT PRICE", discount)
     return discount
+  }
+
+  dpPrice(){
+    let dp = this.state.valueInputBooking["bookingPayment"] || this.state.dpReservationAmount
+    let sumTotalAmount = parseInt( this.state.totalAmount )
+    if(dp === undefined || dp === ''){
+      dp = 0;
+    }
+    if(dp >= sumTotalAmount){
+      dp = sumTotalAmount;
+    }
+    console.log("DP PRICE", dp)
+    return dp
   }
 
   sumChangePayment() {
@@ -1928,7 +1943,7 @@ addSelectedTransaction(id, current, idx) {
 
 
   doProduction = (id, modal) => {
-    this.getStokNow()
+    // this.getStokNow()
     let qty1 = this.state.valueInputRefund["refundCode1"] || 0
     let qty2 = this.state.valueInputRefund["refundCode2"] || 0
     let qty3 = this.state.valueInputRefund["refundCode3"] || 0

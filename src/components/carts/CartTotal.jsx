@@ -8,7 +8,7 @@ const CartTotal = (props) => {
       <tr className="table-spacer"><td></td></tr>
       <tr className="cart-subtotal">
         <td scope="row">Sub Total</td>
-        <td className="subtotal-price"><NumberFormat value={props.cartStore.state.totalAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} className="h5 font-weight-bold" /></td>
+        <td className="subtotal-price"><NumberFormat prefix={'Rp '} value={props.cartStore.state.totalAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} className="h5 font-weight-bold" /></td>
       </tr>
       {/* <tr className="cart-subtotal">
         <td scope="row">Biaya Tambahan</td>
@@ -17,7 +17,7 @@ const CartTotal = (props) => {
       <tr className="cart-subtotal">
         <td scope="row">Diskon</td>
         <td className="subtotal-price">
-          <NumberFormat prefix={props.cartStore.state.discountAmount ? '-' : ''} value={props.cartStore.state.discountAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} />
+          <NumberFormat prefix={props.cartStore.state.discountAmount ? '- Rp' : 'Rp '} value={props.cartStore.state.discountAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} />
         </td>
       </tr>
       <tr className="table-spacer"><td></td></tr>
