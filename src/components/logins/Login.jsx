@@ -89,6 +89,8 @@ class Login extends Component {
         console.log('Cek', sessionStorage)
         sessionStorage.setItem('token', res.data.token);
         this.setState({ redirect: true })
+      }).catch(res => {
+        this.props.modalStore.toggleModal('alert','','','PIN yang anda masukkan salah')
       })
   }
 

@@ -643,8 +643,9 @@ addSelectedTransaction(id, current, idx) {
 
     addTransaction(user_id, modal) {
       const items = this.state.items
-      items.forEach((x) => 
-      this.state.data.push({
+      this.setState({data: []}, () => {
+        items.forEach((x) => 
+        this.state.data.push({
             user_id: user_id,
             product_id: x.id,
             qty: x.qty,
@@ -667,6 +668,7 @@ addSelectedTransaction(id, current, idx) {
         modal('alert', '', '', res.response.data.message)
         console.log(res.response.data.message, this.state)
         this.setState({data: []})
+      })
       })
     }
 
@@ -1941,7 +1943,7 @@ addSelectedTransaction(id, current, idx) {
 
 
   doProduction = (id, modal) => {
-    this.getStokNow()
+    // this.getStokNow()
     let qty1 = this.state.valueInputRefund["refundCode1"] || 0
     let qty2 = this.state.valueInputRefund["refundCode2"] || 0
     let qty3 = this.state.valueInputRefund["refundCode3"] || 0

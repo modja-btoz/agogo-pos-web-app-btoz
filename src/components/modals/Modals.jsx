@@ -105,6 +105,27 @@ class Modals extends Component {
     this.props.transactionStore.clearCart() 
     this.props.toggle()
   }
+  onChangeInput = event => {
+    let input = event.target.value;
+    if(this.props.cartStore.state.activeInputRefund === "refundCode1"){
+    this.props.cartStore.setState({ valueInputRefund: {refundCode1: input }});
+    }
+    else if (this.props.cartStore.state.activeInputRefund === "refundCode2") {
+    this.props.cartStore.setState({ valueInputRefund: {refundCode2: input }});
+    }
+    else if (this.props.cartStore.state.activeInputRefund === "refundCode3") {
+    this.props.cartStore.setState({ valueInputRefund: {refundCode3: input }});
+    }
+    else if (this.props.cartStore.state.activeInputRefund === "refundCode4") {
+    this.props.cartStore.setState({ valueInputRefund: {refundCode4: input }});
+    }
+    else if (this.props.cartStore.state.activeInputRefund === "refundCode5") {
+    this.props.cartStore.setState({ valueInputRefund: {refundCode5: input }});
+    }
+    else{
+      console.log("input salah")
+    }
+  };
 
 
   renderSwitch(type) {
@@ -449,12 +470,13 @@ class Modals extends Component {
 
                 {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
                 <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" type="text" placeholder="Jumlah" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                  <Input className="input-masking mb-4" type="number" placeholder="Jumlah" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["refundCode1"] || this.props.cartStore.state.valueInputRefund["refundCode2"] || 
                           this.props.cartStore.state.valueInputRefund["refundCode3"]  || this.props.cartStore.state.valueInputRefund["refundCode4"] ||
                           this.props.cartStore.state.valueInputRefund["refundCode5"]}
                     name="refundCode" id={"refundCode"+this.props.where}
                     onFocus={this.props.cartStore.setActiveInputRefund}
+                    onChange={e => this.onChangeInput(e)}
                     autoFocus
                     // onBlur={this.props.cartStore.resetActiveInputRefund}
                   />

@@ -18,7 +18,7 @@ const TransactionItem = (props) => {
             {props.trxDate}</a>
         </Col>
         <Col sm="2" className="transaction-list">
-          <a href="#"  onClick={() => props.cartStore.deleteSelectedOrder(props.trxID)}><i className="fas fa-backspace btn-delete-item" style={{ color: "black" }} /></a>
+          <a href="#"  onClick={() => props.cartStore.deleteSelectedOrder(props.trxID, props.trxIndex)}><i className="fas fa-backspace btn-delete-item" style={{ color: "black" }} /></a>
         </Col>
       </Row>
       
