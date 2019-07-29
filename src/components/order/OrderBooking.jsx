@@ -1,13 +1,13 @@
 import React from 'react'
-// import DatePicker from 'react-datepicker'
 import { Container, Row, Col, NavLink, Button, Input, Form, FormGroup, Label } from 'reactstrap';
 import NumberFormat from 'react-number-format';
+import DatePicker from 'react-datepicker'
 import TimePicker from 'react-time-picker'
 
 import './OrderBooking.scss';
 import 'react-times/css/material/default.css'
+import "react-datepicker/dist/react-datepicker.css";
 import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
-
 
 const OrderBooking = (props) => {
 
@@ -35,10 +35,16 @@ const OrderBooking = (props) => {
                         <Col>
                             <h7 className="mb-0">TANGGAL SELESAI</h7>
                             {/* <Input className="input tgl" placeholder="DD-MM-YYYY"></Input> */}
-                            <Input className="input-tgl" type="date" name="bookingDate" id="bookingDate" placeholder="DD-MM-YYYY"
+                            {/* <Input className="input-tgl" type="date" name="bookingDate" id="bookingDate" placeholder="DD-MM-YYYY"
                                 value={props.cartStore.state.valueInputBooking["bookingDate"]}
                                 onChange={props.cartStore.onChangeBooking}
                                 onFocus={props.cartStore.setActiveInputBooking}
+                                /> */}
+                            <DatePicker 
+                                selected={props.cartStore.state.startDate}
+                                onChange={props.cartStore.handleDateChange}
+                                minDate={new Date()}
+                                dateFormat='dd/MM/yyyy'
                                 />
                         </Col>
                         <Col>

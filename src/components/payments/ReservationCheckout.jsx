@@ -32,11 +32,11 @@ const ReservationCheckout = (props) => {
                 value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
                 name="paymentTotal" id="paymentTotal"
                 autoFocus
+                onChange={props.cartStore.onChangePayment}
                 onFocus={props.cartStore.moveCaretAtEnd}
               />
               <Input className="input-masking mb-4" type="text" name="paymentTotal" id="paymentTotal" placeholder=" ..." bsSize="lg" 
-                value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
-                name="paymentTotal" id="paymentTotal"
+                value={props.cartStore.state.valueInputPayment["paymentTotal"]}
                 onFocus={props.cartStore.setActiveInputPayment}
                 autoFocus
               />

@@ -86,7 +86,6 @@ const PaymentCheckout = (props) => {
               />
               <Input className="input-masking mb-4" type="text" name="paymentTotal" id="paymentTotal" placeholder=" ..." bsSize="lg" 
                 value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
-                name="paymentTotal" id="paymentTotal"
                 onFocus={props.cartStore.setActiveInputPayment}
                 autoFocus
               />

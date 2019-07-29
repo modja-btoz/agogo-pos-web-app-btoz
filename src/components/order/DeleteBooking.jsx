@@ -6,6 +6,9 @@ import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
 
 
 const DeleteBooking = (props) => {
+    const date = props.cartStore.state.dataReservation.tgl_selesai.toString()
+    const splitDate = date.split('-')
+    const formatedDate = splitDate[2] + '/' + splitDate[1] + '/' + splitDate[0]
     return (
 
         <Row className="deleteBooking d-block">
@@ -23,7 +26,7 @@ const DeleteBooking = (props) => {
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input disabled value={props.cartStore.state.dataReservation.tgl_selesai} className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input disabled value={formatedDate} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">JAM SELESAI</h7>
