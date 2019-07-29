@@ -80,6 +80,7 @@ const initialState = {
   dpReservationAmount: 0,
   leftToPay: 0,
   date: '',
+  startDate: new Date(),
   time: '00:00',
   currentTrx: '',
   popStatus: false,
@@ -1529,10 +1530,10 @@ addSelectedTransaction(id, current, idx) {
       const name = valueInputBooking.target.value
       this.state.dataReservation["nama"] = name;
     }
-    else if (this.state.activeInputBooking === 'bookingDate'){
-      const date = valueInputBooking.target.value
-      this.state.dataReservation["tgl_selesai"] = date;
-    }
+    // else if (this.state.activeInputBooking === 'bookingDate'){
+    //   const date = valueInputBooking.target.value
+    //   this.state.dataReservation["tgl_selesai"] = date;
+    // }
     // else if (this.state.activeInputBooking === 'bookingTime'){
     //   this.setState({valueInputBooking})
     //   const time = valueInputBooking
@@ -1579,6 +1580,9 @@ addSelectedTransaction(id, current, idx) {
 
   onChangeTime = (time) => this.setState({time}, 
     () => this.state.dataReservation["waktu_selesai"] = time)
+
+  handleDateChange = (date) => this.setState({startDate: date}, 
+    () => this.state.dataReservation["tgl_selesai"] = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
 
   setActiveInputEditBooking = (event) => {
     document.getElementById(event.target.id).focus();
@@ -1877,7 +1881,7 @@ addSelectedTransaction(id, current, idx) {
       if(orderData.length === 0){
         console.log("GAGAL COY")
       } else {
-      this.setState({dataReservation: orderData[0]}, 
+      this.setState({dataReservation: orderData[0], startDate: new Date(orderData[0].tgl_selesai), time: orderData[0].waktu_selesai}, 
         () => {if(this.state.whatBooking === 'deleteBooking'){
                 this.deleteOrder(id)
                 console.log("delete booking")
