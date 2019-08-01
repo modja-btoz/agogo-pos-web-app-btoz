@@ -5,13 +5,14 @@ import { Button, ModalHeader, ModalBody, ModalFooter, Col, Input, Row, Label } f
 import { Redirect, Route } from 'react-router-dom'
 import './Modal.scss';
 import CalcNumeric from '../calcs/CalcNumericRefund';
+import CalcNumericModal from '../calcs/CalcNumericModal';
 import Modal from 'react-modal'
 
 import RootContainer from '../../containers/RootContainer'
 import ModalsContainer from '../../containers/ModalsContainer'
 import CartsContainer from '../../containers/CartsContainer'
 import TransactionContainer from '../../containers/TransactionContainer'
-import { get } from 'http';
+
 const root = document.getElementById("modal");
 const customStyles = {
   content: {
@@ -270,7 +271,7 @@ class Modals extends Component {
             </div>
           <h3>Approval</h3>
           <div className={this.props.cartStore.state.activeInputApproval === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-              <Input className="input-masking mb-4" type="text" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
+              <Input className="input-masking mb-4" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
                 value={this.props.cartStore.state.valueInputRefund["approvalCode"] || ""}
                 name="approvalCode" id="approvalCode" type="password" 
                 onFocus={this.props.cartStore.setActiveInputRefund}
@@ -441,7 +442,87 @@ class Modals extends Component {
               <div>
                 {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name}
               </div>
-              } 
+              }
+            </div>
+            </Row>
+            <Row className="SidebarBody" >
+            {/* {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name ? "Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name : ""} */}
+
+              {/* LEFT */}
+              
+              <Col xs='4'>
+                <div centered>
+                    <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
+                </div>
+                </Col>
+                <Col xs='4'>
+                
+                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
+
+                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
+                <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                  <Input className="input-masking mb-4" type="number" placeholder="Jumlah" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                    value={this.props.cartStore.state.valueInputRefund["refundCode1"] || 
+                          this.props.cartStore.state.valueInputRefund["refundCode2"] || 
+                          this.props.cartStore.state.valueInputRefund["refundCode3"]}
+                    name="refundCode" id={"refundCode"+this.props.where}
+                    onFocus={this.props.cartStore.setActiveInputRefund}
+                    onChange={e => this.onChangeInput(e)}
+                    autoFocus
+                    // onBlur={this.props.cartStore.resetActiveInputRefund}
+                  />
+                </div>
+                <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                  <Input className="input-masking mb-4" placeholder="User" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                    value={this.props.cartStore.state.valueInputRefund["approvalUser"]}
+                    name="approvalUser" id="approvalUser" type="text"
+                    onChange={this.props.cartStore.onChangeApprove}
+                    onFocus={this.props.cartStore.setActiveInputRefund}
+                  />
+                </div>
+                <div className={this.props.cartStore.state.activeInputRefund === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                  <Input className="input-masking mb-4" placeholder="Approval" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                    value={this.props.cartStore.state.valueInputRefund["approvalCode"]}
+                    name="approvalCode" id="approvalCode" type="password"
+                    onChange={this.props.cartStore.onChangeApprove}
+                    onFocus={this.props.cartStore.setActiveInputRefund}
+                  />
+                </div>
+
+                <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={() => this.props.cartStore.doProduction(this.props.cartStore.state.selectedProduct.id, this.props.modalStore)}><i class="fas fa-check mr-1"></i> OK</Button>
+
+                </Col>
+
+                <Col xs='4'>
+                <CalcNumericModal
+                  cartStore={this.props.cartStore} 
+                  onEnterRefund={this.props.cartStore.onEnterRefund}
+                  modalStore={this.props.modalStore} 
+                  // inputName={this.props.cartStore.state.inputName}
+                />
+                </Col>
+  
+              {/* RIGHT */}
+                     
+              </Row>
+          </ModalBody>
+        </Modal>
+        )}
+        </div>
+      );
+
+      case 'productionOther':
+        return (
+          <div id="A" ref={this.root}>
+          {this.root.current && (
+        <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} onAfterClose={this.props.cartStore.resetActiveInputRefund} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered >
+          {externalCloseBtn}
+          <ModalBody className="p-5">
+            <Row>
+              <div className="date"><span className="date-update">{this.state.days[new Date().getDay()] + ", " + this.state.date}</span></div>
+            </Row>
+            <Row>
+            <div className="date">
               {this.props.where === "4" && 
               <div>
                 {"Rusak : " + this.props.cartStore.state.selectedProduct.name}
@@ -462,6 +543,17 @@ class Modals extends Component {
               <Col xs='4'>
                 <div centered>
                     <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
+                    <div style={{paddingTop: '10px'}} className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                            <Input  
+                                    // value={this.props.cartStore.state.valueInputBooking["note"]}
+                                    defaultValue={this.props.cartStore.state.produksi["note"+this.props.cartStore.state.selectedProduct.name]}
+                                    id={"note"+this.props.cartStore.state.selectedProduct.name}
+                                    onChange={this.props.cartStore.onChangeBooking}
+                                    onFocus={this.props.cartStore.setActiveInputBooking} 
+                                    className="note-production" type="textarea" name="catatan" placeholder="TAMBAH CATATAN" rows="4"
+                                    autoFocus
+                                    ></Input>
+                            </div>
                 </div>
                 </Col>
                 <Col xs='4'>
@@ -471,8 +563,7 @@ class Modals extends Component {
                 {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
                 <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                   <Input className="input-masking mb-4" type="number" placeholder="Jumlah" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
-                    value={this.props.cartStore.state.valueInputRefund["refundCode1"] || this.props.cartStore.state.valueInputRefund["refundCode2"] || 
-                          this.props.cartStore.state.valueInputRefund["refundCode3"]  || this.props.cartStore.state.valueInputRefund["refundCode4"] ||
+                    value={this.props.cartStore.state.valueInputRefund["refundCode4"] ||
                           this.props.cartStore.state.valueInputRefund["refundCode5"]}
                     name="refundCode" id={"refundCode"+this.props.where}
                     onFocus={this.props.cartStore.setActiveInputRefund}
@@ -503,9 +594,10 @@ class Modals extends Component {
                 </Col>
 
                 <Col xs='4'>
-                <CalcNumeric
+                <CalcNumericModal
                   cartStore={this.props.cartStore} 
-                  onEnterRefund={this.props.cartStore.onEnterRefund} 
+                  onEnterRefund={this.props.cartStore.onEnterRefund}
+                  modalStore={this.props.modalStore} 
                   // inputName={this.props.cartStore.state.inputName}
                 />
                 </Col>

@@ -26,12 +26,12 @@ class OthersProduction extends React.Component {
                 <tr>
                     <td className="broken-production">Rusak</td>
                     <td className="product-total-broken text-right" >{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "rusak"] || "-"}</td>
-                    <td><a className={this.props.cartStore.productionButton4()} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "4")}><i class="fas fa-pen-square edit"></i></a></td>
+                    <td><a className={this.props.cartStore.productionButton4()} onClick={() => this.props.modalStore.toggleModal('productionOther', 'lg', "4")}><i class="fas fa-pen-square edit"></i></a></td>
                 </tr>
                 <tr>
                     <td className="others-production">Lain-lain</td>
                     <td className="product-total-others text-right" >{ this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "lain"] || "-"}</td>
-                    <td><a className={this.props.cartStore.productionButton5()} onClick={() => this.props.modalStore.toggleModal('production', 'lg', "5")}><i class="fas fa-pen-square edit"></i></a></td>
+                    <td><a className={this.props.cartStore.productionButton5()} onClick={() => this.props.modalStore.toggleModal('productionOther', 'lg', "5")}><i class="fas fa-pen-square edit"></i></a></td>
                 </tr>
                 <hr />
                 <tr>
@@ -42,9 +42,10 @@ class OthersProduction extends React.Component {
                 </div>
                 <div>
                 <tr>
-                <Button disabled={this.props.cartStore.state.disabledProductionNote} onClick={() => this.props.modalStore.toggleModal('catatan')}>
+                {/* <Button disabled={this.props.cartStore.state.disabledProductionNote} onClick={() => this.props.modalStore.toggleModal('catatan')}>
                     Tambah Catatan
-                </Button>
+                </Button> */}
+
                     {/* <Popover placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
                         <PopoverBody >
                         <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>

@@ -56,8 +56,8 @@ const Refund = (props) => {
             <div className={props.cartStore.state.activeInputRefund === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="lg" 
                 name="approvalCode" id="approvalCode"
+                value={props.cartStore.state.valueInputRefund["approvalCode"] || ""}
                 onFocus={props.cartStore.setActiveInputRefund}
-                onChange={props.cartStore.onChangeApprove}
               />
             </div> 
 
