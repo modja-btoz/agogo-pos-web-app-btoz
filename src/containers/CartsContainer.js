@@ -542,6 +542,7 @@ addSelectedTransaction(id, current, idx) {
     transaction.forEach((trx, i) =>
       this.state.selectedItems.push({
         idx: i,
+        id_trx: id,
         id: trx.product_id,
         name: trx.product.name,
         qty: trx.qty,
@@ -1793,6 +1794,7 @@ addSelectedTransaction(id, current, idx) {
             invoice: whatBooking[1],
             user_id: user_id,
             product_id: x.id,
+            id: x.id_trx,
             qty: x.qty,
             price: x.price * x.qty,
             subtotal: this.state.totalAmount,

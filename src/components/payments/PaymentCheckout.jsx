@@ -49,6 +49,7 @@ const PaymentCheckout = (props) => {
                 name="paymentDiscount" id="paymentDiscount" 
                 onFocus={props.cartStore.moveCaretAtEnd}
                 prefix={'Rp '}
+                onChange={props.cartStore.onChangePayment}
               />
               <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
                 value={props.cartStore.state.valueInputPayment["paymentDiscount"] || ""}
@@ -64,6 +65,7 @@ const PaymentCheckout = (props) => {
                 name="paymentDiscount" id="paymentDiscount"
                 onFocus={props.cartStore.moveCaretAtEnd}
                 suffix={'%'}
+                onChange={props.cartStore.onChangePayment}
               />
               <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
                 value={props.cartStore.state.valueInputPayment["paymentDiscount"] || ""}
@@ -83,6 +85,7 @@ const PaymentCheckout = (props) => {
                 name="paymentTotal" id="paymentTotal"
                 autoFocus
                 onFocus={props.cartStore.moveCaretAtEnd}
+                onChange={props.cartStore.onChangePayment}
               />
               <Input className="input-masking mb-4" type="text" name="paymentTotal" id="paymentTotal" placeholder=" ..." bsSize="lg" 
                 value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
