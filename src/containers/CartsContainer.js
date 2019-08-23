@@ -733,7 +733,7 @@ addSelectedTransaction(id, current, idx) {
         alamat	: data.alamat,
         waktu_selesai	: data.waktu_selesai,
         telepon	: data.telepon,
-        catatan	: data.catatan,
+        catatan	: data.catatan || "",
         user_id	: user_now.id,
         qty		: trx.qty,
         product_id: trx.id,
