@@ -29,19 +29,17 @@ const PaymentCheckout = (props) => {
           </Col>
         </Row>
 
-        <Row className="SidebarBody mt-4 mb-3">
+        {/* <Row className="SidebarBody mt-4 mb-3">
           <Col>
             <h5 className="mb-0">SUB TOTAL</h5>
             <h3><strong><NumberFormat value={props.cartStore.state.totalAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></strong></h3>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row className="SidebarBody">
 
-          {/* LEFT */}
-          <Col className="pr-0">
+          {/* LEFT
             <h5>DISKON</h5>
-            {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
             {props.cartStore.state.discountType === 'Rp' &&
             <div className={props.cartStore.state.activeInputPayment === 'paymentDiscount' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
@@ -74,7 +72,8 @@ const PaymentCheckout = (props) => {
               />
             </div>
             }
-            
+             */}
+            <Col className="pr-0">
             <h5 className="mb-0">TOTAL</h5>
             <h3><strong><NumberFormat value={props.cartStore.state.grandTotalAmountDiscount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></strong></h3>
 

@@ -1,11 +1,13 @@
 import React from 'react'
 import { Container, Row, Col, Input, Label, Button, NavLink, Form, FormGroup } from 'reactstrap'
 import FooterNavRightBooking from '../navigations/FooterNavRightBooking'
+import NumberFormat from 'react-number-format';
 
 const TakeBooking = (props) => {
-    const date = props.cartStore.state.dataReservation.tgl_selesai.toString()
-    const splitDate = date.split('-')
-    const formatedDate = splitDate[2] + '/' + splitDate[1] + '/' + splitDate[0]
+    let date = props.cartStore.state.tgl_trx
+    let splitDate = date.split('-')
+    let formatedDate = splitDate[2] + '/' + splitDate[1] + '/' + splitDate[0]
+    date = formatedDate
     return (
 
         <Row className="deleteBooking d-block">
@@ -23,7 +25,7 @@ const TakeBooking = (props) => {
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">TANGGAL SELESAI</h7>
-                        <Input disabled value={formatedDate} className="input tgl" placeholder="DD-MM-YYYY"></Input>
+                        <Input disabled value={date} className="input tgl" placeholder="DD-MM-YYYY"></Input>
                     </Col>
                     <Col sm={4}>
                         <h7 className="mb-0">JAM SELESAI</h7>
@@ -34,6 +36,16 @@ const TakeBooking = (props) => {
                 <Row className="SidebarBottom">
                     <Col>
                         <Form>
+                        <FormGroup row>
+                                <Col sm={3}>
+                                    <Label>
+                                        <h7 className="mb-0">Sisa Pembayaran</h7>
+                                    </Label>
+                                </Col>
+                                <Col sm={9} style={{paddingLeft:'0'}}>
+                                    <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
+                                </Col>
+                            </FormGroup>
                             <FormGroup row>
                                 <Col sm={3}>
                                     <Label>

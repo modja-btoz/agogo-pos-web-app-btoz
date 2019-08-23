@@ -73,7 +73,7 @@ class CartProduction extends React.Component {
             <Container className="cart mt-4 pt-5 pr-0 pl-0">
                 <Row style={{height: "400px"}}>
                     <Col xs="7" className="body-left">
-                        <div className="date">Posisi per <span className="date-update">{this.props.cartStore.state.days[new Date(this.props.cartStore.state.lastDate).getDay()] + ", " +this.props.cartStore.state.lastDate}</span></div>
+                        <div className="date">Posisi per <span className="date-update">{this.props.cartStore.state.days[new Date(this.props.cartStore.state.lastDate).getDay()] + ", " +this.props.cartStore.state.formatDate}</span></div>
                         {/* <div className="date">Posisi per <span className="date-update">{this.state.date.date === 'no production' ? "Belum ada Produksi" : this.state.days[new Date(this.state.lastDate).getDay()]+ ", " + this.state.lastDate}</span></div> */}
                         <div className="change-date" style={{marginTop: "5px"}}><a href="#" onClick={() => this.props.modalStore.toggleModal('changeDate', 'lg')}><strong>Set Tanggal</strong></a></div>
                         <div className="view-img" style={{marginTop: "10px"}}>

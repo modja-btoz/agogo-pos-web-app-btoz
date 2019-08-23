@@ -7,6 +7,7 @@ import './Modal.scss';
 import CalcNumeric from '../calcs/CalcNumericRefund';
 import CalcNumericModal from '../calcs/CalcNumericModal';
 import Modal from 'react-modal'
+import NumberFormat from 'react-number-format'
 
 import RootContainer from '../../containers/RootContainer'
 import ModalsContainer from '../../containers/ModalsContainer'
@@ -309,6 +310,36 @@ class Modals extends Component {
           <ModalBody className="p-5">
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
+            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
+          </ModalBody>
+        </Modal>
+        )}
+        </div>
+      );
+      case 'bayarAmbil':
+        return (
+          <div id="A" ref={this.root}>
+          {this.root.current && (
+        <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {externalCloseBtn}
+          <ModalBody className="p-5">
+            <i className="fas fa-check font-weight-bold display-3 text-red"></i>
+            <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
+            <tr>
+              <th>Uang dibayarkan : 
+                <NumberFormat value={this.props.cartStore.state.valueInputPayment["paymentTotal"] || ''} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
+              </th>
+            </tr>
+            <tr>
+              <th>Sisa pembayaran : 
+                <NumberFormat value={this.props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
+              </th>
+            </tr>
+            <tr>
+              <th>Uang kembali : 
+                <NumberFormat value={this.props.cartStore.state.changePayment} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
+              </th>
+            </tr>
             <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
           </ModalBody>
         </Modal>

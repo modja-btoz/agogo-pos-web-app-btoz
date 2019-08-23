@@ -80,6 +80,7 @@ const initialState = {
   dpReservationAmount: 0,
   leftToPay: 0,
   date: '',
+  tgl_trx: '',
   startDate: new Date(),
   time: '00:00',
   currentTrx: '',
@@ -95,6 +96,7 @@ const initialState = {
   abasa: false,
   prevDate : '',
   lastDate: '',
+  formatDate: '',
   days: [
     "Minggu",
     "Senin",
@@ -576,7 +578,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   addSelectedReservation(id, current, user_id, total) {
-    this.setState({isDisabled: false, isRefundPSShow: true, selectedItems: []})
+    this.setState({isDisabled: false, isRefundPSShow: true, selectedItems: [], onRefund: true})
     let reservationCode = id
     axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -590,7 +592,8 @@ addSelectedTransaction(id, current, idx) {
       this.setState({dpReservationAmount: reservationData[0].uang_muka,  
                     changePayment: reservationData[0].subtotal - reservationData[0].uang_muka,
                     expenseAmount: reservationData[0].add_fee,
-                    discountAmount: reservationData[0].discount},
+                    discountAmount: reservationData[0].discount, 
+                    tgl_trx: reservationData[0].tgl_selesai},
                     () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
                       const transaction = res.data;
                       transaction.forEach((trx, i) => 
@@ -692,7 +695,6 @@ addSelectedTransaction(id, current, idx) {
       pin_approval: this.state.dataReservation["code"]
     }))
 
-    console.log(ref)
     if(ref[0].username_approval === undefined){
       modal('alert','','','User tidak boleh kosong')
     } else if (ref[0].pin_approval === undefined){
@@ -702,6 +704,7 @@ addSelectedTransaction(id, current, idx) {
       .then(res => {
         modal('bayar')
         this.setState({selectedItems: []})
+        console.log("HIAAAAAAAAAAAA",data, item)
         console.log(res, this.state.selectedItems, this.state.items)
       })
       .catch(res => {
@@ -709,7 +712,7 @@ addSelectedTransaction(id, current, idx) {
         console.log(res, this.state.selectedItems, this.state.items)
         modal('alert','','',res.response.data.message)
       })
-    this.setState({selectedItems: [], dataReservation: {}})
+    this.setState({selectedItems: [], dataReservation: {}}, () => this.state.dataReservation.tgl_selesai = data.tgl_selesai)
     }
   }
 
@@ -1821,7 +1824,7 @@ addSelectedTransaction(id, current, idx) {
       axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
       .then(res => {
       console.log(res, modal)
-      modal('bayar')
+      modal('bayarAmbil')
       this.setState({refund: [], data: [], items: []})})
       .catch(res => {
       modal('alert', '' , '', res.response.data.message)
@@ -1859,7 +1862,7 @@ addSelectedTransaction(id, current, idx) {
       console.log(this.state.selectedItems)
       axios.post(`http://101.255.125.227:82/api/bayarPreorder`, this.state.selectedItems)
       .then(res => {
-        modal('bayar')
+        modal('bayarAmbil')
         this.setState({refund: [], selectedItems: []}) 
         console.log(this, res)})
       .catch(res => {
@@ -1886,6 +1889,7 @@ addSelectedTransaction(id, current, idx) {
       this.setState({dataReservation: orderData[0], startDate: new Date(orderData[0].tgl_selesai), time: orderData[0].waktu_selesai}, 
         () => {if(this.state.whatBooking === 'deleteBooking'){
                 this.deleteOrder(id)
+                this.setState({onRefund: true})
                 console.log("delete booking")
               }
               if(this.state.whatBooking === 'editBooking') {
@@ -1895,6 +1899,7 @@ addSelectedTransaction(id, current, idx) {
               }
               if(this.state.whatBooking === 'takeBooking') {
                 this.takeOrder(id)
+                this.setState({onRefund: true})
                 console.log("take boking")
               }})
 
@@ -1928,12 +1933,13 @@ addSelectedTransaction(id, current, idx) {
     this.setState({transaction: newTrx})
   }
 
-  deleteReservation(id, idx) {
-    axios.delete(`http://101.255.125.227:82/api/preorder/` + id)
-    const newTrx = [...this.state.reservation];
-    newTrx.splice(idx, 1);
-    this.setState({reservation: newTrx})
-  }
+  // deleteReservation(id, idx) {
+  //   axios.put(`http://101.255.125.227:82/api/cancelPreorder/` + id, [{username_approval: "adi",
+  //                                                               pin_approval: "123456"}])
+  //   const newTrx = [...this.state.reservation];
+  //   newTrx.splice(idx, 1);
+  //   this.setState({reservation: newTrx})
+  // }
   deleteReservationModal(modal) {
     let id = this.state.dataReservation.id
     axios.put(`http://101.255.125.227:82/api/cancelPreorder/` + id, [{username_approval: this.state.dataReservation["user"],
@@ -2509,9 +2515,13 @@ addSelectedTransaction(id, current, idx) {
         }else{
         var splitDate = date.created_at.split(" ")
         var takeDate = splitDate[0]
+        var takeDate2 = splitDate[0].toString()
+        var split = takeDate2.split('-')
         var tanggal = new Date(takeDate).getDate()
+        const formatedDate = split[2] + '/' + split[1] + '/' + split[0]
+
         console.log(date, tanggal)
-          this.setState({lastDate: takeDate, prevDate: year + '/' + month + '/' + (tanggal - 1)})
+          this.setState({lastDate: takeDate, formatDate: formatedDate, prevDate: (tanggal - 1) + '/' + month + '/' + year})
         }
       })
     })

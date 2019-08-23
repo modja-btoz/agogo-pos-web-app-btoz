@@ -17,13 +17,13 @@ const CartBookingTotal = (props) => {
             <tr className="cart-subtotal">
                 <td scope="row">Diskon</td>
                 <td className="subtotal-price">
-                    <NumberFormat prefix={props.cartStore.state.discountAmount ? 'Rp -' : 'Rp '} value={props.cartStore.state.discountAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} />
+                    <NumberFormat prefix={props.cartStore.state.discountAmount ? 'Rp ' : 'Rp '} value={props.cartStore.state.discountAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} />
                 </td>
             </tr>
             <tr className="cart-subtotal">
                 <td scope="row">Total</td>
                 <td className="subtotal-price">
-                    <NumberFormat value={props.cartStore.state.grandTotalAmountDiscount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
+                    <NumberFormat value={props.cartStore.state.grandTotalAmountDiscount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
                 </td>
             </tr>
             <tr className="cart-subtotal">
@@ -38,17 +38,17 @@ const CartBookingTotal = (props) => {
             <th className="header grand-total-label">{props.cartStore.state.abasa ? props.refund : props.pembayaran}</th>
             {props.cartStore.state.abasa ? 
                 <th className="header text-right grand-total">
-                    <NumberFormat value={props.cartStore.state.dpReservationAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
+                    <NumberFormat value={props.cartStore.state.dpReservationAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
                 </th> :
                 <th className="header text-right grand-total">
-                    <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
+                    <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
                 </th> 
             }
             </tr> :
             <tr className="cart-total">
                 <th className="header grand-total-label">Sisa Pembayaran</th>
                 <th className="header text-right grand-total">
-                <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} suffix={',-'} />
+                <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
                 </th>
             </tr>
             }
