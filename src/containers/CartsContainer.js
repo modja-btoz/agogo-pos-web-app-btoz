@@ -83,6 +83,7 @@ const initialState = {
   tgl_trx: '',
   startDate: new Date(),
   time: '00:00',
+  nama: '',
   currentTrx: '',
   popStatus: false,
   isDisabled: true,
@@ -594,7 +595,8 @@ addSelectedTransaction(id, current, idx) {
                     changePayment: reservationData[0].subtotal - reservationData[0].uang_muka,
                     expenseAmount: reservationData[0].add_fee,
                     discountAmount: reservationData[0].discount, 
-                    tgl_trx: reservationData[0].tgl_selesai},
+                    tgl_trx: reservationData[0].tgl_selesai, 
+                    nama: reservationData[0].nama},
                     () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
                       const transaction = res.data;
                       transaction.forEach((trx, i) => 
@@ -697,9 +699,9 @@ addSelectedTransaction(id, current, idx) {
     }))
 
     if(ref[0].username_approval === undefined){
-      modal('alert','','','User tidak boleh kosong')
+      modal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else if (ref[0].pin_approval === undefined){
-      modal('alert','','','Pin tidak boleh kosong')
+      modal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else {
       axios.post(`http://101.255.125.227:82/api/editPreorders`, ref)
       .then(res => {
@@ -756,9 +758,9 @@ addSelectedTransaction(id, current, idx) {
         ))
         if(where === 'doOrder'){
           if(this.state.selectedItems[0].username_approval === undefined){
-            modal('alert','','','User tidak boleh kosong')
+            modal('alert','','','Mohon lakukan approval terlebih dahulu!')
           } else if (this.state.selectedItems[0].pin_approval === undefined){
-            modal('alert','','','Pin tidak boleh kosong')
+            modal('alert','','','Mohon lakukan approval terlebih dahulu!')
             console.log(this.state.selectedItems)
           }else{
           axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
@@ -775,9 +777,9 @@ addSelectedTransaction(id, current, idx) {
           }
         } else {
           if(this.state.selectedItems[0].username_approval === undefined){
-            modal('alert','','','User tidak boleh kosong')
+            modal('alert','','','Mohon lakukan approval terlebih dahulu!')
           } else if (this.state.selectedItems[0].pin_approval === undefined){
-            modal('alert','','','Pin tidak boleh kosong')
+            modal('alert','','','Mohon lakukan approval terlebih dahulu!')
             console.log(this.state.selectedItems)
           }else{
           axios.post(`http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
@@ -878,10 +880,10 @@ addSelectedTransaction(id, current, idx) {
     console.log(postData.username_approval)
     if(!postData.username_approval){
       modal.clearModal()
-      modal.toggleModal('alert','','','User tidak boleh kosong')
+      modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else if (!postData.pin_approval) {
       modal.clearModal()
-      modal.toggleModal('alert','','','Pin tidak boleh kosong')
+      modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else {
     axios.post('http://101.255.125.227:82/api/postKas', [postData])
     .then(res => {
@@ -899,11 +901,11 @@ addSelectedTransaction(id, current, idx) {
   doRefundPost(modal){
     if(this.state.dataReservation["user"] === null){
       this.setState({trxRefund: []})
-      modal('alert','','','USER tidak boleh kosong')
+      modal('alert','','','Mohon lakukan approval terlebih dahulu!')
       console.log(this.state.trxRefund)
     } else if(isNaN(this.state.valueInputRefund["approvalCode"])){
       this.setState({trxRefund: []})
-      modal('alert','','','USER & APPROVAL tidak boleh kosong')
+      modal('alert','','','Mohon lakukan approval terlebih dahulu!')
       console.log(this.state.trxRefund)
     } else {
     axios.post(`http://101.255.125.227:82/api/refunds`, this.state.trxRefund)
@@ -1848,10 +1850,10 @@ addSelectedTransaction(id, current, idx) {
       modal('alert','','','Uang pembayaran anda kurang')
     }
     else if(user === undefined){
-      modal('alert','','','USER tidak boleh kosong')
+      modal('alert','','','Mohon lakukan approval terlebih dahulu!')
     }
     else if(pass === undefined){
-      modal('alert','','','PIN tidak boleh kosong')
+      modal('alert','','','Mohon lakukan approval terlebih dahulu!')
     }
     else{
     this.setState({
@@ -2153,11 +2155,11 @@ addSelectedTransaction(id, current, idx) {
         if(qty1 !== 0){
           if(user === undefined ){
             modal.clearModal()
-            modal.toggleModal('alert','','','User tidak boleh kosong')
+            modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
           }
           else if (pin === undefined){
             modal.clearModal()
-            modal.toggleModal('alert','','','Pin tidak boleh kosong')
+            modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
           }else{
           this.state.produksi[this.state.selectedProduct.name+"produksi1"] = qty1 || 0
           this.setState({
@@ -2185,11 +2187,11 @@ addSelectedTransaction(id, current, idx) {
           else if(qty2 !== 0){
             if(user === undefined ){
               modal.clearModal()
-              modal.toggleModal('alert','','','User tidak boleh kosong')
+              modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
             }
             else if (pin === undefined){
               modal.clearModal()
-              modal.toggleModal('alert','','','Pin tidak boleh kosong')
+              modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
             }else{
             this.state.produksi[this.state.selectedProduct.name+"produksi2"] = qty2 || 0
             this.setState({
@@ -2217,11 +2219,11 @@ addSelectedTransaction(id, current, idx) {
             else if(qty3 !== 0){
               if(user === undefined ){
                 modal.clearModal()
-                modal.toggleModal('alert','','','User tidak boleh kosong')
+                modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
               }
               else if (pin === undefined){
                 modal.clearModal()
-                modal.toggleModal('alert','','','Pin tidak boleh kosong')
+                modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
               }
               else{
               this.state.produksi[this.state.selectedProduct.name+"produksi3"] = qty3 || 0
@@ -2250,11 +2252,11 @@ addSelectedTransaction(id, current, idx) {
               else if(qty4 !== 0){
                 if(user === undefined ){
                   modal.clearModal()
-                  modal.toggleModal('alert','','','User tidak boleh kosong')
+                  modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
                 }
                 else if (pin === undefined){
                   modal.clearModal()
-                  modal.toggleModal('alert','','','Pin tidak boleh kosong')
+                  modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
                 }
                 else{
                 this.state.produksi[this.state.selectedProduct.name+"rusak"] = qty4 || 0
@@ -2283,11 +2285,11 @@ addSelectedTransaction(id, current, idx) {
               else if(qty5 !== 0){
                 if(user === undefined ){
                   modal.clearModal()
-                  modal.toggleModal('alert','','','User tidak boleh kosong')
+                  modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
                 }
                 else if (pin === undefined){
                   modal.clearModal()
-                  modal.toggleModal('alert','','','Pin tidak boleh kosong')
+                  modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
                 }
                 else{
                 this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
