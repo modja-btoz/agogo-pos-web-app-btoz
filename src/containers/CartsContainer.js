@@ -608,7 +608,7 @@ addSelectedTransaction(id, current, idx) {
                           qty: trx.qty,
                           price: trx.product.price,
                           product_id: trx.product_id,
-                          user_id: user_id,
+                          // user_id: user_id, CEK BESOK
                           total: reservationData[0].subtotal + reservationData[0].add_fee - reservationData[0].discount,
                           preorder_id: id,
                           nama: reservationData[0].nama,
@@ -1860,19 +1860,20 @@ addSelectedTransaction(id, current, idx) {
       selectedItems: [
         ...this.state.selectedItems.slice(0,index),
         Object.assign({}, this.state.selectedItems[index],
-          {user_id: user_id},
           {uang_dibayar: this.state.payment},
           {preorder_id: items[0].preorder_id},
           {uang_kembali: this.state.changePayment},
           {diskon: this.state.discountAmount},
           {subtotal: this.state.totalAmount},
           {status: "PAID"},
+          {user_id: user_id},
           {username_approval: this.state.dataReservation["user"]},
           {pin_approval: this.state.dataReservation["code"]},
         ...this.state.selectedItems.slice(index+1))
       ]
     }, () => {
       console.log(this.state.selectedItems)
+      console.log("CEK INI ~~~~~~~",user_id, this.state.selectedItems)
       axios.post(`http://101.255.125.227:82/api/bayarPreorder`, this.state.selectedItems)
       .then(res => {
         modal('bayarAmbil')
