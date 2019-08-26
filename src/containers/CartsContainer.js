@@ -186,6 +186,7 @@ class CartsContainer extends Container {
   clearCart = () => {
     console.log("CLEAR CART", this)
     this.setState(initialState);
+    this.setState({dataReservation: {}})
   }
 
   resetProduct = () => {
@@ -1836,6 +1837,8 @@ addSelectedTransaction(id, current, idx) {
     let items = this.state.selectedItems
     let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"])
     let index = items.findIndex( x => x.preorder_id === items[0].preorder_id);
+    let user = this.state.dataReservation["user"];
+    let pass = this.state.dataReservation["code"];
     // this.deleteReservation(items[0].preorder_id)
     console.log(items)
     if(isNaN(totalPayment)){
@@ -1843,6 +1846,12 @@ addSelectedTransaction(id, current, idx) {
     }
     else if(totalPayment < this.state.leftToPay){
       modal('alert','','','Uang pembayaran anda kurang')
+    }
+    else if(user === undefined){
+      modal('alert','','','USER tidak boleh kosong')
+    }
+    else if(pass === undefined){
+      modal('alert','','','PIN tidak boleh kosong')
     }
     else{
     this.setState({
@@ -1856,6 +1865,8 @@ addSelectedTransaction(id, current, idx) {
           {diskon: this.state.discountAmount},
           {subtotal: this.state.totalAmount},
           {status: "PAID"},
+          {username_approval: this.state.dataReservation["user"]},
+          {pin_approval: this.state.dataReservation["code"]},
         ...this.state.selectedItems.slice(index+1))
       ]
     }, () => {
@@ -1867,7 +1878,7 @@ addSelectedTransaction(id, current, idx) {
         console.log(this, res)})
       .catch(res => {
         modal('alert','','',res.response.data.message)
-        this.setState({refund: [], selectedItems: []})
+        this.setState({refund: []})
         console.log(res.response,)
       })
     })
