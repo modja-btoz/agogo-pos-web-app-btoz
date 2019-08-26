@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Container, Row, Col, NavLink, Button, Input } from 'reactstrap';
+import { Container, Row, Col, NavLink, Button, Input, Label, FormGroup } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import CalcNumericPayment from '../calcs/CalcNumericPayment'
 import './PaymentCheckout.scss';
@@ -69,7 +69,35 @@ const ReservationCheckout = (props) => {
           
         </Row>
 
-        <Row className="SidebarFooter mt-4">
+        <Row className="SidebarFooter mt-3">
+        <FormGroup row>
+                <Col sm={3}>
+                    <Label>
+                        <h7 className="mb-0">USER</h7>
+                    </Label>
+                </Col>
+                <Col sm={9}>
+                <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="md"
+                        name="approvalUser" id="approvalUser"
+                        onFocus={props.cartStore.setActiveInputRefund}
+                        onChange={props.cartStore.onChangeApprove}
+                        autoComplete="off"
+                    />
+                </Col>
+                <Col sm={3}>
+                    <Label>
+                        <h7 className="mb-0">APPROVAL</h7>
+                    </Label>
+                </Col>
+                <Col sm={9}>
+                <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="md"
+                        // value={props.cartStore.state.valueInputBooking["approvalCode"]}
+                        name="approvalCode" id="approvalCode"
+                        onFocus={props.cartStore.setActiveInputRefund}
+                        onChange={props.cartStore.onChangeApprove}
+                    />
+                </Col>
+            </FormGroup>
           <Col>
             <Button onClick={() => props.cartStore.doReservation(props.userNow.id, props.modalStore.toggleModal)} 
             color="danger" size="lg" className="py-3 px-5 btn-bayar-fixed"><i className="fas fa-coins mr-2"></i> BAYAR</Button>
