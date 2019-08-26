@@ -12,9 +12,9 @@ const FooterNavRightBooking = (props) => {
                 <NavItem>
                     <NavLink disabled={props.cartStore.state.disabledOther} active={props.cartStore.state.isOrderBookingEditShow} onClick={() => props.cartStore.orderBookingEdit()}><i class="fas fa-pen"></i><br />Edit</NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                     <NavLink disabled={props.cartStore.state.disabledOther} active={props.cartStore.state.isOrderBookingTakeShow} onClick={() => props.cartStore.orderBookingTake()}><i class="fas fa-check"></i><br />Ambil</NavLink>
-                </NavItem>
+                </NavItem> */}
                 <NavItem>
                     <NavLink disabled={props.cartStore.state.disabledOrder} active={props.cartStore.state.isOrderBookingShow} onClick={() => props.cartStore.orderBooking()}><i class="fas fa-edit"></i><br />Order</NavLink>
                 </NavItem>
