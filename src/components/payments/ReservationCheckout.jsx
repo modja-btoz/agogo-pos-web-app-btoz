@@ -20,7 +20,8 @@ const ReservationCheckout = (props) => {
 
           {/* LEFT */}
           <Col className="pr-0">
-            
+            {/* <h5 className="mb-0">ATAS NAMA</h5>
+            <h4><strong>{props.cartStore.state.nama}</strong></h4> */}
             <h5 className="mb-0">TOTAL</h5>
             <h3><strong><NumberFormat value={props.cartStore.state.grandTotalAmountDiscount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></strong></h3>
             <h5 className="mb-0">UANG MUKA</h5>
