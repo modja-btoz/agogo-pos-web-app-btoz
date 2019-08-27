@@ -166,7 +166,7 @@ const EditBooking = (props) => {
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
-                                        autoComplete="off"
+                                        autoComplete="new-user"
                                     />
                                 </Col>
                                 <Col sm={6} style={{paddingLeft: '1%', paddingRight: "9%"}}>
@@ -175,6 +175,7 @@ const EditBooking = (props) => {
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
+                                        autoComplete="new-pin"
                                     />
                                 </Col>
                                 </Row>
