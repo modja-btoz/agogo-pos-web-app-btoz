@@ -78,7 +78,7 @@ const ReservationCheckout = (props) => {
                     </Label>
                 </Col>
                 <Col sm={9}>
-                <Input className="input-masking mb-4" type="text" placeholder="USER" bsSize="md"
+                <Input className="mb-4 form-control-lg form-control" type="text" placeholder="USER" bsSize="md"
                         name="approvalUser" id="approvalUser"
                         onFocus={props.cartStore.setActiveInputRefund}
                         onChange={props.cartStore.onChangeApprove}
@@ -91,7 +91,7 @@ const ReservationCheckout = (props) => {
                     </Label>
                 </Col>
                 <Col sm={9}>
-                <Input className="input-masking mb-4" type="password" placeholder="PIN" bsSize="md"
+                <Input className="mb-4 form-control-lg form-control" type="password" placeholder="PIN" bsSize="md"
                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                         name="approvalCode" id="approvalCode"
                         onFocus={props.cartStore.setActiveInputRefund}
