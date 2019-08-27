@@ -56,7 +56,7 @@ const DeleteBooking = (props) => {
                                 </Col>
                                 <Col sm={8}>
                                 <div className='input-keyboard-wrapper'>
-                                <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="form-control-lg form-control" placeholder="Rp 0" 
+                                <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="form-control-md form-control" placeholder="Rp 0" 
                                     value={props.cartStore.state.dataReservation.uang_muka} bsSize="md"
                                     name="uang_muka" id="uang_muka"
                                     prefix={'Rp '} disabled
