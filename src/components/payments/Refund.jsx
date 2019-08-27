@@ -48,6 +48,7 @@ const Refund = (props) => {
                 name="approvalUser" id="approvalUser"
                 onFocus={props.cartStore.setActiveInputRefund}
                 onChange={props.cartStore.onChangeApprove}
+                autoComplete="new-user"
               />
             </div> 
 
@@ -58,6 +59,7 @@ const Refund = (props) => {
                 name="approvalCode" id="approvalCode"
                 value={props.cartStore.state.valueInputRefund["approvalCode"] || ""}
                 onFocus={props.cartStore.setActiveInputRefund}
+                autoComplete="new-pin"
               />
             </div> 
 

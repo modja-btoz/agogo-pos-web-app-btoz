@@ -267,7 +267,7 @@ class Modals extends Component {
                 name="approvalUser" id="approvalUser"
                 onFocus={this.props.cartStore.setActiveInputRefund}
                 onChange={this.props.cartStore.onChangeApprove}
-                autoComplete="off"
+                autoComplete="new-user"
               />
             </div>
           <h3>Approval</h3>
@@ -276,6 +276,7 @@ class Modals extends Component {
                 value={this.props.cartStore.state.valueInputRefund["approvalCode"] || ""}
                 name="approvalCode" id="approvalCode" type="password" 
                 onFocus={this.props.cartStore.setActiveInputRefund}
+                autoComplete="new-user"
               />
           </div>
           <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>

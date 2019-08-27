@@ -75,7 +75,7 @@ const DeleteBooking = (props) => {
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
-                                        autoComplete="off"
+                                        autoComplete="new-user"
                                     />
                                 </Col>
                                 <Col sm={4} style={{paddingTop: "10px"}}>
@@ -89,6 +89,7 @@ const DeleteBooking = (props) => {
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
+                                        autoComplete="new-pin"
                                     />
                                 </Col>
                             </FormGroup>
