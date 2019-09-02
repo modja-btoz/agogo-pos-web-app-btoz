@@ -1,5 +1,5 @@
     import React, { Component } from  'react'
-    import { Navbar, NavbarBrand, Container, Row, Col, Nav, NavItem, NavLink, Input, Button, Popover, PopoverBody } from 'reactstrap'
+    import { Navbar, NavbarBrand, Container, Row, Col, Nav, NavItem, NavLink, Input, Button, Popover, PopoverBody, PopoverHeader } from 'reactstrap'
     import Cart from '../carts/Cart'
     import CalcNumericCart from '../calcs/CalcNumericCart'
     import Products from '../products/Products'
@@ -58,6 +58,24 @@
             })
         }
 
+        buttonSetSearchKeyword(keyword){
+            this.props.productStore.setSearchKeyword(keyword)
+          }
+        
+          handleChange = (e) => {
+            this.props.productStore.setState({
+              searchKeyword: e.target.value
+            }, () => {
+              this.buttonSetSearchKeyword(this.props.productStore.state.searchKeyword)
+            })
+          }
+        
+          resetSearchKeyword(){
+            this.props.productStore.setState({
+              searchKeyword: ''
+            })
+          }
+
         render() {
             return (
                 <Container fluid="true" className="booking container-fluid h-100">
@@ -88,7 +106,15 @@
                                         <Button toggle="false" block="true" type="button" id="Popover1" onClick={() => this.toggle()}>
                                         Tambah Item
                                         </Button>
-                                        <Popover container={'#A'} placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
+                                        <Popover container={'#A'} placement="right-start" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
+                                            <PopoverHeader>
+                                                <Input type="search" name="search" className="search" placeholder="Cari produk..." 
+                                                    value={this.props.productStore.state.searchKeyword}
+                                                    onChange={this.handleChange}
+                                                    ref={el => this.inputTitle = el}
+                                                    style={{}}
+                                                />
+                                            </PopoverHeader>
                                             <PopoverBody >
                                                 <Products cartStore={this.props.cartStore} productStore={this.props.productStore} activePath={this.props.activePath}/>
                                             </PopoverBody>
