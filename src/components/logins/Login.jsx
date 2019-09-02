@@ -100,6 +100,11 @@ class Login extends Component {
     this.setState({ redirect: true })
   }
 
+  doPrint() {
+    var content = document.getElementById('invoice-POS');
+    content.print()
+}
+
 
 
   render() {
@@ -126,7 +131,7 @@ class Login extends Component {
                       <a href="/"><i className="fas fa-arrow-left mr-5"></i></a> SIGN IN
                     </div>
                     <div className="col-3 text-right">
-                      <img src={LogoAgogo} className="img-fluid" />
+                      <a onClick={() => window.print()}><img src={LogoAgogo} className="img-fluid" /> </a>
                     </div>
                   </div>
                 </div>
@@ -152,8 +157,7 @@ class Login extends Component {
                         value={this.state.password} 
                         onChange={e => this.onChangeInput(e)}
                         type="password" name="password" id="pin" placeholder="PIN"  size="lg" className="text-center" 
-                        autoComplete="new-pin"
-                        readonly
+                        autoComplete="off"
                       />
                     </FormGroup>
                   </div>

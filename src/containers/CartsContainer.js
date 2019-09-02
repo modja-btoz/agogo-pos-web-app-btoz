@@ -2155,10 +2155,12 @@ addSelectedTransaction(id, current, idx) {
       // this.state.produksi[this.state.selectedProduct.name+"lain"] = qty5 || 0
         if(qty1 !== 0){
           if(user === undefined ){
+            console.log(this.state)
             modal.clearModal()
             modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
           }
           else if (pin === undefined){
+            console.log(this.state)
             modal.clearModal()
             modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
           }else{
@@ -2464,6 +2466,7 @@ addSelectedTransaction(id, current, idx) {
       console.log(result)
       axios.post(`http://101.255.125.227:82/api/postProduction`, result)
     .then(res => {
+      console.log(this.state)
       this.clearCart()
       this.getDateTrx()
       close()

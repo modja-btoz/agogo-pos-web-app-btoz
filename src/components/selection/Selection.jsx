@@ -16,6 +16,9 @@ class Selection extends Component {
         kasir: false,
         stok: false,
         pemesanan: false,
+        kasirpemesanan: false,
+        kasirproduksi: false,
+        produksipemesanan: false,
         admin: false,
       }
 
@@ -30,7 +33,16 @@ class Selection extends Component {
     }
 
     checkRole(){
-        if(this.state.userLoggedIn.role.includes("kasir")){
+        if(this.state.userLoggedIn.role.includes("kasir") && this.state.userLoggedIn.role.includes("pemesanan")){
+            this.setState({kasirpemesanan: !this.state.kasirpemesanan})
+        }
+        else if(this.state.userLoggedIn.role.includes("kasir") && this.state.userLoggedIn.role.includes("produksi")){
+            this.setState({kasirproduksi: !this.state.kasirproduksi})
+        }
+        else if(this.state.userLoggedIn.role.includes("produksi") && this.state.userLoggedIn.role.includes("pemesanan")){
+            this.setState({produksipemesanan: !this.state.produksipemesanan})
+        }
+        else if(this.state.userLoggedIn.role.includes("kasir")){
             this.setState({kasir: !this.state.kasir})
         }
         else if(this.state.userLoggedIn.role.includes("produksi")){
@@ -60,7 +72,6 @@ class Selection extends Component {
                             <button className="btn btn-size">KASIR</button>
                             </Link>
                         } */}
-
                         {this.state.kasir &&
                             <div>
                             {this.state.where.status === 'counted' ?
@@ -98,6 +109,46 @@ class Selection extends Component {
                             </Link>
                             <Link to={'/booking'}>
                             <button className="btn btn-size">PEMESANAN</button>
+                            </Link>
+                            </div>
+                        }
+                        {this.state.kasirpemesanan &&
+                            <div>
+                            {this.state.where.status === 'success' ?
+                                <Link to={'/initial-balance'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link> : 
+                                <Link to={'/cashier'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link>
+                            }
+                            <Link to={'/booking'}>
+                            <button className="btn btn-size">PEMESANAN</button>
+                            </Link>
+                            </div>
+                        }
+                        {this.state.kasirproduksi &&
+                            <div>
+                            {this.state.where.status === 'success' ?
+                                <Link to={'/initial-balance'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link> : 
+                                <Link to={'/cashier'}>
+                                    <button className="btn btn-size">KASIR</button>
+                                </Link>
+                            }
+                            <Link to={'/production'}>
+                            <button className="btn btn-size">PRODUKSI</button>
+                            </Link>
+                            </div>
+                        }
+                        {this.state.produksipemesanan &&
+                            <div>
+                            <Link to={'/booking'}>
+                            <button className="btn btn-size">PEMESANAN</button>
+                            </Link>
+                            <Link to={'/production'}>
+                            <button className="btn btn-size">PRODUKSI</button>
                             </Link>
                             </div>
                         }

@@ -67,15 +67,15 @@ const DeleteBooking = (props) => {
                             <FormGroup row>
                                 <Col sm={4} style={{paddingTop: "10px"}}>
                                     <Label>
-                                    <h7 className="mb-0">USER</h7>
+                                    <h7 className="mb-0">USER APPROVAL</h7>
                                     </Label>
                                 </Col>
                                 <Col sm={8} style={{paddingTop: "10px"}}>
-                                    <Input className="input-user" type="text" placeholder="USER" bsSize="md"
+                                    <Input className="input-user" type="text" placeholder="USER APPROVAL" bsSize="md"
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
-                                        autoComplete="new-user"
+                                        autoComplete="off"
                                     />
                                 </Col>
                                 <Col sm={4} style={{paddingTop: "10px"}}>
@@ -89,7 +89,7 @@ const DeleteBooking = (props) => {
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
-                                        autoComplete="new-pin"
+                                        autoComplete="off"
                                     />
                                 </Col>
                             </FormGroup>
