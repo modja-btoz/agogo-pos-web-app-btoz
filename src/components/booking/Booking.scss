@@ -152,3 +152,25 @@
   background-color: rgba(0,0,0,.75)
 }
 
+.popover {
+  min-width: 500px;
+  &-header {
+    height: 63px;
+  }
+}
+
+.search{
+  float: right;
+  text-align: left;
+  width: 40%;
+  border-radius: 3rem;
+  margin-top: 0.25rem;
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  font-style: italic;
+  &::placeholder {
+    color: $lightGrey;
+  }
+}
+
