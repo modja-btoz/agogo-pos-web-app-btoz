@@ -14,7 +14,7 @@ import Booking from './components/booking/Booking'
 
 import Fullscreen from "react-full-screen";
 import Production from './components/production/Production';
-import Modals from './components/modals/Modals';
+import Invoice from './components/print/kasirOrder';
 
 Modal.setAppElement("#root");
 
@@ -117,6 +117,19 @@ class App extends Component {
             {/* GAKTAUNYA BISA KASIH FUNCTION DI ROUTE
             INI GAK BSIA KRN ROUTENYA DI PROTECT */}
             <Switch>
+              <Route exact path='/invoice'
+                  render={(props) => {
+                    this.activePath(props);
+                    return(
+                      isLoggedIn() === true
+                      ? <Redirect to={{ pathname: '/initial-balance', state: { from: props.location } }} />
+                      : <Invoice {...props} 
+                        rootStore={this.props.rootStore} 
+                        activePath={props.match.path} />
+                    )
+                  }}
+                />
+
               <Route exact path='/'
                 render={(props) => {
                   this.activePath(props);

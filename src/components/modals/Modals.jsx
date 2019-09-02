@@ -261,9 +261,9 @@ class Modals extends Component {
             <Label>Saldo Akhir : {parseInt(this.props.modalStore.state.transaction.total_transaksi) + parseInt(this.props.modalStore.state.transaction.saldo_awal)}</Label></h5>
           </div>
 
-          <h3>USER</h3>
+          <h3>USER APPROVAL</h3>
             <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-              <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
+              <Input className="input-masking mb-4" type="text" placeholder="USER APPROVAL" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
                 name="approvalUser" id="approvalUser"
                 onFocus={this.props.cartStore.setActiveInputRefund}
                 onChange={this.props.cartStore.onChangeApprove}
@@ -276,7 +276,7 @@ class Modals extends Component {
                 value={this.props.cartStore.state.valueInputRefund["approvalCode"] || ""}
                 name="approvalCode" id="approvalCode" type="password" 
                 onFocus={this.props.cartStore.setActiveInputRefund}
-                autoComplete="new-user"
+                autoComplete="new-pin"
               />
           </div>
           <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
@@ -327,17 +327,17 @@ class Modals extends Component {
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
             <tr>
-              <th>Uang dibayarkan : 
+              <th className="paewo">Uang dibayarkan : 
                 <NumberFormat value={this.props.cartStore.state.valueInputPayment["paymentTotal"] || ''} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
               </th>
             </tr>
             <tr>
-              <th>Sisa pembayaran : 
+            <th className="paewo">Sisa pembayaran : 
                 <NumberFormat value={this.props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
               </th>
             </tr>
             <tr>
-              <th>Uang kembali : 
+            <th className="paewo">Uang kembali : 
                 <NumberFormat value={this.props.cartStore.state.changePayment} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
               </th>
             </tr>
@@ -505,7 +505,7 @@ class Modals extends Component {
                   />
                 </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" placeholder="User" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                  <Input className="input-masking mb-4" placeholder="USER APPROVAL" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalUser"]}
                     name="approvalUser" id="approvalUser" type="text"
                     onChange={this.props.cartStore.onChangeApprove}
@@ -513,7 +513,7 @@ class Modals extends Component {
                   />
                 </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" placeholder="Approval" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                  <Input className="input-masking mb-4" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalCode"]}
                     name="approvalCode" id="approvalCode" type="password"
                     onChange={this.props.cartStore.onChangeApprove}
@@ -605,7 +605,7 @@ class Modals extends Component {
                   />
                 </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" placeholder="User" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                  <Input className="input-masking mb-4" placeholder="USER APPROVAL" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalUser"]}
                     name="approvalUser" id="approvalUser" type="text"
                     onChange={this.props.cartStore.onChangeApprove}
@@ -613,7 +613,7 @@ class Modals extends Component {
                   />
                 </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                  <Input className="input-masking mb-4" placeholder="Approval" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
+                  <Input className="input-masking mb-4" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalCode"]}
                     name="approvalCode" id="approvalCode" type="password"
                     onChange={this.props.cartStore.onChangeApprove}

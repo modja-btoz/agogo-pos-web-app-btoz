@@ -11,7 +11,7 @@ const ProductItems = (props) => {
       { props.productStore.state.productsFiltered.map((product, index) => 
       <Col xs="4">
         <ProductItem 
-          productIndex = {index}
+          productIndex={index}
           productID={product.id} 
           productName={product.name} 
           productQty={1} 

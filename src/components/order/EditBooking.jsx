@@ -110,7 +110,8 @@ const EditBooking = (props) => {
                                     value={props.cartStore.state.valueInputBooking["bookingAddition"]}  
                                     onValueChange={props.cartStore.onChangeBooking} 
                                     defaultValue={props.cartStore.state.dataReservation.add_fee}
-                                    onFocus={props.cartStore.setActiveInputBooking}/>
+                                    onFocus={props.cartStore.setActiveInputBooking}
+                                    autoComplete="off"/>
                                     </Col>
                                 </FormGroup>
 
@@ -124,6 +125,7 @@ const EditBooking = (props) => {
                                     onValueChange={props.cartStore.onChangeBooking}
                                     defaultValue={props.cartStore.state.dataReservation.discount}
                                     onFocus={props.cartStore.setActiveInputBooking}
+                                    autoComplete="off"
                                     prefix={'Rp '}/>
                                     }
                                     {props.cartStore.state.discountType === '%' &&
@@ -133,7 +135,8 @@ const EditBooking = (props) => {
                                     onValueChange={props.cartStore.onChangeBooking}
                                     defaultValue={props.cartStore.state.dataReservation.discount}
                                     onFocus={props.cartStore.setActiveInputBooking}
-                                    suffix={'%'}/>
+                                    suffix={'%'}
+                                    autoComplete="off"/>
                                     }
                                     </Col>
                                     <Col sm={2}>
@@ -154,7 +157,8 @@ const EditBooking = (props) => {
                                         value={props.cartStore.state.valueInputBooking["bookingPayment"]}
                                         onValueChange={props.cartStore.onChangeBooking}
                                         defaultValue={props.cartStore.state.dataReservation.uang_muka}
-                                        onFocus={props.cartStore.setActiveInputBooking}/>
+                                        onFocus={props.cartStore.setActiveInputBooking}
+                                        autoComplete="off"/>
                                     </Col>
                                 </FormGroup>
 
@@ -162,11 +166,11 @@ const EditBooking = (props) => {
                                 <Row >
                                 {/* <Label sm={2} className="approval">USER</Label> */}
                                 <Col sm={6} style={{paddingRight: "9%"}}>
-                                <Input className="input-user" type="text" placeholder="USER" 
+                                <Input className="input-user" type="text" placeholder="USER APPROVAL" 
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
-                                        autoComplete="new-user"
+                                        autoComplete="off"
                                     />
                                 </Col>
                                 <Col sm={6} style={{paddingLeft: '1%', paddingRight: "9%"}}>
@@ -175,7 +179,7 @@ const EditBooking = (props) => {
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
                                         onChange={props.cartStore.onChangeApprove}
-                                        autoComplete="new-pin"
+                                        autoComplete="off"
                                     />
                                 </Col>
                                 </Row>
