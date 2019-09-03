@@ -150,7 +150,7 @@
 
                             <Row className="product-nav no-gutters">
                                 <Col xs="12">
-                                    <FooterNavRightBooking rootStore={this.props.rootStore} cartStore={this.props.cartStore} />
+                                    <FooterNavRightBooking rootStore={this.props.rootStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
                                 </Col>
                             </Row>
                             

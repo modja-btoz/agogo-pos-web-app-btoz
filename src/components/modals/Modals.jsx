@@ -4,7 +4,7 @@ import { Subscribe } from 'unstated'
 import { Button, ModalHeader, ModalBody, ModalFooter, Col, Input, Row, Label } from 'reactstrap';
 import { Redirect, Route } from 'react-router-dom'
 import './Modal.scss';
-import CalcNumeric from '../calcs/CalcNumericRefund';
+import CalcNumericKas from '../calcs/CalcNumericKas';
 import CalcNumericModal from '../calcs/CalcNumericModal';
 import Modal from 'react-modal'
 import NumberFormat from 'react-number-format'
@@ -193,9 +193,9 @@ class Modals extends Component {
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
           {externalCloseBtn}
-          <ModalHeader toggle={this.props.toggle} className="text-center d-block mt-2"><h3>Modal Logout</h3></ModalHeader>
+          <ModalHeader toggle={this.props.toggle} className="text-center d-block mt-2"><h3>Logout</h3></ModalHeader>
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Apakah anda yakin akan keluar ?
           </ModalBody>
           <ModalFooter className="text-center d-block">
             <a href="/logout" color="dark" className="btn btn-dark btn-lg"><i class="fas fa-sign-out-alt mr-1"></i> Log Out</a>
@@ -266,16 +266,17 @@ class Modals extends Component {
               <Input className="input-masking mb-4" type="text" placeholder="USER APPROVAL" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
                 name="approvalUser" id="approvalUser"
                 onFocus={this.props.cartStore.setActiveInputRefund}
-                onChange={this.props.cartStore.onChangeApprove}
+                onChange={this.props.cartStore.onChangeUserApprove}
                 autoComplete="new-user"
               />
             </div>
           <h3>Approval</h3>
           <div className={this.props.cartStore.state.activeInputApproval === 'approvalCode' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <Input className="input-masking mb-4" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
-                value={this.props.cartStore.state.valueInputRefund["approvalCode"] || ""}
+                value={this.props.cartStore.state.valueInputRefund["approvalCode"]}
                 name="approvalCode" id="approvalCode" type="password" 
                 onFocus={this.props.cartStore.setActiveInputRefund}
+                onChange={this.props.cartStore.onChangePinApprove}
                 autoComplete="new-pin"
               />
           </div>
@@ -283,10 +284,11 @@ class Modals extends Component {
           <a href="#" onClick={() => this.props.cartStore.doPostKas(this.props.modalStore.state.transaction, data, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
           </Col>
           <Col xs="5">
-          <CalcNumeric
+          <CalcNumericKas
                   cartStore={this.props.cartStore} 
-                  onEnterRefund={this.props.cartStore.onEnterRefund} 
-                  // inputName={this.props.cartStore.state.inputName}
+                  onEnterKas={this.props.cartStore.onEnterKas} 
+                  modalStore={this.props.modalStore}
+                  data={data}
                 />
           </Col>
         </Row>
@@ -508,7 +510,7 @@ class Modals extends Component {
                   <Input className="input-masking mb-4" placeholder="USER APPROVAL" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalUser"]}
                     name="approvalUser" id="approvalUser" type="text"
-                    onChange={this.props.cartStore.onChangeApprove}
+                    onChange={this.props.cartStore.onChangeUserApprove}
                     onFocus={this.props.cartStore.setActiveInputRefund}
                   />
                 </div>
@@ -516,7 +518,7 @@ class Modals extends Component {
                   <Input className="input-masking mb-4" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalCode"]}
                     name="approvalCode" id="approvalCode" type="password"
-                    onChange={this.props.cartStore.onChangeApprove}
+                    onChange={this.props.cartStore.onChangePinApprove}
                     onFocus={this.props.cartStore.setActiveInputRefund}
                   />
                 </div>
