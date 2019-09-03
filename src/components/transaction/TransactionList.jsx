@@ -61,7 +61,7 @@ class TransactionList extends Component {
 
             <Row className="product-nav no-gutters">
               <Col xs="12">
-                <FooterNavRight cartStore={this.props.cartStore} rootStore={this.props.rootStore}/>
+                <FooterNavRight cartStore={this.props.cartStore} rootStore={this.props.rootStore} modalStore={this.props.modalStore}/>
               </Col>
             </Row>
         </Container>

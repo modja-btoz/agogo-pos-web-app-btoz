@@ -844,11 +844,11 @@ addSelectedTransaction(id, current, idx) {
       qty: data.qty,
       price: data.price,
       order_id: "",
-      preorder_id: data.order_id,
+      preorder_id: data.preorder_id,
       product_id: data.product_id,
       total: data.total,
       username_approval: this.state.dataReservation["user"],
-      pin_approval: this.state.valueInputRefund["approvalCode"]}))
+      pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]}))
     this.doRefundPost(modal)
     }else if (this.state.whatRefund === "TK"){
       let dataReservation = this.state.refundItems
@@ -861,7 +861,7 @@ addSelectedTransaction(id, current, idx) {
           product_id: data.id,
           total: parseInt(data.qty) * parseInt(data.price),
           username_approval: this.state.dataReservation["user"],
-          pin_approval: this.state.valueInputRefund["approvalCode"]}))
+          pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]}))
       this.doRefundPost(modal)
     }
     // axios.put('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + dataRefund.id, this.state.items)
@@ -875,9 +875,9 @@ addSelectedTransaction(id, current, idx) {
         transaksi: transaction.total_transaksi,
         saldo_akhir: saldo_akhir,
         username_approval: this.state.dataReservation["user"],
-        pin_approval: this.state.valueInputRefund["approvalCode"]
+        pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]
       }
-    console.log(postData.username_approval)
+    console.log(postData.username_approval, postData.pin_approval)
     if(!postData.username_approval){
       modal.clearModal()
       modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
@@ -903,7 +903,7 @@ addSelectedTransaction(id, current, idx) {
       this.setState({trxRefund: []})
       modal('alert','','','Mohon lakukan approval terlebih dahulu!')
       console.log(this.state.trxRefund)
-    } else if(isNaN(this.state.valueInputRefund["approvalCode"])){
+    } else if(isNaN(this.state.valueInputRefund["approvalCode"] || this.state.dataReservation["code"])){
       this.setState({trxRefund: []})
       modal('alert','','','Mohon lakukan approval terlebih dahulu!')
       console.log(this.state.trxRefund)
@@ -1479,7 +1479,8 @@ addSelectedTransaction(id, current, idx) {
     // console.log('event', event.target.id)
     document.getElementById(event.target.id).focus();
     this.setState({
-      activeInputPayment: event.target.id
+      activeInputPayment: event.target.id,
+      activeInputRefund: ""
     },
       () => {
         console.log("setActiveInput", this.state.activeInputPayment, this.state)
@@ -1488,8 +1489,28 @@ addSelectedTransaction(id, current, idx) {
   }
 
   onChangePayment = valueInputPayment => {
+    if(this.state.activeInputPayment === "approvalUser"){
+      this.setState({
+        valueInputRefund: valueInputPayment,
+      });
+    } else if(this.state.activeInputPayment === "approvalCode"){
+      this.setState({
+        valueInputRefund: valueInputPayment,
+      });
+    } else {
     this.setState({
-      valueInputPayment: valueInputPayment
+      valueInputPayment: valueInputPayment,
+    },
+      () =>{
+        this.sumGrandTotalAmount()
+      }
+    );
+    console.log("Input changed", valueInputPayment);
+  };
+}
+  onChangeValuePayment = valueInputPayment => {
+    this.setState({
+      valueInputPayment: {paymentTotal: valueInputPayment.value},
     },
       () =>{
         this.sumGrandTotalAmount()
@@ -1572,17 +1593,17 @@ addSelectedTransaction(id, current, idx) {
     }
   }
 
-  onChangeApprove = valueInputApprove => {
-    if (this.state.activeInputRefund === 'approvalUser'){
-      const user = valueInputApprove.target.value
+  onChangeUserApprove = event => {
+      const user = event.target.value
+      // this.setState({dataReservation: {user:user}})
       this.state.dataReservation["user"] = user;
-      console.log(user,this.state.dataReservation["user"],this.state.dataReservation.user,this.state.valueInputRefund["approvalUser"])
-    }
-    else if (this.state.activeInputRefund === 'approvalCode'){
-      const code = valueInputApprove.target.value
+      console.log("User", user)
+  }
+  onChangePinApprove = event => {
+      const code = event.target.value
+      // this.setState({dataReservation: {code:code}})
       this.state.dataReservation["code"] = code;
-      console.log(code,this.state.dataReservation["code"],this.state.dataReservation.code,this.state.valueInputBooking["approvalCode"])
-    }
+      console.log("Code", code)
   }
 
   onChangeTime = (time) => this.setState({time}, 
@@ -1712,7 +1733,8 @@ addSelectedTransaction(id, current, idx) {
     // console.log('event', event.target.id)
     document.getElementById(event.target.id).focus();
     this.setState({
-      activeInputRefund: event.target.id || 0
+      activeInputRefund: event.target.id,
+      activeInputPayment: ""
     },
       () => {
         console.log("setActiveInput", this.state.activeInputRefund)
@@ -1840,7 +1862,7 @@ addSelectedTransaction(id, current, idx) {
     let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"])
     let index = items.findIndex( x => x.preorder_id === items[0].preorder_id);
     let user = this.state.dataReservation["user"];
-    let pass = this.state.dataReservation["code"];
+    let pass = this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"];
     // this.deleteReservation(items[0].preorder_id)
     console.log(items)
     if(isNaN(totalPayment)){
@@ -1868,7 +1890,7 @@ addSelectedTransaction(id, current, idx) {
           {status: "PAID"},
           {user_id: user_id},
           {username_approval: this.state.dataReservation["user"]},
-          {pin_approval: this.state.dataReservation["code"]},
+          {pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]},
         ...this.state.selectedItems.slice(index+1))
       ]
     }, () => {
@@ -1976,7 +1998,7 @@ addSelectedTransaction(id, current, idx) {
     let qty4 = this.state.valueInputRefund["refundCode4"] || 0
     let qty5 = this.state.valueInputRefund["refundCode5"] || 0
     let user = this.state.dataReservation['user']
-    let pin = this.state.dataReservation['code']
+    let pin = this.state.dataReservation['code'] || this.state.valueInputRefund["approvalCode"]
     let index = this.state.production.findIndex( x => x.id === id);
     
     // if(this.state.activeInputRefund === "refundCode1"){
@@ -2452,8 +2474,8 @@ addSelectedTransaction(id, current, idx) {
         o.ket_rusak= 0;
         o.ket_lain= 0;
         o.total_lain= 0;
-        o.username_approval= 'adi';
-        o.pin_approval= '123456';
+        // o.username_approval= 'adi';
+        // o.pin_approval= '123456';
         o.catatan= "tidak ada catatan";
         o.sisa_stock = o.stock;
         o.stock_awal = o.stock;
@@ -2464,7 +2486,7 @@ addSelectedTransaction(id, current, idx) {
         return o;
       })
       console.log(result)
-      axios.post(`http://101.255.125.227:82/api/postProduction`, result)
+      axios.post(`http://101.255.125.227:82/api/ubahTanggal`, result)
     .then(res => {
       console.log(this.state)
       this.clearCart()

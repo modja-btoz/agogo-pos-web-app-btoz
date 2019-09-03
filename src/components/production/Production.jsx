@@ -78,7 +78,7 @@ class Production extends React.Component {
 
                         <Row className="product-nav no-gutters">
                             <Col xs="12">
-                                <FooterNavRightProduction productStore={this.props.productStore} rootStore={this.props.rootStore}/>
+                                <FooterNavRightProduction productStore={this.props.productStore} rootStore={this.props.rootStore} modalStore={this.props.modalStore}/>
                             </Col>
                         </Row>
                     </Col>

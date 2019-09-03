@@ -62,13 +62,13 @@ class Login extends Component {
 
   onChange = input => {
     this.setState({ password: input });
-    console.log("Password changed", input);
+    console.log("Password changed using Touch", input);
   };
 
   onChangeInput = event => {
     let input = event.target.value;
     this.setState({ password: input });
-    // console.log("Password changed", input);
+    console.log("Password changed using Keyboard", input);
   };
 
   onEnter = () => {

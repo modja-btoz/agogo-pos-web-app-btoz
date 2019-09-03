@@ -21,7 +21,8 @@ const FooterNavRightProduction = (props) => {
                     </NavItem>
 
                 <NavItem>
-                    <NavLink href="/logout"><i class="fas fa-sign-out-alt"></i><br />Logout</NavLink>
+                    <NavLink onClick={() => props.modalStore.toggleModal('logout', 'md')}><i className="fas fa-sign-out-alt"></i> <br />Logout</NavLink>
+                    {/* <NavLink href="/logout"><i class="fas fa-sign-out-alt"></i><br />Logout</NavLink> */}
                 </NavItem>
                 <NavItem>
                     <a href="#" className="btn-fullscreen-other" onClick={props.rootStore.goFull} >

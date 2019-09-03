@@ -80,15 +80,16 @@ const PaymentCheckout = (props) => {
             <h5 className="mt-4">TOTAL PEMBAYARAN</h5>
             <div className={props.cartStore.state.activeInputPayment === 'paymentTotal' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="mb-4 form-control-lg form-control" placeholder="Rp 0"  
-                value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
+                value={props.cartStore.state.valueInputPayment["paymentTotal"]}
                 name="paymentTotal" id="paymentTotal"
                 autoFocus
                 onFocus={props.cartStore.moveCaretAtEnd}
-                onChange={props.cartStore.onChangePayment}
+                onValueChange={props.cartStore.onChangeValuePayment}
               />
               <Input className="input-masking mb-4" type="text" name="paymentTotal" id="paymentTotal" placeholder=" ..." bsSize="lg" 
-                value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
+                value={props.cartStore.state.valueInputPayment["paymentTotal"]}
                 onFocus={props.cartStore.setActiveInputPayment}
+                onChange={props.cartStore.onChangePayment}
                 autoFocus
               />
             </div>

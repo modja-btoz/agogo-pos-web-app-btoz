@@ -193,7 +193,7 @@ const EditBooking = (props) => {
                             </Form>
                             <Row className="product-nav no-gutters">
                                 <Col xs="12">
-                                    <FooterNavRightBooking cartStore={props.cartStore} rootStore={props.rootStore}/>
+                                    <FooterNavRightBooking cartStore={props.cartStore} rootStore={props.rootStore} modalStore={props.modalStore}/>
                                 </Col>
                             </Row>
                         </Col>
