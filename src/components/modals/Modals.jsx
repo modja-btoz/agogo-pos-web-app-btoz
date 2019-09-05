@@ -610,7 +610,7 @@ class Modals extends Component {
                   <Input className="input-masking mb-4" placeholder="USER APPROVAL" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalUser"]}
                     name="approvalUser" id="approvalUser" type="text"
-                    onChange={this.props.cartStore.onChangeApprove}
+                    onChange={this.props.cartStore.onChangeUserApprove}
                     onFocus={this.props.cartStore.setActiveInputRefund}
                   />
                 </div>
@@ -618,7 +618,7 @@ class Modals extends Component {
                   <Input className="input-masking mb-4" placeholder="PIN" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["approvalCode"]}
                     name="approvalCode" id="approvalCode" type="password"
-                    onChange={this.props.cartStore.onChangeApprove}
+                    onChange={this.props.cartStore.onChangePinApprove}
                     onFocus={this.props.cartStore.setActiveInputRefund}
                   />
                 </div>
