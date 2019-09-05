@@ -2,7 +2,7 @@
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
     padding:2mm;
     margin: 0 auto;
-    width: 50mm;
+    width: 70mm;
     background: #FFF;
     
     
@@ -18,7 +18,7 @@
     line-height: 2em;
   }
   h6{
-    font-size: 0.5em;
+    font-size: 0.7em;
   }
   p{
     font-size: .7em;
@@ -26,21 +26,22 @@
     line-height: 1.2em;
   }
    
-  #top, #mid, #bot{ /* Targets all id with 'col-' */
+  #top, #midKasir, #midPemesanan, #bot{ /* Targets all id with 'col-' */
     border-bottom: 1px solid #EEE;
     margin-bottom: 5px
   }
   
   #top{min-height: 70px;}
-  #mid{min-height: 65px;} 
+  #midKasir{min-height: 65px;} 
+  #midPemesanan{min-height: 110px;} 
   #bot{ min-height: 50px;}
   
   #top .logo{
     float: left;
       height: 40px;
-      width: 70px;
+      width: 100px;
       background: url(./../../img/logo-agogo.png) no-repeat;
-      background-size: 70px 40px;
+      background-size: 100px 40px;
   }
   .clientlogo{
     float: left;

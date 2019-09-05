@@ -67,6 +67,8 @@ const initialState = {
   isReservationListShow: false,
   isRefundShow: false,
   isRefundItem: false,
+  isInOrder: false,
+  inOrder: false,
   valueInputRefund: '',
   activeInputRefund: '',
   valueInputApproval: '',
@@ -580,7 +582,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   addSelectedReservation(id, current, user_id, total) {
-    this.setState({isDisabled: false, isRefundPSShow: true, selectedItems: [], onRefund: true})
+    this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:true, inOrder:true, selectedItems: [], onRefund: true})
     let reservationCode = id
     axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -759,6 +761,7 @@ addSelectedTransaction(id, current, idx) {
         if(where === 'doOrder'){
           if(this.state.selectedItems[0].username_approval === undefined){
             modal('alert','','','Mohon lakukan approval terlebih dahulu!')
+            console.log(this.state.selectedItems)
           } else if (this.state.selectedItems[0].pin_approval === undefined){
             modal('alert','','','Mohon lakukan approval terlebih dahulu!')
             console.log(this.state.selectedItems)

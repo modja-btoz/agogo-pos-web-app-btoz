@@ -131,7 +131,7 @@ class Login extends Component {
                       <a href="/"><i className="fas fa-arrow-left mr-5"></i></a> SIGN IN
                     </div>
                     <div className="col-3 text-right">
-                      <a onClick={() => window.print()}><img src={LogoAgogo} className="img-fluid" /> </a>
+                      <a href='/invoice'><img src={LogoAgogo} className="img-fluid" /> </a>
                     </div>
                   </div>
                 </div>

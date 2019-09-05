@@ -4,7 +4,7 @@ import './kasirOrder.scss'
 
 
 
-const kasirOrder = (props) => {
+const pemesananOrder = (props) => {
 
 console.log(props)
 
@@ -27,18 +27,34 @@ console.log(props)
       </div>
     </div>
     
-    <div id="midKasir" >
+    <div id="midPemesanan" >
       <div class="buyer">
         <tr>
-            <td><p class="itemtext">No Order</p></td>
+            <td><p class="itemtext">Pemesan</p></td>
             <td><p class="itemtext">: TK-1231231</p></td>
         </tr>
         <tr>
-            <td><p class="itemtext">Tanggal</p></td>
-            <td><p class="itemtext">: 15 Agustus 2109</p></td>
+            <td><p class="itemtext">Alamat</p></td>
+            <td><p class="itemtext">: Jln Pegangsaan Timur no 54, Jakarta</p></td>
         </tr>
         <tr>
-            <td><p class="itemtext">Kasir</p></td>
+            <td><p class="itemtext">Telepon</p></td>
+            <td><p class="itemtext">: 082565654125</p></td>
+        </tr>
+		<tr>
+            <td><p class="itemtext">No. Order</p></td>
+            <td><p class="itemtext">: PS-3541351</p></td>
+        </tr>
+		<tr>
+            <td><p class="itemtext">Tanggal</p></td>
+            <td><p class="itemtext">: 11/09/2019</p></td>
+        </tr>
+		<tr>
+            <td><p class="itemtext">Selesai</p></td>
+            <td><p class="itemtext">: 13/09/2019</p></td>
+        </tr>
+		<tr>
+            <td><p class="itemtext">Pencatat</p></td>
             <td><p class="itemtext">: Pak Alex</p></td>
         </tr>
       </div>
@@ -62,7 +78,7 @@ console.log(props)
 									</tr>
 							)}
 							<tr class="service">
-								<td class="tableitem"><p class="itemtext">{props.cartStore.state.items}</p></td>
+								<td class="tableitem"><p class="itemtext">{props.cartStore.state.time}</p></td>
 								<td class="tableitem"><p class="itemtext">5</p></td>
 								<td class="payment"><p class="itemtext">$375.00</p></td>
 							</tr>
@@ -135,4 +151,4 @@ console.log(props)
   )
 }
 
-export default kasirOrder
+export default pemesananOrder

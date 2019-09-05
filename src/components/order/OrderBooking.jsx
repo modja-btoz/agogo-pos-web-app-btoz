@@ -154,7 +154,7 @@ const OrderBooking = (props) => {
                                 <Input className="input-user" type="text" placeholder="USER APPROVAL" 
                                         name="approvalUser" id="approvalUser"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeApprove}
+                                        onChange={props.cartStore.onChangeUserApprove}
                                         autoComplete="off"
                                     />
                                 </Col>
@@ -163,7 +163,7 @@ const OrderBooking = (props) => {
                                         // value={props.cartStore.state.valueInputBooking["approvalCode"]}
                                         name="approvalCode" id="approvalCode"
                                         onFocus={props.cartStore.setActiveInputRefund}
-                                        onChange={props.cartStore.onChangeApprove}
+                                        onChange={props.cartStore.onChangePinApprove}
                                         autoComplete="off"
                                     />
                                 </Col>

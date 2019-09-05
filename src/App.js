@@ -14,7 +14,7 @@ import Booking from './components/booking/Booking'
 
 import Fullscreen from "react-full-screen";
 import Production from './components/production/Production';
-import Invoice from './components/print/kasirOrder';
+import Invoice from './components/print/pemesananOrder';
 
 Modal.setAppElement("#root");
 
@@ -117,18 +117,6 @@ class App extends Component {
             {/* GAKTAUNYA BISA KASIH FUNCTION DI ROUTE
             INI GAK BSIA KRN ROUTENYA DI PROTECT */}
             <Switch>
-              <Route exact path='/invoice'
-                  render={(props) => {
-                    this.activePath(props);
-                    return(
-                      isLoggedIn() === true
-                      ? <Redirect to={{ pathname: '/initial-balance', state: { from: props.location } }} />
-                      : <Invoice {...props} 
-                        rootStore={this.props.rootStore} 
-                        activePath={props.match.path} />
-                    )
-                  }}
-                />
 
               <Route exact path='/'
                 render={(props) => {
@@ -182,6 +170,21 @@ class App extends Component {
                       transactionStore={this.props.transactionStore}
                       activePath={props.match.path} />
                     : <Redirect to={{ pathname: '/', state: {from: props.location} }} />
+                  )
+                }}
+              />
+
+              <Route path='/invoice'
+                render={(props) => {
+                  this.activePath(props);
+                  return(
+                    isLoggedIn() === true
+                    ? <Invoice {...props} 
+                      cartStore={this.props.cartStore}
+                      rootStore={this.props.rootStore} 
+                      modalStore={this.props.modalStore} 
+                      activePath={props.match.path} /> 
+                    : <Redirect to={{ pathname: '/login/:user_index', state: { from: props.location } }} />
                   )
                 }}
               />
