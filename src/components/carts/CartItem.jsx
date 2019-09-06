@@ -10,9 +10,7 @@ const CartItem = (props) => {
         <td className="item-delete text-right">
           <i className="fas fa-undo btn-delete-item" onClick={() => props.cartStore.onRemoveToRefund(props.idx)} />
         </td> : props.cartStore.state.isInOrder ?
-        <td className="item-delete text-right">
-          <Input disabled className="fas fa-backspace btn-delete-item" onClick={() => props.cartStore.onRemoveFromCart(props.idx)} />
-        </td> :
+        <td /> :
         <td className="item-delete text-right">
           <i className="fas fa-backspace btn-delete-item" onClick={() => props.cartStore.onRemoveFromCart(props.idx)} />
         </td>

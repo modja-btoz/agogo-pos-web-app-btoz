@@ -185,16 +185,16 @@ class SaldoAwal extends Component {
                           readonly autoComplete="off"
                         />
 
-                        <Label for="username" className="text-center d-block"><h3>Username</h3></Label>
+                        <Label for="username" className="text-center d-block"><h3>User Approval</h3></Label>
                         <Input 
                           onFocus={() => this.onFocus('username') } 
                           value={this.state.username} 
                           onChange={e => this.onChangeInputUsername(e)}
-                          type="text" name="username" id="username" placeholder="USER"  size="lg" className="text-center mb-3" 
+                          type="text" name="username" id="username" placeholder="USER" size="lg" className="text-center mb-3" 
                           readonly autoComplete="off"
                         />
                         
-                        <Label for="pin" className="text-center d-block"><h3>Kode Approval</h3></Label>
+                        <Label for="pin" className="text-center d-block"><h3>Pin Approval</h3></Label>
                         <Input 
                           onFocus={() => this.onFocus('pin') } 
                           value={this.state.pin} 

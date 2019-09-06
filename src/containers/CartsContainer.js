@@ -582,7 +582,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   addSelectedReservation(id, current, user_id, total) {
-    this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:true, inOrder:true, selectedItems: [], onRefund: true})
+    this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: [], onRefund: true})
     let reservationCode = id
     axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -598,7 +598,7 @@ addSelectedTransaction(id, current, idx) {
                     expenseAmount: reservationData[0].add_fee,
                     discountAmount: reservationData[0].discount, 
                     tgl_trx: reservationData[0].tgl_selesai, 
-                    nama: reservationData[0].nama},
+                    nama: reservationData[0].nama}, 
                     () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
                       const transaction = res.data;
                       transaction.forEach((trx, i) => 
@@ -1914,7 +1914,7 @@ addSelectedTransaction(id, current, idx) {
   }
   
   doOrder = (id) => {
-    this.setState({isRefundPSShow: true, disabledOrder: true, disabledOther: true})
+    this.setState({isRefundPSShow: true, disabledOrder: true, disabledOther: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder})
     let orderCode = id
     axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -2460,8 +2460,12 @@ addSelectedTransaction(id, current, idx) {
     .then(res=> console.log(res))
     .catch(res => console.log(res))
     axios.post(`http://101.255.125.227:82/api/postProduction`, dataFiltered)
-    .then(modal.clearModal())
-  }
+    .then(res => {console.log(res)
+                  modal.clearModal()})
+    .catch(res => {modal.clearModal() 
+                   modal.toggleModal('alert','','',res.response.data.message)
+  })
+}
 
   changeAllDate(modal, close){
     axios.get(`http://101.255.125.227:82/api/products`)
