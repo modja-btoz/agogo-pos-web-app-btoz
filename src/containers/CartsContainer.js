@@ -2606,6 +2606,16 @@ addSelectedTransaction(id, current, idx) {
   //   })
   //   console.log("Clicked")
   // }
+
+  doPrint(){
+    var content = document.getElementById("bacoba");
+    var pri = document.getElementById("ifmcontentstoprint").contentWindow;
+    pri.document.open();
+    pri.document.write(content.innerHTML);
+    pri.document.close();
+    pri.focus();
+    pri.print();
+  }
 }
 
 
