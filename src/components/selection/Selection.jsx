@@ -78,7 +78,7 @@ class Selection extends Component {
                         } */}
                         {this.state.all &&
                             <div>
-                            {this.state.where.status === 'success' ?
+                            {this.state.where.status === 'counted' ?
                                 <Link to={'/initial-balance'}>
                                     <button className="btn btn-size">KASIR</button>
                                 </Link> : 

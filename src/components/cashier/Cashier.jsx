@@ -10,6 +10,7 @@ import FooterNavRight from '../navigations/FooterNavRight'
 import PaymentCheckout from '../payments/PaymentCheckout'
 import ReservationCheckout from '../payments/ReservationCheckout'
 import NumberFormat from 'react-number-format'
+import axios from 'axios'
 import LogoAgogo from "./../../img/logo-agogo.png";
 
 import './Cashier.scss';
@@ -34,6 +35,11 @@ class Kasir extends Component {
     console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore);
     console.log("CART ~~~~~~~~~~~~~ ", this.props.cartStore);
     console.log('A', sessionStorage);
+      
+    axios.get('http://101.255.125.227:82/api/cekKas')
+    .then(res => {
+        sessionStorage.setItem('idKas', JSON.stringify(res.data))
+    })
 
     const user = JSON.parse(sessionStorage.getItem('usernow'))
     this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
