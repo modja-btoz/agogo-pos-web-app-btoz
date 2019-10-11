@@ -52,7 +52,7 @@ class TransactionList extends Component {
               autoHeightMin={500}
               autoHeightMax={500}
             >
-              <div className="scroll-wrapper">
+              <div className="scroll-wrapper" id="Cobaaa">
                 <Table style={{color: "white"}} borderless striped className="mb-0">
                   <TransactionItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
                 </Table>

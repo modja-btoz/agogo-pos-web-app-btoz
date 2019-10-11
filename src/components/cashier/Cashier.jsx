@@ -9,6 +9,9 @@ import FooterNavLeft from '../navigations/FooterNavLeft'
 import FooterNavRight from '../navigations/FooterNavRight'
 import PaymentCheckout from '../payments/PaymentCheckout'
 import ReservationCheckout from '../payments/ReservationCheckout'
+import NumberFormat from 'react-number-format'
+import axios from 'axios'
+import LogoAgogo from "./../../img/logo-agogo.png";
 
 import './Cashier.scss';
 import './SidebarComponentsWrapper.scss';
@@ -32,6 +35,11 @@ class Kasir extends Component {
     console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore);
     console.log("CART ~~~~~~~~~~~~~ ", this.props.cartStore);
     console.log('A', sessionStorage);
+      
+    axios.get('http://101.255.125.227:82/api/cekKas')
+    .then(res => {
+        sessionStorage.setItem('idKas', JSON.stringify(res.data))
+    })
 
     const user = JSON.parse(sessionStorage.getItem('usernow'))
     this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
@@ -50,6 +58,147 @@ class Kasir extends Component {
   render() {
     return (
       <Container fluid="true" className="kasir container-fluid h-100">
+        <iframe id="ifmcontentstoprint" title="coba" style={{display: 'none', width: '70mm'}}></iframe>
+        <div id="bacoba">
+
+        <div style={{borderBottom: '1px solid #EEE', marginBottom: '5px'}}>
+        <div style={{marginTop: '5%', float: 'left', width: '100px', height: '40px', backgroundImage: `url(require(Rp {LogoAgogo}))`, backgroundSize: '100px 40px'}} />
+        <div class="info" style={{marginTop: '5%'}}> 
+        <h6>
+        <p align='left'> 
+            Jalan Woltermonginsidi<br />
+            Kel. Girian Indah | Kec. Girian <br />
+            Bitung | Sulawesi Utara<br />
+            Telp. 0438 2230652<br />
+            Fax. 0821 8749 8746<br />
+        </p>
+        </h6>
+      </div>
+    </div>
+    
+    <div style={{borderBottom: '1px solid #EEE', marginBottom: '5px', minHeight: '110px'}} >
+      <div style={{marginTop: '10px'}}>
+      <table>
+        <tr>
+            <td>Pemesan</td>
+            <td>: Manusia tak bertulgang</td>
+        </tr>
+        <tr>
+            <td>Alamat</td>
+            <td>: Jln Pegangsaan Timur no 54, Jakarta</td>
+        </tr>
+        <tr>
+            <td>Telepon</td>
+            <td>: 082565654125</td>
+        </tr>
+		    <tr>
+            <td>No. Order</td>
+            <td>: PS-3541351</td>
+        </tr>
+		    <tr>
+            <td>Tanggal</td>
+            <td>: 11/09/2019</td>
+        </tr>
+		    <tr>
+            <td>Selesai</td>
+            <td>: 13/09/2019</td>
+        </tr>
+		    <tr>
+            <td>Pencatat</td>
+            <td>: Pak Alex</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+    
+    <div style={{borderBottom: '1px solid #EEE', marginBottom: '5px'}}>
+
+					<div id="table" style={{marginTop: 10}}>
+						<table>
+							<tr style={{height: 20}}>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Item</td>
+								<td style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}>Qty</td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Sub Total</td>
+							</tr>
+
+							{this.props.cartStore.state.items.map(item => 
+									<tr class="service">
+										<td>{item.name}</td>
+										<td style={{textAlign: 'center'}}>{item.qty}</td>
+										<td><NumberFormat prefix={'Rp '} value={item.price} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} /></td>
+									</tr>
+							)}
+							{/* <tr class="service">
+								<td class="tableitem"><p class="itemtext">{this.props.cartStore.state.time}</p></td>
+								<td class="tableitem"><p class="itemtext">5</p></td>
+								<td class="payment"><p class="itemtext">Rp 375.00</p></td>
+							</tr>
+
+							<tr class="service">
+								<td class="tableitem"><p class="itemtext">Asset Gathering</p></td>
+								<td class="tableitem"><p class="itemtext">3</p></td>
+								<td class="payment"><p class="itemtext">Rp 225.00</p></td>
+							</tr>
+
+							<tr class="service">
+								<td class="tableitem"><p class="itemtext">Design Development</p></td>
+								<td class="tableitem"><p class="itemtext">5</p></td>
+								<td class="payment"><p class="itemtext">Rp 375.00</p></td>
+							</tr>
+
+							<tr class="service">
+								<td class="tableitem"><p class="itemtext">Animation</p></td>
+								<td class="tableitem"><p class="itemtext">20</p></td>
+								<td class="payment"><p class="itemtext">Rp 1500.00</p></td>
+							</tr>
+
+							<tr class="service">
+								<td class="tableitem"><p class="itemtext">Animation Revisions</p></td>
+								<td class="tableitem"><p class="itemtext">10</p></td>
+								<td class="payment"><p class="itemtext">Rp 750.00</p></td>
+							</tr> */}
+
+
+							{/* <tr class="tabletitle">
+								<td></td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Jumlah</td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Rp 419.25</td>
+							</tr>
+
+							<tr class="tabletitle">
+								<td></td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Diskon</td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Rp 0</td>
+							</tr> */}
+
+							<tr class="tabletitle">
+								<td></td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Total</td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Rp 3,644.25</td>
+							</tr>
+
+							<tr class="tabletitle">
+								<td></td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Pembayaran</td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Rp 4,000.00</td>
+							</tr>
+
+							<tr class="tabletitle">
+								<td></td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Kembali</td>
+								<td style={{fontSize: '16px', fontWeight: 'bold'}}>Rp 365.75</td>
+							</tr>
+
+						</table>
+					</div>
+
+					<div id="legalcopy">
+						<p class="legal"><strong>*** 5 ITEM ***<br /></strong>Terima kasih <br />Atas kunjungan anda</p>
+					</div>
+
+				</div>
+      </div>
+
         <Row className="h-100">
 
           <Col xs="6" className="kasir-cart">
@@ -59,7 +208,7 @@ class Kasir extends Component {
                   <NavbarBrand href="#" className="ml-4"><i className="fas fa-user-alt mr-1"></i>{" " +this.state.name}</NavbarBrand>
                   <Nav className="ml-auto" navbar>
                     <NavItem>
-                      <NavLink href="/invoice">{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
+                      <NavLink onClick={() => this.props.cartStore.doPrint()}>{"Order #" + this.props.cartStore.state.currentTrx}</NavLink>
                     </NavItem>
                     <NavItem>
                       <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>

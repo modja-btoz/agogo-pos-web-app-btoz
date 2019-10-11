@@ -85,6 +85,7 @@ class App extends Component {
   logout = () => {
     // console.log("LOGOUT")
     sessionStorage.setItem('token', '');
+    sessionStorage.setItem('idKas', '');
     sessionStorage.clear();
   }
 

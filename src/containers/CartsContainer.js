@@ -871,16 +871,18 @@ addSelectedTransaction(id, current, idx) {
   }
 
   doPostKas(transaction, user, modal){
+    const idKas = JSON.parse(sessionStorage.getItem('idKas'))
     const saldo_akhir = transaction.total_transaksi + transaction.saldo_awal
     let postData = {
-        user_id: user.id,
-        saldo_awal: transaction.saldo_awal,
+        // user_id: user.id,
+        // saldo_awal: transaction.saldo_awal,
+        diskon: transaction.diskon,
         transaksi: transaction.total_transaksi,
         saldo_akhir: saldo_akhir,
         username_approval: this.state.dataReservation["user"],
         pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]
       }
-    console.log(postData.username_approval, postData.pin_approval)
+    console.log(postData.username_approval, postData.pin_approval, transaction)
     if(!postData.username_approval){
       modal.clearModal()
       modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
@@ -888,15 +890,15 @@ addSelectedTransaction(id, current, idx) {
       modal.clearModal()
       modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else {
-    axios.post('http://101.255.125.227:82/api/postKas', [postData])
+    axios.put('http://101.255.125.227:82/api/updateKas/' + idKas.id_kas, [postData])
     .then(res => {
       document.location.href = '/logout'
-      console.log(res, [postData])
+      console.log(res, idKas, [postData])
     })
     .catch(res => {
       modal.clearModal()
       modal.toggleModal('alert','','',res.response.data.message)
-      console.log(res, [postData])
+      console.log(res, idKas, [postData])
     })
     }
   }
@@ -1175,7 +1177,7 @@ addSelectedTransaction(id, current, idx) {
       grandTotalAmount: grandTotalAmount
     },
       () => {
-        let grandTotalAmountDiscount = parseInt( sumTotalAmount - discountAmount + otherExpenses )
+        let grandTotalAmountDiscount = parseInt( sumTotalAmount + otherExpenses  - discountAmount )
         let leftToPay = parseInt (grandTotalAmountDiscount - dpReservationAmount)
         this.setState({
           grandTotalAmountDiscount: grandTotalAmountDiscount,
@@ -1219,7 +1221,10 @@ addSelectedTransaction(id, current, idx) {
 
   dpPrice(){
     let dp = this.state.valueInputBooking["bookingPayment"] || this.state.dpReservationAmount
-    let sumTotalAmount = parseInt( this.state.totalAmount )
+    let otherExpenses = parseInt( this.state.expenseAmount )
+    let discountAmount = parseInt( this.state.discountAmount )
+    let sumTotalAmount = parseInt( this.state.totalAmount + otherExpenses - discountAmount )
+    
     if(dp === undefined || dp === ''){
       dp = 0;
     }
@@ -2606,6 +2611,16 @@ addSelectedTransaction(id, current, idx) {
   //   })
   //   console.log("Clicked")
   // }
+
+  doPrint(){
+    var content = document.getElementById("bacoba");
+    var pri = document.getElementById("ifmcontentstoprint").contentWindow;
+    pri.document.open();
+    pri.document.write(content.innerHTML);
+    pri.document.close();
+    pri.focus();
+    pri.print();
+  }
 }
 
 

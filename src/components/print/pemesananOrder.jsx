@@ -1,7 +1,8 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
-import './kasirOrder.scss'
+import NumberFormat from 'react-number-format'
 
+import './kasirOrder.scss'
 
 
 const pemesananOrder = (props) => {
@@ -74,7 +75,7 @@ console.log(props)
 									<tr class="service">
 										<td class="tableitem"><p class="itemtext">{item.name}</p></td>
 										<td class="tableitem"><p class="itemtext">{item.qty}</p></td>
-										<td class="payment"><p class="itemtext">{item.price}</p></td>
+										<td class="payment"><p class="itemtext"><NumberFormat prefix={'Rp '} value={item.price} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} /></p></td>
 									</tr>
 							)}
 							<tr class="service">
