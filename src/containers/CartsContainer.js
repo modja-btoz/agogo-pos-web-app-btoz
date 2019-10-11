@@ -876,12 +876,13 @@ addSelectedTransaction(id, current, idx) {
     let postData = {
         // user_id: user.id,
         // saldo_awal: transaction.saldo_awal,
+        diskon: transaction.diskon,
         transaksi: transaction.total_transaksi,
         saldo_akhir: saldo_akhir,
         username_approval: this.state.dataReservation["user"],
         pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]
       }
-    console.log(postData.username_approval, postData.pin_approval)
+    console.log(postData.username_approval, postData.pin_approval, transaction)
     if(!postData.username_approval){
       modal.clearModal()
       modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
@@ -1176,7 +1177,7 @@ addSelectedTransaction(id, current, idx) {
       grandTotalAmount: grandTotalAmount
     },
       () => {
-        let grandTotalAmountDiscount = parseInt( sumTotalAmount - discountAmount + otherExpenses )
+        let grandTotalAmountDiscount = parseInt( sumTotalAmount + otherExpenses  - discountAmount )
         let leftToPay = parseInt (grandTotalAmountDiscount - dpReservationAmount)
         this.setState({
           grandTotalAmountDiscount: grandTotalAmountDiscount,
@@ -1220,7 +1221,10 @@ addSelectedTransaction(id, current, idx) {
 
   dpPrice(){
     let dp = this.state.valueInputBooking["bookingPayment"] || this.state.dpReservationAmount
-    let sumTotalAmount = parseInt( this.state.totalAmount )
+    let otherExpenses = parseInt( this.state.expenseAmount )
+    let discountAmount = parseInt( this.state.discountAmount )
+    let sumTotalAmount = parseInt( this.state.totalAmount + otherExpenses - discountAmount )
+    
     if(dp === undefined || dp === ''){
       dp = 0;
     }
