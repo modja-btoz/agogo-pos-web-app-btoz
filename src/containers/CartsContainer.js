@@ -1160,7 +1160,7 @@ addSelectedTransaction(id, current, idx) {
     let sumTotalAmount = this.state.totalAmount
     let otherExpenses = parseInt( this.state.expenseAmount )
     let grandTotalAmount = parseInt( sumTotalAmount - otherExpenses )
-    let dpReservationAmount = parseInt(this.dpPrice())
+    // let dpReservationAmount = parseInt(this.dpPrice())
     
     let discountAmount;
     if(this.state.discountType === '%'){
@@ -1178,7 +1178,7 @@ addSelectedTransaction(id, current, idx) {
     },
       () => {
         let grandTotalAmountDiscount = parseInt( sumTotalAmount + otherExpenses  - discountAmount )
-        let leftToPay = parseInt (grandTotalAmountDiscount - dpReservationAmount)
+        let leftToPay = parseInt (grandTotalAmountDiscount - this.dpPrice())
         this.setState({
           grandTotalAmountDiscount: grandTotalAmountDiscount,
           leftToPay: leftToPay
@@ -1208,7 +1208,7 @@ addSelectedTransaction(id, current, idx) {
 
   discountPrice(){
     let discount = this.state.valueInputPayment["paymentDiscount"] || this.state.valueInputBooking["paymentDiscount"] || this.state.discountAmount
-    let sumTotalAmount = parseInt( this.state.totalAmount )
+    let sumTotalAmount = parseInt( this.state.totalAmount)
     if(discount === undefined || discount === ''){
       discount = 0;
     }
