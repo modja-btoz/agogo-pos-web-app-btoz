@@ -35,7 +35,7 @@ class Production extends React.Component {
                         <Row className="cart-header no-gutters">
                             <Col xs="12">
                                 <Navbar expand="md">
-                                    <NavbarBrand href="/" className="ml-4"><i className="fas fa-user-alt mr-1"></i> {" " +this.state.name}</NavbarBrand>
+                                    <NavbarBrand href="#" className="ml-4"><i className="fas fa-user-alt mr-1"></i> {" " +this.state.name}</NavbarBrand>
                                     <Nav className="ml-auto" navbar>
                                         <NavItem>
                                             <NavLink onClick={() => this.props.modalStore.toggleModal('clearCart', '')} className="navbar-close"><i className="fas fa-times"></i></NavLink>

@@ -79,7 +79,7 @@ class Cart extends Component {
           }
           {this.props.cartStore.state.isRefundPSShow &&
             <aside >
-              <CartBookingTotal refund="Total Refund" pembayaran="Sisa Pembayaran" cartStore={this.props.cartStore} />
+              <CartBookingTotal cartStore={this.props.cartStore} />
             </aside>
           }
             

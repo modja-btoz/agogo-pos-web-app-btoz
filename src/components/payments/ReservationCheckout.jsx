@@ -45,7 +45,7 @@ const ReservationCheckout = (props) => {
             </div>
 
             <h5 className="mb-0">
-              {(props.cartStore.state.valueInputPayment["paymentTotal"] < props.cartStore.state.grandTotalAmountDiscount || isNaN(props.cartStore.state.valueInputPayment["paymentTotal"]) )
+              {(props.cartStore.state.valueInputPayment["paymentTotal"] < props.cartStore.state.leftToPay || isNaN(props.cartStore.state.valueInputPayment["paymentTotal"]) )
               ? 'KURANG' 
               : 'KEMBALI'}
             </h5>

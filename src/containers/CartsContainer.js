@@ -96,7 +96,6 @@ const initialState = {
   disabledProductionNote: true,
   productNote: "",
   payRefundTK: true,
-  abasa: false,
   prevDate : '',
   lastDate: '',
   formatDate: '',
@@ -189,7 +188,8 @@ class CartsContainer extends Container {
   clearCart = () => {
     console.log("CLEAR CART", this)
     this.setState(initialState);
-    this.setState({dataReservation: {}})
+    this.setState({dataReservation: {}, trxRefund: []});
+    this.getDateTrx()
   }
 
   resetProduct = () => {
@@ -582,7 +582,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   addSelectedReservation(id, current, user_id, total) {
-    this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: [], onRefund: true})
+    this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: []})
     let reservationCode = id
     axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
@@ -841,7 +841,7 @@ addSelectedTransaction(id, current, idx) {
   doNextRefund(modal) {
     this.setState({trxRefund: []})
     if(this.state.whatRefund === "PS"){
-    let dataReservation = this.state.selectedItems
+    let dataReservation = this.state.refundItems
     dataReservation.forEach(data => 
     this.state.trxRefund.push({
       qty: data.qty,
@@ -853,6 +853,7 @@ addSelectedTransaction(id, current, idx) {
       username_approval: this.state.dataReservation["user"],
       pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]}))
     this.doRefundPost(modal)
+    console.log(this.state.trxRefund);
     }else if (this.state.whatRefund === "TK"){
       let dataReservation = this.state.refundItems
       dataReservation.forEach(data => 
@@ -866,6 +867,7 @@ addSelectedTransaction(id, current, idx) {
           username_approval: this.state.dataReservation["user"],
           pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]}))
       this.doRefundPost(modal)
+      console.log(this.state.trxRefund);
     }
     // axios.put('https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/order/' + dataRefund.id, this.state.items)
   }
@@ -916,12 +918,12 @@ addSelectedTransaction(id, current, idx) {
     axios.post(`http://101.255.125.227:82/api/refunds`, this.state.trxRefund)
     .then(res => {
       modal('bayar')
-      console.log(this.state.trxRefund, this.state.selectedItems)
+      console.log(this.state.trxRefund, this.state.selectedItems, res)
       this.setState({trxRefund: [], selectedItems: []})
       })
     .catch(res => {
       modal('alert','','',res.response.data.message)
-      console.log(this.state.trxRefund, this.state.selectedItems)
+      console.log(this.state.trxRefund, this.state.selectedItems, res)
       this.setState({trxRefund: [], selectedItems: []})
     })
    }
@@ -941,7 +943,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   doPSRefund(id, current, user_id){
-    this.setState({isDisabled: false, isRefundPSShow: true, selectedItems: []})
+    this.setState({isDisabled: false, selectedItems: []})
     let reservationCode = id
     axios.get(`http://101.255.125.227:82/api/paid_preorders`)
     .then(res => {
@@ -1772,13 +1774,23 @@ addSelectedTransaction(id, current, idx) {
   //   }
   // }
 
-  handleRefundChange= (event) => {
+  setRefund = (code) => {
+    if(code === "TK"){
+      this.setState({selectedRefund: 'TK'})
+    }else if(code === "PS"){
+      this.setState({selectedRefund: 'PS'})
+    }else{
+      console.log("SALAH !")
+    }
+  }
+
+  handleRefundChange = (event) => {
     console.log("PENCET", this.state.selectedRefund, this.state.valueInputRefund)
     if (this.state.selectedRefund === 'PS'){
-      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value, isRefundPSShow: !this.state.isRefundPSShow, })
+      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value })
     }
     if (this.state.selectedRefund === 'TK'){
-      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value, isRefundPSShow: !this.state.isRefundPSShow, })
+      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value })
     }
   }
 
@@ -1886,25 +1898,41 @@ addSelectedTransaction(id, current, idx) {
       modal('alert','','','Mohon lakukan approval terlebih dahulu!')
     }
     else{
-    this.setState({
-      selectedItems: [
-        ...this.state.selectedItems.slice(0,index),
-        Object.assign({}, this.state.selectedItems[index],
-          {uang_dibayar: this.state.payment},
-          {preorder_id: items[0].preorder_id},
-          {uang_kembali: this.state.changePayment},
-          {diskon: this.state.discountAmount},
-          {subtotal: this.state.totalAmount},
-          {status: "PAID"},
-          {user_id: user_id},
-          {username_approval: this.state.dataReservation["user"]},
-          {pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]},
-        ...this.state.selectedItems.slice(index+1))
-      ]
-    }, () => {
+      let myData = [];
+      items.forEach(item => {
+        myData.push({
+          add_fee: item.add_fee,
+          alamat: item.alamat,
+          catatan: item.catatan,
+          id: item.id,
+          idx: item.idx,
+          invoice: item.invoice,
+          nama: item.nama,
+          name: item.name,
+          preorder_id: item.preorder_id,
+          price: item.price,
+          product_id: item.product_id,
+          qty: item.qty,
+          sisa_harus_bayar: item.sisa_harus_bayar,
+          telepon: item.telepon,
+          tgl_selesai: item.tgl_selesai,
+          total: item.total,
+          uang_muka: item.uang_muka,
+          waktu_selesai: item.waktu_selesai,
+          uang_dibayar: this.state.payment,
+          uang_kembali: this.state.changePayment,
+          diskon: this.state.discountAmount,
+          subtotal: this.state.totalAmount,
+          status: "PAID",
+          user_id: user_id,
+          username_approval: this.state.dataReservation["user"],
+          pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"],
+        })
+      });
       console.log(this.state.selectedItems)
-      console.log("CEK INI ~~~~~~~",user_id, this.state.selectedItems)
-      axios.post(`http://101.255.125.227:82/api/bayarPreorder`, this.state.selectedItems)
+      console.log(myData)
+      console.log("CEK INI ~~~~~~~",user_id, this.state.selectedItems, myData)
+      axios.post(`http://101.255.125.227:82/api/bayarPreorder`, myData)
       .then(res => {
         modal('bayarAmbil')
         this.setState({refund: [], selectedItems: []}) 
@@ -1914,8 +1942,7 @@ addSelectedTransaction(id, current, idx) {
         this.setState({refund: []})
         console.log(res.response,)
       })
-    })
-   }
+    }
   }
   
   doOrder = (id) => {
