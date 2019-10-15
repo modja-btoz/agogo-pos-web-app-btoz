@@ -18,11 +18,11 @@ const Refund = (props) => {
         <Row sm={4}>
         <FormGroup check>
               <Label style={{marginLeft:"4px", marginRight:"10px"}} check> Toko </Label>
-              <Input style={{position: "relative"}} checked={props.cartStore.state.selectedRefund === "TK"} onChange={props.cartStore.handleRefundChange} value="TK" className="radio sm" size="sm" type="radio" name="TK" id="TK" /> {' '}
+              <Input style={{position: "relative"}} checked={props.cartStore.state.selectedRefund === "TK"} onChange={(e) => props.cartStore.handleRefundChange(e)} value="TK" className="radio sm" size="sm" type="radio" name="TK" id="TK" /> {' '}
             </FormGroup>  
           <FormGroup check>
               <Label style={{marginLeft:"4px", marginRight:"10px"}} check> Pesanan </Label>
-              <Input style={{position: "relative"}} checked={props.cartStore.state.selectedRefund === "PS"} onChange={props.cartStore.handleRefundChange} value="PS" className="radio sm" size="sm" type="radio" name="PS" id="PS" /> {' '}
+              <Input style={{position: "relative"}} checked={props.cartStore.state.selectedRefund === "PS"} onChange={(e) => props.cartStore.handleRefundChange(e)} value="PS" className="radio sm" size="sm" type="radio" name="PS" id="PS" /> {' '}
             </FormGroup>                    
           </Row>
 

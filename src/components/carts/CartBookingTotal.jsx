@@ -33,25 +33,12 @@ const CartBookingTotal = (props) => {
                 </td>
             </tr>
             <tr className="table-spacer"><td></td></tr>
-            {props.cartStore.state.isRefundPSShow ?
             <tr className="cart-total">
-            <th className="header grand-total-label">{props.cartStore.state.abasa ? props.refund : props.pembayaran}</th>
-            {props.cartStore.state.abasa ? 
-                <th className="header text-right grand-total">
-                    <NumberFormat value={props.cartStore.state.dpReservationAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
-                </th> :
+            <th className="header grand-total-label">Sisa Pembayaran</th>
                 <th className="header text-right grand-total">
                     <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
                 </th> 
-            }
-            </tr> :
-            <tr className="cart-total">
-                <th className="header grand-total-label">Sisa Pembayaran</th>
-                <th className="header text-right grand-total">
-                <NumberFormat value={props.cartStore.state.leftToPay} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} />
-                </th>
             </tr>
-            }
         </tfoot>
     )
 }
