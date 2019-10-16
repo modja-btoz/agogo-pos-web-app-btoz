@@ -87,6 +87,7 @@ const initialState = {
   time: '00:00',
   nama: '',
   currentTrx: '',
+  currentIDTrx: '',
   popStatus: false,
   isDisabled: true,
   isDisabledRefund: true,
@@ -555,7 +556,7 @@ addSelectedTransaction(id, current, idx) {
         price: trx.product.price
       })
     )
-    console.log("INI ", this.state.selectedItems)
+    console.log("INI ", this.state.selectedItems, id, current)
     this.setState({items: this.state.selectedItems, selectedItems:[]}, 
       () => {this.sumTotalAmount() 
             this.setState({
@@ -571,12 +572,14 @@ addSelectedTransaction(id, current, idx) {
               }, 3500);
             }
           )
+          // axios.delete(`http://101.255.125.227:82/api/order/` + id)
         }
       )
     })
     this.setState({
       refund: [id, current],
       currentTrx: current, 
+      currentIDTrx: id,
       isTransactionListShow: false,
       selectedItems: []})
   }
@@ -656,6 +659,8 @@ addSelectedTransaction(id, current, idx) {
       this.setState({data: []}, () => {
         items.forEach((x) => 
         this.state.data.push({
+            invoice: this.state.currentTrx,
+            order_id: this.state.currentIDTrx,
             user_id: user_id,
             product_id: x.id,
             qty: x.qty,
