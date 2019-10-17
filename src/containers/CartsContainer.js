@@ -854,7 +854,7 @@ addSelectedTransaction(id, current, idx) {
       order_id: "",
       preorder_id: data.preorder_id,
       product_id: data.product_id,
-      total: data.total,
+      total: parseInt(data.qty) * parseInt(data.price),
       username_approval: this.state.dataReservation["user"],
       pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]}))
     this.doRefundPost(modal)
