@@ -35,7 +35,7 @@ class Login extends Component {
       this.state({ redirect: true })
     }
 
-    // console.log(this.props)
+    /// console.log(this.props)
     let user_index = this.props.match.params.user_index;
     let users = sessionStorage.getItem('users');
     this.setState({ users: JSON.parse(users)},
