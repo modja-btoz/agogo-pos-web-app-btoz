@@ -254,11 +254,40 @@ class Modals extends Component {
         <Row>
           <Col xs="7">
           <div style={{textAlign: "left", paddingLeft: "30px"}}>
-            <h5>
-            <Label>Saldo Awal : {this.props.modalStore.state.transaction.saldo_awal}</Label>< br/>
-            <Label>Transaksi : {this.props.modalStore.state.transaction.total_transaksi}</Label>
+            <h4>
+            <tr>
+              <td>Saldo Awal </td>
+              <td>:</td>
+              <td className='toRight'>
+              <NumberFormat value={this.props.modalStore.state.transaction.saldo_awal} 
+              displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
+              </td>
+            </tr>
+            <tr>
+              <td>Transaksi </td>
+              <td>:</td>
+              <td className='toRight'>
+              <NumberFormat value={parseInt(this.props.modalStore.state.transaction.total_transaksi) - 
+                parseInt(this.props.modalStore.state.transaction.total_refund)}
+                displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
+                </td>
+            </tr>
+            <hr style={{width: 'auto', marginTop: '10px'}} />
+            <tr>
+              <td>Saldo Akhir </td>
+              <td>:</td>
+              <td className='toRight'>
+              <NumberFormat value={parseInt(this.props.modalStore.state.transaction.total_transaksi) + 
+                parseInt(this.props.modalStore.state.transaction.saldo_awal) - 
+                parseInt(this.props.modalStore.state.transaction.total_refund)}
+                displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
+                </td>
+            </tr>
+            </h4>
+            {/* <Label>Saldo Awal : {this.props.modalStore.state.transaction.saldo_awal}</Label>< br/>
+            <Label>Transaksi : {parseInt(this.props.modalStore.state.transaction.total_transaksi) - parseInt(this.props.modalStore.state.transaction.total_refund)}</Label>
             <hr style={{width: 'auto'}} />
-            <Label>Saldo Akhir : {parseInt(this.props.modalStore.state.transaction.total_transaksi) + parseInt(this.props.modalStore.state.transaction.saldo_awal)}</Label></h5>
+            <Label>Saldo Akhir : {parseInt(this.props.modalStore.state.transaction.total_transaksi) + parseInt(this.props.modalStore.state.transaction.saldo_awal) - parseInt(this.props.modalStore.state.transaction.total_refund)}</Label></h5> */}
           </div>
 
           <h3>USER APPROVAL</h3>
