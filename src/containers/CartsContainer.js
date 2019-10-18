@@ -879,10 +879,10 @@ addSelectedTransaction(id, current, idx) {
 
   doPostKas(transaction, user, modal){
     const idKas = JSON.parse(sessionStorage.getItem('idKas'))
-    const saldo_akhir = transaction.total_transaksi + transaction.saldo_awal
+    const saldo_akhir = transaction.total_transaksi + transaction.saldo_awal - parseInt(transaction.total_refund)
     let postData = {
         // user_id: user.id,
-        // saldo_awal: transaction.saldo_awal,
+        refund: parseInt(transaction.total_refund),
         diskon: transaction.diskon,
         transaksi: transaction.total_transaksi,
         saldo_akhir: saldo_akhir,
