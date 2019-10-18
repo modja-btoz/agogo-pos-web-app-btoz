@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Row, Col } from 'reactstrap';
 import TransactionItem from './TransactionItem';
 
 class TransactionItems extends Component {
@@ -8,17 +9,39 @@ class TransactionItems extends Component {
   }
 
   componentDidMount(){
-    console.log("ETSTTTTTT", this.props.transactionStore)
-  }
+    this.props.cartStore.fetchTransaction()
+  }  
 
   render(){
 
     return (
-      <div>
-        {this.props.transactionStore.state.transactionStore.map((transaction, i) => 
-          <li>{transaction.username}</li>
-        )}
-      </div>
+
+      <Row className="TransactionItems row m-0">
+
+      { this.props.cartStore.state.transaction.map((transaction, i) => 
+      <Col xs="12">
+        <TransactionItem 
+          trxIndex={i}
+          trxID={transaction.id} 
+          trxName={transaction.invoice}
+          userID={transaction.user_id}
+          trxPrice={transaction.total} 
+          trxDate={transaction.created_at} 
+          transactionStore={this.props.transactionStore} 
+          cartStore={this.props.cartStore} 
+          rootStore={this.props.rootStore}
+        />
+      </Col>
+      )}    
+
+    </Row>
+
+
+      // <div>
+      //   {this.props.transactionStore.state.transactionStore.map((transaction, i) => 
+      //     <li>{transaction.username}</li>
+      //   )}
+      // </div>
     )
   }
 }

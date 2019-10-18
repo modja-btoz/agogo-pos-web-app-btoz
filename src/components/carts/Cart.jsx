@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Table, Container } from 'reactstrap';
+import { Table, Container, Button } from 'reactstrap';
 import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 
 import CartHeader from './CartHeader';
 import CartItems from './CartItems';
 import CartTotal from './CartTotal';
+import RefundItems from './RefundItems';
+import CartBookingTotal from './CartBookingTotal';
 
 import './Cart.scss';
+import { relative } from 'path';
 
 
 class Cart extends Component {
@@ -52,12 +55,36 @@ class Cart extends Component {
               <Table borderless striped className="mb-0">
                 <CartItems cartStore={this.props.cartStore} />
               </Table>
+              {this.props.cartStore.state.isRefundItem &&
+                <div>
+                <h3 style={{textAlign: "center"}}>Refund</h3>
+                <Table borderless striped className="mb-0">
+                <RefundItems cartStore={this.props.cartStore}  />
+                </Table>
+                </div>
+                  }
             </div>
           </ShadowScrollbars>
 
-          <Table borderless striped>
+          {/* <Table borderless striped>
             <CartTotal cartStore={this.props.cartStore} />
+          </Table> */}
+          
+          
+          <Table borderless striped>
+          {this.props.cartStore.state.isRefundTKShow &&
+            <aside >
+              <CartTotal cartStore={this.props.cartStore} />
+            </aside>
+          }
+          {this.props.cartStore.state.isRefundPSShow &&
+            <aside >
+              <CartBookingTotal cartStore={this.props.cartStore} />
+            </aside>
+          }
+            
           </Table>
+
       </Container>
     );
   }

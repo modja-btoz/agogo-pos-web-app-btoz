@@ -7,6 +7,7 @@ class ProductsContainer extends Container {
     products: [],
     productsFiltered: [],
     filterKeyword: "Semua Item",
+    selectedStok: 'Semua Stok',
     searchKeyword: '',
     footerNvaBarHeight: 114,
     windowInnerHeight: 0,
@@ -16,7 +17,7 @@ class ProductsContainer extends Container {
 
   fetchProducts() {
     // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
-    axios.get(`http://dev.wakwaw.com/agogo/wp-json/wp/v2/produk?_embed`)
+    axios.get(`http://101.255.125.227:82/api/products`)
     .then(res => {
       const products = res.data;
       this.setState({ 
@@ -39,7 +40,7 @@ class ProductsContainer extends Container {
 
     let productsSearch =  products.filter(function(product) {
       // return product.title.rendered === searchKeyword;
-      return product.title.rendered.toString().toLowerCase().search(searchKeyword.toLowerCase()) !== -1;
+      return product.name.toString().toLowerCase().search(searchKeyword.toLowerCase()) !== -1;
     });
 
     this.setState({ 
@@ -67,19 +68,63 @@ class ProductsContainer extends Container {
   productsFiltered(){
     let products = this.state.products
     let filterKeyword = this.state.filterKeyword
+    let selectedStok = this.state.selectedStok
+    let stok = "0"
 
     let productsFiltered =  products.filter(function(product) {
-      return product.kategori[0] === filterKeyword;
+      return product.category_name === filterKeyword;
+    });
+
+    let stokFiltered =  products.filter(function(product) {
+      return product.stock === stok;
+    });
+
+    let stokFilteredN =  products.filter(function(product) {
+      return product.stock !== stok;
     });
 
     if(filterKeyword === "Semua Item"){
+      if (selectedStok === "Stok Tersedia"){
+        this.setState({ 
+          productsFiltered: stokFilteredN
+        })
+      }
+      else if (selectedStok === "Stok Habis"){
+        this.setState({ 
+          productsFiltered: stokFiltered
+        })
+      }
+      else {
       this.setState({ 
         productsFiltered: products
       })
-    }else{
+    }
+    }
+    else{
+      this.setState({ 
+        productsFiltered: productsFiltered
+      }, () => {
+        if (selectedStok === "Stok Tersedia"){ 
+        let stokFilteredN =  productsFiltered.filter(function(product) {
+            return product.stock !== stok;
+          });     
+          this.setState({ 
+          productsFiltered: stokFilteredN
+        })
+      }
+      else if (selectedStok === "Stok Habis"){
+        let stokFiltered =  productsFiltered.filter(function(product) {
+          return product.stock === stok;
+        });  
+        this.setState({ 
+          productsFiltered: stokFiltered
+        })
+      }
+      else {
       this.setState({ 
         productsFiltered: productsFiltered
       })
+    }})
     }
   }
 
@@ -104,6 +149,19 @@ class ProductsContainer extends Container {
         })
       }
     );
+  }
+
+  handleStokChange= (event) => {
+    if (this.state.selectedStok === 'Semua Stok'){
+      this.setState({selectedStok: event.target.value}, () => this.productsFiltered())
+    }
+    if (this.state.selectedStok === 'Stok Tersedia'){
+      this.setState({selectedStok: event.target.value}, () => this.productsFiltered())
+    }
+    if (this.state.selectedStok === 'Stok Habis'){
+      this.setState({selectedStok: event.target.value}, () => this.productsFiltered())
+    }
+    console.log(this.state.selectedStok)
   }
 
 }

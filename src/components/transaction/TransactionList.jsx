@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Table, NavLink, Container } from 'reactstrap';
+import { Table, NavLink, Container, Row, Col } from 'reactstrap';
 import ShadowScrollbars from '../scrollbars/ShadowScrollbars';
 
 import TransactionHeader from './TransactionHeader';
 import TransactionItems from './TransactionItems';
+import FooterNavRight from '../navigations/FooterNavRight';
 
 
 class TransactionList extends Component {
@@ -18,11 +19,9 @@ class TransactionList extends Component {
   }
 
   componentDidMount(){
-    console.log("TRANSACTION LIST ~~~~~~~~~~~~~ ", this.props.transactionStore)
-    this.setState({
-      transactionStore: [...this.state.transactionStore, this.props.transactionStore]
-    });
+    this.props.cartStore.fetchTransaction()
   }
+
 
   componentWillMount(){
     this.setState({
@@ -39,9 +38,9 @@ class TransactionList extends Component {
 
     render() {
       return (
-        <Container className="transaction mt-4 pt-5 pr-0 pl-0">
+        <Container className="transaction d-block">
         <NavLink onClick={() => this.props.cartStore.toggleOpenTransactionShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
-            <Table borderless striped>
+            <Table style={{color: "white"}} borderless striped>
               <TransactionHeader transactionStore={this.props.transactionStore}/>
             </Table>
   
@@ -50,15 +49,21 @@ class TransactionList extends Component {
               autoHideTimeout={1000}
               autoHideDuration={200}
               autoHeight
-              autoHeightMin={600}
-              autoHeightMax={this.state.productItemsHeight}
+              autoHeightMin={500}
+              autoHeightMax={500}
             >
-              <div className="scroll-wrapper">
-                <Table borderless striped className="mb-0">
-                  <TransactionItems transactionStore={this.props.transactionStore}/>
+              <div className="scroll-wrapper" id="Cobaaa">
+                <Table style={{color: "white"}} borderless striped className="mb-0">
+                  <TransactionItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
                 </Table>
               </div>
             </ShadowScrollbars>
+
+            <Row className="product-nav no-gutters">
+              <Col xs="12">
+                <FooterNavRight cartStore={this.props.cartStore} rootStore={this.props.rootStore} modalStore={this.props.modalStore}/>
+              </Col>
+            </Row>
         </Container>
       );
     }

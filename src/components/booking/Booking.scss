@@ -43,6 +43,12 @@
       .fas{
         font-size: 2rem;
       }
+      &.disabled{
+        color: grey;
+        &:hover{
+          background-color: black;
+        }
+      }
       &:hover{
         background-color: $red;
       }
@@ -103,6 +109,12 @@
       border: solid 3px black;
       height: 48px;
     }
+    &-numberformat{
+      display: inline-block;
+      border-radius: 3rem;
+      border: solid 3px black;
+      height: 48px;
+    }
   }
 
   .cart-header{
@@ -138,5 +150,27 @@
   width: 50%;
   height: 87%;
   background-color: rgba(0,0,0,.75)
+}
+
+.popover {
+  min-width: 500px;
+  &-header {
+    height: 63px;
+  }
+}
+
+.search{
+  float: right;
+  text-align: left;
+  width: 40%;
+  border-radius: 3rem;
+  margin-top: 0.25rem;
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  font-style: italic;
+  &::placeholder {
+    color: $lightGrey;
+  }
 }
 

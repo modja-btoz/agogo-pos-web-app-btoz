@@ -1,41 +1,53 @@
-import React from 'react'
-import { Container, Row, Col, NavLink, Button, Input } from 'reactstrap';
+import React, {Component} from 'react'
+import { Container, Row, Col, NavLink, Button, Input, Label } from 'reactstrap';
 import NumberFormat from 'react-number-format';
 import CalcNumericPayment from '../calcs/CalcNumericPayment'
 import './PaymentCheckout.scss';
 
-
 const PaymentCheckout = (props) => {
+
+  // ~ {
+  //   usernow: props.userNow.id,
+  //   qty: "",
+  //   product_id: "",
+  //   price: "",
+  //   subtotal: props.cartStore.state.totalAmount,
+  //   diskon: props.cartStore.state.grandTotalAmountDiscount,
+  //   total: props.cartStore.state.grandTotalAmount,
+  //   dibayar: props.cartStore.state.totalPayment,
+  //   kembali: props.cartStore.state.changePayment,
+  //   status: "",
+  // }
+
   return (
 
     <Row className="PaymentCheckout d-block">
       <Container>
         <Row className="SidebarHeader">
           <Col>
-            <NavLink onClick={() => props.cartStore.togglePaymentCheckoutShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i> Lanjut Belanja</NavLink>
+            <NavLink onClick={() => props.cartStore.togglePaymentCheckoutShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i><Label style={{fontSize: "1em"}}>Lanjut Belanja</Label></NavLink>
           </Col>
         </Row>
 
-        <Row className="SidebarBody mt-4 mb-3">
+        {/* <Row className="SidebarBody mt-4 mb-3">
           <Col>
             <h5 className="mb-0">SUB TOTAL</h5>
             <h3><strong><NumberFormat value={props.cartStore.state.totalAmount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></strong></h3>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row className="SidebarBody">
 
-          {/* LEFT */}
-          <Col className="pr-0">
+          {/* LEFT
             <h5>DISKON</h5>
-            {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
             {props.cartStore.state.discountType === 'Rp' &&
             <div className={props.cartStore.state.activeInputPayment === 'paymentDiscount' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="mb-4 form-control-lg form-control" placeholder="Rp 0" 
                 value={props.cartStore.state.valueInputPayment["paymentDiscount"] || ""}
-                name="paymentDiscount" id="paymentDiscount"
+                name="paymentDiscount" id="paymentDiscount" 
                 onFocus={props.cartStore.moveCaretAtEnd}
                 prefix={'Rp '}
+                onChange={props.cartStore.onChangePayment}
               />
               <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
                 value={props.cartStore.state.valueInputPayment["paymentDiscount"] || ""}
@@ -51,6 +63,7 @@ const PaymentCheckout = (props) => {
                 name="paymentDiscount" id="paymentDiscount"
                 onFocus={props.cartStore.moveCaretAtEnd}
                 suffix={'%'}
+                onChange={props.cartStore.onChangePayment}
               />
               <Input className="input-masking mb-4" type="text" placeholder=" ..." bsSize="lg" 
                 value={props.cartStore.state.valueInputPayment["paymentDiscount"] || ""}
@@ -59,22 +72,24 @@ const PaymentCheckout = (props) => {
               />
             </div>
             }
-            
+             */}
+            <Col className="pr-0">
             <h5 className="mb-0">TOTAL</h5>
             <h3><strong><NumberFormat value={props.cartStore.state.grandTotalAmountDiscount} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} /></strong></h3>
 
             <h5 className="mt-4">TOTAL PEMBAYARAN</h5>
             <div className={props.cartStore.state.activeInputPayment === 'paymentTotal' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'Rp '} className="mb-4 form-control-lg form-control" placeholder="Rp 0"  
-                value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
+                value={props.cartStore.state.valueInputPayment["paymentTotal"]}
                 name="paymentTotal" id="paymentTotal"
                 autoFocus
                 onFocus={props.cartStore.moveCaretAtEnd}
+                onValueChange={props.cartStore.onChangeValuePayment}
               />
               <Input className="input-masking mb-4" type="text" name="paymentTotal" id="paymentTotal" placeholder=" ..." bsSize="lg" 
-                value={props.cartStore.state.valueInputPayment["paymentTotal"] || ""}
-                name="paymentTotal" id="paymentTotal"
+                value={props.cartStore.state.valueInputPayment["paymentTotal"]}
                 onFocus={props.cartStore.setActiveInputPayment}
+                onChange={props.cartStore.onChangePayment}
                 autoFocus
               />
             </div>
@@ -105,7 +120,8 @@ const PaymentCheckout = (props) => {
 
         <Row className="SidebarFooter mt-4">
           <Col>
-            <Button onClick={() => props.modalStore.toggleModal('bayar', '')} color="danger" size="lg" className="py-3 px-5"><i className="fas fa-coins mr-2"></i> BAYAR</Button>
+            <Button onClick={() => props.cartStore.doTransaction(props.userNow.id, props.modalStore.toggleModal)} 
+            color="danger" size="lg" className="py-3 px-5 btn-bayar-fixed"><i className="fas fa-coins mr-2"></i> BAYAR</Button>
           </Col>
         </Row>
       </Container>

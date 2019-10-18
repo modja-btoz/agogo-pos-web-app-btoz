@@ -36,7 +36,7 @@ class CalcNumeric extends Component {
 
   onChangeInput = event => {
     let input = event.target.value;
-    console.log(input)
+    console.log("LOLOLO",input)
     this.setState(
       {
         input: input

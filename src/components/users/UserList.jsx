@@ -14,7 +14,9 @@ const UserList = (props) => {
               user={user} 
               userID={user.id} 
               userName={user.username} 
-              // userAvatar={user.avatar_urls['96']} 
+              userAvatar={user.photo}
+              userRole={user.role}
+              defAvatar="http://101.255.125.227:82/uploads/profile/profile.png?t=+ new Date().getTime();"
               colorTitle="text-white" colorSubTitle="text-orange" 
             />
           </div>

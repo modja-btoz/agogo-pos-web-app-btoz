@@ -24,6 +24,7 @@ class Login extends Component {
     userAvatar: '',
     password: '',
     username: '',
+    userRole: '',
     redirect: false
   };
 
@@ -34,7 +35,7 @@ class Login extends Component {
       this.state({ redirect: true })
     }
 
-    // console.log(this.props)
+    /// console.log(this.props)
     let user_index = this.props.match.params.user_index;
     let users = sessionStorage.getItem('users');
     this.setState({ users: JSON.parse(users)},
@@ -46,9 +47,11 @@ class Login extends Component {
         console.log(this.state.user)
         this.setState({
           username: this.state.user.username,
-          // userAvatar: this.state.user.avatar_urls['96']
+          userAvatar: this.state.user.photo,
+          userRole: this.state.user.role,
         },
         () => {
+          sessionStorage.setItem('usernow', JSON.stringify(this.state.user));
           // console.log("USERNAME")
           // console.log(this.state.username)
           // console.log(this.state.userAvatar)
@@ -59,13 +62,13 @@ class Login extends Component {
 
   onChange = input => {
     this.setState({ password: input });
-    console.log("Password changed", input);
+    console.log("Password changed using Touch", input);
   };
 
   onChangeInput = event => {
     let input = event.target.value;
     this.setState({ password: input });
-    // console.log("Password changed", input);
+    console.log("Password changed using Keyboard", input);
   };
 
   onEnter = () => {
@@ -79,14 +82,15 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    axios.post(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/auth/login`, userData )
+    axios.post(`http://101.255.125.227:82/api/auth/login`, userData )
       .then(res => {
         console.log("UI ", res);
         console.log("UO ", res.data);
         console.log('Cek', sessionStorage)
         sessionStorage.setItem('token', res.data.token);
-        sessionStorage.setItem('usernow', res.data.username);
         this.setState({ redirect: true })
+      }).catch(res => {
+        this.props.modalStore.toggleModal('alert','','','PIN yang anda masukkan salah')
       })
   }
 
@@ -95,6 +99,11 @@ class Login extends Component {
     sessionStorage.clear();
     this.setState({ redirect: true })
   }
+
+  doPrint() {
+    var content = document.getElementById('invoice-POS');
+    content.print()
+}
 
 
 
@@ -122,7 +131,7 @@ class Login extends Component {
                       <a href="/"><i className="fas fa-arrow-left mr-5"></i></a> SIGN IN
                     </div>
                     <div className="col-3 text-right">
-                      <img src={LogoAgogo} className="img-fluid" />
+                      <a href='/invoice'><img src={LogoAgogo} className="img-fluid" /> </a>
                     </div>
                   </div>
                 </div>
@@ -136,7 +145,8 @@ class Login extends Component {
                       user={this.state.user} 
                       userID={this.state.user.id} 
                       userName={this.state.user.username} 
-                      // userAvatar={this.state.userAvatar} 
+                      userAvatar={this.state.userAvatar}
+                      userRole={this.state.userRole} 
                       colorTitle="text-black" 
                       colorSubTitle="text-red" 
                     />
@@ -147,7 +157,7 @@ class Login extends Component {
                         value={this.state.password} 
                         onChange={e => this.onChangeInput(e)}
                         type="password" name="password" id="pin" placeholder="PIN"  size="lg" className="text-center" 
-                        readonly
+                        autoComplete="off"
                       />
                     </FormGroup>
                   </div>

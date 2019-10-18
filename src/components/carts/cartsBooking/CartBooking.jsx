@@ -1,11 +1,13 @@
 import React from 'react'
 import { Table, Container } from 'reactstrap'
 import CartHeader from '../CartHeader'
+
 import ShadowScrollbars from '../../scrollbars/ShadowScrollbars'
 import CartItems from '../CartItems'
 import CartBookingTotal from '../CartBookingTotal'
 
 import '../../booking/CartBooking.scss'
+
 
 class CartBooking extends React.Component {
     constructor(props) {
@@ -44,7 +46,7 @@ class CartBooking extends React.Component {
                     autoHideDuration={200}
                     autoHeight
                     autoHeightMin={100}
-                    autoHeightMax={this.state.productItemsHeight}
+                    autoHeightMax={700}
                 >
                     <div className="scroll-wrapper">
                         <Table borderless striped className="mb-0">
@@ -54,7 +56,7 @@ class CartBooking extends React.Component {
                 </ShadowScrollbars>
                 
                 <Table borderless striped>
-                    <CartBookingTotal cartStore={this.props.cartStore} />
+                    <CartBookingTotal name="tfoot-booking" refund="Total Refund" pembayaran="Sisa Pembayaran" cartStore={this.props.cartStore} />
                 </Table>  
                 
             </Container>

@@ -11,17 +11,20 @@ const ProductItems = (props) => {
       { props.productStore.state.productsFiltered.map((product, index) => 
       <Col xs="4">
         <ProductItem 
-          productIndex = {index}
+          productIndex={index}
           productID={product.id} 
-          productName={product.title.rendered} 
+          productName={product.name} 
           productQty={1} 
-          productPrice={product.harga}
+          productPrice={product.price}
+          productStok={product.stock}
           // productImage={product._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url} 
-          productImage={product.gambar.guid} 
+          productImage={product.photo} 
           colorTitle="text-white"
           products={props.products}
           cartStore={props.cartStore} 
           isAdded={props.cartStore.state.isAdded}
+          activePath={props.activePath}
+          modalStore={props.modalStore}
         />
       </Col>
       )}    

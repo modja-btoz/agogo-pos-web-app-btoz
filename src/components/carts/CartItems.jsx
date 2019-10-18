@@ -1,5 +1,6 @@
 import React from 'react'
 import CartItem from './CartItem';
+import RefundItem from './RefundItem';
 
 const CartItems = (props) => {
   return (
@@ -14,6 +15,17 @@ const CartItems = (props) => {
           cartStore={props.cartStore}  
         />
       ))}
+      {/* {props.cartStore.state.isRefundItem && 
+        props.cartStore.state.refundItems.map((item, i) => (
+        <RefundItem 
+          idx={i}
+          id={item.id}
+          title={item.name}
+          qty={item.qty}
+          price={item.price}
+          cartStore={props.cartStore}  
+        />
+        ))} */}
     </tbody>
   )
 }

@@ -110,13 +110,36 @@ a{
   line-height: 1;
   float: right;
 }
+.btn-fullscreen-other{
+  color: white;
+  font-size: 2.5rem;
+  padding: 1.5rem;
+  // display: inline-block;
+  // // line-height: 1;
+  float: right;
+}
 
 // ======
 // MODALS
 // ======
+
 .modal-content{
   border-radius: 2rem;
   border: none;
+  // top: 90%;
+  // left: 90%;
+  // right: auto;
+  // bottom: auto;
+  // margin-right: -50%;
+  // transform: translate(-50%, -50%)
+}
+.modal{
+  // top: 90%;
+  // left: 90%;
+  // right: auto;
+  // bottom: auto;
+  // margin-right: -50%;
+  // transform: translate(-50%, -50%)
 }
 
 

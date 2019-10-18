@@ -8,17 +8,20 @@ class CalcNumeric extends Component {
     super(props)
   }
   state = {
-    layoutName: "default",
-    valueInputRefund: '',
-    inputName: ''
+    layoutName: "default"
   };
 
   onKeyPress = button => {
     // console.log("Button pressed", button);
-
     if ( button === "{enter}" ) {
-      this.onEnter(button);
+      this.onEnterRefund(button);
     }
+  };
+  onEnterRefund = (button) => {
+    console.log("Button ENTER pressed", button);
+
+    // JALANKAN FUNGSI DARI PARENT
+    this.props.onEnterRefund(this.props.modalStore)
   };
 
   render() {

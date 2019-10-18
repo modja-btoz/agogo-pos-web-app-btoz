@@ -6,11 +6,18 @@ const CartItem = (props) => {
   return (
     <tr>
       <td className="item-name" scope="row">{props.title}</td>
-      <td className="item-delete text-right">
-        <i className="fas fa-backspace btn-delete-item" onClick={() => props.cartStore.onRemoveFromCart(props.idx)} />
-      </td>
+      { props.cartStore.state.isRefundItem ?
+        <td className="item-delete text-right">
+          <i className="fas fa-undo btn-delete-item" onClick={() => props.cartStore.onRemoveToRefund(props.idx)} />
+        </td> : props.cartStore.state.isInOrder ?
+        <td /> :
+        <td className="item-delete text-right">
+          <i className="fas fa-backspace btn-delete-item" onClick={() => props.cartStore.onRemoveFromCart(props.idx)} />
+        </td>
+      }
       <td className="item-qty text-center">
         <Input 
+          disabled={props.cartStore.state.onRefund}
           className={props.cartStore.state.activeItem === props.idx ? 'btn btn-danger focus' : 'btn btn-danger'}
           id={"qty"+props.id} 
           name={"qty"+props.id} 

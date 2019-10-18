@@ -50,9 +50,14 @@
         top: 7rem;
       }
     }
+    &.username{
+      &::before{
+        top: 14.25rem;
+      }
+    }
     &.pin{
       &::before{
-        top: 16.5rem;
+        top: 21.5rem;
       }
     }
   }
