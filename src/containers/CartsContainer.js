@@ -543,7 +543,7 @@ class CartsContainer extends Container {
 
 addSelectedTransaction(id, current, idx) {
   axios.get('http://101.255.125.227:82/api/order/' + id).then(res => {
-    this.setState({isDisabled: false})
+    this.setState({isDisabled: false, onRefund: false})
     const transaction = res.data;
     console.log(id, current, id)
     transaction.forEach((trx, i) =>
@@ -585,7 +585,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   addSelectedReservation(id, current, user_id, total) {
-    this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: []})
+    this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: [], onRefund: true})
     let reservationCode = id
     axios.get(`http://101.255.125.227:82/api/preorders`)
     .then(res => {
