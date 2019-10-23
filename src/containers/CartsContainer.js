@@ -543,7 +543,7 @@ class CartsContainer extends Container {
 
 addSelectedTransaction(id, current, idx) {
   axios.get('http://101.255.125.227:82/api/order/' + id).then(res => {
-    this.setState({isDisabled: false, onRefund: false})
+    this.setState({isDisabled: false})
     const transaction = res.data;
     console.log(id, current, id)
     transaction.forEach((trx, i) =>
@@ -819,7 +819,7 @@ addSelectedTransaction(id, current, idx) {
       if(refundData.length === 0){
         modal.toggleModal('alert','','','Nomor order tidak ditemukan')
       } else {
-      this.setState({dataRefund: refundData, isDisabledRefund: false, isRefundItem: true}, () => this.addSelectedRefund())
+      this.setState({dataRefund: refundData, isRefundItem: true}, () => this.addSelectedRefund())
       console.log("HU",refundData )
       }
     })
@@ -1684,6 +1684,7 @@ addSelectedTransaction(id, current, idx) {
   // ===============
   openTransaction = () => {
     // console.log("OpenTransaction")
+    this.clearCart()
     this.toggleOpenTransactionShow()
   }
 
@@ -1702,6 +1703,7 @@ addSelectedTransaction(id, current, idx) {
   // ===============
   openReservation = () => {
     // console.log("OpenReservation")
+    this.clearCart()
     this.toggleOpenReservationShow()
   }
 
@@ -1720,6 +1722,7 @@ addSelectedTransaction(id, current, idx) {
   // ===============
   openRefund = () => {
     // console.log("OpenReservation")
+    this.clearCart()
     this.toggleOpenRefundShow()
     this.setState({payRefundTK : false})
   }
@@ -1792,10 +1795,10 @@ addSelectedTransaction(id, current, idx) {
   handleRefundChange = (event) => {
     console.log("PENCET", this.state.selectedRefund, this.state.valueInputRefund)
     if (this.state.selectedRefund === 'PS'){
-      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value })
+      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value, refundItems: [] })
     }
     if (this.state.selectedRefund === 'TK'){
-      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value })
+      this.setState({selectedRefund: event.target.value, whatRefund: event.target.value, refundItems: [] })
     }
   }
 
