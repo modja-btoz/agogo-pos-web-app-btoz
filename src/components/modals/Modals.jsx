@@ -84,7 +84,7 @@ class Modals extends Component {
   }
 
   // componentWillUpdate() {
-  //   axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`)
+  //   axios.get(`https://cors-anywhere.herokuapp.com/http://10.254.128.66:82/api/getTrx`)
   //   .then(res => this.setState({transaction: res.data}, () => console.log("AA")))
   // }
 

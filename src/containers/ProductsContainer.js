@@ -17,7 +17,7 @@ class ProductsContainer extends Container {
 
   fetchProducts() {
     // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
-    axios.get(`http://101.255.125.227:82/api/products`)
+    axios.get(`http://10.254.128.66:82/api/products`)
     .then(res => {
       const products = res.data;
       this.setState({ 

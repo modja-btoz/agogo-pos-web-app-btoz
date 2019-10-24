@@ -131,7 +131,7 @@ class SaldoAwal extends Component {
   onEnter = () => {
     console.log("ON ENTER", this.state)
     this.setState({data: [this.state.pos] }, () => console.log(this))
-    axios.post(`http://101.255.125.227:82/api/postKas`, this.state.data)
+    axios.post(`http://10.254.128.66:82/api/postKas`, this.state.data)
     .then(res => {
       if(res.status === 200) {
       this.setState({redirect: true})
