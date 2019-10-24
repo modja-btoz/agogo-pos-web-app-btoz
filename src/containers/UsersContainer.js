@@ -10,7 +10,7 @@ class LoginSplashScreen extends Component {
   }
   render = this.render.bind(this);
   componentDidMount() {
-    axios.get(`http://101.255.125.227:82/api/users`)
+    axios.get(`http://10.254.128.66:82/api/users`)
     .then(res => {
       const users = res.data;
       this.setState({ users });
