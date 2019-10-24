@@ -24,7 +24,7 @@ class Selection extends Component {
       }
 
     componentDidMount(){
-        axios.get('http://10.254.128.66as')
+        axios.get('http://10.254.128.66:82/api/cekKas')
         .then(res => {
             this.setState({where: res.data})
         })

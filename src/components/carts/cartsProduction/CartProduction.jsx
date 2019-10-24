@@ -31,7 +31,7 @@ class CartProduction extends React.Component {
 
     componentDidMount() {
         this.props.cartStore.getDateTrx()
-        // axios.get(`https://cors-anywhere.herokuapp.com/http://10.254.128.66i/GetLastDate`)
+        // axios.get(`https://cors-anywhere.herokuapp.com/http://10.254.128.66:82/api/GetLastDate`)
         // .then(res => { this.setState({date: res.data}, 
         //     () => {
         //         var month = new Date().getMonth() + 1; //Current Month

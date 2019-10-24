@@ -52,7 +52,7 @@
             })
         }
         doUpdate(){
-            axios.get(`http://10.254.128.66cekPOInvoice`).then(res => {
+            axios.get(`http://10.254.128.66:82/api/cekPOInvoice`).then(res => {
                 const trx = res.data;
                 this.setState({ currentTrx: trx.current_invoice});
             })

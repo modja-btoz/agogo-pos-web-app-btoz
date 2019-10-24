@@ -16,7 +16,7 @@ const UserList = (props) => {
               userName={user.username} 
               userAvatar={user.photo}
               userRole={user.role}
-              defAvatar="http://10.254.128.66ads/profile/profile.png?t=+ new Date().getTime();"
+              defAvatar="http://10.254.128.66:82/uploads/profile/profile.png?t=+ new Date().getTime();"
               colorTitle="text-white" colorSubTitle="text-orange" 
             />
           </div>
