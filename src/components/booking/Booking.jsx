@@ -46,13 +46,13 @@
             console.log("UWOWO ~~~~~~~~~~~~~ ", this.props.transactionStore);
             const user = JSON.parse(sessionStorage.getItem('usernow'))
             this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
-            axios.get(`http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+            axios.get(`http://10.254.128.66:82/api/cekPOInvoice`).then(res => {
                 const trx = res.data;
                 this.setState({ currentTrx: trx.current_invoice});
             })
         }
         doUpdate(){
-            axios.get(`http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+            axios.get(`http://10.254.128.66cekPOInvoice`).then(res => {
                 const trx = res.data;
                 this.setState({ currentTrx: trx.current_invoice});
             })

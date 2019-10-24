@@ -24,7 +24,7 @@ class ProductCategories extends Component {
   }
 
   fetchCategories() {
-    axios.get(`http://101.255.125.227:82/api/categories`)
+    axios.get(`http://10.254.128.66i/categories`)
     .then(res => {
       const categories = res.data;
       categories.map(x => 

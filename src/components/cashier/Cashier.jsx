@@ -36,7 +36,7 @@ class Kasir extends Component {
     console.log("CART ~~~~~~~~~~~~~ ", this.props.cartStore);
     console.log('A', sessionStorage);
       
-    axios.get('http://101.255.125.227:82/api/cekKas')
+    axios.get('http://10.254.128.66cekKas')
     .then(res => {
         sessionStorage.setItem('idKas', JSON.stringify(res.data))
     })
