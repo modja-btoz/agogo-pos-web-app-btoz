@@ -181,7 +181,7 @@ class Modals extends Component {
             {this.props.message || "Input tidak sesuai"}
           </ModalBody>
           <ModalFooter className="text-center d-block">
-            <Button color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times-circle mr-1"></i> Close</Button>
+            <Button color="danger" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Close</Button>
           </ModalFooter>
         </Modal>
         )}
