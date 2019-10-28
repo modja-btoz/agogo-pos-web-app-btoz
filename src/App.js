@@ -76,7 +76,7 @@ const whatRole = () => {
 }
 
 const saldo = () => {
-  axios.get('http://10.254.128.66:82/api/cekKas')
+  axios.get('http://101.255.125.227:82/api/cekKas')
   .then(res => {
       if(res.data.status === 'counted'){
         console.log('counted', res)
