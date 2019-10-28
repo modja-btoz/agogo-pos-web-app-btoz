@@ -116,7 +116,7 @@ const OrderBooking = (props) => {
                                     prefix={'Rp '}/>
                                     }
                                     {props.cartStore.state.discountType === '%' &&
-                                    <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="input-uangDiskon" placeholder="Rp %" 
+                                    <NumberFormat type="text" thousandSeparator={'.'} decimalSeparator={','} className="input-uangDiskon" placeholder="%" 
                                     value={props.cartStore.state.valueInputBooking["paymentDiscount"]}
                                     name="paymentDiscount" id="paymentDiscount"
                                     onValueChange={props.cartStore.onChangeBooking}
