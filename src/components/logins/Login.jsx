@@ -82,7 +82,7 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    axios.post(`http://10.254.128.66:82/api/auth/login`, userData )
+    axios.post(`http://101.255.125.227:82/api/auth/login`, userData )
       .then(res => {
         console.log("UI ", res);
         console.log("UO ", res.data);

@@ -1,6 +1,6 @@
 export function PostData(type, encodedDataUser) {
 
-    let BaseURL = `http://10.254.128.66:82/api/`;
+    let BaseURL = `http://101.255.125.227:82/api/`;
     // let BaseURL = `https://apipipipol.btoz.co.id/api/`;
     //let BaseURL = 'http://localhost/PHP-Slim-Restful/api/';
 
