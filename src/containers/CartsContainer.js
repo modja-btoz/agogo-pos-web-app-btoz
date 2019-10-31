@@ -363,8 +363,8 @@ class CartsContainer extends Container {
               ket_rusak: 0,
               ket_lain: 0,
               total_lain: 0,
-              username_approval: 'adi',
-              pin_approval: '123456',
+              // username_approval: 'adi',
+              // pin_approval: '123456',
               catatan: "tidak ada catatan",
           }
           const productKosong = Object.assign(product, reset)
@@ -388,8 +388,8 @@ class CartsContainer extends Container {
         this.state.produksi[this.state.selectedProduct.name + "produksi3"] = 0
         this.state.produksi[this.state.selectedProduct.name + "rusak"] = 0
         this.state.produksi[this.state.selectedProduct.name + "lain"] = 0
-        this.state.produksi["note" + this.state.selectedProduct.name] = 0
-        this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_preorder + pesan.count_order
+        this.state.produksi["note" + this.state.selectedProduct.name] = "tidak ada catatan"
+        this.state.produksi["total_penjualan"+this.state.selectedProduct.name] = pesan.count_order + pesan.count_preorder
         this.state.produksi["stok_kemarin"+this.state.selectedProduct.name] = 0
         this.state.produksi["total"+this.state.selectedProduct.name] = pesan.count_order
         this.state.produksi["pemesanan"+this.state.selectedProduct.name] = pesan.count_preorder
@@ -401,8 +401,8 @@ class CartsContainer extends Container {
              Object.assign({}, this.state.production[index], {penjualan_toko: pesan.count_order},
                                                              {penjualan_pemesanan: pesan.count_preorder},
                                                              {total_penjualan: parseInt(pesan.count_preorder) + parseInt(pesan.count_order)},
-                                                             {stock_awal: parseInt(this.state.selectedProduct.stock)},
-                                                             {sisa_stock: parseInt(this.state.selectedProduct.stock)},
+                                                             {stock_awal: pesan.stok_awal},
+                                                             {sisa_stock: pesan.sisa_stock},
                                                              {product_id: id},
                                                              {catatan: "tidak ada catatan"},
                                                              {produksi1: 0},
@@ -2503,7 +2503,7 @@ addSelectedTransaction(id, current, idx) {
     .then(res => {console.log(res)
                   modal.clearModal()})
     .catch(res => {modal.clearModal() 
-                   modal.toggleModal('alert','','',res.response.data.message)
+                   modal.toggleModal('alertProduksi','','',res.response.data.message)
   })
 }
 
