@@ -85,6 +85,7 @@ const initialState = {
   tgl_trx: '',
   startDate: new Date(),
   time: '00:00',
+  today: '',
   nama: '',
   currentTrx: '',
   currentIDTrx: '',
@@ -584,6 +585,20 @@ addSelectedTransaction(id, current, idx) {
       selectedItems: []})
   }
 
+  getToday() {
+    const year = new Date().getFullYear(); 
+    var month = new Date().getMonth() + 1; //Current Month
+    var date = new Date().getDate(); 
+    if (date < 10) {
+      date = '0' + date;
+    } 
+    if (month < 10) {
+      month = '0' + month;
+    } 
+    var today = year + '-' + month + '-' + date;
+    return today;
+  }
+
   addSelectedReservation(id, current, user_id, total) {
     this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: [], onRefund: true})
     let reservationCode = id
@@ -596,6 +611,14 @@ addSelectedTransaction(id, current, idx) {
       if(reservationData.length === 0){
         console.log("GAGAL COY")
       } else {
+      const dateTrx = reservationData[0].created_at
+
+      const split = dateTrx.split(" ")
+      const takeDate = split[0].toString()
+      const splitDate = takeDate.split('-')
+      const formatedDate = splitDate[0] + '-' + splitDate[1] + '-' + splitDate[2]
+
+      console.log(dateTrx, formatedDate)
       this.setState({dpReservationAmount: reservationData[0].uang_muka,  
                     changePayment: reservationData[0].subtotal - reservationData[0].uang_muka,
                     expenseAmount: reservationData[0].add_fee,
@@ -604,6 +627,12 @@ addSelectedTransaction(id, current, idx) {
                     nama: reservationData[0].nama}, 
                     () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
                       const transaction = res.data;
+                      let sameDate
+                      if(formatedDate === this.getToday()){
+                        sameDate = 'sameday'
+                      }else{
+                        sameDate = 'notsameday'
+                      }
                       transaction.forEach((trx, i) => 
                         this.state.selectedItems.push({
                           idx: i,
@@ -619,12 +648,14 @@ addSelectedTransaction(id, current, idx) {
                           nama: reservationData[0].nama,
                           alamat: reservationData[0].alamat,
                           tgl_selesai: reservationData[0].tgl_selesai,
+                          tgl_pesan: reservationData[0].tgl_pesan,
                           telepon: reservationData[0].telepon,
                           catatan: reservationData[0].catatan,
                           add_fee: reservationData[0].add_fee,
                           uang_muka: reservationData[0].uang_muka,
                           waktu_selesai: reservationData[0].waktu_selesai,
                           sisa_harus_bayar: this.state.leftToPay,
+                          hari_pelunasan: sameDate,
                         })
                       )
                       console.log("INI ", this.state.selectedItems)
@@ -732,6 +763,7 @@ addSelectedTransaction(id, current, idx) {
   //   this.doReservation(user_now, data)
   // }
   addReservation(user_now, modal, where) {
+
     const trx = this.state.items
     const data = this.state.dataReservation
     this.setState({selectedItems: []}, () => {
@@ -740,6 +772,7 @@ addSelectedTransaction(id, current, idx) {
         nama		: data.nama,
         invoice	: data.invoice,
         tgl_selesai	: data.tgl_selesai,
+        tgl_pesan: this.getToday(),
         alamat	: data.alamat,
         waktu_selesai	: data.waktu_selesai,
         telepon	: data.telepon,
@@ -1924,6 +1957,7 @@ addSelectedTransaction(id, current, idx) {
           sisa_harus_bayar: item.sisa_harus_bayar,
           telepon: item.telepon,
           tgl_selesai: item.tgl_selesai,
+          tgl_pesan: item.tgl_pesan,
           total: item.total,
           uang_muka: item.uang_muka,
           waktu_selesai: item.waktu_selesai,
@@ -1933,6 +1967,7 @@ addSelectedTransaction(id, current, idx) {
           subtotal: this.state.totalAmount,
           status: "PAID",
           user_id: user_id,
+          hari_pelunasan: item.hari_pelunasan,
           username_approval: this.state.dataReservation["user"],
           pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"],
         })
