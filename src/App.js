@@ -146,10 +146,10 @@ class App extends Component {
     axios.get('http://101.255.125.227:82/api/cekKas')
     .then(res => {
         if(res.data.status === 'counted'){
-          console.log('counted', res)
+          console.log('counted', res);
           this.setState({saldo: false})
         }else{
-          console.log('uncounted2', res)
+          console.log('uncounted2', res);
           this.setState({saldo: true})
         }
     })
