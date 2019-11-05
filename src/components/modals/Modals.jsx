@@ -187,23 +187,6 @@ class Modals extends Component {
         )}
         </div>
       );
-      case 'alertProduksi':
-        return (
-          <div id="A" ref={this.root}>
-          {this.root.current && (
-        <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
-          {externalCloseBtn}
-          <ModalHeader toggle={this.props.toggle} className="text-center d-block mt-2"><h3>ALERT !</h3></ModalHeader>
-          <ModalBody>
-            {this.props.message || "Input tidak sesuai"}
-          </ModalBody>
-          <ModalFooter className="text-center d-block">
-            <Button color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times-circle mr-1"></i> Close</Button>
-          </ModalFooter>
-        </Modal>
-        )}
-        </div>
-      );
       case 'logout':
         return (
           <div id="A" ref={this.root}>
