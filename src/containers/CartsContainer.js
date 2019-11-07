@@ -599,6 +599,55 @@ addSelectedTransaction(id, current, idx) {
     return today;
   }
 
+  getCurrentTime() {
+    const date = new Date();
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+    let seconds = date.getSeconds()
+
+    if (hours < 10) {
+      hours = '0' + hours;
+    } 
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    } 
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    } 
+
+    let currentTime = hours + ":" + minutes + ":" + seconds;
+
+    return currentTime;
+  }
+
+  getDateTime(){
+    const year = new Date().getFullYear(); 
+    let month = new Date().getMonth() + 1; //Current Month
+    let date = new Date().getDate();
+    let hours = new Date().getHours();
+    let minutes = new Date().getMinutes();
+    let seconds = new Date().getSeconds();
+
+    if (date < 10) {
+      date = '0' + date;
+    } 
+    if (month < 10) {
+      month = '0' + month;
+    } 
+    if (hours < 10) {
+      hours = '0' + hours;
+    } 
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    } 
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    } 
+
+    let today = year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + seconds;
+    return today;
+
+  }
   addSelectedReservation(id, current, user_id, total) {
     this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: [], onRefund: true})
     let reservationCode = id
@@ -766,13 +815,16 @@ addSelectedTransaction(id, current, idx) {
 
     const trx = this.state.items
     const data = this.state.dataReservation
+    // let dateTime = this.getDateTime()
+    let date = this.getToday()
+    let time = this.getCurrentTime()
     this.setState({selectedItems: []}, () => {
       trx.forEach((trx) => this.state.selectedItems.push({
         preorder_id: data.id,
         nama		: data.nama,
         invoice	: data.invoice,
         tgl_selesai	: data.tgl_selesai,
-        tgl_pesan: this.getToday(),
+        tgl_pesan: date + ' ' + time,
         alamat	: data.alamat,
         waktu_selesai	: data.waktu_selesai,
         telepon	: data.telepon,
@@ -915,6 +967,7 @@ addSelectedTransaction(id, current, idx) {
     const saldo_akhir = transaction.total_transaksi + transaction.saldo_awal - parseInt(transaction.total_refund)
     let postData = {
         // user_id: user.id,
+        tgl_hitung: this.getToday() + ' ' + this.getCurrentTime(),
         refund: parseInt(transaction.total_refund),
         diskon: transaction.diskon,
         transaksi: transaction.total_transaksi,
