@@ -87,6 +87,7 @@ const initialState = {
   time: '00:00',
   today: '',
   nama: '',
+  userPencatat: '',
   currentTrx: '',
   currentIDTrx: '',
   popStatus: false,
@@ -879,6 +880,7 @@ addSelectedTransaction(id, current, idx) {
           axios.post(`http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
           .then(res => {
             modal('bayar')
+            this.selectedPrint('pesananOrder')
             this.setState({selectedItems: []})
             console.log(res, this.state.selectedItems, this.state.items)
           })
@@ -1648,21 +1650,21 @@ addSelectedTransaction(id, current, idx) {
   onChangeBooking = valueInputBooking => {
     if(this.state.activeInputBooking === "bookingAddition"){
       const add_fee = valueInputBooking.value
-      this.setState({expenseAmount: add_fee}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
+      this.setState({expenseAmount: add_fee || 0}, () => this.sumGrandTotalAmount(), this.state.dataReservation["add_fee"] = this.state.expenseAmount)
     }
     else if(this.state.activeInputBooking === "paymentDiscount"){
       const discount = valueInputBooking.value
       if(this.state.discountType === 'Rp'){
-        this.setState({discountAmount: discount}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+        this.setState({discountAmount: discount || 0}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
       }
       else if(this.state.discountType === '%'){
-        this.setState({discountPercentage: discount}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
+        this.setState({discountPercentage: discount || 0}, () => this.sumGrandTotalAmount(), this.state.dataReservation["diskon"] = this.state.discountAmount)
       }
     }
     else if(this.state.activeInputBooking === "bookingPayment"){
       const dp = valueInputBooking.value
       this.state.dataReservation["status"] = "UNPAID";
-      this.setState({dpReservationAmount: dp}, () => this.sumGrandTotalAmount(), this.state.dataReservation["dibayar"] = this.state.dpReservationAmount)
+      this.setState({dpReservationAmount: dp || 0}, () => this.sumGrandTotalAmount(), this.state.dataReservation["dibayar"] = this.state.dpReservationAmount)
     } 
     else if (this.state.activeInputBooking === 'bookingName'){
       const name = valueInputBooking.target.value
@@ -1719,7 +1721,7 @@ addSelectedTransaction(id, current, idx) {
   onChangeTime = (time) => this.setState({time}, 
     () => this.state.dataReservation["waktu_selesai"] = time)
 
-  handleDateChange = (date) => this.setState({startDate: date}, 
+  handleDateChange = (date) => this.setState({startDate: date, whatDate: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()}, 
     () => this.state.dataReservation["tgl_selesai"] = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
 
   setActiveInputEditBooking = (event) => {
@@ -2766,6 +2768,10 @@ addSelectedTransaction(id, current, idx) {
         return (
           this.doPrint("kasirRefund")
       );
+      case 'pesananOrder':
+        return (
+          this.doPrint("pesananOrder")
+        );
       case 'pesanan':
         return (
           this.doPrint("pesananBayar")
