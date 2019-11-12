@@ -672,7 +672,7 @@ addSelectedTransaction(id, current, idx) {
                     changePayment: reservationData[0].subtotal - reservationData[0].uang_muka,
                     expenseAmount: reservationData[0].add_fee,
                     discountAmount: reservationData[0].discount, 
-                    tgl_trx: reservationData[0].tgl_selesai, 
+                    tgl_trx: reservationData[0].tgl_selesai,
                     nama: reservationData[0].nama}, 
                     () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
                       const transaction = res.data;
@@ -692,6 +692,7 @@ addSelectedTransaction(id, current, idx) {
                           price: trx.product.price,
                           product_id: trx.product_id,
                           // user_id: user_id, CEK BESOK
+                          pencatat: reservationData[0].user.username,
                           total: reservationData[0].subtotal + reservationData[0].add_fee - reservationData[0].discount,
                           preorder_id: id,
                           nama: reservationData[0].nama,
@@ -1009,6 +1010,12 @@ addSelectedTransaction(id, current, idx) {
     axios.post(`http://101.255.125.227:82/api/refunds`, this.state.trxRefund)
     .then(res => {
       modal('bayar')
+      if(this.state.whatRefund === "TK"){
+        this.selectedPrint('kasirRefund')
+      }
+      if(this.state.whatRefund === "PS"){
+        this.selectedPrint('pesananRefund')
+      }
       console.log(this.state.trxRefund, this.state.selectedItems, res)
       this.setState({trxRefund: [], selectedItems: []})
       })
@@ -1072,6 +1079,8 @@ addSelectedTransaction(id, current, idx) {
                           uang_muka: reservationData[0].uang_muka,
                           waktu_selesai: reservationData[0].waktu_selesai,
                           sisa_harus_bayar: this.state.leftToPay,
+                          tgl_pesan: reservationData[0].tgl_pesan,
+                          pencatat: reservationData[0].user.username,
                         })
                       )
                       console.log("INI ", this.state.selectedItems)
@@ -1964,6 +1973,7 @@ addSelectedTransaction(id, current, idx) {
       .then(res => {
       console.log(res, modal)
       modal('bayarAmbil')
+      this.selectedPrint('kasir')
       this.setState({refund: [], data: [], items: []})})
       .catch(res => {
       modal('alert', '' , '', res.response.data.message)
@@ -2031,6 +2041,7 @@ addSelectedTransaction(id, current, idx) {
       axios.post(`http://101.255.125.227:82/api/bayarPreorder`, myData)
       .then(res => {
         modal('bayarAmbil')
+        this.selectedPrint('pesanan')
         this.setState({refund: [], selectedItems: []}) 
         console.log(this, res)})
       .catch(res => {
@@ -2735,14 +2746,39 @@ addSelectedTransaction(id, current, idx) {
   //   console.log("Clicked")
   // }
 
-  doPrint(){
-    var content = document.getElementById("bacoba");
-    var pri = document.getElementById("ifmcontentstoprint").contentWindow;
+  doPrint(id){
+    var content = document.getElementById(id);
+    var pri = document.getElementById("printArea").contentWindow;
     pri.document.open();
     pri.document.write(content.innerHTML);
     pri.document.close();
     pri.focus();
     pri.print();
+  }
+
+  selectedPrint(type) {
+    switch(type) {
+      case 'kasir':
+        return (
+          this.doPrint("kasirBayar")
+        );
+      case 'kasirRefund':
+        return (
+          this.doPrint("kasirRefund")
+      );
+      case 'pesanan':
+        return (
+          this.doPrint("pesananBayar")
+        );
+      case 'pesananRefund':
+        return (
+          this.doPrint("pesananRefund")
+        );
+      default:
+        return (
+          console.log("C")
+        );
+    }
   }
 }
 

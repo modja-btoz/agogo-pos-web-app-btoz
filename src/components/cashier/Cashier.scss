@@ -172,7 +172,7 @@
 
 
 
-#bacoba{
+#kasirBayar, #pesananBayar, #kasirRefund, #pesananRefund{
   display: none;
   box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
   padding:2mm;
@@ -262,7 +262,8 @@ td{
 
 #legalcopy{
   margin-top: 3mm;
-  text-align: center
+  // width: 70mm;
+  // text-align: center
 }
 
 .payment{

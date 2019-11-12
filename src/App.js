@@ -15,7 +15,7 @@ import Booking from './components/booking/Booking'
 
 import Fullscreen from "react-full-screen";
 import Production from './components/production/Production';
-import Invoice from './components/print/pemesananOrder';
+import Invoice from './components/cashier/PrintArea';
 
 Modal.setAppElement("#root");
 
