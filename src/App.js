@@ -117,7 +117,7 @@ class App extends Component {
   
   state = {
     activePath: '/',
-    saldo: false
+    saldo: true
   }
   modal = React.createRef()
 
@@ -149,7 +149,7 @@ class App extends Component {
           console.log('counted', res);
           this.setState({saldo: false})
         }else{
-          console.log('uncounted2', res);
+          console.log('uncounted', res);
           this.setState({saldo: true})
         }
     })
