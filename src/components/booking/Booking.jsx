@@ -19,6 +19,7 @@
     import DeleteBooking from '../order/DeleteBooking'
     import EditBooking from '../order/EditBooking'
     import TakeBooking from '../order/TakeBooking'
+    import PrintArea from '../cashier/PrintArea'
 
     class Booking extends Component {
         constructor(props) {
@@ -46,6 +47,7 @@
             console.log("UWOWO ~~~~~~~~~~~~~ ", this.props.transactionStore);
             const user = JSON.parse(sessionStorage.getItem('usernow'))
             this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
+            this.props.cartStore.setState({userPencatat: user.username.toUpperCase()})
             axios.get(`http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
                 const trx = res.data;
                 this.setState({ currentTrx: trx.current_invoice});
@@ -79,6 +81,7 @@
         render() {
             return (
                 <Container fluid="true" className="booking container-fluid h-100">
+                    <PrintArea cartStore={this.props.cartStore} namaKasir={this.state.name} />
                     <Row className="h-100">
 
                         <Col xs="6" className="booking-cart">
