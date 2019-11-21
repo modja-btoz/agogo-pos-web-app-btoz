@@ -860,7 +860,8 @@ addSelectedTransaction(id, current, idx) {
           }else{
           axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
           .then(res => {
-            modal('bayar')
+            modal('bayarPesanan','','pesananOrder')
+            this.selectedPrint('pesananOrder')
             this.setState({selectedItems: []})
             console.log(res, this.state.selectedItems, this.state.items)
           })
@@ -879,7 +880,7 @@ addSelectedTransaction(id, current, idx) {
           }else{
           axios.post(`http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
           .then(res => {
-            modal('bayar')
+            modal('bayarPesanan','','pesananOrder')
             this.selectedPrint('pesananOrder')
             this.setState({selectedItems: []})
             console.log(res, this.state.selectedItems, this.state.items)
@@ -1011,15 +1012,16 @@ addSelectedTransaction(id, current, idx) {
     } else {
     axios.post(`http://101.255.125.227:82/api/refunds`, this.state.trxRefund)
     .then(res => {
-      modal('bayar')
       if(this.state.whatRefund === "TK"){
+        modal('bayarRefund','','kasirRefund')
         this.selectedPrint('kasirRefund')
       }
       if(this.state.whatRefund === "PS"){
+        modal('bayarRefund','','pesananRefund')
         this.selectedPrint('pesananRefund')
       }
       console.log(this.state.trxRefund, this.state.selectedItems, res)
-      this.setState({trxRefund: [], selectedItems: []})
+      this.setState({trxRefund: []})
       })
     .catch(res => {
       modal('alert','','',res.response.data.message)
@@ -1962,6 +1964,7 @@ addSelectedTransaction(id, current, idx) {
     }
   })
   }
+
   doPayment(modal){
     let totalPayment = parseInt( this.state.valueInputPayment["paymentTotal"])
     if(isNaN(totalPayment)){
@@ -1974,12 +1977,12 @@ addSelectedTransaction(id, current, idx) {
       axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
       .then(res => {
       console.log(res, modal)
-      modal('bayarAmbil')
+      modal('bayarAmbil','','kasir')
       this.selectedPrint('kasir')
-      this.setState({refund: [], data: [], items: []})})
+      this.setState({refund: [], data: []})})
       .catch(res => {
       modal('alert', '' , '', res.response.data.message)
-      this.setState({refund: [], data: [], items: []})})
+      this.setState({refund: [], data: []})})
     }
   }
 
@@ -2042,7 +2045,7 @@ addSelectedTransaction(id, current, idx) {
       console.log("CEK INI ~~~~~~~",user_id, this.state.selectedItems, myData)
       axios.post(`http://101.255.125.227:82/api/bayarPreorder`, myData)
       .then(res => {
-        modal('bayarAmbil')
+        modal('bayarAmbil','','pesanan')
         this.selectedPrint('pesanan')
         this.setState({refund: [], selectedItems: []}) 
         console.log(this, res)})
@@ -2749,10 +2752,14 @@ addSelectedTransaction(id, current, idx) {
   // }
 
   doPrint(id){
+    const htmlToText = require('html-to-text');
+
     var content = document.getElementById(id);
     var pri = document.getElementById("printArea").contentWindow;
     pri.document.open();
-    pri.document.write(content.innerHTML);
+    // pri.document.write(String.fromCharCode(0x1B, 0x70, 0x30, 0x37, 0x79));
+    pri.document.write(htmlToText.fromString(content.innerHTML));
+    // pri.document.write(String.fromCharCode(0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A));
     pri.document.close();
     pri.focus();
     pri.print();

@@ -333,16 +333,17 @@ class Modals extends Component {
         )}
         </div>
       );
-      case 'bayar':
+      case 'bayarPesanan':
         return (
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
-          {externalCloseBtn}
+          {/* {externalCloseBtn} */}
           <ModalBody className="p-5">
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
-            <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
+            <h2 className="display-6 py-3">Pesanan Berhasil Disimpan!</h2>
             <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
+            <Button className="mt-3 py-3 px-5" color="info" size="lg" onClick={() => this.props.cartStore.selectedPrint(this.props.where)}><i class="fas fa-print mr-1"></i> Re-print struk</Button>
           </ModalBody>
         </Modal>
         )}
@@ -353,7 +354,7 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
-          {externalCloseBtn}
+          {/* {externalCloseBtn} */}
           <ModalBody className="p-5">
             <i className="fas fa-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
@@ -373,6 +374,29 @@ class Modals extends Component {
               </th>
             </tr>
             <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
+            <Button className="mt-3 py-3 px-5" color="info" size="lg" onClick={() => this.props.cartStore.selectedPrint(this.props.where)}><i class="fas fa-print mr-1"></i> Re-print struk</Button>
+          </ModalBody>
+        </Modal>
+        )}
+        </div>
+      );
+      
+      case 'bayarRefund':
+        return (
+          <div id="A" ref={this.root}>
+          {this.root.current && (
+        <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
+          {/* {externalCloseBtn} */}
+          <ModalBody className="p-5">
+            <i className="fas fa-check font-weight-bold display-3 text-red"></i>
+            <h2 className="display-6 py-3">Refund Berhasil!</h2>
+            <tr>
+              <th className="paewo">Total Refund : 
+                <NumberFormat value={this.props.cartStore.state.totalRefund || ''} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} prefix={' Rp '} />
+              </th>
+            </tr>
+            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
+            <Button className="mt-3 py-3 px-5" color="info" size="lg" onClick={() => this.props.cartStore.selectedPrint(this.props.where)}><i class="fas fa-print mr-1"></i> Re-print struk</Button>
           </ModalBody>
         </Modal>
         )}
