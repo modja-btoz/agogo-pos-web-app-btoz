@@ -246,13 +246,14 @@ class Modals extends Component {
           <div id="A" ref={this.root}>
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
-        {externalCloseBtn}
+        {/* {externalCloseBtn} */}
         <ModalHeader className="text-center d-block">
             {data.username.toUpperCase() || "nama user"}
           </ModalHeader>
         <ModalBody>
         <Row>
           <Col xs="7">
+          {this.props.cartStore.state.approveOK ?
           <div style={{textAlign: "left", paddingLeft: "30px"}}>
             <h4>
             <tr>
@@ -288,8 +289,11 @@ class Modals extends Component {
             <Label>Transaksi : {parseInt(this.props.modalStore.state.transaction.total_transaksi) - parseInt(this.props.modalStore.state.transaction.total_refund)}</Label>
             <hr style={{width: 'auto'}} />
             <Label>Saldo Akhir : {parseInt(this.props.modalStore.state.transaction.total_transaksi) + parseInt(this.props.modalStore.state.transaction.saldo_awal) - parseInt(this.props.modalStore.state.transaction.total_refund)}</Label></h5> */}
+          <Button color="secondary" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
+          <Button href="#" onClick={() => this.props.cartStore.doPostKas(this.props.modalStore.state.transaction, data, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</Button>
           </div>
-
+          :
+          <div>
           <h3>USER APPROVAL</h3>
             <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
               <Input className="input-masking mb-4" type="text" placeholder="USER APPROVAL" bsSize="lg" style={{textAlign: "center", border: "2px solid black"}}
@@ -309,8 +313,8 @@ class Modals extends Component {
                 autoComplete="new-pin"
               />
           </div>
-          <Button color="secondary" size="lg" onClick={this.props.toggle}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
-          <a href="#" onClick={() => this.props.cartStore.doPostKas(this.props.modalStore.state.transaction, data, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</a>
+          </div>
+          }
           </Col>
           <Col xs="5">
           <CalcNumericKas
