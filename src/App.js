@@ -142,7 +142,20 @@ class App extends Component {
     }
   }
 
+  escFunction = (event) => {
+    if(event.keyCode === 123) {
+      const iframe = document.createElement('iframe')
+      iframe.setAttribute('style', 'height: 0px; width: 0px; position: absolute;')
+      document.body.appendChild(iframe)
+      var pri = iframe.contentWindow
+      pri.focus();
+      pri.print()
+    }
+  }
+
   componentDidMount(){
+    document.addEventListener("keydown", this.escFunction, false);
+
     axios.get('http://101.255.125.227:82/api/cekKas')
     .then(res => {
         if(res.data.status === 'counted'){
