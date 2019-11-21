@@ -111,6 +111,7 @@ const initialState = {
     "Jumat",
     "Saturday"
 ],
+approveOK: false,
 };
 
 class CartsContainer extends Container {
@@ -2792,6 +2793,28 @@ addSelectedTransaction(id, current, idx) {
           console.log("C")
         );
     }
+  }
+
+  checkApproval = (modal) =>{
+    let data = [{
+      username_approval: this.state.dataReservation["user"],
+      pin_approval: this.state.dataReservation["code"]
+    }]
+    
+    axios.post(`http://101.255.125.227:82/api/CheckApproval`, data)
+    .then(res => {
+      if(res.data.status === 'success'){
+        this.setState({approveOK: true})
+      }else{
+        console.log(modal)
+        modal.clearModal()
+        modal.toggleModal('alert', '', '', 'Approval yang anda masukkan salah')
+      }
+    })
+    .catch(res => {
+      modal.clearModal()
+      modal.toggleModal('alert', '', '', 'Mohon lakukan approval terlebih dahulu!')
+    })
   }
 }
 

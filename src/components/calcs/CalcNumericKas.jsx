@@ -21,7 +21,7 @@ class CalcNumericKas extends Component {
     console.log("Button ENTER pressed", button);
 
     // JALANKAN FUNGSI DARI PARENT
-    this.props.cartStore.doPostKas(this.props.modalStore.state.transaction, this.props.data, this.props.modalStore)
+    this.props.cartStore.checkApproval(this.props.modalStore)
   };
 
   render() {
