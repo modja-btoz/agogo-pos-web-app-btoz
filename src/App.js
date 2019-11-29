@@ -145,11 +145,11 @@ class App extends Component {
   escFunction = (event) => {
     if(event.keyCode === 123) {
       const iframe = document.createElement('iframe')
-      iframe.setAttribute('style', 'height: 0px; width: 0px; position: absolute;')
       document.body.appendChild(iframe)
       var pri = iframe.contentWindow
+      // pri.document.write(String.fromCharCode(0x1B));
       pri.focus();
-      pri.print()
+      pri.print();
     }
   }
 

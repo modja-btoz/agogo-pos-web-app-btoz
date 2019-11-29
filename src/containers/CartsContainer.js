@@ -2759,7 +2759,7 @@ addSelectedTransaction(id, current, idx) {
     var pri = document.getElementById("printArea").contentWindow;
     pri.document.open();
     // pri.document.write(String.fromCharCode(0x1B, 0x70, 0x30, 0x37, 0x79));
-    pri.document.write(htmlToText.fromString(content.innerHTML));
+    pri.document.write(content.innerHTML);
     // pri.document.write(String.fromCharCode(0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A, 0x0A));
     pri.document.close();
     pri.focus();
@@ -2768,6 +2768,10 @@ addSelectedTransaction(id, current, idx) {
 
   selectedPrint(type) {
     switch(type) {
+      // case 'abc':
+      //   return (
+      //     this.doPrint("abc")
+      //   );
       case 'kasir':
         return (
           this.doPrint("kasirBayar")
