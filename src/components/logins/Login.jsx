@@ -30,12 +30,11 @@ class Login extends Component {
 
   componentDidMount(){
     if(sessionStorage.getItem('users')){
-      console.log('User logged in', sessionStorage)
+      console.log('User logged in')
     }else{
       this.state({ redirect: true })
     }
 
-    /// console.log(this.props)
     let user_index = this.props.match.params.user_index;
     let users = sessionStorage.getItem('users');
     this.setState({ users: JSON.parse(users)},
@@ -44,7 +43,6 @@ class Login extends Component {
         user: this.state.users[user_index]
       },
       () => {
-        console.log(this.state.user)
         this.setState({
           username: this.state.user.username,
           userAvatar: this.state.user.photo,
@@ -52,9 +50,6 @@ class Login extends Component {
         },
         () => {
           sessionStorage.setItem('usernow', JSON.stringify(this.state.user));
-          // console.log("USERNAME")
-          // console.log(this.state.username)
-          // console.log(this.state.userAvatar)
         });
       });
     });
@@ -62,17 +57,14 @@ class Login extends Component {
 
   onChange = input => {
     this.setState({ password: input });
-    console.log("Password changed using Touch", input);
   };
 
   onChangeInput = event => {
     let input = event.target.value;
     this.setState({ password: input });
-    console.log("Password changed using Keyboard", input);
   };
 
   onEnter = () => {
-    // console.log("ENTERRRRRRR DARI CHILD KEYBOARD")
     this.login()
   }
 
@@ -84,9 +76,6 @@ class Login extends Component {
 
     axios.post(`http://101.255.125.227:82/api/auth/login`, userData )
       .then(res => {
-        console.log("UI ", res);
-        console.log("UO ", res.data);
-        console.log('Cek', sessionStorage)
         sessionStorage.setItem('token', res.data.token);
         this.setState({ redirect: true })
       }).catch(res => {

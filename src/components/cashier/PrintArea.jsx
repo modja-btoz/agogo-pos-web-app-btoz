@@ -1,6 +1,6 @@
 import React from 'react'
 import NumberFormat from 'react-number-format'
-import "./PrintArea.css"
+// import "./PrintArea.css"
 
 const headContent = () =>{
   return (<div>
@@ -15,6 +15,16 @@ const headContent = () =>{
           </p>
           </div>
   )
+}
+
+const paperFeed = () => {
+  return (<div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <p align='center'>-</p>
+  </div>)
 }
 
 const PrintArea = (props) => {
@@ -83,6 +93,7 @@ return (
         Terima kasih<br />
         Atas kunjungan anda<br />
       </p>
+      {paperFeed()}
     </div>
     
 
@@ -146,6 +157,7 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
+          {paperFeed()}
     </div>
 
 
@@ -235,6 +247,7 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
+          {paperFeed()}
     </div>
 
 
@@ -338,6 +351,7 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
+          {paperFeed()}
     </div>
 
     {/* PEMESANAN REFUND */}
@@ -419,6 +433,7 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
+          {paperFeed()}
     </div>
 </div>
 )}

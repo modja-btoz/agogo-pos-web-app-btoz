@@ -24,7 +24,6 @@ class ModalsContainer extends Container {
       modalMessage: message
     },
     () => {
-      console.log("MODAL TYPE =>", this.state.modalType, this.state)
       setTimeout(this.setState({
         modal: !this.state.modal
       }), 1000)
@@ -34,12 +33,11 @@ class ModalsContainer extends Container {
 
   clearModal = () => {
     this.setState({modal: !this.state.modal})
-    console.log("IEE")
   }
 
   getData(){
     axios.get(`http://101.255.125.227:82/api/getTrx`)
-    .then(res => this.setState({transaction: res.data}, () => console.log("AA")))
+    .then(res => this.setState({transaction: res.data}))
   }
   
 }

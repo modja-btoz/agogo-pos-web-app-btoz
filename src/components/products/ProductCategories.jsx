@@ -30,8 +30,6 @@ class ProductCategories extends Component {
       categories.map(x => 
       this.setState({ categories: [...this.state.categories, x] })
       )
-      // sessionStorage.setItem('transaction', JSON.stringify(transaction));
-      console.log("TIS", this.state.categories)
     })
   }
 
@@ -42,8 +40,6 @@ class ProductCategories extends Component {
     let activeCatClass = "cat-"+index
     this.props.productStore.setState({
       activeCatClass: activeCatClass
-    },()=>{
-      console.log("activeCatClass => ", this.props.productStore.state.activeCatClass)
     })
   }
 
@@ -66,7 +62,6 @@ class ProductCategories extends Component {
   }
 
   render() {
-    // console.log(this.state.categories)
     return (
       <Nav className="product-categories pt-4 pb-4">
         <NavItem>
