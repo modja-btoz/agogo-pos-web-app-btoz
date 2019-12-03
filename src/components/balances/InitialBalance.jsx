@@ -32,7 +32,6 @@ class SaldoAwal extends Component {
   componentDidMount(){
     const user = JSON.parse(sessionStorage.getItem('usernow'))
     this.setState({pos: Object.assign({}, this.state.pos, {user_id: user.id}, {saldo_akhir:0}, {transaksi:0})})
-    console.log(this)
   }
 
   onFocus = whatInput => {
@@ -42,14 +41,12 @@ class SaldoAwal extends Component {
         keyboardPIN: false,
         keyboardUser: false,
       })
-      console.log("What Input?", whatInput);
     }else if(whatInput === 'username'){
       this.setState({ 
         keyboardPIN: false,
         keyboardSaldo: false,
         keyboardUser: true,
       })
-      console.log("What Input?", whatInput);
     }
     else if(whatInput === 'pin'){
       this.setState({ 
@@ -57,7 +54,6 @@ class SaldoAwal extends Component {
         keyboardSaldo: false,
         keyboardUser: false
       })
-      console.log("What Input?", whatInput);
     }
   };
 
@@ -66,21 +62,18 @@ class SaldoAwal extends Component {
     this.setState({
       saldo: saldo
     });
-    console.log("Input Saldo changed", saldo);
   };
   onChangeUsername = username => {
     this.state.pos['username_approval'] = username
     this.setState({
       username: username
     });
-    console.log("Input USERNAME changed", username);
   };
   onChangePIN = pin => {
     this.state.pos['pin_approval'] = pin
     this.setState({
       pin: pin
     });
-    console.log("Input PIN changed", pin);
   };
 
   onChangeInputSaldo = event => {
@@ -121,22 +114,18 @@ class SaldoAwal extends Component {
   };
 
   onKeyPress = button => {
-    // console.log("Button pressed", button);
-
     if ( button === "{enter}" ) {
       this.onEnter(button);
     }
   };
 
   onEnter = () => {
-    console.log("ON ENTER", this.state)
-    this.setState({data: [this.state.pos] }, () => console.log(this))
+    this.setState({data: [this.state.pos] })
     axios.post(`http://101.255.125.227:82/api/postKas`, this.state.data)
     .then(res => {
       if(res.status === 200) {
       this.setState({redirect: true})
       } 
-      console.log(res)
     })
     .catch(res => this.props.modalStore.toggleModal('alert', '', '', res.response.data.message))
   }

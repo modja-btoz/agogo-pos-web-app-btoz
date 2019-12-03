@@ -16,27 +16,21 @@ class CalcNumeric extends Component {
     () => {
       this.props.onChange(input)
     });
-    // console.log("Input CalcNumeric changed", input);
   };
 
   onKeyPress = button => {
-    // console.log("Button pressed", button);
-
     if ( button === "{enter}" ) {
       this.onEnter(button);
     }
   };
 
   onEnter = (button) => {
-    console.log("Button ENTER pressed", button);
-
     // JALANKAN FUNGSI DARI PARENT
     this.props.onEnter()
   };
 
   onChangeInput = event => {
     let input = event.target.value;
-    console.log("LOLOLO",input)
     this.setState(
       {
         input: input

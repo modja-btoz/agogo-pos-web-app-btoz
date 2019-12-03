@@ -19,7 +19,6 @@ class TransactionContainer extends Container {
   }
 
   clearCart = () => {
-    console.log("CLEAR CART")
     this.setState(initialState);
   }
 
@@ -28,7 +27,6 @@ class TransactionContainer extends Container {
     .then(res => {
       const transaction = res.data;
       this.setState({ transactionStore: transaction});
-      // sessionStorage.setItem('transaction', JSON.stringify(transaction));
     })
   }
 
@@ -37,7 +35,6 @@ class TransactionContainer extends Container {
     .then(res => {
       const transaction = res.data;
       this.setState({ reservationStore: transaction });
-      // sessionStorage.setItem('transaction', JSON.stringify(transaction));
     })
   }
 
@@ -59,12 +56,10 @@ addTransaction(user_id, items, total, modal) {
   axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
   .then(res => {
     modal('bayar')
-    console.log("A",res)
     this.setState({data: []})
   })
   .catch(res => {
     modal('alert', '', '', res.response.data.message)
-    console.log(res.response.data.message, this.state)
     this.setState({data: []})
   })
 }

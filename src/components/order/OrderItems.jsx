@@ -10,7 +10,6 @@ class OrderItems extends Component {
   }
 
   componentDidMount(){
-    // console.log("ETSTTTTTT", this.props.transactionStore)
     this.props.cartStore.fetchReservation()
   }
 

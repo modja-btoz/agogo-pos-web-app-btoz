@@ -12,14 +12,11 @@ class CalcNumericKas extends Component {
   };
 
   onKeyPress = button => {
-    // console.log("Button pressed", button);
     if ( button === "{enter}" ) {
       this.onEnterKas(button);
     }
   };
   onEnterKas = (button) => {
-    console.log("Button ENTER pressed", button);
-
     // JALANKAN FUNGSI DARI PARENT
     this.props.cartStore.checkApproval(this.props.modalStore)
   };
@@ -27,11 +24,6 @@ class CalcNumericKas extends Component {
   render() {
     return (
       <div>
-        {/* <input
-          value={this.state.input}
-          placeholder={"Tap on the virtual keyboard to start"}
-          onChange={e => this.onChangeInput(e)}
-        /> */}
         <Keyboard
           ref={r => (this.keyboard = r)}
           layoutName={this.state.layoutName}

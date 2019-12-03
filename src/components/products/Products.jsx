@@ -23,8 +23,6 @@ class Products extends Component {
   }
 
   render() {
-    // console.log(this.state.products)
-    // this.props.productStore.productsFiltered()
 
     return (
       <Container className="products pt-4 pl-0">

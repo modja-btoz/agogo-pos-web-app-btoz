@@ -13,7 +13,6 @@ class OthersProduction extends React.Component {
         this.setState({
         popoverOpen: !this.state.popoverOpen
         });
-        console.log("A")
     }
 
     render() {
@@ -38,26 +37,6 @@ class OthersProduction extends React.Component {
                     <td className="total-others">Total Lain-lain</td>
                     <td className="calc-product-total text-right">{parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "rusak"] || 0)+
                                                                     parseInt(this.props.cartStore.state.produksi[this.props.cartStore.state.selectedProduct.name + "lain"] || 0) || "-"}</td>
-                </tr>
-                </div>
-                <div>
-                <tr>
-                {/* <Button disabled={this.props.cartStore.state.disabledProductionNote} onClick={() => this.props.modalStore.toggleModal('catatan')}>
-                    Tambah Catatan
-                </Button> */}
-
-                    {/* <Popover placement="right" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
-                        <PopoverBody >
-                        <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                            <Input  
-                                    value={this.props.cartStore.state.valueInputBooking["note"]}
-                                    name="refundCode" id={"note"+this.props.cartStore.state.selectedProduct.name}
-                                    onChange={this.props.cartStore.onChangeBooking}
-                                    onFocus={this.props.cartStore.setActiveInputBooking} 
-                                    className="note-production" type="textarea" name="catatan" placeholder="TAMBAH CATATAN" rows="7"></Input>
-                            </div>
-                        </PopoverBody>
-                    </Popover> */}
                 </tr>
                 </div>
             </div>

@@ -33,15 +33,12 @@ setActiveInput = (event) => {
 onChangeAll = (input) => {
   this.setState({
     input: input
-  }, () => {
-    console.log("Inputs changed", input);
   });
 }
 
   
 
   render() {
-    // console.log(this.state.users)
     return (
       <section className="LoginSplashScreen centered">
         <div className="container">

@@ -28,7 +28,6 @@ class Selection extends Component {
         .then(res => {
             this.setState({where: res.data})
         })
-        console.log(this.state, sessionStorage)
         const user = JSON.parse(sessionStorage.getItem('usernow'))
         this.setState({userLoggedIn: user}, () => this.checkRole())
     }

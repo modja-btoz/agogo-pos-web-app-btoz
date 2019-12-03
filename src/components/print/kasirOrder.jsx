@@ -5,11 +5,8 @@ import './kasirOrder.scss'
 
 
 const kasirOrder = (props) => {
-
-console.log(props)
-
   return (
-<div>
+  <div>
   <div id="invoice-POS">
     
     <div id="top">

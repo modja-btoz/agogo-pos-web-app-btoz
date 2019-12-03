@@ -19,7 +19,6 @@ export default class AuthService {
                 password
             })
         }).then(res => {
-            console.log(res)
             this.setUserID(res.userid)
             this.setUserData(res)
             this.setToken(res.token) // Setting the token in localStorage
@@ -46,7 +45,6 @@ export default class AuthService {
         .then(res => {
             
             let userDetails = JSON.stringify(res.data.user_details[0])
-            // console.log(userDetails)
             localStorage.setItem('userDetails', userDetails)
         })
     }
@@ -85,26 +83,11 @@ export default class AuthService {
     }
 
     logout() {
-        // Clear user token and profile data from localStorage
-        // localStorage.removeItem('id_token');
-        // localStorage.removeItem('userData');
-        // localStorage.removeItem('userDetails');
-        // localStorage.removeItem('userid');
-        // localStorage.removeItem('isLoggedIn');
-        // localStorage.removeItem('sisaPoint');
-        // localStorage.removeItem('currentPoint');
-        // localStorage.removeItem('userAvatar');
-        // localStorage.removeItem('loginType');
-
         localStorage.clear()
         sessionStorage.clear();
-        
 
         // KASIH TAU SI ROUTER KLO UDAH SIGN OUT
         window.updateTopMostParent(false, "", ""); 
-
-        // REDIRECT TO
-        // this.props.history.replace('/');
     }
 
     getProfile() {
@@ -121,16 +104,14 @@ export default class AuthService {
             'x-access-token': this.getToken()
         }
 
-        console.log(this.loggedIn())
 
         // Setting Authorization header
         // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
         if (this.loggedIn()) {
-            console.log("MASIH LOGIN NIHHHHHH")
             headers['x-access-token'] = this.getToken()
             // headers['Authorization'] = 'Bearer ' + this.getToken()
         }else{
-            console.log("LOGIN NIHHHHHH")
+            console.log("LOGIN ")
         }
 
         return fetch(url, {
