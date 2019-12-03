@@ -63,7 +63,6 @@ class Modals extends Component {
     userLoggedIn :[],
     name: '',
     transaction: {}
-    // console.log(days[new Date().getDay()]);
     };
     this.root = React.createRef();
   };
@@ -73,20 +72,12 @@ class Modals extends Component {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
-    // var hours = new Date().getHours(); //Current Hours
-    // var min = new Date().getMinutes(); //Current Minutes
-    // var sec = new Date().getSeconds(); //Current Seconds
     that.setState({
       //Setting the value of the date time
       date:
         date + '/' + month + '/' + year,
     });
   }
-
-  // componentWillUpdate() {
-  //   axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/getTrx`)
-  //   .then(res => this.setState({transaction: res.data}, () => console.log("AA")))
-  // }
 
   componentWillUnmount(){
     this.props.cartStore.clearCart()
@@ -99,7 +90,6 @@ class Modals extends Component {
 
   clearToggle = () => {
     this.props.toggle()
-    console.log("ABC")
     this.props.cartStore.resetProduct()
   }
 
@@ -131,7 +121,6 @@ class Modals extends Component {
 
 
   renderSwitch(type) {
-    // console.log(type)
     const externalCloseBtn = <button className="close" style={{ zIndex:'20', position: 'absolute', top: '20px', right: '20px' }} onClick={this.props.toggle}>&times;</button>;
     switch(type) {
       case 'reguler':
@@ -241,7 +230,6 @@ class Modals extends Component {
       case 'hitungKas':
         const user = sessionStorage.getItem('usernow')
         const data = JSON.parse(user)
-        console.log("AWODKOPWAKDPO",this.props.cartStore.state)
         return (
           <div id="A" ref={this.root}>
           {this.root.current && (
@@ -285,12 +273,8 @@ class Modals extends Component {
                 </td>
             </tr>
             </h4>
-            {/* <Label>Saldo Awal : {this.props.modalStore.state.transaction.saldo_awal}</Label>< br/>
-            <Label>Transaksi : {parseInt(this.props.modalStore.state.transaction.total_transaksi) - parseInt(this.props.modalStore.state.transaction.total_refund)}</Label>
-            <hr style={{width: 'auto'}} />
-            <Label>Saldo Akhir : {parseInt(this.props.modalStore.state.transaction.total_transaksi) + parseInt(this.props.modalStore.state.transaction.saldo_awal) - parseInt(this.props.modalStore.state.transaction.total_refund)}</Label></h5> */}
-          <Button color="secondary" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
-          <Button href="#" onClick={() => this.props.cartStore.doPostKas(this.props.modalStore.state.transaction, data, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</Button>
+            <Button color="secondary" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times-circle mr-1"></i> Batalkan</Button>
+            <Button href="#" onClick={() => this.props.cartStore.doPostKas(this.props.modalStore.state.transaction, data, this.props.modalStore)} color="danger" className="btn btn-danger btn-lg"><i class="fas fa-check mr-1"></i> Sign Out</Button>
           </div>
           :
           <div>
@@ -326,13 +310,6 @@ class Modals extends Component {
           </Col>
         </Row>
         </ModalBody>
-
-
-          {/* <ModalBody className="p-5">
-            <i className="fas fa-check font-weight-bold display-3 text-red"></i>
-            <h2 className="display-6 py-3">Transaksi Berhasil!</h2>
-            <Button className="mt-3 py-3 px-5" color="danger" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-check mr-1"></i> Selesai</Button>
-          </ModalBody> */}
         </Modal>
         )}
         </div>
@@ -548,20 +525,13 @@ class Modals extends Component {
             </div>
             </Row>
             <Row className="SidebarBody" >
-            {/* {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name ? "Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name : ""} */}
-
               {/* LEFT */}
-              
               <Col xs='4'>
                 <div centered>
                     <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
                 </div>
                 </Col>
                 <Col xs='4'>
-                
-                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
-
-                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
                 <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                   <Input className="input-masking mb-4" type="number" placeholder="Jumlah" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["refundCode1"] || 
@@ -571,7 +541,6 @@ class Modals extends Component {
                     onFocus={this.props.cartStore.setActiveInputRefund}
                     onChange={e => this.onChangeInput(e)}
                     autoFocus
-                    // onBlur={this.props.cartStore.resetActiveInputRefund}
                   />
                 </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
@@ -600,12 +569,10 @@ class Modals extends Component {
                   cartStore={this.props.cartStore} 
                   onEnterRefund={this.props.cartStore.onEnterRefund}
                   modalStore={this.props.modalStore} 
-                  // inputName={this.props.cartStore.state.inputName}
                 />
                 </Col>
   
               {/* RIGHT */}
-                     
               </Row>
           </ModalBody>
         </Modal>
@@ -638,31 +605,24 @@ class Modals extends Component {
             </div>
             </Row>
             <Row className="SidebarBody" >
-            {/* {"Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name ? "Produksi " + this.props.where + " : " + this.props.cartStore.state.selectedProduct.name : ""} */}
-
               {/* LEFT */}
-              
               <Col xs='4'>
                 <div centered>
-                    <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
-                    <div style={{paddingTop: '10px'}} className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                            <Input  
-                                    // value={this.props.cartStore.state.valueInputBooking["note"]}
-                                    defaultValue={this.props.cartStore.state.produksi["note"+this.props.cartStore.state.selectedProduct.name]}
-                                    id={"note"+this.props.cartStore.state.selectedProduct.name}
-                                    onChange={this.props.cartStore.onChangeBooking}
-                                    onFocus={this.props.cartStore.setActiveInputBooking} 
-                                    className="note-production" type="textarea" name="catatan" placeholder="TAMBAH CATATAN" rows="4"
-                                    autoFocus
-                                    ></Input>
-                            </div>
+                  <img className="img-view" src={this.props.cartStore.state.selectedProduct.photo}></img>
+                  <div style={{paddingTop: '10px'}} className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
+                    <Input  
+                            defaultValue={this.props.cartStore.state.produksi["note"+this.props.cartStore.state.selectedProduct.name]}
+                            id={"note"+this.props.cartStore.state.selectedProduct.name}
+                            onChange={this.props.cartStore.onChangeBooking}
+                            onFocus={this.props.cartStore.setActiveInputBooking} 
+                            className="note-production" type="textarea" name="catatan" placeholder="TAMBAH CATATAN" rows="4"
+                            autoFocus
+                            >
+                    </Input>
+                  </div>
                 </div>
                 </Col>
                 <Col xs='4'>
-                
-                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
-
-                {/* <Input className="mb-4" type="text" name="paymentDiscount" id="paymentDiscount" placeholder=" ..." bsSize="lg" /> */}
                 <div className={this.props.cartStore.state.activeInputRefund === 'refundCode'+this.props.where ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
                   <Input className="input-masking mb-4" type="number" placeholder="Jumlah" bsSize="lg" style={{textAlign: "center", border: "2px solid grey", fontSize:"20px"}}
                     value={this.props.cartStore.state.valueInputRefund["refundCode4"] ||
@@ -671,7 +631,6 @@ class Modals extends Component {
                     onFocus={this.props.cartStore.setActiveInputRefund}
                     onChange={e => this.onChangeInput(e)}
                     autoFocus
-                    // onBlur={this.props.cartStore.resetActiveInputRefund}
                   />
                 </div>
                 <div className={this.props.cartStore.state.activeInputRefund === 'approvalUser' ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
@@ -700,12 +659,10 @@ class Modals extends Component {
                   cartStore={this.props.cartStore} 
                   onEnterRefund={this.props.cartStore.onEnterRefund}
                   modalStore={this.props.modalStore} 
-                  // inputName={this.props.cartStore.state.inputName}
                 />
                 </Col>
   
               {/* RIGHT */}
-                     
               </Row>
           </ModalBody>
         </Modal>

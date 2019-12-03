@@ -17,18 +17,13 @@ class CalcNumeric extends Component {
   setActiveInput = (event) => {
     this.setState({
       inputName: event.target.id
-    },
-      () => {
-        console.log("setActiveInput", this.state.inputName)
-      }
-    );
+    });
   }
   
   onChange = inputQtyCartItem => {
     this.setState({
       inputQtyCartItem: inputQtyCartItem
     });
-    console.log("Input changed", inputQtyCartItem);
   };
 
   onChangeInput = event => {

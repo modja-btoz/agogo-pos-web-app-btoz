@@ -32,9 +32,6 @@ class Kasir extends Component {
   componentDidMount(){
     this.props.transactionStore.fetchTransaction()
     this.props.transactionStore.fetchReservation()
-    console.log("TRANS ~~~~~~~~~~~~~ ", this.props.transactionStore);
-    console.log("CART ~~~~~~~~~~~~~ ", this.props.cartStore);
-    console.log('A', sessionStorage);
       
     axios.get('http://101.255.125.227:82/api/cekKas')
     .then(res => {
@@ -50,10 +47,6 @@ class Kasir extends Component {
     }
     
   }
-
-  // componentWillUpdate(){
-  //   console.log("update", this.props.cartStore.state.selectedItems)
-  // }
 
   render() {
     return (

@@ -44,77 +44,32 @@ const whatRole = () => {
   const roles = JSON.parse(sessionStorage.getItem("usernow"))
   try{
     if(roles.role.includes("kasir") && roles.role.includes("pemesanan") && roles.role.includes("produksi") ){
-      console.log("all", roles.role)
       return 'all'
     }else if(roles.role.includes("kasir") && roles.role.includes("pemesanan")){
-      console.log("kasirpemesanan", roles.role)
       return 'kasirpemesanan'
     }else if(roles.role.includes("kasir") && roles.role.includes("produksi")){
-      console.log("kasirproduksi", roles.role)
       return 'kasirproduksi'
     }else if(roles.role.includes("pemesanan") && roles.role.includes("produksi")){
-      console.log("pemesananproduksi", roles.role)
       return 'pemesananproduksi'
     }else if(roles.role.includes("kasir")){
-      console.log("kasir", roles.role)
       return 'kasir'
     } if(roles.role.includes("pemesanan")){
-      console.log("pemesanan", roles.role)
       return 'pemesanan'
     }else if(roles.role.includes("produksi")){
-      console.log("produksi", roles.role)
       return 'produksi'
     }else{
-      console.log("salah", roles.role)
       return false
     }
   }
   catch(err){
-    console.log("error", roles.role)
     return false;
   }
 }
 
-// const ProtectedRoute = ({ component: Component, ...rest }) => (
-//   <Route {...rest} render={(props) => {
-//     console.log("GET CURRENT PATH")
-//     console.log(props.match.path)
-//     return(
-//       isLoggedIn() === true
-//       ? <Component {...props} rootStore={props.rootStore} />
-//       : <Redirect to={{
-//           pathname: '/initial-balance',
-//           state: { from: props.location }
-//         }} />
-//     )
-//   }} />
-// );
-
-// const ProtectedRouteLogged = ({ component: Component, ...rest }) => (
-//   <Route {...rest} render={(props) => {
-//     console.log("GET CURRENT PATH")
-//     console.log(props.match.path)
-//     return(
-//       isLoggedIn() === false
-//       ? <Component {...props} rootStore={props.rootStore} />
-//       : <Redirect to={{
-//           pathname: '/',
-//           state: { from: props.location }
-//         }} />
-//     )
-//   }} />
-// );
-// );
-
-
 const root = document.getElementById("root");
 
 class App extends Component {
-  // modal = React.createRef()
-  // componentDidMount(){
-  //   console.log("TES ~~~~~~~~~~~~~ ", this.props.transactionStore)
-  // }
-  
+
   state = {
     activePath: '/',
     saldo: true
@@ -122,22 +77,15 @@ class App extends Component {
   modal = React.createRef()
 
   logout = () => {
-    // console.log("LOGOUT")
     sessionStorage.setItem('token', '');
     sessionStorage.setItem('idKas', '');
     sessionStorage.clear();
   }
 
   activePath = (props) => {
-    // console.log("=== ACTIVE PATH ===")
-    // console.log(props.match.path)
     if(props.match.path !== this.state.activePath){
       this.setState({
         activePath: props.match.path
-      },
-      () => {
-
-        console.log(this.state.activePath)
       })
     }
   }
@@ -147,7 +95,6 @@ class App extends Component {
       const iframe = document.createElement('iframe')
       document.body.appendChild(iframe)
       var pri = iframe.contentWindow
-      // pri.document.write(String.fromCharCode(0x1B));
       pri.focus();
       pri.print();
     }
@@ -159,10 +106,8 @@ class App extends Component {
     axios.get('http://101.255.125.227:82/api/cekKas')
     .then(res => {
         if(res.data.status === 'counted'){
-          console.log('counted', res);
           this.setState({saldo: false})
         }else{
-          console.log('uncounted', res);
           this.setState({saldo: true})
         }
     })
@@ -170,20 +115,8 @@ class App extends Component {
       console.log('catch', res)
     })
   }
-
-
-  // componentDidMount(){
-  //   console.log("AAAAAAAAAAAAAAAA", this.checkRoles())
-  //   // this.setState({role })
-  // }
-
-  // componentDidUpdate(){
-  //   // console.log("AAAAAAAAAAAAAAAA", this.checkRoles())
-  //   // this.setState({role })
-  // }
   
   render() {
-    // console.log(isLoggedIn())
 
     return (
 
@@ -271,13 +204,11 @@ class App extends Component {
               <Route path='/cashier'
                 render={(props) => {
                   this.activePath(props);
-                  // console.log(this.props.myModal.props)
                   return(
                     isLoggedIn() === true && (whatRole() === 'all' || whatRole() === 'kasirpemesanan' || whatRole() === 'kasirproduksi' || whatRole() === 'kasir')
                     ? <Cashier {...props} 
                         rootStore={this.props.rootStore} 
                         modalStore={this.props.modalStore}
-                        // myModal={this.props.myModal}
                         cartStore={this.props.cartStore} 
                         productStore={this.props.productStore} 
                         transactionStore={this.props.transactionStore} 

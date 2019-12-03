@@ -15,12 +15,10 @@ class LoginSplashScreen extends Component {
       const users = res.data;
       this.setState({ users });
       sessionStorage.setItem('users', JSON.stringify(users));
-      console.log("TES ~~~~~~~~~~~~~ ", this.state.users)
     })
   }
 
   render() {
-    // console.log(this.state.users)
     return (
       <section className="LoginSplashScreen centered">
         <div className="container">

@@ -39,12 +39,10 @@
             this.setState({
             popoverOpen: !this.state.popoverOpen
             });
-            console.log("A")
         }
 
         componentDidMount(){
             this.props.transactionStore.fetchReservation()
-            console.log("UWOWO ~~~~~~~~~~~~~ ", this.props.transactionStore);
             const user = JSON.parse(sessionStorage.getItem('usernow'))
             this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
             this.props.cartStore.setState({userPencatat: user.username.toUpperCase()})

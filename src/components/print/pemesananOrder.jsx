@@ -6,11 +6,8 @@ import './kasirOrder.scss'
 
 
 const pemesananOrder = (props) => {
-
-console.log(props)
-
   return (
-<div>
+  <div>
   <div id="invoice-POS">
     
     <div id="top">

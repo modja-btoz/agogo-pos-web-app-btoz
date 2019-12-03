@@ -25,9 +25,7 @@ class ProductsContainer extends Container {
       }, 
         () => {
           this.productsFiltered()
-
           sessionStorage.setItem('products', JSON.stringify(products));
-          console.log(products)
         }
       );
     })
@@ -39,22 +37,17 @@ class ProductsContainer extends Container {
     let searchKeyword = this.state.searchKeyword
 
     let productsSearch =  products.filter(function(product) {
-      // return product.title.rendered === searchKeyword;
       return product.name.toString().toLowerCase().search(searchKeyword.toLowerCase()) !== -1;
     });
 
     this.setState({ 
       productsFiltered: productsSearch,
       activeCatClass: ''
-    },()=>{
-      console.log("searchKeyword => ", searchKeyword)
-      console.log("productsFiltered => ", productsSearch)
     })
     
   }
 
   setSearchKeyword(keyword) {
-    console.log("CATEGORY => ", keyword)
     this.setState({ 
       searchKeyword: keyword
     }, 
@@ -129,7 +122,6 @@ class ProductsContainer extends Container {
   }
 
   setFilteredKeyword(keyword) {
-    console.log("CATEGORY => ", keyword)
     this.setState({ 
       filterKeyword: keyword
     }, 
@@ -161,7 +153,6 @@ class ProductsContainer extends Container {
     if (this.state.selectedStok === 'Stok Habis'){
       this.setState({selectedStok: event.target.value}, () => this.productsFiltered())
     }
-    console.log(this.state.selectedStok)
   }
 
 }

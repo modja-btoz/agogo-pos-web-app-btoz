@@ -25,47 +25,11 @@ class CartProduction extends React.Component {
             "Jumat",
             "Saturday"
         ],
-        // console.log(days[new Date().getDay()]);
         };
     }
 
     componentDidMount() {
         this.props.cartStore.getDateTrx()
-        // axios.get(`https://cors-anywhere.herokuapp.com/http://101.255.125.227:82/api/GetLastDate`)
-        // .then(res => { this.setState({date: res.data}, 
-        //     () => {
-        //         var month = new Date().getMonth() + 1; //Current Month
-        //         var year = new Date().getFullYear(); 
-        //         var date = this.state.date.date
-        //         if(date === 'no production') {
-        //             this.setState({date: "TimeOut"})
-        //             console.log(res)
-        //         }else{
-        //         var splitDate = date.created_at.split(" ")
-        //         var takeDate = splitDate[0]
-        //         var tanggal = new Date(takeDate).getDate()
-        //         console.log(date, tanggal)
-        //         this.setState({lastDate: takeDate, prevDate: year + '/' + month + '/' + (tanggal - 1)})
-        //         }
-        //     })})
-        // .catch(res => {
-        //     this.setState({date: "TimeOut", lastDate: "TimeOut", prevDate: "TimeOut"})
-        // })
-            // this.props.cartStore.getDataNyoba()
-    //     var that = this;
-    //     var date = new Date().getDate(); //Current Date
-    //     var month = new Date().getMonth() + 1; //Current Month
-    //     var year = new Date().getFullYear(); //Current Year
-    //     // var hours = new Date().getHours(); //Current Hours
-    //     // var min = new Date().getMinutes(); //Current Minutes
-    //     // var sec = new Date().getSeconds(); //Current Seconds
-    //     // that.setState({
-    //     //   //Setting the value of the date time
-    //     //   date:
-    //     //     date + '/' + month + '/' + year,
-    //     // //   prevDate:
-    //     // //     date + '/' + month + '/' + year,
-    //     // });
       }
 
     render() {
@@ -74,7 +38,6 @@ class CartProduction extends React.Component {
                 <Row style={{height: "400px"}}>
                     <Col xs="7" className="body-left">
                         <div className="date">Posisi per <span className="date-update">{this.props.cartStore.state.days[new Date(this.props.cartStore.state.lastDate).getDay()] + ", " +this.props.cartStore.state.formatDate}</span></div>
-                        {/* <div className="date">Posisi per <span className="date-update">{this.state.date.date === 'no production' ? "Belum ada Produksi" : this.state.days[new Date(this.state.lastDate).getDay()]+ ", " + this.state.lastDate}</span></div> */}
                         <div className="change-date" style={{marginTop: "5px"}}><a href="#" onClick={() => this.props.modalStore.toggleModal('changeDate', 'lg')}><strong>Set Tanggal</strong></a></div>
                         <div className="view-img" style={{marginTop: "10px"}}>
                             <img className="img-product" src={this.props.cartStore.state.selectedProduct.photo}></img>
@@ -120,15 +83,6 @@ class CartProduction extends React.Component {
                 <Row >
                     <Col>
                         <h5>Catatan {this.props.cartStore.state.selectedProduct.name} : {this.props.cartStore.state.produksi["note"+this.props.cartStore.state.selectedProduct.name] || ""} </h5>
-
-                        {/* <div className={this.props.cartStore.state.activeInputBooking === 'note'+this.props.cartStore.state.selectedProduct.name ? 'input-keyboard-wrapper active-input' : 'input-keyboard-wrapper'}>
-                        <Input  
-                                value={this.props.cartStore.state.valueInputBooking["note"]}
-                                name="refundCode" id={"note"+this.props.cartStore.state.selectedProduct.name}
-                                onChange={this.props.cartStore.onChangeBooking}
-                                onFocus={this.props.cartStore.setActiveInputBooking} 
-                                className="note-production" type="textarea" name="catatan" placeholder="TAMBAH CATATAN" rows="7"></Input>
-                        </div> */}
                     </Col>
                 </Row>
 

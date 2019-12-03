@@ -16,27 +16,21 @@ class CalcNumericModal extends Component {
     () => {
       this.props.onChange(input)
     });
-    // console.log("Input CalcNumeric changed", input);
   };
 
   onKeyPress = button => {
-    // console.log("Button pressed", button);
-
     if ( button === "{enter}" ) {
       this.onEnter(button);
     }
   };
 
   onEnter = (button) => {
-    console.log("Button ENTER pressed", button);
-
     // JALANKAN FUNGSI DARI PARENT
     this.props.cartStore.doProduction(this.props.cartStore.state.selectedProduct.id, this.props.modalStore)
   };
 
   onChangeInput = event => {
     let input = event.target.value;
-    console.log("LOLOLO",input)
     this.setState(
       {
         input: input
@@ -50,11 +44,6 @@ class CalcNumericModal extends Component {
   render() {
     return (
       <div>
-        {/* <input
-          value={this.state.input}
-          placeholder={"Tap on the virtual keyboard to start"}
-          onChange={e => this.onChangeInput(e)}
-        /> */}
         <Keyboard
           ref={r => (this.keyboard = r)}
           layoutName={this.state.layoutName}
