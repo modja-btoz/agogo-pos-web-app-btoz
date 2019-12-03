@@ -1174,7 +1174,7 @@ addSelectedTransaction(id, current, idx) {
     this.doRefund(modal)
   };
 
-  
+
 
   // ===============
   // KEYBOARD ACTION
@@ -2179,9 +2179,9 @@ addSelectedTransaction(id, current, idx) {
   checkApproval = (modal) =>{
     let data = [{
       username_approval: this.state.dataReservation["user"],
-      pin_approval: this.state.dataReservation["code"]
+      pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]
     }]
-    
+
     axios.post(`http://101.255.125.227:82/api/CheckApproval`, data)
     .then(res => {
       if(res.data.status === 'success'){
