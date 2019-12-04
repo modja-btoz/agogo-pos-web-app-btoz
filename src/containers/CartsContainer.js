@@ -1760,7 +1760,7 @@ addSelectedTransaction(id, current, idx) {
       .then(res => {
         modal('bayarAmbil','','pesanan')
         this.selectedPrint('pesanan')
-        this.setState({refund: [], selectedItems: []}) 
+        this.setState({refund: []}) 
       })
       .catch(res => {
         modal('alert','','',res.response.data.message)
