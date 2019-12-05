@@ -4,14 +4,14 @@ import NumberFormat from 'react-number-format'
 
 const headContent = () =>{
   return (<div>
-          <p style={{fontFamily: 'Arial, Helvetica, sans-serif'}} align='center'>Agogo Bakery</p>
+          < br />
+          <p style={{fontFamily: 'Arial, Helvetica, sans-serif', fontWeight: 'bold', fontSize: '120%'}} align='center'>Agogo Cake & Bakery</p>
           <p style={{fontFamily: 'Arial, Helvetica, sans-serif'}}> 
               Jalan Woltermonginsidi<br />
-              Kel. Girian Indah | Kec. Girian<br />
+              Kel. Girian Indah - Kec. Girian<br />
               Bitung | Sulawesi Utara<br />
               Telp. 0438 2230652<br />
               Fax. 0821 8749 8746<br />
-              --------------------------------------------
           </p>
           </div>
   )
@@ -35,7 +35,8 @@ return (
   <div id="abc"></div>
   {/* KASIR BAYAR*/}
   <div id="kasirBayar" style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>
-    {headContent()}
+    {/* {headContent()} */}
+    --------------------------------------------
       <table>
         <tr>
             <td style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>No order</td>
@@ -55,9 +56,9 @@ return (
         <table>
           <thead>
             <tr>
-              <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-              <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-              <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+              <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+              <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+              <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
             </tr>
           </thead>
           {props.cartStore.state.items.map(item => 
@@ -93,13 +94,15 @@ return (
         Terima kasih<br />
         Atas kunjungan anda<br />
       </p>
-      {paperFeed()}
+      {headContent()}
+      {/* {paperFeed()} */}
     </div>
     
 
     {/* KASIR REFUND */}
     <div id="kasirRefund">
-      {headContent()}
+      {/* {headContent()} */}
+      --------------------------------------------
         <table>
           <tr>
               <td style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>No order</td>
@@ -119,9 +122,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.refundItems.map(item => 
@@ -157,13 +160,15 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
-          {paperFeed()}
+          {/* {paperFeed()} */}
+          {headContent()}
     </div>
 
 
     {/* PEMESANAN ORDER */}
     <div id="pesananOrder">
-      {headContent()}
+      {/* {headContent()} */}
+      --------------------------------------------
         <table>
           <tr>
               <td style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Pemesan</td>
@@ -199,9 +204,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.items.map(item => 
@@ -247,13 +252,15 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
-          {paperFeed()}
+          {/* {paperFeed()} */}
+          {headContent()}
     </div>
 
 
     {/* PEMESANAN BAYAR */}
     <div id="pesananBayar">
-      {headContent()}
+      {/* {headContent()} */}
+        --------------------------------------------
         <table>
           <tr>
               <td style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Pemesan</td>
@@ -289,9 +296,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.items.map(item => 
@@ -351,12 +358,14 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
-          {paperFeed()}
+          {/* {paperFeed()} */}
+          {headContent()}
     </div>
 
     {/* PEMESANAN REFUND */}
     <div id="pesananRefund">
-      {headContent()}
+      {/* {headContent()} */}
+      --------------------------------------------
         <table>
           <tr>
               <td style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Pemesan</td>
@@ -392,9 +401,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.refundItems.map(item => 
@@ -433,7 +442,8 @@ return (
             Terima kasih<br />
             Atas kunjungan anda<br />
           </p>
-          {paperFeed()}
+          {/* {paperFeed()} */}
+          {headContent()}
     </div>
 </div>
 )}
