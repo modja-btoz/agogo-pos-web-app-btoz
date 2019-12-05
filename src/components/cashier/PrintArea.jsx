@@ -122,9 +122,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.refundItems.map(item => 
@@ -204,9 +204,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.items.map(item => 
@@ -296,9 +296,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.items.map(item => 
@@ -401,9 +401,9 @@ return (
           <table>
             <thead>
               <tr>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Jumlah</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Item</th>
-                <th style={{fontFamily: 'Arial, Helvetica, sans-serif'}}>Sub Total</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Jumlah</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Item</th>
+                <th style={{fontFamily: 'Arial, Helvetica, sans-serif', fontSize: '110%'}}>Sub Total</th>
               </tr>
             </thead>
             {props.cartStore.state.refundItems.map(item => 
