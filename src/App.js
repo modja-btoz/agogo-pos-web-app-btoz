@@ -91,7 +91,7 @@ class App extends Component {
   }
 
   escFunction = (event) => {
-    if(event.keyCode === 123) {
+    if(event.keyCode === 121) {
       const iframe = document.createElement('iframe')
       document.body.appendChild(iframe)
       var pri = iframe.contentWindow
