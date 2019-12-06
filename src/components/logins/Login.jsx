@@ -9,6 +9,7 @@ import LogoAgogo from "./../../img/logo-agogo.png";
 import { Provider, Subscribe } from 'unstated'
 import ModalsContainer from '../modals/_ModalsContainer'
 import RootContainer from '../roots/RootContainer'
+import DefaultIP from '../../containers/DefaultIP'
 
 import './Login.scss';
 
@@ -74,7 +75,7 @@ class Login extends Component {
       password: this.state.password,
     };
 
-    axios.post(`http://101.255.125.227:82/api/auth/login`, userData )
+    axios.post(DefaultIP + `/api/auth/login`, userData )
       .then(res => {
         sessionStorage.setItem('token', res.data.token);
         this.setState({ redirect: true })

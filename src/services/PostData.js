@@ -1,6 +1,8 @@
+import DefaultIP from '../containers/DefaultIP'
+
 export function PostData(type, encodedDataUser) {
 
-    let BaseURL = `http://101.255.125.227:82/api/`;
+    let BaseURL = DefaultIP + `/api/`;
     // let BaseURL = `https://apipipipol.btoz.co.id/api/`;
     //let BaseURL = 'http://localhost/PHP-Slim-Restful/api/';
 

@@ -16,6 +16,7 @@ import Booking from './components/booking/Booking'
 import Fullscreen from "react-full-screen";
 import Production from './components/production/Production';
 import Invoice from './components/cashier/PrintArea';
+import DefaultIP from './containers/DefaultIP'
 
 Modal.setAppElement("#root");
 
@@ -103,7 +104,7 @@ class App extends Component {
   componentDidMount(){
     document.addEventListener("keydown", this.escFunction, false);
 
-    axios.get('http://101.255.125.227:82/api/cekKas')
+    axios.get(DefaultIP + '/api/cekKas')
     .then(res => {
         if(res.data.status === 'counted'){
           this.setState({saldo: false})

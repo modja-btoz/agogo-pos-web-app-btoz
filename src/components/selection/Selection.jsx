@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import DefaultIP from '../../containers/DefaultIP'
 
 import './Selection.css'
 
@@ -24,7 +25,7 @@ class Selection extends Component {
       }
 
     componentDidMount(){
-        axios.get('http://101.255.125.227:82/api/cekKas')
+        axios.get(DefaultIP + '/api/cekKas')
         .then(res => {
             this.setState({where: res.data})
         })

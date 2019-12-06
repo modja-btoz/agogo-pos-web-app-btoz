@@ -7,6 +7,7 @@ import "../calcs/CalcNumeric.scss";
 import '../logins/Login.scss';
 import { Redirect } from 'react-router-dom'
 import axios from 'axios'
+import DefaultIP from '../../containers/DefaultIP'
 
 import { Provider, Subscribe } from 'unstated'
 import ModalsContainer from '../modals/_ModalsContainer'
@@ -121,7 +122,7 @@ class SaldoAwal extends Component {
 
   onEnter = () => {
     this.setState({data: [this.state.pos] })
-    axios.post(`http://101.255.125.227:82/api/postKas`, this.state.data)
+    axios.post(DefaultIP + `/api/postKas`, this.state.data)
     .then(res => {
       if(res.status === 200) {
       this.setState({redirect: true})

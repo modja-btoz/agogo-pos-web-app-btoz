@@ -1,5 +1,6 @@
 import { Container } from 'unstated'
 import axios from 'axios'
+import DefaultIP from './DefaultIP'
 
 class ProductsContainer extends Container {
 
@@ -17,7 +18,7 @@ class ProductsContainer extends Container {
 
   fetchProducts() {
     // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
-    axios.get(`http://101.255.125.227:82/api/products`)
+    axios.get(DefaultIP + `/api/products`)
     .then(res => {
       const products = res.data;
       this.setState({ 
