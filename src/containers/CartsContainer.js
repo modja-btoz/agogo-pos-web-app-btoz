@@ -1,5 +1,6 @@
 import { Container } from 'unstated'
 import axios from 'axios'
+import DefaultIP from './DefaultIP'
 
 const initialState = {
   dataNyoba: [],
@@ -123,7 +124,7 @@ class CartsContainer extends Container {
 
   fetchProducts() {
     // axios.get(`http://gigit.store/wp-json/wp/v2/product?_embed`)
-    axios.get(`http://101.255.125.227:82/api/products`)
+    axios.get(DefaultIP + `/api/products`)
     .then(res => {
       const products = res.data;
       this.setState({ 
@@ -153,7 +154,7 @@ class CartsContainer extends Container {
     });
     if(productsCode.length === 1){
       this.setState({searchCode: ''})
-      axios.get(`http://101.255.125.227:82/api/cekInvoice`).then(res => {
+      axios.get(DefaultIP + `/api/cekInvoice`).then(res => {
       const trx = res.data;
       this.setState({ currentTrx: trx.current_invoice, isDisabled: false});
       // sessionStorage.setItem('transaction', JSON.stringify(transaction));
@@ -201,7 +202,7 @@ class CartsContainer extends Container {
   }
 
   fetchTransaction() {
-    axios.get(`http://101.255.125.227:82/api/orders`)
+    axios.get(DefaultIP + `/api/orders`)
     .then(res => {
       const transaction = res.data;
       this.setState({ transaction: transaction});
@@ -209,7 +210,7 @@ class CartsContainer extends Container {
   }
 
   fetchReservation() {
-    axios.get(`http://101.255.125.227:82/api/preorders`)
+    axios.get(DefaultIP + `/api/preorders`)
     .then(res => {
       const transaction = res.data;
       this.setState({ reservation: transaction });
@@ -265,13 +266,13 @@ class CartsContainer extends Container {
   addSelectedProduct(idx, id, name, qty, price, active_path, modal) {
     if(active_path === '/cashier' || active_path === '/booking'){
       if(active_path === '/cashier' && this.state.items.length === 0){
-      axios.get(`http://101.255.125.227:82/api/cekInvoice`).then(res => {
+      axios.get(DefaultIP + `/api/cekInvoice`).then(res => {
       const trx = res.data;
       this.setState({ currentTrx: trx.current_invoice, isDisabled: false});
       })
       }
       else if(active_path === '/booking'){
-        axios.get(`http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+        axios.get(DefaultIP + `/api/cekPOInvoice`).then(res => {
         const trx = res.data;
         this.setState({ currentTrx: trx.current_invoice, disabledOrder: false, disabledOther: true});
         })
@@ -294,7 +295,7 @@ class CartsContainer extends Container {
     }
     else if (active_path === '/production'){
       this.setState({valueInputBooking: ""})
-      axios.get('http://101.255.125.227:82/api/product/' + id).then(res => {
+      axios.get(DefaultIP + '/api/product/' + id).then(res => {
         const product = res.data;
         this.setState({selectedProduct: product})
         let index = this.state.production.findIndex( x => x.id === id);
@@ -315,12 +316,12 @@ class CartsContainer extends Container {
           this.state.clearProduction.push(productKosong)
           this.setState({disabledProductionNote: false})
         } else {
-          axios.get('http://101.255.125.227:82/api/product/' + id)
+          axios.get(DefaultIP + '/api/product/' + id)
         }
 
       })
       this.doProduction(id, modal)
-      axios.get(`http://101.255.125.227:82/api/TrxByProduct/` + id).then(res => {
+      axios.get(DefaultIP + `/api/TrxByProduct/` + id).then(res => {
       const pesan = res.data;
       let index = this.state.production.findIndex( x => x.id === id)
       if(pesan.production === null){
@@ -459,7 +460,7 @@ class CartsContainer extends Container {
   }
 
 addSelectedTransaction(id, current, idx) {
-  axios.get('http://101.255.125.227:82/api/order/' + id).then(res => {
+  axios.get(DefaultIP + '/api/order/' + id).then(res => {
     this.setState({isDisabled: false})
     const transaction = res.data;
     transaction.forEach((trx, i) =>
@@ -564,7 +565,7 @@ addSelectedTransaction(id, current, idx) {
   addSelectedReservation(id, current, user_id, total) {
     this.setState({isDisabled: false, isRefundPSShow: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder, selectedItems: [], onRefund: true})
     let reservationCode = id
-    axios.get(`http://101.255.125.227:82/api/preorders`)
+    axios.get(DefaultIP + `/api/preorders`)
     .then(res => {
       const transaction = res.data;
       let reservationData = transaction.filter(function(data) {
@@ -584,7 +585,7 @@ addSelectedTransaction(id, current, idx) {
                     discountAmount: reservationData[0].discount, 
                     tgl_trx: reservationData[0].tgl_selesai,
                     nama: reservationData[0].nama}, 
-                    () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
+                    () => axios.get(DefaultIP + '/api/preorder/' + id).then(res => {
                       const transaction = res.data;
                       let sameDate
                       if(formatedDate === this.getToday()){
@@ -657,7 +658,7 @@ addSelectedTransaction(id, current, idx) {
             status: "UNPAID",
           })
       )
-      axios.post(`http://101.255.125.227:82/api/keepOrders`, this.state.data)
+      axios.post(DefaultIP + `/api/keepOrders`, this.state.data)
       .then(res => {
         modal('simpan')
         this.setState({data: []})
@@ -691,7 +692,7 @@ addSelectedTransaction(id, current, idx) {
     } else if (ref[0].pin_approval === undefined){
       modal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else {
-      axios.post(`http://101.255.125.227:82/api/editPreorders`, ref)
+      axios.post(DefaultIP + `/api/editPreorders`, ref)
       .then(res => {
         modal('bayar')
         this.setState({selectedItems: []})
@@ -745,7 +746,7 @@ addSelectedTransaction(id, current, idx) {
           } else if (this.state.selectedItems[0].pin_approval === undefined){
             modal('alert','','','Mohon lakukan approval terlebih dahulu!')
           }else{
-          axios.post(`http://101.255.125.227:82/api/editPreorders`, this.state.selectedItems)
+          axios.post(DefaultIP + `/api/editPreorders`, this.state.selectedItems)
           .then(res => {
             modal('bayarPesanan','','pesananOrder')
             this.selectedPrint('pesananOrder')
@@ -762,7 +763,7 @@ addSelectedTransaction(id, current, idx) {
           } else if (this.state.selectedItems[0].pin_approval === undefined){
             modal('alert','','','Mohon lakukan approval terlebih dahulu!')
           }else{
-          axios.post(`http://101.255.125.227:82/api/preorders`, this.state.selectedItems)
+          axios.post(DefaultIP + `/api/preorders`, this.state.selectedItems)
           .then(res => {
             modal('bayarPesanan','','pesananOrder')
             this.selectedPrint('pesananOrder')
@@ -781,7 +782,7 @@ addSelectedTransaction(id, current, idx) {
     this.setState({onRefund: true})
     let refundCode = this.state.whatRefund + '-' + (this.state.valueInputRefund["refundCode"])
     if(this.state.whatRefund === 'PS'){
-    axios.get(`http://101.255.125.227:82/api/paid_preorders`)
+    axios.get(DefaultIP + `/api/paid_preorders`)
     .then(res => {
       const transaction = res.data;
       let refundData = transaction.filter(function(data) {
@@ -795,7 +796,7 @@ addSelectedTransaction(id, current, idx) {
     })
     }
     else if(this.state.whatRefund === 'TK'){
-      axios.get(`http://101.255.125.227:82/api/PaidOrders`)
+      axios.get(DefaultIP + `/api/PaidOrders`)
       .then(res => {
         const transaction = res.data;
         let refundData = transaction.filter(function(data) {
@@ -860,7 +861,7 @@ addSelectedTransaction(id, current, idx) {
       modal.clearModal()
       modal.toggleModal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else {
-    axios.put('http://101.255.125.227:82/api/updateKas/' + idKas.id_kas, [postData])
+    axios.put(DefaultIP + '/api/updateKas/' + idKas.id_kas, [postData])
     .then(res => {
       document.location.href = '/logout'
     })
@@ -879,7 +880,7 @@ addSelectedTransaction(id, current, idx) {
       this.setState({trxRefund: []})
       modal('alert','','','Mohon lakukan approval terlebih dahulu!')
     } else {
-    axios.post(`http://101.255.125.227:82/api/refunds`, this.state.trxRefund)
+    axios.post(DefaultIP + `/api/refunds`, this.state.trxRefund)
     .then(res => {
       if(this.state.whatRefund === "TK"){
         modal('bayarRefund','','kasirRefund')
@@ -912,7 +913,7 @@ addSelectedTransaction(id, current, idx) {
   doPSRefund(id, current, user_id){
     this.setState({isDisabled: false, selectedItems: []})
     let reservationCode = id
-    axios.get(`http://101.255.125.227:82/api/paid_preorders`)
+    axios.get(DefaultIP + `/api/paid_preorders`)
     .then(res => {
       const transaction = res.data;
       let reservationData = transaction.filter(function(data) {
@@ -925,7 +926,7 @@ addSelectedTransaction(id, current, idx) {
                     changePayment: reservationData[0].subtotal - reservationData[0].uang_muka,
                     expenseAmount: reservationData[0].add_fee,
                     discountAmount: reservationData[0].discount},
-                    () => axios.get('http://101.255.125.227:82/api/preorder/' + id).then(res => {
+                    () => axios.get(DefaultIP + '/api/preorder/' + id).then(res => {
                       const transaction = res.data;
                       transaction.forEach((trx, i) => 
                         this.state.selectedItems.push({
@@ -1693,7 +1694,7 @@ addSelectedTransaction(id, current, idx) {
       modal('alert','','','Uang pembayaran anda kurang')
     }
     else{
-      axios.post(`http://101.255.125.227:82/api/orders`, this.state.data)
+      axios.post(DefaultIP + `/api/orders`, this.state.data)
       .then(res => {
       modal('bayarAmbil','','kasir')
       this.selectedPrint('kasir')
@@ -1756,7 +1757,7 @@ addSelectedTransaction(id, current, idx) {
           pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"],
         })
       });
-      axios.post(`http://101.255.125.227:82/api/bayarPreorder`, myData)
+      axios.post(DefaultIP + `/api/bayarPreorder`, myData)
       .then(res => {
         modal('bayarAmbil','','pesanan')
         this.selectedPrint('pesanan')
@@ -1772,7 +1773,7 @@ addSelectedTransaction(id, current, idx) {
   doOrder = (id) => {
     this.setState({isRefundPSShow: true, disabledOrder: true, disabledOther: true, isInOrder:!this.state.isInOrder, inOrder:!this.state.inOrder})
     let orderCode = id
-    axios.get(`http://101.255.125.227:82/api/preorders`)
+    axios.get(DefaultIP + `/api/preorders`)
     .then(res => {
       const transaction = res.data;
       let orderData = transaction.filter(function(data) {
@@ -1813,7 +1814,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   deleteSelectedOrder(id, idx) {
-    axios.delete(`http://101.255.125.227:82/api/order/` + id)
+    axios.delete(DefaultIP + `/api/order/` + id)
     const newTrx = [...this.state.transaction];
     newTrx.splice(idx, 1);
     this.setState({transaction: newTrx})
@@ -1821,7 +1822,7 @@ addSelectedTransaction(id, current, idx) {
 
   deleteReservationModal(modal) {
     let id = this.state.dataReservation.id
-    axios.put(`http://101.255.125.227:82/api/cancelPreorder/` + id, [{username_approval: this.state.dataReservation["user"],
+    axios.put(DefaultIP + `/api/cancelPreorder/` + id, [{username_approval: this.state.dataReservation["user"],
                                                                       pin_approval: this.state.dataReservation["code"]}])
     .then(res => {
       modal('hapus')
@@ -2060,10 +2061,10 @@ addSelectedTransaction(id, current, idx) {
     let dataFiltered = data.filter(function(data){
       return data.id === id
     })
-    axios.put(`http://101.255.125.227:82/api/updateStock/` + id, [{sisa_stock: this.getStokNow()}])
+    axios.put(DefaultIP + `/api/updateStock/` + id, [{sisa_stock: this.getStokNow()}])
     .then(res=> console.log("res"))
     .catch(res => console.log("res"))
-    axios.post(`http://101.255.125.227:82/api/postProduction`, dataFiltered)
+    axios.post(DefaultIP + `/api/postProduction`, dataFiltered)
     .then(res => {console.log("res")
                   modal.clearModal()})
     .catch(res => {modal.clearModal() 
@@ -2072,7 +2073,7 @@ addSelectedTransaction(id, current, idx) {
 }
 
   changeAllDate(modal, close){
-    axios.get(`http://101.255.125.227:82/api/products`)
+    axios.get(DefaultIP + `/api/products`)
     .then(res => {
       const allProduct = res.data;
       var result = allProduct.map(function(el) {
@@ -2094,7 +2095,7 @@ addSelectedTransaction(id, current, idx) {
         o.ubah_tanggal = "yes"
         return o;
       })
-      axios.post(`http://101.255.125.227:82/api/ubahTanggal`, result)
+      axios.post(DefaultIP + `/api/ubahTanggal`, result)
     .then(res => {
       this.clearCart()
       this.getDateTrx()
@@ -2107,7 +2108,7 @@ addSelectedTransaction(id, current, idx) {
   }
 
   getDateTrx(){
-    axios({timeout: 4000, method: 'get', url:`http://101.255.125.227:82/api/GetLastDate`})
+    axios({timeout: 4000, method: 'get', url:DefaultIP + `/api/GetLastDate`})
     .then(res => {
       this.setState({date: res.data}, () => {
         var month = new Date().getMonth() + 1; //Current Month
@@ -2182,7 +2183,7 @@ addSelectedTransaction(id, current, idx) {
       pin_approval: this.state.dataReservation["code"] || this.state.valueInputRefund["approvalCode"]
     }]
 
-    axios.post(`http://101.255.125.227:82/api/CheckApproval`, data)
+    axios.post(DefaultIP + `/api/CheckApproval`, data)
     .then(res => {
       if(res.data.status === 'success'){
         this.setState({approveOK: true})

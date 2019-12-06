@@ -1,5 +1,7 @@
 import { Container } from 'unstated'
 import axios from 'axios'
+import DefaultIP from './DefaultIP'
+
 
 class ModalsContainer extends Container {
   constructor() {
@@ -36,7 +38,7 @@ class ModalsContainer extends Container {
   }
 
   getData(){
-    axios.get(`http://101.255.125.227:82/api/getTrx`)
+    axios.get(DefaultIP + `/api/getTrx`)
     .then(res => this.setState({transaction: res.data}))
   }
   
