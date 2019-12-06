@@ -18,6 +18,7 @@ import TransactionList from '../transaction/TransactionList';
 import ReservationList from '../reservation/ReservationList';
 import Refund from '../payments/Refund';
 import PrintArea from './PrintArea'
+import DefaultIP from '../../containers/DefaultIP'
 
 class Kasir extends Component {
 
@@ -30,22 +31,13 @@ class Kasir extends Component {
   }
   
   componentDidMount(){
-    this.props.transactionStore.fetchTransaction()
-    this.props.transactionStore.fetchReservation()
-      
-    axios.get('http://101.255.125.227:82/api/cekKas')
+    axios.get(DefaultIP + '/api/cekKas')
     .then(res => {
         sessionStorage.setItem('idKas', JSON.stringify(res.data))
     })
 
     const user = JSON.parse(sessionStorage.getItem('usernow'))
     this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
-
-    let transactionStoreModal = this.props.transactionStore.state.showModal
-    if(transactionStoreModal){
-      this.props.modalStore.toggleModal('clearCart', '')
-    }
-    
   }
 
   render() {

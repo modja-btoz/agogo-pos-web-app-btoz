@@ -20,6 +20,7 @@
     import EditBooking from '../order/EditBooking'
     import TakeBooking from '../order/TakeBooking'
     import PrintArea from '../cashier/PrintArea'
+    import DefaultIP from '../../containers/DefaultIP'
 
     class Booking extends Component {
         constructor(props) {
@@ -46,13 +47,13 @@
             const user = JSON.parse(sessionStorage.getItem('usernow'))
             this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
             this.props.cartStore.setState({userPencatat: user.username.toUpperCase()})
-            axios.get(`http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+            axios.get(DefaultIP + `/api/cekPOInvoice`).then(res => {
                 const trx = res.data;
                 this.setState({ currentTrx: trx.current_invoice});
             })
         }
         doUpdate(){
-            axios.get(`http://101.255.125.227:82/api/cekPOInvoice`).then(res => {
+            axios.get(DefaultIP + `/api/cekPOInvoice`).then(res => {
                 const trx = res.data;
                 this.setState({ currentTrx: trx.current_invoice});
             })

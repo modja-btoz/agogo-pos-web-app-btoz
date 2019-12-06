@@ -72,6 +72,12 @@ class Modals extends Component {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
     var year = new Date().getFullYear(); //Current Year
+    if (date < 10) {
+      date = '0' + date;
+    } 
+    if (month < 10) {
+      month = '0' + month;
+    }
     that.setState({
       //Setting the value of the date time
       date:
@@ -453,6 +459,7 @@ class Modals extends Component {
             {this.state.date !== this.props.cartStore.state.formatDate 
             ?
             <div>
+              {console.log(this.state.date, this.props.cartStore.state.formatDate)}
             <i className="fas fa-calendar-check font-weight-bold display-3 text-red"></i>
             <h2 className="display-6 py-3">Apakah anda yakin akan mengubah posisi tanggal ke hari berikutnya ?</h2>
             <Button className="mt-3 py-3 px-5" color="secondary" size="lg" onClick={this.clearCartCloseModal}><i class="fas fa-times mr-1"></i> TIDAK</Button>{" "}
@@ -675,13 +682,12 @@ class Modals extends Component {
           {this.root.current && (
         <Modal parentSelector={() => this.root.current} style={customStyles} isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className} size={this.props.size} centered>
           {externalCloseBtn}
-          <ModalHeader toggle={this.props.toggle} className="text-center d-block">Shutdown</ModalHeader>
+          <ModalHeader toggle={this.props.toggle} className="text-center d-block">Connection Alert</ModalHeader>
           <ModalBody>
-            Apakah Anda yakin ingin mematikan mesin ? 
+            Koneksi terhambat, mohon tunggu beberapa saat lagi
           </ModalBody>
           <ModalFooter className="text-center d-block">
-            <Button color="dark" size="lg" onClick={this.props.toggle}>Ya</Button>{' '}
-            <Button color="danger" size="lg" onClick={this.props.toggle}>Cancel</Button>
+            <Button color="dark" size="lg" onClick={this.props.toggle}>OK</Button>
           </ModalFooter>
         </Modal>
         )}

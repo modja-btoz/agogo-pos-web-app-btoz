@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import UserList from '../components/users/UserList'
+import DefaultIP from './DefaultIP'
 import '../components/users/Users.scss';
 
 class LoginSplashScreen extends Component {
@@ -10,7 +11,8 @@ class LoginSplashScreen extends Component {
   }
   render = this.render.bind(this);
   componentDidMount() {
-    axios.get(`http://101.255.125.227:82/api/users`)
+    console.log(DefaultIP)
+    axios.get(DefaultIP + `/api/users`)
     .then(res => {
       const users = res.data;
       this.setState({ users });

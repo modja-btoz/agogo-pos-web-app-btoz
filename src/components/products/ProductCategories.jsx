@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Nav, NavItem, NavLink, Input } from 'reactstrap';
 import axios from 'axios'
+import DefaultIP from '../../containers/DefaultIP'
 
 import './ProductCategories.scss';
 
@@ -24,7 +25,7 @@ class ProductCategories extends Component {
   }
 
   fetchCategories() {
-    axios.get(`http://101.255.125.227:82/api/categories`)
+    axios.get(DefaultIP + `/api/categories`)
     .then(res => {
       const categories = res.data;
       categories.map(x => 
