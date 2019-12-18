@@ -43,7 +43,7 @@
         }
 
         componentDidMount(){
-            this.props.transactionStore.fetchReservation()
+            // this.props.transactionStore.fetchReservation()
             const user = JSON.parse(sessionStorage.getItem('usernow'))
             this.setState({userLoggedIn: user, name: user.username.toUpperCase()});
             this.props.cartStore.setState({userPencatat: user.username.toUpperCase()})
