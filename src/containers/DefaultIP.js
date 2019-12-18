@@ -1,1 +1,1 @@
-export default 'http://apiagogo.btoz.co.id:80/api';
+export default 'http://apiagogo.btoz.co.id:80';
