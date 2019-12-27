@@ -12,7 +12,6 @@ class ReservationList extends Component {
     super(props)
   }
     state = {
-    transactionStore: [],
     footerNvaBarHeight: 350,
     windowInnerHeight: 0,
     productItemsHeight: 0,
@@ -40,7 +39,7 @@ class ReservationList extends Component {
 <Container className="reservation">
         <NavLink onClick={() => this.props.cartStore.toggleOpenReservationShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Pemesanan</NavLink>
             <Table style={{color: "white"}} borderless striped>
-              <ReservationHeader transactionStore={this.props.transactionStore}/>
+              <ReservationHeader />
             </Table>
   
             <ShadowScrollbars
@@ -53,7 +52,7 @@ class ReservationList extends Component {
             >
               <div className="scroll-wrapper">
                 <Table style={{color: "white"}} borderless striped className="mb-0">
-                  <ReservationItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
+                  <ReservationItems cartStore={this.props.cartStore}/>
                 </Table>
               </div>
             </ShadowScrollbars>

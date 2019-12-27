@@ -118,7 +118,7 @@ class Selection extends Component {
                         }
                         {this.state.kasirpemesanan &&
                             <div>
-                            {this.state.where.status === 'success' ?
+                            {this.state.where.status === 'counted' ?
                                 <Link to={'/initial-balance'}>
                                     <button className="btn btn-size">KASIR</button>
                                 </Link> : 
@@ -133,7 +133,7 @@ class Selection extends Component {
                         }
                         {this.state.kasirproduksi &&
                             <div>
-                            {this.state.where.status === 'success' ?
+                            {this.state.where.status === 'counted' ?
                                 <Link to={'/initial-balance'}>
                                     <button className="btn btn-size">KASIR</button>
                                 </Link> : 
