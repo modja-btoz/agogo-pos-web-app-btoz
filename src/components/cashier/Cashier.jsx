@@ -65,7 +65,7 @@ class Kasir extends Component {
 
             <Row className="cart-list no-gutters">
               <Col xs="12">
-                <Cart cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore} />
+                <Cart cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
 
                 {this.props.cartStore.state.isCalcNumericCartOpen && (
                 <div className="calc-container">
@@ -85,35 +85,35 @@ class Kasir extends Component {
 
             <Row className="cart-nav no-gutters">
               <Col xs="12">
-                <FooterNavLeft productStore={this.props.productStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore} userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} />
+                <FooterNavLeft productStore={this.props.productStore} modalStore={this.props.modalStore}  userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} />
               </Col>
             </Row>
             
             {this.props.cartStore.state.isPaymentCheckoutShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* PAYMENT COMPONENTS */}
-                <PaymentCheckout userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore}/>
+                <PaymentCheckout userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 
             {this.props.cartStore.state.isReservationCheckoutShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* PAYMENT COMPONENTS */}
-                <ReservationCheckout userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} transactionStore={this.props.transactionStore}/>
+                <ReservationCheckout userNow={this.state.userLoggedIn} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 
             {this.props.cartStore.state.isTransactionListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* TRANSACTION COMPONENTS */}
-                <TransactionList rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore}/>
+                <TransactionList rootStore={this.props.rootStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore}/>
               </aside>
             }
 
             {this.props.cartStore.state.isReservationListShow &&
               <aside className="SidebarComponentsWrapper">
                 {/* RESERVATION COMPONENTS */}
-                <ReservationList rootStore={this.props.rootStore} transactionStore={this.props.transactionStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
+                <ReservationList rootStore={this.props.rootStore} cartStore={this.props.cartStore} modalStore={this.props.modalStore} />
               </aside>
             }
 

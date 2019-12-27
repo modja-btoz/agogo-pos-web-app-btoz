@@ -167,7 +167,6 @@ class App extends Component {
                     ? <Selection {...props}
                       rootStore={this.props.rootStore}
                       modalStore={this.props.modalStore}
-                      transactionStore={this.props.transactionStore}
                       activePath={props.match.path} />
                     : <Redirect to={{ pathname: '/', state: {from: props.location} }} />
                   )
@@ -212,7 +211,6 @@ class App extends Component {
                         modalStore={this.props.modalStore}
                         cartStore={this.props.cartStore} 
                         productStore={this.props.productStore} 
-                        transactionStore={this.props.transactionStore} 
                         activePath={props.match.path} />
                     : <Redirect to={{ pathname: '/', state: { from: props.location } }} />
                   )
@@ -223,13 +221,12 @@ class App extends Component {
                 render={(props) => {
                   this.activePath(props);
                   return (
-                    isLoggedIn() === true && (whatRole() === 'all' || whatRole() === 'kasirpemesanan' || whatRole() === 'kasirpemesanan' || whatRole() === 'pemesanan' ) && this.state.saldo
+                    isLoggedIn() === true && (whatRole() === 'all' || whatRole() === 'kasirpemesanan' || whatRole() === 'pemesananproduksi' || whatRole() === 'pemesanan' ) && this.state.saldo
                       ? <Booking {...props}
                         rootStore={this.props.rootStore}
                         modalStore={this.props.modalStore}
                         cartStore={this.props.cartStore}
                         productStore={this.props.productStore}
-                        transactionStore={this.props.transactionStore}
                         activePath={props.match.path} />
                       : this.props.modalStore.toggleModal('alert','','','Saldo kasir belum diinput!') || this.logout() || 
                       <Redirect to={{ pathname: '/', state: { from: props.location } }} />

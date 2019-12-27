@@ -25,7 +25,7 @@ const OrderBookingEdit = (props) => {
             >
               <div className="scroll-wrapper">
                 <Table style={{color: "white"}} borderless striped className="mb-0">
-                  <OrderItems transactionStore={props.transactionStore} cartStore={props.cartStore}/>
+                  <OrderItems cartStore={props.cartStore}/>
                 </Table>
               </div>
             </ShadowScrollbars>

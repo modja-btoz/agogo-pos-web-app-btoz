@@ -12,7 +12,6 @@ import NumberFormat from 'react-number-format'
 import RootContainer from '../../containers/RootContainer'
 import ModalsContainer from '../../containers/ModalsContainer'
 import CartsContainer from '../../containers/CartsContainer'
-import TransactionContainer from '../../containers/TransactionContainer'
 
 const root = document.getElementById("modal");
 const customStyles = {
@@ -100,7 +99,7 @@ class Modals extends Component {
   }
 
   hideModalTransaction = (props) => {
-    this.props.transactionStore.clearCart() 
+    // this.props.transactionStore.clearCart() 
     this.props.toggle()
   }
   onChangeInput = event => {
@@ -698,8 +697,8 @@ class Modals extends Component {
 
   render() {
     return (
-      <Subscribe to={[RootContainer, ModalsContainer, CartsContainer, TransactionContainer]}>
-      {(rootStore, modalStore, cartStore, transactionStore) => (
+      <Subscribe to={[RootContainer, ModalsContainer, CartsContainer]}>
+      {(rootStore, modalStore, cartStore) => (
         <div>
           {this.renderSwitch(modalStore.state.modalType)}
         </div>

@@ -27,7 +27,6 @@ class TransactionItems extends Component {
           userID={transaction.user_id}
           trxPrice={transaction.total} 
           trxDate={transaction.created_at} 
-          transactionStore={this.props.transactionStore} 
           cartStore={this.props.cartStore} 
           rootStore={this.props.rootStore}
         />
@@ -36,12 +35,6 @@ class TransactionItems extends Component {
 
     </Row>
 
-
-      // <div>
-      //   {this.props.transactionStore.state.transactionStore.map((transaction, i) => 
-      //     <li>{transaction.username}</li>
-      //   )}
-      // </div>
     )
   }
 }
