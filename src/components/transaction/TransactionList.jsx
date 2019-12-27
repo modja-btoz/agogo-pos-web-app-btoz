@@ -12,7 +12,6 @@ class TransactionList extends Component {
     super(props)
   }
     state = {
-    transactionStore: [],
     footerNvaBarHeight: 350,
     windowInnerHeight: 0,
     productItemsHeight: 0,
@@ -41,7 +40,7 @@ class TransactionList extends Component {
         <Container className="transaction d-block">
         <NavLink onClick={() => this.props.cartStore.toggleOpenTransactionShow()} className="sidebar-header-nav"><i className="fas fa-arrow-left mr-2"></i>Transaksi Tertunda</NavLink>
             <Table style={{color: "white"}} borderless striped>
-              <TransactionHeader transactionStore={this.props.transactionStore}/>
+              <TransactionHeader />
             </Table>
   
             <ShadowScrollbars
@@ -54,7 +53,7 @@ class TransactionList extends Component {
             >
               <div className="scroll-wrapper" id="Cobaaa">
                 <Table style={{color: "white"}} borderless striped className="mb-0">
-                  <TransactionItems transactionStore={this.props.transactionStore} cartStore={this.props.cartStore}/>
+                  <TransactionItems cartStore={this.props.cartStore}/>
                 </Table>
               </div>
             </ShadowScrollbars>
