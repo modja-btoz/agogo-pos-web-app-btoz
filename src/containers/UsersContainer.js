@@ -11,7 +11,7 @@ class LoginSplashScreen extends Component {
   }
   render = this.render.bind(this);
   componentDidMount() {
-    console.log(DefaultIP)
+    // console.log(DefaultIP)
     axios.get(DefaultIP + `/api/users`)
     .then(res => {
       const users = res.data;

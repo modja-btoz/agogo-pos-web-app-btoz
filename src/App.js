@@ -113,7 +113,7 @@ class App extends Component {
         }
     })
     .catch(res => {
-      console.log('catch', res)
+      // console.log('catch', res.response)
     })
   }
   
